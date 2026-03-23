@@ -1,8 +1,8 @@
-# Portfolio - Andrés Caso Iglesias
+# Portafolio - Andrés Caso Iglesias
 
 > "Después de casi 20 años liderando equipos en hostelería y logística bajo presión, di un giro radical hacia IT. Traigo disciplina, resiliencia y liderazgo que pocos juniors pueden ofrecer."
 
-Portfolio profesional que presenta mi trayectoria, proyectos y habilidades como Junior Backend Developer. No es solo un escaparate visual, sino una demostración activa de buenas prácticas, arquitectura limpia y código escalable.
+Portafolio profesional que presenta mi trayectoria, proyectos y habilidades como Junior Backend Developer. No es solo un escaparate visual, sino una demostración activa de buenas prácticas, arquitectura limpia y código escalable.
 
 ---
 
