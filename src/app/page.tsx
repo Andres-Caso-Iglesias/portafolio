@@ -140,7 +140,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold mb-4 text-white">Contacto</h2>
           <p className="text-slate-300 mb-6">
-            Buscando mi primera oportunidad como Junior Backend en Asturias,
+            Buscando una oportunidad como Junior Backend en Asturias,
             híbrido o remoto. ¿Hablamos?
           </p>
           <a

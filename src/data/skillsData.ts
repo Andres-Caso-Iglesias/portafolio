@@ -20,4 +20,8 @@ export const skills: SkillCategory[] = [
     category: "DevOps & Cloud",
     items: ["Azure", "Docker", "Git", "Hyper-V"],
   },
+  {
+    category: "Herramientas de IA",
+    items: ["Antigravity", "OpenCode", "notebookLM", "GitHub Copilot", "Claude", "Gemini", "ChatGPT"],
+  }
 ];
