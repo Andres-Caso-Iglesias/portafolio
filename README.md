@@ -21,7 +21,7 @@ El proyecto ha sido refactorizado y diseñado siguiendo principios de ingenierí
 
 | Front-end | Configuración & Estilos | Deploy & Herramientas |
 |:---|:---|:---|
-| Next.js 16 (App Router) | TypeScript | Vercel (Pendiente) |
+| Next.js 16 (App Router) | TypeScript | Vercel |
 | React | Tailwind CSS v4 | npm |
 
 ---
@@ -68,9 +68,9 @@ npm run start
 
 ## Proyectos Destacados
 
-- **FoodBites:** API Backend robusta desarrollada en Java y PostgreSQL.
-- **Bolsa Empleo:** Aplicación móvil multiplataforma desarrollada con Dart y Flutter.
-- **Gestor Huertos Urbanos:** Interfaz web semántica con HTML, CSS y JavaScript Vanilla.
+- **Bolsa Empleo:** Aplicación multiplataforma desarrollada con Flutter (Dart), Nest.JS y PostgreSQL.
+- **FoodBites:** API Backend robusta desarrollada en Java 17 y MySQL.
+- **Gestor Huertos Urbanos:** Interfaz web desarrollada en Java 17 con Spring Boot y MySQL.
 
 ---
 
