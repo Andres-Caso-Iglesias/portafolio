@@ -15,9 +15,9 @@ export default function Home() {
           Junior Backend Developer
         </p>
         <p className="max-w-2xl text-slate-300 mb-8 text-lg leading-relaxed">
-          Después de casi 20 años liderando equipos en hostelería y logística, 
-          di un giro radical hacia el desarrollo de software. 
-          Trayectoria en Mecalux: C#, bases de datos, seguridad NIS2 y gestión cloud. 
+          Después de casi 20 años liderando equipos en hostelería y logística,
+          di un giro radical hacia el desarrollo de software.<br />
+          Trayectoria en Mecalux: C#, bases de datos, seguridad NIS2 y gestión cloud.<br />
           Bilingüe nativo español-inglés.
         </p>
         <div className="flex gap-4">
@@ -42,24 +42,24 @@ export default function Home() {
           <h2 className="text-3xl font-bold mb-8 text-white">Perfil Profesional</h2>
           <div className="space-y-4 text-slate-300">
             <p>
-              Desarrollador con formación técnica en aplicaciones multiplataforma y 
-              administración de servicios de internet. Experiencia práctica en 
-              entornos de desarrollo de software logístico y una trayectoria previa 
-              que respalda mi capacidad para trabajar bajo presión y resolución de 
+              Desarrollador con formación técnica en aplicaciones multiplataforma y
+              administración de servicios de internet. Experiencia práctica en
+              entornos de desarrollo de software logístico y una trayectoria previa
+              que respalda mi capacidad para trabajar bajo presión y resolución de
               problemas complejos.
             </p>
             <p>
-              Durante mis prácticas en Mecalux Software Solutions apliqué desarrollo 
-              en C#, optimización de bases de datos, implementación de seguridad NIS2 
-              y gestión de entornos en la nube. Mis años previos me diferencian: 
-              sé trabajar bajo presión, liderar sin excusas, entender al usuario final 
+              Durante mis prácticas en Mecalux Software Solutions apliqué desarrollo
+              en C#, optimización de bases de datos, implementación de seguridad NIS2
+              y gestión de entornos en la nube. Mis años previos me diferencian:
+              sé trabajar bajo presión, liderar sin excusas, entender al usuario final
               y optimizar recursos al máximo.
             </p>
             <div className="mt-6 p-4 bg-slate-900 rounded-lg border-l-4 border-blue-500">
               <p className="text-blue-400 font-medium">¿Por qué soy diferente?</p>
               <p className="text-slate-400 mt-1">
-                Sé lo que es la excelencia bajo presión constante. Entiendo al usuario final 
-                porque yo lo fui. Traigo disciplina, resiliencia y capacidad de liderazgo 
+                Sé lo que es la excelencia bajo presión constante. Entiendo al usuario final
+                porque yo lo fui. Traigo disciplina, resiliencia y capacidad de liderazgo
                 que pocos juniors pueden ofrecer.
               </p>
             </div>
@@ -141,7 +141,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold mb-4 text-white">Contacto</h2>
           <p className="text-slate-300 mb-6">
-            Buscando mi primera oportunidad como Junior Backend en Asturias, 
+            Buscando mi primera oportunidad como Junior Backend en Asturias,
             híbrido o remoto. ¿Hablamos?
           </p>
           <a
