@@ -10,11 +10,11 @@ export const skills: SkillCategory[] = [
   },
   {
     category: "Frameworks",
-    items: [".NET", "NestJS 10", "LINQ"],
+    items: [".NET", "NestJS 10", "LINQ", "Spring Boot"],
   },
   {
     category: "Bases de Datos",
-    items: ["PostgreSQL", "SQL Server"],
+    items: ["PostgreSQL", "SQL Server", "MySQL", "MongoDB"],
   },
   {
     category: "DevOps & Cloud",

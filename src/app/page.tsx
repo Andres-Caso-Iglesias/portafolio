@@ -43,10 +43,9 @@ export default function Home() {
           <div className="space-y-4 text-slate-300">
             <p>
               Desarrollador con formación técnica en aplicaciones multiplataforma y
-              administración de servicios de internet. Experiencia práctica en
-              entornos de desarrollo de software logístico y una trayectoria previa
-              que respalda mi capacidad para trabajar bajo presión y resolución de
-              problemas complejos.
+              administración de servicios de internet.<br />
+              Experiencia práctica en entornos de desarrollo de software logístico y una trayectoria previa
+              que respalda mi capacidad para trabajar bajo presión y resolución de problemas complejos.
             </p>
             <p>
               Durante mis prácticas en Mecalux Software Solutions apliqué desarrollo
