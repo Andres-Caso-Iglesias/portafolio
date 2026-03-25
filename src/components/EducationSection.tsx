@@ -11,7 +11,6 @@ export default function EducationSection() {
           {educationData.map((edu) => (
             <div key={edu.id} className="bg-slate-900 rounded-lg p-6 border border-slate-700">
               <h3 className="text-lg font-semibold text-blue-400 mb-2 flex items-center gap-2">
-                <span className="text-xl">🎓</span>
                 {edu.title}
               </h3>
               <p className="text-sm text-slate-400 mb-2">

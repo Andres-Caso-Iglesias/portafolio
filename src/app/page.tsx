@@ -13,13 +13,14 @@ export default function Home() {
           Andrés Caso Iglesias
         </h1>
         <p className="text-xl md:text-2xl text-blue-400 mb-6">
-          Junior Backend Developer
+          Developer
         </p>
         <p className="max-w-2xl text-slate-300 mb-8 text-lg leading-relaxed">
           Después de casi 20 años liderando equipos en hostelería y logística,
           di un giro radical hacia el desarrollo de software.<br />
-          Trayectoria en Mecalux: C#, bases de datos, seguridad NIS2 y gestión cloud.<br />
-          Bilingüe nativo español-inglés.
+          Como no soy una IA no voy a decir que programar me apasiona, 
+          pero siempre me ha fascinado entender como funcionaban las cosas por dentro.<br />
+          Y por si no lo dejo claro mas adelante soy bilingüe nativo español-inglés.
         </p>
         <div className="flex gap-4">
           <Link
