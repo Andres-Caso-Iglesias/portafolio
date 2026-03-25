@@ -2,6 +2,7 @@ import Link from "next/link";
 import Timeline from "@/components/Timeline";
 import { projects } from "@/data/projectsData";
 import { skills } from "@/data/skillsData";
+import EducationSection from "@/components/EducationSection";
 
 export default function Home() {
   return (
@@ -68,6 +69,9 @@ export default function Home() {
 
       {/* Timeline Section */}
       <Timeline />
+
+      {/* Education Section */}
+      <EducationSection />
 
       {/* Skills Section */}
       <section className="py-20 px-6 bg-slate-800">
