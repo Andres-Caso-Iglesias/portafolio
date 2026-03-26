@@ -18,7 +18,7 @@ export default function Home() {
         <p className="max-w-2xl text-slate-300 mb-8 text-lg leading-relaxed">
           Después de casi 20 años liderando equipos en hostelería y logística,
           di un giro radical hacia el desarrollo de software.<br />
-          Como no soy una IA no voy a decir que programar me apasiona, 
+          Como no soy una IA no voy a decir que programar me apasiona,
           pero siempre me ha fascinado entender como funcionaban las cosas por dentro.<br />
           Y por si no lo dejo claro mas adelante soy bilingüe nativo español-inglés.
         </p>
@@ -35,6 +35,14 @@ export default function Home() {
           >
             LinkedIn
           </Link>
+          <a
+            href="/AndresCasoIglesiasResumen_ES.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 rounded-lg font-medium transition-colors"
+          >
+            Resumen
+          </a>
         </div>
       </section>
 
