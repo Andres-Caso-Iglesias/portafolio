@@ -14,7 +14,7 @@ export const educationData: EducationItem[] = [
     period: "Sep 2022 – Dic 2025",
     details: [
       "Proyecto final: Aplicación de gestión de tareas multiplataforma (Flutter + Firebase)",
-      "Certificación en Fundamentos de Azure (AZ-900)",
+      "Certificación MongoDB Java Developer Path",
       "Especialización en desarrollo multiplataforme "
     ]
   },
