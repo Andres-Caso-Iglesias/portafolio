@@ -55,5 +55,16 @@ export const educationData: EducationItem[] = [
       "Optimización de procesos logísticos",
       "Formación continua en gestión y liderazgo en hosteleria"
     ]
+  },
+  {
+    id: "5",
+    title: "Máster en Ciberseguridad e IA",
+    institution: "Evolve",
+    period: "abr 2026 – presente",
+    details: [
+      "Enfoque en seguridad de sistemas, criptografía e IA aplicada",
+      "Proyectos prácticos de pentesting, gestión de incidentes y defensa en profundidad",
+      "Colaboración con equipos de desarrollo para incorporar prácticas de seguridad",
+    ]
   }
 ];

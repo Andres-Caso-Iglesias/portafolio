@@ -3,17 +3,29 @@ import Timeline from "@/components/Timeline";
 import { projects } from "@/data/projectsData";
 import { skills } from "@/data/skillsData";
 import EducationSection from "@/components/EducationSection";
+import LanguageSwitch from "@/components/LanguageSwitch";
+import LocaleText from "@/components/LocaleText";
+import ProjectsGrid from "@/components/ProjectsGrid";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  // Lightweight bilingual: rely on client components for runtime language toggle
+  // Default lang is ES; couple with LocaleText and ProjectsGrid for translation
+  // Optionally render a language switch in the header area
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
       <section className="min-h-screen flex flex-col justify-center items-center px-6 text-center bg-gradient-to-b from-slate-900 to-slate-800">
+        <div className="w-full flex justify-end px-6 pt-2">
+          <LanguageSwitch />
+        </div>
         <h1 className="text-4xl md:text-6xl font-bold mb-4 text-white">
           Andrés Caso Iglesias
         </h1>
         <p className="text-xl md:text-2xl text-blue-400 mb-6">
-          Developer
+          <LocaleText es="Desarrollador" en="Developer" />
         </p>
         <p className="max-w-2xl text-slate-300 mb-8 text-lg leading-relaxed">
           Después de casi 20 años liderando equipos en hostelería y logística,
@@ -114,37 +126,8 @@ export default function Home() {
       {/* Projects Section */}
       <section className="py-20 px-6 bg-slate-800">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8 text-white">Proyectos</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {projects.map((project) => (
-              <div
-                key={project.name}
-                className="bg-slate-900 rounded-lg p-6 border border-slate-700 hover:border-blue-500 transition-colors"
-              >
-                <h3 className="text-xl font-semibold mb-2 text-white">
-                  {project.name}
-                </h3>
-                <p className="text-slate-300 mb-4">{project.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="px-2 py-1 bg-blue-600/20 text-blue-400 rounded text-xs"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <Link
-                  href={project.github}
-                  target="_blank"
-                  className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors"
-                >
-                  Ver en GitHub →
-                </Link>
-              </div>
-            ))}
-          </div>
+          <h2 className="text-3xl font-bold mb-8 text-white"><LocaleText es="Proyectos" en="Projects"/></h2>
+          <ProjectsGrid />
         </div>
       </section>
 
