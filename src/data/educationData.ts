@@ -63,6 +63,7 @@ export const educationData: EducationItem[] = [
     period: "abr 2026 – presente",
     details: [
       "Enfoque en seguridad de sistemas, criptografía e IA aplicada",
+      "Con foco en la obtención de la certificación eJPT (eLearnSecurity)",
       "Proyectos prácticos de pentesting, gestión de incidentes y defensa en profundidad",
       "Colaboración con equipos de desarrollo para incorporar prácticas de seguridad",
     ]
