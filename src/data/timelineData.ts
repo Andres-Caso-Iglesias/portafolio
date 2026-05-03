@@ -154,9 +154,16 @@ export const rawTimelineData: TimelineItem[] = [
     startDateStr: "oct. 2025",
     endDateStr: "ene. 2026",
     year: "2025",
-
     expTitle: "Intenship developer",
     expSubtitle: "Mecalux",
     expColor: "blue" as const,
+  },
+  {
+    id: 17,
+    startDateStr: "abr. 2026",
+    endDateStr: "dic. 2026",
+    year: "2026",
+    eduTitle: "Máster en Ciberseguridad e IA",
+    eduSubtitle: "Evolve",
   },
 ];

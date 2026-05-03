@@ -9,6 +9,18 @@ export interface EducationItem {
 export const educationData: EducationItem[] = [
   {
     id: "1",
+    title: "Máster en Ciberseguridad e IA",
+    institution: "Evolve",
+    period: "abr 2026 – dic 2026",
+    details: [
+      "Enfoque en seguridad de sistemas, criptografía e IA aplicada",
+      "Con foco en la obtención de la certificación eJPT (eLearnSecurity)",
+      "Proyectos prácticos de pentesting, gestión de incidentes y defensa en profundidad",
+      "Colaboración con equipos de desarrollo para incorporar prácticas de seguridad",
+    ]
+  },
+  {
+    id: "2",
     title: "Técnico Superior en Desarrollo de Aplicaciones Multiplataforma",
     institution: "IES Juan Jose Calvo Miguel, Sotrondio",
     period: "Sep 2022 – Dic 2025",
@@ -19,7 +31,7 @@ export const educationData: EducationItem[] = [
     ]
   },
   {
-    id: "2",
+    id: "3",
     title: "Formación Práctica en Desarrollo de Software",
     institution: "Mecalux Software Solutions",
     period: "oct 2025 – dic 2025",
@@ -33,7 +45,7 @@ export const educationData: EducationItem[] = [
     ]
   },
   {
-    id: "3",
+    id: "4",
     title: "Administración de servicios de internet",
     institution: "Mentiona",
     period: " ene 2021 – oct 2021",
@@ -45,7 +57,7 @@ export const educationData: EducationItem[] = [
     ]
   },
   {
-    id: "4",
+    id: "5",
     title: "Experiencia Profesional Liderazgo Técnico",
     institution: "Sector Hostelería y Logística",
     period: "2003 – 2020",
@@ -54,18 +66,6 @@ export const educationData: EducationItem[] = [
       "Gestión de operaciones bajo presión alta",
       "Optimización de procesos logísticos",
       "Formación continua en gestión y liderazgo en hosteleria"
-    ]
-  },
-  {
-    id: "5",
-    title: "Máster en Ciberseguridad e IA",
-    institution: "Evolve",
-    period: "abr 2026 – presente",
-    details: [
-      "Enfoque en seguridad de sistemas, criptografía e IA aplicada",
-      "Con foco en la obtención de la certificación eJPT (eLearnSecurity)",
-      "Proyectos prácticos de pentesting, gestión de incidentes y defensa en profundidad",
-      "Colaboración con equipos de desarrollo para incorporar prácticas de seguridad",
     ]
   }
 ];

@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import Timeline from "@/components/Timeline";
 import { projects } from "@/data/projectsData";
@@ -6,14 +7,10 @@ import EducationSection from "@/components/EducationSection";
 import LanguageSwitch from "@/components/LanguageSwitch";
 import LocaleText from "@/components/LocaleText";
 import ProjectsGrid from "@/components/ProjectsGrid";
-import { useEffect, useState } from "react";
+ // removed unused hooks
 
 export default function Home() {
-  // Lightweight bilingual: rely on client components for runtime language toggle
-  // Default lang is ES; couple with LocaleText and ProjectsGrid for translation
-  // Optionally render a language switch in the header area
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
+  // Client component: bilingual UI via LanguageSwitch, LocaleText, and ProjectsGrid
   return (
     <main className="min-h-screen">
       {/* Hero Section */}

@@ -99,28 +99,41 @@ export function calculateTimelinePositions(items: TimelineItem[]): TimelineItem[
   });
 
   // Find the earliest and latest dates to normalize positions
-  const allDates = timelineData.flatMap(item => [
-    parseSpanishDate(item.startDateStr)!,
-    parseSpanishDate(item.endDateStr)!
+  const allDatesRaw = timelineData.flatMap(item => [
+    parseSpanishDate(item.startDateStr),
+    parseSpanishDate(item.endDateStr)
   ]);
 
+  // Filter out any nulls to avoid runtime errors when reading .year
+  const allDates = allDatesRaw.filter((d): d is { year: number; month: number } => d != null);
+
+  const minYear = Math.min(...allDates.map(d => d.year));
+  // For min month, consider entries that have the min year
   const minDate = {
-    year: Math.min(...allDates.map(d => d.year)),
-    month: Math.min(...allDates.filter(d => d.year === Math.min(...allDates.map(d => d.year))).map(d => d.month))
+    year: minYear,
+    month: Math.min(
+      ...allDates.filter(d => d.year === minYear).map(d => d.month)
+    )
   };
 
+  const maxYear = Math.max(...allDates.map(d => d.year));
   const maxDate = {
-    year: Math.max(...allDates.map(d => d.year)),
-    month: Math.max(...allDates.filter(d => d.year === Math.max(...allDates.map(d => d.year))).map(d => d.month))
+    year: maxYear,
+    month: Math.max(
+      ...allDates.filter(d => d.year === maxYear).map(d => d.month)
+    )
   };
 
   const totalMonths = (maxDate.year - minDate.year) * 12 + (maxDate.month - minDate.month);
 
   // Calculate normalized positions (0-100%)
   const positionedTimelineData = timelineData.map(item => {
-    const startDate = parseSpanishDate(item.startDateStr)!;
-    const endDate = parseSpanishDate(item.endDateStr)!;
+    const startDate = parseSpanishDate(item.startDateStr);
+    const endDate = parseSpanishDate(item.endDateStr);
     
+    if (!startDate || !endDate) {
+      return { ...item, startPos: 0, endPos: 0 };
+    }
     const startMonthsFromMin = (startDate.year - minDate.year) * 12 + (startDate.month - minDate.month);
     const endMonthsFromMin = (endDate.year - minDate.year) * 12 + (endDate.month - minDate.month);
     

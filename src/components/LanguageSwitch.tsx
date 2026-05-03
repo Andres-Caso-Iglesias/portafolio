@@ -24,7 +24,7 @@ export default function LanguageSwitch() {
       className="px-3 py-1 border border-slate-500 rounded text-sm text-slate-100 bg-slate-800 hover:bg-slate-700"
       title="Change language"
     >
-      {lang === 'es' ? 'ES' : 'EN'}
+      ES/EN
     </button>
   )
 }
