@@ -13,7 +13,6 @@ export interface EducationItem {
 export const educationData: EducationItem[] = [
   {
     id: "1",
-    title: "Máster en Ciberseguridad e IA",
     enTitle: "Master in Cybersecurity and AI",
     enInstitution: "Evolve",
     enPeriod: "Apr 2026 – Dec 2026",
