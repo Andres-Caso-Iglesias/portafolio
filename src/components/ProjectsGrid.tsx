@@ -1,26 +1,22 @@
 "use client";
 import React, { useEffect, useState } from 'react'
 import { projects } from '@/data/projectsData'
+import { useGlobalLang } from '@/hooks/useGlobalLang'
+import { t } from '@/i18n/locales'
 
 export default function ProjectsGrid() {
-  const [lang, setLang] = useState<'es'|'en'>('es')
-
+  const { lang } = useGlobalLang()
+  
   useEffect(() => {
     try {
       const v = localStorage.getItem('lang') as 'es'|'en' | null
-      if (v === 'es' || v === 'en') setLang(v)
+      // Lang is managed by useLocale; this local state is deprecated but kept for compatibility
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const _ = v
     } catch {}
   }, [])
 
-  // Listen for language changes triggered by LanguageSwitch via a custom event
-  useEffect(() => {
-    const onLangChanged = () => {
-      const v = (typeof window !== 'undefined') ? (localStorage.getItem('lang') as 'es'|'en' | null) : null
-      if (v === 'es' || v === 'en') setLang(v)
-    }
-    window.addEventListener('langChanged', onLangChanged as any)
-    return () => window.removeEventListener('langChanged', onLangChanged as any)
-  }, [])
+  // Language changes are handled by useLocale context; no local listener needed here
 
   const displayName = (p: any) => (lang === 'en' && p.enName) ? p.enName : p.name
   const displayDesc = (p: any) => (lang === 'en' && p.enDescription) ? p.enDescription : p.description
@@ -36,7 +32,7 @@ export default function ProjectsGrid() {
               <span key={t} className="px-2 py-1 bg-blue-600/20 text-blue-400 rounded text-xs">{t}</span>
             ))}
           </div>
-          <a href={p.github} target="_blank" className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors">Ver en GitHub →</a>
+          <a href={p.github} target="_blank" className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors">{t(lang, 'home.viewGithub')} →</a>
         </div>
       ))}
     </div>

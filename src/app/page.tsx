@@ -6,11 +6,13 @@ import { projects } from "@/data/projectsData";
 import { skills } from "@/data/skillsData";
 import EducationSection from "@/components/EducationSection";
 import LanguageSwitch from "@/components/LanguageSwitch";
-import LocaleText from "@/components/LocaleText";
 import ProjectsGrid from "@/components/ProjectsGrid";
-// removed unused hooks
+import { t } from '@/i18n/locales'
+import { useGlobalLang } from '@/hooks/useGlobalLang'
+import ProfileIntroText from '@/components/ProfileIntroText'
 
 export default function Home() {
+  const { lang } = useGlobalLang()
   // Client component: bilingual UI via LanguageSwitch, LocaleText, and ProjectsGrid
   return (
     <main className="min-h-screen">
@@ -19,7 +21,7 @@ export default function Home() {
         <div className="absolute top-6 right-6">
           <LanguageSwitch />
         </div>
-        
+
         <div className="w-full max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-center gap-10 md:gap-16 mt-16 md:mt-0">
           {/* Columna Izquierda: Foto */}
           <div className="flex-shrink-0">
@@ -28,6 +30,7 @@ export default function Home() {
                 src="/profile.jpg"
                 alt="Andrés Caso Iglesias"
                 fill
+                sizes="100vw"
                 className="object-cover"
                 priority
               />
@@ -37,30 +40,24 @@ export default function Home() {
           {/* Columna Derecha: Texto y Botones */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left max-w-2xl">
             <h1 className="text-4xl md:text-6xl font-bold mb-4 text-white">
-              Andrés Caso Iglesias
+              {t(lang, 'home.title')}
             </h1>
             <p className="text-xl md:text-2xl text-blue-400 mb-6">
-              <LocaleText es="Desarrollador" en="Developer" />
+              {t(lang, 'home.subtitle')}
             </p>
-            <p className="text-slate-300 mb-8 text-lg leading-relaxed">
-              Después de casi 20 años liderando equipos en hostelería y logística,
-              di un giro radical hacia el desarrollo de software.<br />
-              Como no soy una IA no voy a decir que programar me apasiona,
-              pero siempre me ha fascinado entender como funcionaban las cosas por dentro.<br />
-              Y por si no lo dejo claro mas adelante soy bilingüe nativo español-inglés.
-            </p>
+            <ProfileIntroText />
             <div className="flex flex-wrap justify-center md:justify-start gap-4">
               <Link
                 href="https://github.com/Andres-Caso-Iglesias"
                 className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium transition-colors"
               >
-                GitHub
+                {t(lang, 'home.github')}
               </Link>
               <Link
                 href="https://linkedin.com/in/andrescasoiglesias"
                 className="px-6 py-3 border border-slate-500 hover:border-slate-400 rounded-lg font-medium transition-colors"
               >
-                LinkedIn
+                {t(lang, 'home.linkedin')}
               </Link>
               <a
                 href="/AndresCasoIglesiasResumen_ES.pdf"
@@ -68,7 +65,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 rounded-lg font-medium transition-colors"
               >
-                Resumen
+                {t(lang, 'home.resume')}
               </a>
             </div>
           </div>
@@ -78,27 +75,18 @@ export default function Home() {
       {/* About Section */}
       <section className="py-20 px-6 bg-slate-800">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8 text-white">Perfil Profesional</h2>
+          <h2 className="text-3xl font-bold mb-8 text-white">{t(lang, 'home.profileTitle')}</h2>
           <div className="space-y-4 text-slate-300">
             <p>
-              Desarrollador con formación técnica en aplicaciones multiplataforma y
-              administración de servicios de internet.<br />
-              Experiencia práctica en entornos de desarrollo de software logístico y una trayectoria previa
-              que respalda mi capacidad para trabajar bajo presión y resolución de problemas complejos.
+              {t(lang, 'home.profileIntro')}
             </p>
             <p>
-              Durante mis prácticas en Mecalux Software Solutions apliqué desarrollo
-              en C#, optimización de bases de datos, implementación de seguridad NIS2
-              y gestión de entornos en la nube. Mis años previos me diferencian:
-              sé trabajar bajo presión, liderar sin excusas, entender al usuario final
-              y optimizar recursos al máximo.
+              {t(lang, 'home.profileIntro2')}
             </p>
             <div className="mt-6 p-4 bg-slate-900 rounded-lg border-l-4 border-blue-500">
-              <p className="text-blue-400 font-medium">¿Por qué soy diferente?</p>
+              <p className="text-blue-400 font-medium">{t(lang, 'home.profileDifferTitle')}</p>
               <p className="text-slate-400 mt-1">
-                Sé lo que es la excelencia bajo presión constante. Entiendo al usuario final
-                porque yo lo fui. Traigo disciplina, resiliencia y capacidad de liderazgo
-                que pocos juniors pueden ofrecer.
+                {t(lang, 'home.profileDifferText')}
               </p>
             </div>
           </div>
@@ -114,7 +102,7 @@ export default function Home() {
       {/* Skills Section */}
       <section className="py-20 px-6 bg-slate-800">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8 text-white">Skills Técnicos</h2>
+          <h2 className="text-3xl font-bold mb-8 text-white">{t(lang, 'home.skillsTitle')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {skills.map((skill) => (
               <div
@@ -143,7 +131,7 @@ export default function Home() {
       {/* Projects Section */}
       <section className="py-20 px-6 bg-slate-800">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8 text-white"><LocaleText es="Proyectos" en="Projects" /></h2>
+          <h2 className="text-3xl font-bold mb-8 text-white">{t(lang, 'home.projectsTitle')}</h2>
           <ProjectsGrid />
         </div>
       </section>
@@ -151,11 +139,8 @@ export default function Home() {
       {/* Contact Section */}
       <section className="py-20 px-6 bg-slate-900 text-center">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-4 text-white">Contacto</h2>
-          <p className="text-slate-300 mb-6">
-            Buscando una oportunidad como Junior Backend en Asturias,
-            híbrido o remoto. ¿Hablamos?
-          </p>
+          <h2 className="text-3xl font-bold mb-4 text-white">{t(lang, 'home.contactTitle')}</h2>
+          <p className="text-slate-300 mb-6">{t(lang, 'home.contactIntro')}</p>
           <a
             href="mailto:andrescasoiglesias@gmail.com"
             className="inline-block px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium transition-colors"

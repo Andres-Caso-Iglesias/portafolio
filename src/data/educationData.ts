@@ -4,11 +4,24 @@ export interface EducationItem {
   institution: string;
   period: string; // e.g., "Sep 2020 – Jun 2022"
   details?: string[];
+  enTitle?: string;
+  enInstitution?: string;
+  enPeriod?: string;
+  enDetails?: string[];
 }
 
 export const educationData: EducationItem[] = [
   {
     id: "1",
+    title: "Máster en Ciberseguridad e IA",
+    enTitle: "Master in Cybersecurity and AI",
+    enInstitution: "Evolve",
+    enPeriod: "Apr 2026 – Dec 2026",
+    enDetails: [
+      "Focus on system security, cryptography, and applied AI",
+      "Projects on practical pentesting, incident management, and defense in depth",
+      "Collaborating with development teams to integrate security practices",
+    ],
     title: "Máster en Ciberseguridad e IA",
     institution: "Evolve",
     period: "abr 2026 – dic 2026",
@@ -21,6 +34,14 @@ export const educationData: EducationItem[] = [
   },
   {
     id: "2",
+    enTitle: "Higher Technician in Multiplatform Application Development",
+    enInstitution: "IES Juan Jose Calvo Miguel, Sotrondio",
+    enPeriod: "Sep 2022 – Dec 2025",
+    enDetails: [
+      "Final project: Multiplatform task management app (Flutter + Firebase)",
+      "MongoDB Java Developer Path certification",
+      "Specialization in multiplatform development",
+    ],
     title: "Técnico Superior en Desarrollo de Aplicaciones Multiplataforma",
     institution: "IES Juan Jose Calvo Miguel, Sotrondio",
     period: "Sep 2022 – Dic 2025",
@@ -32,6 +53,17 @@ export const educationData: EducationItem[] = [
   },
   {
     id: "3",
+    enTitle: "Practical Training in Software Development",
+    enInstitution: "Mecalux Software Solutions",
+    enPeriod: "Oct 2025 – Dec 2025",
+    enDetails: [
+      "Development in C# and .NET Framework",
+      "SQL Server database optimization",
+      "NIS2 security implementation",
+      "Cloud environments management on Azure",
+      "Agile development methodologies",
+      "Logistics",
+    ],
     title: "Formación Práctica en Desarrollo de Software",
     institution: "Mecalux Software Solutions",
     period: "oct 2025 – dic 2025",
@@ -46,6 +78,15 @@ export const educationData: EducationItem[] = [
   },
   {
     id: "4",
+    enTitle: "Internet services administration",
+    enInstitution: "Mentiona",
+    enPeriod: "Jan 2021 – Oct 2021",
+    enDetails: [
+      "Network administration",
+      "Active Directory",
+      "IIS, DNS",
+      "Application deployment, data handling"
+    ],
     title: "Administración de servicios de internet",
     institution: "Mentiona",
     period: " ene 2021 – oct 2021",
@@ -58,6 +99,15 @@ export const educationData: EducationItem[] = [
   },
   {
     id: "5",
+    enTitle: "Technical Leadership Professional Experience",
+    enInstitution: "Hospitality and Logistics Sector",
+    enPeriod: "2003 – 2020",
+    enDetails: [
+      "Team leadership of up to 10 people",
+      "High-pressure operations management",
+      "Process optimization in logistics",
+      "Continuous leadership training in hospitality"
+    ],
     title: "Experiencia Profesional Liderazgo Técnico",
     institution: "Sector Hostelería y Logística",
     period: "2003 – 2020",
