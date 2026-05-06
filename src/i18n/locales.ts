@@ -8,6 +8,9 @@ type HomeKeys = {
   profileIntro: string
   profileIntroShort: string
   profileIntroFull: string
+  profileIntro2: string
+  profileDifferTitle: string
+  profileDifferText: string
   seoTitle?: string
   seoDescription?: string
   educationTitle: string
