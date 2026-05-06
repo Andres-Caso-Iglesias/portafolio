@@ -84,9 +84,9 @@ export default function Home() {
               {t(lang, 'home.profileIntro2')}
             </p>
             <div className="mt-6 p-4 bg-slate-900 rounded-lg border-l-4 border-blue-500">
-              <p className="text-blue-400 font-medium">{t(lang, 'home.profileDifferTitle')}</p>
+              <p className="text-blue-400 font-medium">{t(lang, 'home.profileDifferTitle') || (lang === 'en' ? 'Why am I different?' : '¿Por qué soy diferente?')}</p>
               <p className="text-slate-400 mt-1">
-                {t(lang, 'home.profileDifferText')}
+                {t(lang, 'home.profileDifferText') || (lang === 'en' ? 'I know what excellence under constant pressure means. I understand the end user because I have been there. I bring discipline, resilience and leadership that few juniors can offer.' : 'Sé lo que es la excelencia bajo presión constante. Entiendo al usuario final porque yo lo fui. Traigo disciplina, resiliencia y capacidad de liderazgo que pocos juniors pueden ofrecer.')}
               </p>
             </div>
           </div>
