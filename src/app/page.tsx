@@ -60,7 +60,7 @@ export default function Home() {
                 {t(lang, 'home.linkedin')}
               </Link>
               <a
-                href="/AndresCasoIglesiasResumen_ES.pdf"
+                href={lang === 'en' ? '/andres_caso_iglesias_EN.pdf' : '/andres_caso_iglesias_Es.pdf'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 rounded-lg font-medium transition-colors"
