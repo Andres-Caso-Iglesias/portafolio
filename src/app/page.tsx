@@ -54,7 +54,7 @@ export default function Home() {
                 {t(lang, 'home.github')}
               </Link>
               <Link
-                href="https://linkedin.com/in/andrescasoiglesias"
+                href={lang === 'en' ? 'https://www.linkedin.com/in/andrescasoiglesias/?locale=en-US' : 'https://www.linkedin.com/in/andrescasoiglesias/'}
                 className="px-6 py-3 border border-slate-500 hover:border-slate-400 rounded-lg font-medium transition-colors"
               >
                 {t(lang, 'home.linkedin')}
