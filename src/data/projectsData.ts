@@ -55,4 +55,18 @@ export const projects: Project[] = [
       "UI amigable que impulsó adopción del sistema entre comunidades; estructura de datos clara para reporte de actividades.",
     role: "Frontend / Full-stack",
   },
+  {
+    name: "Portafolio Profesional",
+    description:
+      "Portafolio web personal construido con Next.js 16, React 19 y TypeScript, siguiendo principios de arquitectura limpia: separación de capas (datos, lógica, presentación), tipado estricto y diseño responsivo con Tailwind CSS v4.",
+    enName: "Professional Portfolio",
+    enDescription:
+      "Personal web portfolio built with Next.js 16, React 19 and TypeScript, applying clean architecture principles: layered separation (data, logic, presentation), strict typing and responsive design with Tailwind CSS v4.",
+    tech: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS v4", "Vercel"],
+    github: "https://github.com/Andres-Caso-Iglesias/portafolio",
+    live: "https://andres-caso-iglesias.vercel.app",
+    impact:
+      "Demuestra la aplicación práctica de clean architecture, tipado estricto y buenas prácticas de ingeniería en un proyecto real desplegado en producción.",
+    role: "Frontend / Diseño & Arquitectura",
+  }
 ];

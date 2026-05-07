@@ -5,6 +5,6 @@ import { t } from '@/i18n/locales'
 export default function ProfileIntroText() {
   const { lang } = useGlobalLang()
   return (
-    <p className="text-slate-300 mb-8 text-lg leading-relaxed">{t(lang, 'home.profileIntroFull')}</p>
+    <p className="text-slate-300 mb-8 text-lg leading-relaxed whitespace-pre-line">{t(lang, 'home.profileIntroFull')}</p>
   )
 }
