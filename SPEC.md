@@ -1,7 +1,7 @@
 # Portfolio - Andrés Caso Iglesias
 
 ## Descripción
-Portfolio profesional para Junior Backend Developer buscando su primera oportunidad en IT.
+Portfolio profesional para Backend Developer buscando su primera oportunidad en IT.
 
 ## Stack Tecnológico
 
@@ -95,7 +95,7 @@ export function cn(...inputs: ClassValue[]) {
 
 ### 1. Hero (page.tsx)
 - Nombre: "Andrés Caso Iglesias"
-- Título: "Junior Backend Developer"
+- Título: "Backend Developer"
 - Pitch personal con experiencia previa
 - Botones: GitHub, LinkedIn
 
@@ -199,7 +199,7 @@ Los datos del timeline están separados en `src/data/timelineData.ts` con:
   - Infraestructura: Azure, Hyper-V, VPN/RDP
 
 ### Diferenciador Principal
-"Después de casi 20 años liderando equipos en hostelería y logística bajo presión, di un giro radical hacia IT. Traigo disciplina, resiliencia y liderazgo que pocos juniors pueden ofrecer."
+"Después de casi 20 años liderando equipos en hostelería y logística bajo presión, di un giro radical hacia IT. Traigo disciplina, resiliencia y liderazgo que pocos pueden ofrecer."
 
 ## Pendiente
 

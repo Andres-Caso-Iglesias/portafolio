@@ -3,8 +3,8 @@ import "./globals.css";
 import SeoClient from "@/components/SeoClient";
 
 export const metadata: Metadata = {
-  title: "Andrés Caso Iglesias | Junior Backend Developer",
-  description: "Portfolio de Andrés Caso Iglesias - Junior Backend Developer especializado en C#/.NET, Java y TypeScript",
+  title: "Andrés Caso Iglesias | Backend Developer",
+  description: "Portfolio de Andrés Caso Iglesias - Backend Developer especializado en C#/.NET, Java y TypeScript",
 };
 
 export default function RootLayout({

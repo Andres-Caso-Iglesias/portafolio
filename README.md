@@ -4,7 +4,7 @@
 
 **Enlace al Portafolio:** [https://portafolio-livid-two-33.vercel.app/](https://portafolio-livid-two-33.vercel.app/)
 
-> "Después de casi 20 años liderando equipos en hostelería y logística bajo presión, di un giro radical hacia IT. Traigo disciplina, resiliencia y liderazgo que pocos juniors pueden ofrecer."
+> "Después de casi 20 años liderando equipos en hostelería y logística bajo presión, di un giro radical hacia IT. Traigo disciplina, resiliencia y liderazgo que pocos pueden ofrecer."
 
 Este portafolio presenta mi trayectoria, proyectos y habilidades como desarrollador. No es solo un escaparate visual, sino una demostración activa de buenas prácticas de ingeniería de software, arquitectura limpia y código escalable. Actualmente cursando un master en ciberseguridad & IA, para obtener la certificación eJPT.
 
@@ -89,7 +89,7 @@ npm run start
 
 ## 🌟 Proyectos Destacados
 
-- **Bolsa Empleo:** Aplicación multiplataforma desarrollada con Flutter (Dart), Nest.JS y PostgreSQL.
+- **Bolsa Empleo:** Aplicación multiplataforma desarrollada con Flutter (Dart), NestJS y PostgreSQL.
 - **FoodBites:** API Backend robusta desarrollada en Java 17 y MySQL.
 - **Gestor Huertos Urbanos:** Interfaz web desarrollada en Java 17 con Spring Boot y MySQL.
 

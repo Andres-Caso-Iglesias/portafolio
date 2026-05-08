@@ -10,6 +10,7 @@ export interface Project {
   // English translations
   enName?: string;
   enDescription?: string;
+  enImpact?: string;
 }
 
 export const projects: Project[] = [
@@ -20,7 +21,7 @@ export const projects: Project[] = [
     enName: "Job Board App",
     enDescription:
       "Cross-platform job offers management app with a Dart/Flutter frontend and NestJS backend.",
-    tech: ["Dart", "Flutter", "nest.JS", "PostgreSQL"],
+    tech: ["Dart", "Flutter", "NestJS", "PostgreSQL"],
     github: "https://github.com/Andres-Caso-Iglesias/Bolsa_Empleo",
     live: null,
     impact:
@@ -67,6 +68,18 @@ export const projects: Project[] = [
     live: "https://andres-caso-iglesias.vercel.app",
     impact:
       "Demuestra la aplicación práctica de clean architecture, tipado estricto y buenas prácticas de ingeniería en un proyecto real desplegado en producción.",
-    role: "Frontend / Diseño & Arquitectura",
-  }
-];
+     role: "Frontend / Diseño & Arquitectura",
+   },
+   {
+     name: "Auditoría de Seguridad Web Básica",
+     enName: "Basic Web Security Audit",
+     description: "Herramienta de auditoría básica que verifica headers de seguridad faltantes, vulnerabilidades XSS/SQL injection comunes y cumplimiento de normativas básicas.",
+     enDescription: "Basic audit tool that checks for missing security headers, common XSS/SQL injection vulnerabilities, and basic regulatory compliance.",
+     tech: ["Next.js 16", "TypeScript", "REST API"],
+     github: "",
+     live: null,
+     impact: "Demuestra conocimientos prácticos de auditoría de seguridad y alineación con normativas como NIS2.",
+     enImpact: "Demonstrates practical security audit knowledge and alignment with regulations like NIS2.",
+     role: "Backend / Security",
+   }
+ ];
