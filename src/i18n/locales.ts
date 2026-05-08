@@ -6,7 +6,6 @@ type HomeKeys = {
   projectsTitle: string
   profileTitle: string
   profileIntro: string
-  profileIntroShort: string
   profileIntroFull: string
   profileIntro2: string
   profileDifferTitle: string
@@ -42,8 +41,7 @@ export const locales: LocalesMap = {
       projectsTitle: 'Proyectos',
       profileTitle: 'Perfil Profesional',
       profileIntro: 'Desarrollador con formación técnica en aplicaciones multiplataforma y administración de servicios de internet. Experiencia práctica en entornos de desarrollo de software logístico y una trayectoria previa que respalda mi capacidad para trabajar bajo presión y resolución de problemas complejos.',
-      profileIntroShort: 'Después de casi 20 años liderando equipos en hostelería y logística, di un giro radical hacia el desarrollo de software.',
-      profileIntroFull: 'Después de casi 20 años liderando equipos en hostelería y logística, di un giro radical hacia el desarrollo de software.\n\nCuento con 20 años de experiencia en liderazgo operativo en sectores críticos, una trayectoria que ahora canalizo hacia la ingeniería de software. Mi enfoque se centra en el desarrollo backend, la ciberseguridad y la alineación de soluciones técnicas con objetivos de negocio. Siempre me ha fascinado entender cómo funcionan las cosas por dentro.\n\nY por si no queda claro, soy bilingüe nativo español-inglés.',
+      profileIntroFull: 'Después de casi 20 años liderando equipos en hostelería y logística, di un giro radical hacia el desarrollo de software.\n\nCuento con una dilatada experiencia en liderazgo operativo en sectores críticos, una trayectoria que ahora canalizo hacia la ingeniería de software. Mi enfoque se centra en el desarrollo backend, la ciberseguridad y la alineación de soluciones técnicas con objetivos de negocio. Siempre me ha intrigado cómo funcionan las cosas por dentro.\n\nY por si no queda claro, soy bilingüe nativo español-inglés.',
       profileIntro2: 'Durante mis prácticas en Mecalux Software Solutions apliqué desarrollo en C#, optimización de bases de datos, implementación de seguridad NIS2 y gestión de entornos en la nube. Mis años previos me diferencian: sé trabajar bajo presión, liderar sin excusas, entender al usuario final y optimizar recursos al máximo.',
       profileDifferTitle: '¿Por qué soy diferente?',
       profileDifferText: 'Sé lo que es la excelencia bajo presión constante. Entiendo al usuario final porque yo lo fui. Traigo disciplina, resiliencia y capacidad de liderazgo que pocos pueden ofrecer.',
@@ -68,8 +66,7 @@ export const locales: LocalesMap = {
       projectsTitle: 'Projects',
       profileTitle: 'Professional Profile',
       profileIntro: 'Developer with a technical background in cross‑platform applications and internet services administration. Practical software development experience in logistics environments and a track record of working under pressure and solving complex problems.',
-      profileIntroShort: 'After almost 20 years leading teams in hospitality and logistics, I pivoted to software development.',
-      profileIntroFull: 'After almost 20 years leading teams in hospitality and logistics, I pivoted to software development.\n\nI bring 20 years of operational leadership experience, now transitioning to software engineering with a focus on backend development, security, and business-aligned technical solutions. I have always been fascinated by understanding how things work internally.\n\nAnd to clarify, I am bilingual native Spanish-English.',
+      profileIntroFull: 'After almost 20 years leading teams in hospitality and logistics, I pivoted to software development.\n\nI bring extensive experience in operational leadership in critical sectors, now channeled into software engineering with a focus on backend development, security, and business-aligned technical solutions. I have always been curious how things work internally.\n\nAnd to clarify, I am bilingual native Spanish-English.',
       profileIntro2: 'During my internship at Mecalux Software Solutions I applied development in C#, optimized databases, implemented NIS2 security and cloud management on Azure. My prior years differentiate me: I know how to work under pressure, lead without excuses, understand the end user and optimize resources to the max.',
       profileDifferTitle: 'Why am I different?',
       profileDifferText: 'I know what excellence under constant pressure means. I understand the end user because I have been there. I bring discipline, resilience and leadership that few can offer.',
