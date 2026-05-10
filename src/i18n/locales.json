@@ -2,46 +2,49 @@
   "es": {
     "home": {
       "title": "Andrés Caso Iglesias",
-      "subtitle": "Desarrollador",
+      "subtitle": "Desarrollador Backend Senior",
       "projectsTitle": "Proyectos",
       "profileTitle": "Perfil Profesional",
-      "profileIntro": "Desarrollador con formación técnica en aplicaciones multiplataforma y administración de servicios de internet. Experiencia práctica en entornos de desarrollo de software logístico y una trayectoria previa que respalda mi capacidad para trabajar bajo presión y resolución de problemas complejos. Y por si no lo dejo claro mas adelante soy bilingüe nativo español-inglés.",
-      "profileIntro2": "Durante mis prácticas en Mecalux Software Solutions apliqué desarrollo en C#, optimización de bases de datos, implementación de seguridad NIS2 y gestión de entornos en la nube. Mis años previos me diferencian: sé trabajar bajo presión, liderar sin excusas, entender al usuario final y optimizar recursos al máximo.",
-      "profileDifferTitle": "¿Por qué soy diferente?",
-      "profileDifferText": "Sé lo que es la excelencia bajo presión constante. Entiendo al usuario final porque yo lo fui. Traigo disciplina, resiliencia y capacidad de liderazgo que pocos pueden ofrecer.",
+      "profileIntro": "Desarrollador Backend bilingüe (Nativo Inglés/Español) con capacidad probada para diseñar sistemas robustos en C# y Java. Aporto dos décadas de experiencia en liderazgo operativo y logística crítica, lo que me permite abordar el desarrollo de software no solo como código, sino como una solución de negocio escalable, segura y preparada para entornos de alta presión.",
+      "profileIntro2": "Durante mi residencia técnica profesional en Mecalux Software Solutions, implementé protocolos de seguridad NIS2 en SGA, optimicé procedimientos almacenados en SQL Server reduciendo tiempos de respuesta en operaciones logísticas clave, y desarrollé en el ecosistema .NET & Azure para garantizar escalabilidad de la cadena de suministro. Mi trayectoria previa en hostelería y logística me brinda una visión única para diseñar soluciones técnicas que resuelven problemas reales de negocio.",
+      "profileDifferTitle": "Seniority Híbrido: Liderazgo Operativo + Excelencia Técnica",
+      "profileDifferText": "No soy solo otro desarrollador que cambió de carrera. Soy un líder operativo con 20 años gestionando equipos en entornos de misión crítica que evolucionó hacia la ingeniería de software backend. Mi ventaja competitiva: entiendo el problema de negocio antes de escribir la primera línea de código, sé qué significa tiempo de inactividad cero, y aplico principios de seguridad NIS2 desde la fase de diseño.",
       "educationTitle": "Educación y Formación",
-      "educationIntro": "Formación académica y práctica en desarrollo de software, gestión de proyectos y seguridad.",
+      "educationIntro": "Formación académica y práctica en desarrollo de software, gestión de proyectos y seguridad. Actualmente cursando Máster en Ciberseguridad e IA con enfoque en desarrollo seguro e inteligencia aplicada.",
       "skillsTitle": "Habilidades Técnicas",
       "contactTitle": "Contacto",
-      "contactIntro": "Buscando una oportunidad como Backend Developer (España, híbrido o remoto).",
+      "contactIntro": "Buscando una oportunidad como Backend Developer Senior (España, híbrido o remoto) especializado en sistemas críticos y seguridad NIS2.",
       "resume": "Resumen",
       "github": "GitHub",
       "linkedin": "LinkedIn",
       "viewGithub": "Ver en GitHub",
       "timelineTitle": "Mi Trayectoria",
-      "seoTitle": "Andrés Caso Iglesias | Backend Developer",
-      "seoDescription": "Portfolio de Andrés Caso Iglesias - Backend Developer especializado en C#/.NET, Java y TypeScript"
+      "seoTitle": "Andrés Caso Iglesias | Backend Developer Senior | Especialista en NIS2",
+      "seoDescription": "Portfolio de Andrés Caso Iglesias - Backend Developer Senior especializado en C#/.NET, Java, TypeScript y seguridad NIS2 para entornos críticos"
     }
   },
   "en": {
     "home": {
       "title": "Andrés Caso Iglesias",
-      "subtitle": "Developer",
+      "subtitle": "Senior Backend Developer",
       "projectsTitle": "Projects",
       "profileTitle": "Professional Profile",
-      "profileIntro": "Developer with a technical background in cross‑platform applications and internet services administration. Practical software development experience in logistics environments and a track record of working under pressure and solving complex problems.",
+      "profileIntro": "Bilingual Backend Developer (Native English/Spanish) with proven ability to design robust systems in C# and Java. I bring two decades of operational leadership and critical logistics experience, enabling me to approach software development not just as code, but as a scalable, secure business solution ready for high-pressure environments.",
+      "profileIntro2": "During my professional technical residency at Mecalux Software Solutions, I implemented NIS2 security protocols in WMS, optimized stored procedures in SQL Server reducing response times in key logistics operations, and developed within the .NET & Azure ecosystem to ensure supply chain scalability. My prior experience in hospitality and logistics gives me a unique perspective to design technical solutions that solve real business problems.",
+      "profileDifferTitle": "Hybrid Seniority: Operational Leadership + Technical Excellence",
+      "profileDifferText": "I'm not just another career-changer developer. I'm an operational leader with 20 years managing teams in mission-critical environments who evolved into backend software engineering. My competitive advantage: I understand the business problem before writing the first line of code, I know what zero downtime means, and I apply NIS2 security principles from the design phase.",
       "educationTitle": "Education and Training",
-      "educationIntro": "Academic and practical training in software development, project management, and security.",
+      "educationIntro": "Academic and practical training in software development, project management, and security. Currently pursuing Master's in Cybersecurity & AI with focus on secure development and applied intelligence.",
       "skillsTitle": "Technical Skills",
       "contactTitle": "Contact",
-      "contactIntro": "Seeking an opportunity as a Backend Developer (Spain, hybrid or remote).",
+      "contactIntro": "Seeking a Senior Backend Developer opportunity (Spain, hybrid or remote) specializing in critical systems and NIS2 compliance.",
       "resume": "Resume",
       "github": "GitHub",
       "linkedin": "LinkedIn",
       "viewGithub": "View on GitHub",
       "timelineTitle": "My Timeline",
-      "seoTitle": "Andrés Caso Iglesias | Backend Developer",
-      "seoDescription": "Portfolio of Andrés Caso Iglesias - Backend Developer specialized in C#/.NET, Java and TypeScript"
+      "seoTitle": "Andrés Caso Iglesias | Senior Backend Developer | NIS2 Specialist",
+      "seoDescription": "Portfolio of Andrés Caso Iglesias - Senior Backend Developer specializing in C#/.NET, Java, TypeScript and NIS2 security for critical environments"
     }
   }
 }

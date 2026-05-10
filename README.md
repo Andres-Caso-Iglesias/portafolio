@@ -2,7 +2,7 @@
 
 ![Despliegue Vercel](https://img.shields.io/badge/Deployed_on-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
 
-**Enlace al Portafolio:** [https://portafolio-livid-two-33.vercel.app/](https://portafolio-livid-two-33.vercel.app/)
+**Enlace al Portafolio:** [https://andres-caso-iglesias.vercel.app/](https://andres-caso-iglesias.vercel.app/)
 
 > "Después de casi 20 años liderando equipos en hostelería y logística bajo presión, di un giro radical hacia IT. Traigo disciplina, resiliencia y liderazgo que pocos pueden ofrecer."
 
@@ -10,7 +10,7 @@ Este portafolio presenta mi trayectoria, proyectos y habilidades como desarrolla
 
 ---
 
-## 🛠 Stack Tecnológico
+## 📚 Stack Tecnológico
 
 | Categoría | Tecnología | Detalles |
 |-----------|------------|----------|
@@ -18,14 +18,14 @@ Este portafolio presenta mi trayectoria, proyectos y habilidades como desarrolla
 | | React 19 | Biblioteca de UI con últimas características (React Compiler) |
 | | TypeScript | Tipado estricto para seguridad y autocompletado |
 | **Estilos** | Tailwind CSS v4 | Framework utility-first para diseño responsivo y mantenible |
-| **Iconos** | SVG inline | Íconos personalizados y accesibles |
+| **Iconos** | SVG inline | Iconos personalizados y accesibles |
 | **Despliegue** | Vercel | Plataforma de despliegue optimizada para Next.js |
 | **Gestión de Paquetes** | npm | Gestor de paquetes estándar |
 | **Control de Versiones** | Git | Con convenciones de commits convencionales |
 
 ---
 
-## 🏛 Arquitectura y Organización del Código
+## 🏗️ Arquitectura y Organización del Código
 
 El proyecto ha sido refactorizado y diseñado siguiendo principios de ingeniería de software para asegurar su mantenibilidad y escalabilidad:
 
@@ -36,13 +36,19 @@ El proyecto ha sido refactorizado y diseñado siguiendo principios de ingenierí
 - **Lógica Pura y Testable:** Funciones de utilidad aisladas y sin efectos secundarios.
 
 ### Estructura de Directorios
-```text
+```
 /src
   /app           # Enrutamiento, layouts y páginas (App Router de Next.js)
   /components    # Capa de Presentación (JSX y estado UI exclusivamente)
-    /timeline    # Componentes especializados (TimelineDesktop, TimelineMobile)
-  /data          # Capa de Datos (arrays estáticos y tipados, ej: educationData.ts)
+    /timeline    # Componentes especializados (TimelineDesktop, TimelineMobile, EducationSection)
+  /data          # Capa de Datos (arrays estáticos y tipados)
+    projectsData.ts
+    skillsData.ts
+    timelineData.ts
+    educationData.ts
   /lib           # Capa de Lógica (utilidades, cálculos puros y helpers)
+    utils.ts
+    timelineUtils.ts
 ```
 
 ### Flujo de Datos
@@ -52,9 +58,9 @@ El proyecto ha sido refactorizado y diseñado siguiendo principios de ingenierí
 
 ---
 
-## 🚀 Buenas Prácticas Implementadas
+## ✨ Buenas Prácticas Implementadas
 
-- **Arquitectura Limpia:** Capas bien definidas con dependencias unidireccionales (Presentación -> Lógica -> Datos).
+- **Arquitectura Limpia:** Capas bien definidas con dependencias unidireccionales (Presentación → Lógica → Datos).
 - **Rendimiento y Optimización:** Code splitting automático de Next.js 16, CSS óptimo con Tailwind (elimina unused CSS), y uso de fuentes del sistema.
 - **Accesibilidad (a11y):** Contraste de colores adecuado, navegación por teclado, uso de labels/ARIA y enfoque visible.
 - **SEO y Metadatos:** Metaetiquetas completas, Open Graph, Twitter Card y preparado para JSON-LD.
@@ -62,7 +68,7 @@ El proyecto ha sido refactorizado y diseñado siguiendo principios de ingenierí
 
 ---
 
-## 💻 Ejecución Local
+## 🖥️ Ejecución Local
 
 Para ejecutar este portfolio en tu entorno local, sigue estos pasos:
 
@@ -87,18 +93,41 @@ npm run start
 
 ---
 
-## 🌟 Proyectos Destacados
+## 🚀 Proyectos Destacados
 
-- **Bolsa Empleo:** Aplicación multiplataforma desarrollada con Flutter (Dart), NestJS y PostgreSQL.
-- **FoodBites:** API Backend robusta desarrollada en Java 17 y MySQL.
-- **Gestor Huertos Urbanos:** Interfaz web desarrollada en Java 17 con Spring Boot y MySQL.
+Puedes ver el detalle técnico de cada proyecto en las siguientes páginas:
+- [Bolsa de Empleo](https://andres-caso-iglesias.vercel.app/projects/bolsa-empleo) - API NestJS + PostgreSQL, documentación Swagger disponible
+- [FoodBites](https://andres-caso-iglesias.vercel.app/projects/foodbites) - Backend Java Spring Boot + MySQL, diagrama ER disponible
+- [Gestor Huertos Urbanos](https://andres-caso-iglesias.vercel.app/projects/gestor-huertos) - Java Spring Boot + MySQL
+- [Portafolio Profesional](https://andres-caso-iglesias.vercel.app/projects/portafolio-profesional) - Next.js 16 + React 19 + TypeScript
+- [Auditoría de Seguridad](https://andres-caso-iglesias.vercel.app/projects/auditoria-seguridad) - Next.js 16 + TypeScript
+
+### 🔍 Nueva Funcionalidad: Estrategia de Visualización Técnica
+Cada proyecto ahora incluye una vista detallada accesible mediante `/projects/[slug]` que muestra:
+- **Diagramas ER** (Entity Relationship) en `public/erd/`
+- **Documentación API** (Swagger/OpenAPI) en `public/swagger/`
+- **Fragmentos de código representativos** en `public/snippets/`
+- **Información de configuración Docker** cuando aplica
+- **Secciones de Reto, Solución y Arquitectura** existentes
+
+Proyectos con backend disponen de configuración Docker:
+- `docker-compose.yml` en la raíz del proyecto configura servicios para:
+  - MySQL (FoodBites, Gestor Huertos)
+  - PostgreSQL (Bolsa de Empleo)
+  - Java Spring Boot (FoodBites, Gestor Huertos)
+  - NestJS (Bolsa de Empleo)
+
+Documentación técnica y diagramas disponibles en:
+- Diagramas ER: `public/erd/`
+- Documentación API: `public/swagger/`
+- Fragmentos de código: `public/snippets/`
 
 ---
 
-## 📬 Contacto
+## 📞 Contacto
 
 - **Ubicación:** Asturias, España
 - **Email:** andrescasoiglesias@gmail.com
 - **GitHub:** [Andres-Caso-Iglesias](https://github.com/Andres-Caso-Iglesias)
 - **LinkedIn:** [andrescasoiglesias](https://linkedin.com/in/andrescasoiglesias)
-- **Web:** [https://portafolio-livid-two-33.vercel.app/](https://portafolio-livid-two-33.vercel.app/)
+- **Web:** [https://andres-caso-iglesias.vercel.app/](https://andres-caso-iglesias.vercel.app/)

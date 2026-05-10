@@ -50,31 +50,31 @@ export const educationData: EducationItem[] = [
       "Especialización en desarrollo multiplataforme "
     ]
   },
-  {
-    id: "3",
-    enTitle: "Practical Training in Software Development",
-    enInstitution: "Mecalux Software Solutions",
-    enPeriod: "Oct 2025 – Dec 2025",
-    enDetails: [
-      "Development in C# and .NET Framework",
-      "SQL Server database optimization",
-      "NIS2 security implementation",
-      "Cloud environments management on Azure",
-      "Agile development methodologies",
-      "Logistics",
-    ],
-    title: "Formación Práctica en Desarrollo de Software",
-    institution: "Mecalux Software Solutions",
-    period: "oct 2025 – dic 2025",
-    details: [
-      "Desarrollo en C# y .NET Framework",
-      "Optimización de bases de datos SQL Server",
-      "Implementación de seguridad NIS2",
-      "Gestión de entornos cloud en Azure",
-      "Metodologías ágiles de desarrollo",
-      "Logistica"
-    ]
-  },
+    {
+      id: "3",
+      title: "Residencia Técnica Profesional",
+      institution: "Mecalux Software Solutions",
+      period: "oct 2025 – ene 2026",
+      details: [
+        "Residencia técnica de 4 meses en empresa líder en software logístico",
+        "Desarrollo en C# y .NET Framework para sistemas de gestión de almacenes",
+        "Optimización de procedimientos almacenados y consultas complejas en SQL Server",
+        "Implementación de protocolos de seguridad NIS2 en software crítico",
+        "Desarrollo y despliegue en ecosistema .NET & Azure",
+        "Participación en metodologías ágiles y revisiones de código"
+      ],
+      enTitle: "Professional Technical Residency",
+      enInstitution: "Mecalux Software Solutions",
+      enPeriod: "Oct 2025 – Jan 2026",
+      enDetails: [
+        "4-month technical residency at leading logistics software company",
+        "Development in C# and .NET Framework for warehouse management systems",
+        "Optimization of stored procedures and complex queries in SQL Server",
+        "Implementation of NIS2 security protocols in critical software",
+        "Development and deployment within .NET & Azure ecosystem",
+        "Participation in agile methodologies and code reviews"
+      ]
+    },
   {
     id: "4",
     enTitle: "Internet services administration",
