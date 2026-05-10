@@ -313,7 +313,18 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                     <div className="flex items-center justify-between px-4 py-2 bg-slate-800 border-b">
                       <span className="text-xs font-medium text-slate-400">{path.split('/').pop()}</span>
                       <button
-                        onClick={() => navigator.clipboard.writeText(snippetContents[path] || 'Content not available')}
+                        onClick={() => {
+                          if (typeof navigator !== 'undefined' && navigator.clipboard) {
+                            navigator.clipboard.writeText(snippetContents[path] || 'Content not available').then(() => {
+                              alert('Snippet copied to clipboard!');
+                            }).catch(err => {
+                              console.error('Failed to copy: ', err);
+                              alert('Failed to copy snippet to clipboard');
+                            });
+                          } else {
+                            alert('Clipboard API not available');
+                          }
+                        }}
                         className="text-xs hover:text-slate-300"
                       >
                         Copy
