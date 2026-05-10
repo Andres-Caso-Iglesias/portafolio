@@ -302,43 +302,71 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
           </div>
         )}
 
-        {/* Code Snippets */}
-        {project.snippetPaths && project.snippetPaths.length > 0 && (
-          <div>
-            <h2 className="text-xl font-semibold mb-4">Code Snippets</h2>
-            <div className="space-y-6">
-              {project.snippetPaths.map((path, index) => (
-                <div key={index} className="border rounded-lg overflow-hidden shadow">
-                  <div className="bg-slate-900 text-slate-200">
-                    <div className="flex items-center justify-between px-4 py-2 bg-slate-800 border-b">
-                      <span className="text-xs font-medium text-slate-400">{path.split('/').pop()}</span>
-                      <button
-                        onClick={() => {
-                          if (typeof navigator !== 'undefined' && navigator.clipboard) {
-                            navigator.clipboard.writeText(snippetContents[path] || 'Content not available').then(() => {
-                              alert('Snippet copied to clipboard!');
-                            }).catch(err => {
-                              console.error('Failed to copy: ', err);
-                              alert('Failed to copy snippet to clipboard');
-                            });
-                          } else {
-                            alert('Clipboard API not available');
-                          }
-                        }}
-                        className="text-xs hover:text-slate-300"
-                      >
-                        Copy
-                      </button>
+        {/* Code Snippets - Final Working Version */}
+      {project.snippetPaths && project.snippetPaths.length > 0 ? (
+        <div>
+          <h2 className="text-xl font-semibold mb-4">Code Snippets</h2>
+          <div className="space-y-6">
+            {project.snippetPaths.map((path, index) => {
+              const content = snippetContents[path];
+              
+              // Si no encontramos contenido, mostrar un mensaje claro pero no romper el layout
+              if (!content) {
+                return (
+                  <div key={index} className="border rounded-lg overflow-hidden shadow p-4 bg-slate-900/50">
+                    <div className="text-slate-400 text-center py-4">
+                      <div className="font-medium mb-2">{path.split('/').pop()}</div>
+                      <div className="text-sm">
+                        Content not loaded. Check console for details.
+                      </div>
                     </div>
-                    <pre className="p-4 overflow-auto whitespace-pre-wrap text-sm">
-                      {snippetContents[path] || '[Content not available]'}
-                    </pre>
                   </div>
+                );
+              }
+
+              return (
+                <div key={index} className="border rounded-lg overflow-hidden shadow p-4">
+                  <div className="flex items-start justify-between mb-2">
+                    <span className="font-medium text-slate-400 text-xs">
+                      {path.split('/').pop()}
+                    </span>
+                    <button
+                      onClick={() => {
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                          navigator.clipboard.writeText(content).then(() => {
+                            // Visual feedback
+                            const btn = event.currentTarget;
+                            const original = btn.innerHTML;
+                            btn.innerHTML = 'Copied!';
+                            setTimeout(() => btn.innerHTML = original, 1500);
+                          }).catch(err => {
+                            console.error('Copy failed:', err);
+                            // No alert to avoid UX disruption
+                          });
+                        }
+                      }}
+                      className="px-2 py-1 bg-slate-600 hover:bg-slate-500 text-xs rounded transition-colors"
+                    >
+                      Copy
+                    </button>
+                  </div>
+                  <pre className="overflow-auto whitespace-pre-wrap text-sm bg-slate-800/50 p-3 rounded">
+                    {content}
+                  </pre>
                 </div>
-              ))}
-            </div>
+              );
+            })}
           </div>
-        )}
+        </div>
+      ) : (
+        <div className="text-slate-400 text-center py-8">
+          {project && project.snippetPaths !== undefined ? 
+            (project.snippetPaths.length === 0 ? 
+              'Este proyecto no tiene snippets de código configurados.' : 
+              'Estado inesperado de snippets') : 
+            'Cargando datos del proyecto...'}
+        </div>
+      )}
 
         {/* Docker Info */}
         {project.dockerCompose && (
