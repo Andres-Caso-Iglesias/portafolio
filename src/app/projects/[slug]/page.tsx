@@ -129,7 +129,6 @@ public class PedidoService {
         if (producto == null || producto.trim().isEmpty()) {
             throw new IllegalArgumentException("El producto no puede estar vacío");
         }
-        // Otras validaciones de producto...
     }
 
     private void validarCantidad(int cantidad) {
@@ -142,12 +141,11 @@ public class PedidoService {
     }
 
     private Double calcularPrecioConDescuento(String producto, int cantidad) {
-        // Lógica de descuentos por volumen
         Double precioBase = obtenerPrecioBase(producto);
         if (cantidad >= 100) {
-            return precioBase * 0.9; // 10% de descuento
+            return precioBase * 0.9;
         } else if (cantidad >= 50) {
-            return precioBase * 0.95; // 5% de descuento
+            return precioBase * 0.95;
         }
         return precioBase;
     }
@@ -161,29 +159,14 @@ public class LinqAdvancedExamples
 {
     public void RunExamples()
     {
-        // Datos de ejemplo: pedidos de un sistema de foodtrucks
-        var orders = new List<Order>
-        {
-            new Order { Id = 1, Product = "Taco", Quantity = 3, Price = 2.5m, CustomerId = 101, OrderDate = DateTime.Now.AddDays(-2) },
-            new Order { Id = 2, Product = "Burrito", Quantity = 1, Price = 5.0m, CustomerId = 102, OrderDate = DateTime.Now.AddDays(-1) },
-            new Order { Id = 3, Product = "Taco", Quantity = 2, Price = 2.5m, CustomerId = 101, OrderDate = DateTime.Now.AddDays(-1) },
-            new Order { Id = 4, Product = "Agua", Quantity = 5, Price = 1.0m, CustomerId = 103, OrderDate = DateTime.Now.AddDays(-3) },
-            new Order { Id = 5, Product = "Burrito", Quantity = 2, Price = 5.0m, CustomerId = 101, OrderDate = DateTime.Now.AddDays(-2) },
-        };
+        var orders = new List<Order> { /* ... */ };
+        var customers = new List<Customer> { /* ... */ };
 
-        var customers = new List<Customer>
-        {
-            new Customer { Id = 101, Name = "Ana", City = "Madrid" },
-            new Customer { Id = 102, Name = "Luis", City = "Barcelona" },
-            new Customer { Id = 103, Name = "María", City = "Madrid" },
-        };
-
-        // 1. Agrupación múltiple y agregados: ventas totales por producto y ciudad
+        // 1. Agrupación múltiple y agregados
         var salesByProductAndCity = from o in orders
                                     join c in customers on o.CustomerId equals c.Id
                                     group new { o, c } by new { o.Product, c.City } into g
-                                    select new
-                                    {
+                                    select new {
                                         Product = g.Key.Product,
                                         City = g.Key.City,
                                         TotalQuantity = g.Sum(x => x.o.Quantity),
@@ -191,13 +174,7 @@ public class LinqAdvancedExamples
                                         OrderCount = g.Count()
                                     };
 
-        foreach (var item in salesByProductAndCity)
-        {
-            Console.WriteLine($"{item.Product} en {item.City}: {item.TotalQuantity} unidades, {item.TotalRevenue:C} revenue, {item.OrderCount} pedidos");
-        }
-
-        // 2. Consultas con operaciones de conjunto y filtrado avanzado
-        // Clientes que han hecho pedidos en los últimos 2 días y han comprado más de 4 unidades en total
+        // 2. Clientes frecuentes con filtrado avanzado
         var frequentCustomers = (from o in orders
                                  where o.OrderDate >= DateTime.Now.AddDays(-2)
                                  group o by o.CustomerId into g
@@ -206,53 +183,98 @@ public class LinqAdvancedExamples
                                  select new { c.Name, c.City, TotalUnits = g.Sum(o => o.Quantity) })
                                 .ToList();
 
-        Console.WriteLine("\\nClientes frecuentes (últimos 2 días, >4 unidades):");
-        foreach var c in frequentCustomers
-        {
-            Console.WriteLine($"{c.Name} ({c.City}): {c.TotalUnits} unidades");
-        }
-
-        // 3. Uso de let para cálculos intermedios y anidados
+        // 3. Uso de let para cálculos intermedios
         var orderSummary = from o in orders
                            let total = o.Quantity * o.Price
                            let discount = total > 10 ? total * 0.1m : 0m
                            let final = total - discount
                            orderby final descending
-                           select new
-                           {
-                               o.Id,
-                               o.Product,
-                               o.Quantity,
-                               o.Price,
-                               Total = total,
-                               Discount = discount,
-                               Final = final
-                           };
-
-        Console.WriteLine("\\nResumen de pedidos ordenado por monto final (desc):");
-        foreach var o in orderSummary.Take(3)
-        {
-            Console.WriteLine($"Pedido {o.Id}: {o.Product} x{o.Quantity} = {o.Total:C} - Descuento: {o.Discount:C} = Final: {o.Final:C}");
-        }
+                           select new { o.Id, o.Product, Total = total, Discount = discount, Final = final };
     }
+}`,
+  '/snippets/react-component.tsx': `// Ejemplo de componente React con TypeScript para el Portafolio Profesional
+// Demuestra uso de tipado estricto y patrones de clean architecture
+
+interface Project {
+  id: string;
+  name: string;
+  description: string;
+  tech: string[];
+  github: string;
+  live: string | null;
 }
 
-public class Order
-{
-    public int Id { get; set; }
-    public string Product { get; set; }
-    public int Quantity { get; set; }
-    public decimal Price { get; set; }
-    public int CustomerId { get; set; }
-    public DateTime OrderDate { get; set; }
+interface ProjectsGridProps {
+  projects: Project[];
+  onProjectClick?: (slug: string) => void;
 }
 
-public class Customer
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string City { get; set; }
-}`
+export default function ProjectsGrid({ projects, onProjectClick }: ProjectsGridProps) {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {projects.map((project) => (
+        <article
+          key={project.id}
+          className="border rounded-lg p-4 hover:shadow-lg transition-shadow cursor-pointer"
+          onClick={() => onProjectClick?.(project.slug)}
+        >
+          <h3 className="text-xl font-bold">{project.name}</h3>
+          <p className="text-gray-600 mt-2">{project.description}</p>
+          <div className="flex gap-2 mt-4">
+            {project.tech.map((t) => (
+              <span key={t} className="px-2 py-1 bg-slate-100 rounded text-sm">
+                {t}
+              </span>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+export function useProjects() {
+  const getProjects = () => { /* ... */ };
+  const getProjectBySlug = (slug: string) => { /* ... */ };
+  return { getProjects, getProjectBySlug };
+}`,
+  '/snippets/security-audit.ts': `// Ejemplo de auditoría de seguridad en Next.js - Verificación de headers
+// Implementa análisis de respuestas HTTP y detección de patrones inseguros
+
+interface SecurityHeader {
+  name: string;
+  expectedValue: string;
+  required: boolean;
+}
+
+const REQUIRED_HEADERS: SecurityHeader[] = [
+  { name: 'Strict-Transport-Security', expectedValue: 'max-age=31536000; includeSubDomains', required: true },
+  { name: 'Content-Security-Policy', expectedValue: "default-src 'self'", required: true },
+  { name: 'X-Content-Type-Options', expectedValue: 'nosniff', required: true },
+  { name: 'X-Frame-Options', expectedValue: 'DENY', required: true },
+];
+
+export function auditSecurityHeaders(url: string): Promise<AuditResult[]> {
+  return fetch(url)
+    .then(response => {
+      return REQUIRED_HEADERS.map(header => {
+        const value = response.headers.get(header.name);
+        if (!value) return { header: header.name, status: 'missing' };
+        const pass = header.required ? value.includes(header.expectedValue) : value.length > 0;
+        return { header: header.name, status: pass ? 'pass' : 'fail', currentValue: value };
+      });
+    });
+}
+
+export function detectXSS(input: string): boolean {
+  const xssPatterns = [/<script/i, /javascript:/i, /on\\w+\\s*=/i, /expression\s*\(/i];
+  return xssPatterns.some(pattern => pattern.test(input));
+}
+
+export function detectSQLInjection(input: string): boolean {
+  const sqlPatterns = [/(\b|\W)(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|EXEC|EXECUTE)\\b/i, /'/, /--/, /\\/\\*|\\*\\//];
+  return sqlPatterns.some(pattern => pattern.test(input));
+}`,
 };
 
 export default function ProjectPage({ params }: { params: { slug: string } }) {
@@ -302,71 +324,50 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
           </div>
         )}
 
-        {/* Code Snippets - Final Working Version */}
-      {project.snippetPaths && project.snippetPaths.length > 0 ? (
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Code Snippets</h2>
-          <div className="space-y-6">
-            {project.snippetPaths.map((path, index) => {
-              const content = snippetContents[path];
-              
-              // Si no encontramos contenido, mostrar un mensaje claro pero no romper el layout
-              if (!content) {
-                return (
-                  <div key={index} className="border rounded-lg overflow-hidden shadow p-4 bg-slate-900/50">
-                    <div className="text-slate-400 text-center py-4">
-                      <div className="font-medium mb-2">{path.split('/').pop()}</div>
-                      <div className="text-sm">
-                        Content not loaded. Check console for details.
-                      </div>
+        {/* Code Snippets */}
+        {project.snippetPaths && project.snippetPaths.length > 0 && (
+          <div>
+            <h2 className="text-xl font-semibold mb-4">Code Snippets</h2>
+            <div className="space-y-6">
+              {project.snippetPaths.map((path, index) => {
+                const content = snippetContents[path];
+                
+                if (!content) {
+                  return (
+                    <div key={index} className="border rounded-lg p-4 bg-slate-900/50 text-slate-400">
+                      Snippet no disponible: {path.split('/').pop()}
                     </div>
+                  );
+                }
+
+                return (
+                  <div key={index} className="border rounded-lg overflow-hidden shadow">
+                    <div className="flex items-center justify-between px-4 py-2 bg-slate-800 border-b">
+                      <span className="text-xs font-medium text-slate-400">
+                        {path.split('/').pop()}
+                      </span>
+                      <button
+                        onClick={() => {
+                          navigator.clipboard?.writeText(content).then(() => {
+                            const btn = event.currentTarget;
+                            btn.textContent = 'Copied!';
+                            setTimeout(() => btn.textContent = 'Copy', 1500);
+                          });
+                        }}
+                        className="px-2 py-1 bg-slate-600 hover:bg-slate-500 text-xs rounded transition-colors"
+                      >
+                        Copy
+                      </button>
+                    </div>
+                    <pre className="overflow-auto whitespace-pre-wrap text-sm p-4 bg-slate-900">
+                      {content}
+                    </pre>
                   </div>
                 );
-              }
-
-              return (
-                <div key={index} className="border rounded-lg overflow-hidden shadow p-4">
-                  <div className="flex items-start justify-between mb-2">
-                    <span className="font-medium text-slate-400 text-xs">
-                      {path.split('/').pop()}
-                    </span>
-                    <button
-                      onClick={() => {
-                        if (navigator.clipboard && navigator.clipboard.writeText) {
-                          navigator.clipboard.writeText(content).then(() => {
-                            // Visual feedback
-                            const btn = event.currentTarget;
-                            const original = btn.innerHTML;
-                            btn.innerHTML = 'Copied!';
-                            setTimeout(() => btn.innerHTML = original, 1500);
-                          }).catch(err => {
-                            console.error('Copy failed:', err);
-                            // No alert to avoid UX disruption
-                          });
-                        }
-                      }}
-                      className="px-2 py-1 bg-slate-600 hover:bg-slate-500 text-xs rounded transition-colors"
-                    >
-                      Copy
-                    </button>
-                  </div>
-                  <pre className="overflow-auto whitespace-pre-wrap text-sm bg-slate-800/50 p-3 rounded">
-                    {content}
-                  </pre>
-                </div>
-              );
-            })}
+              })}
+            </div>
           </div>
-        </div>
-      ) : (
-        <div className="text-slate-400 text-center py-8">
-          {project && project.snippetPaths !== undefined ? 
-            (project.snippetPaths.length === 0 ? 
-              'Este proyecto no tiene snippets de código configurados.' : 
-              'Estado inesperado de snippets') : 
-            'Cargando datos del proyecto...'}
-        </div>
-      )}
+        )}
 
         {/* Docker Info */}
         {project.dockerCompose && (
