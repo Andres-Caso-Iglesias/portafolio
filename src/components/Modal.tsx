@@ -16,6 +16,10 @@ export default function Modal({ project, onClose }: ModalProps) {
   const [snippetsContent, setSnippetsContent] = useState<{path: string, content: string}[]>([]);
   const [isLoadingSnippets, setIsLoadingSnippets] = useState(false);
 
+  const handleTabChange = (tab: 'challenge' | 'solution' | 'architecture' | 'snippets') => {
+    setActiveTab(tab);
+  };
+
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -55,7 +59,7 @@ export default function Modal({ project, onClose }: ModalProps) {
       >
         <motion.div
           layoutId={project.name}
-          className="relative z-10 max-w-4xl w-full max-h-[90vh] overflow-y-auto bg-slate-900 rounded-xl p-8 m-4"
+          className="relative z-10 w-[95%] max-w-[800px] h-[85vh] overflow-y-auto bg-slate-900 rounded-xl p-6 md:p-8 mx-auto"
           onClick={(e) => e.stopPropagation()}
         >
           <button
@@ -83,7 +87,7 @@ export default function Modal({ project, onClose }: ModalProps) {
 
           <div className="flex flex-wrap gap-2 mb-4 border-b border-slate-700 pb-2">
             <button
-              onClick={() => setActiveTab('challenge')}
+              onClick={() => handleTabChange('challenge')}
               className={`px-3 py-1 text-xs rounded transition-colors ${
                 activeTab === 'challenge' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
               }`}
@@ -91,7 +95,7 @@ export default function Modal({ project, onClose }: ModalProps) {
               {lang === 'en' ? 'Challenge' : 'Reto'}
             </button>
             <button
-              onClick={() => setActiveTab('solution')}
+              onClick={() => handleTabChange('solution')}
               className={`px-3 py-1 text-xs rounded transition-colors ${
                 activeTab === 'solution' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
               }`}
@@ -99,7 +103,7 @@ export default function Modal({ project, onClose }: ModalProps) {
               {lang === 'en' ? 'Solution' : 'Solución'}
             </button>
             <button
-              onClick={() => setActiveTab('architecture')}
+              onClick={() => handleTabChange('architecture')}
               className={`px-3 py-1 text-xs rounded transition-colors ${
                 activeTab === 'architecture' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
               }`}
@@ -108,7 +112,7 @@ export default function Modal({ project, onClose }: ModalProps) {
             </button>
             {project.snippetPaths && project.snippetPaths.length > 0 && (
               <button
-                onClick={() => setActiveTab('snippets')}
+                onClick={() => handleTabChange('snippets')}
                 className={`px-3 py-1 text-xs rounded transition-colors ${
                   activeTab === 'snippets' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
                 }`}
@@ -118,7 +122,7 @@ export default function Modal({ project, onClose }: ModalProps) {
             )}
           </div>
 
-          <div className="text-slate-300 text-sm">
+          <div className="text-slate-300 text-base">
             {activeTab === 'challenge' && (
               <div className="prose prose-invert max-w-none">
                 <p>{lang === 'en' ? (project.enChallenge || 'No content.') : (project.challenge || 'Sin contenido.')}</p>
@@ -132,6 +136,18 @@ export default function Modal({ project, onClose }: ModalProps) {
             {activeTab === 'architecture' && (
               <div className="prose prose-invert max-w-none">
                 <p>{lang === 'en' ? (project.enArchitecture || 'No content.') : (project.architecture || 'Sin contenido.')}</p>
+                
+                {/* ERD Diagram */}
+                {project.erdPath && (
+                  <div className="mt-6">
+                    <h3 className="text-lg font-semibold text-white mb-3">
+                      {lang === 'en' ? 'Entity Relationship Diagram (ERD)' : 'Diagrama Entidad-Relación (ERD)'}
+                    </h3>
+                    <div className="border rounded-lg overflow-hidden bg-white">
+                      <img src={project.erdPath} alt={`${project.name} ERD`} className="w-full h-auto" />
+                    </div>
+                  </div>
+                )}
               </div>
             )}
             {activeTab === 'snippets' && (

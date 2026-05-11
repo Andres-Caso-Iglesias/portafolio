@@ -17,7 +17,7 @@ const REQUIRED_HEADERS: SecurityHeader[] = [
 
 interface AuditResult {
   header: string;
-  status: 'pass' | 'fail' | 'missing';
+  status: string;
   currentValue?: string;
 }
 
@@ -36,9 +36,11 @@ export function auditSecurityHeaders(url: string): Promise<AuditResult[]> {
           ? value.includes(header.expectedValue)
           : value.length > 0;
         
+        const resultStatus = pass ? 'pass' : 'fail';
+        
         return { 
           header: header.name, 
-          status: pass ? 'pass' : 'fail',
+          status: resultStatus,
           currentValue: value 
         };
       });

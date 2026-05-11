@@ -1,42 +1,62 @@
-import { IsEmail, IsNotEmpty, IsString, Length, Matches } from 'class-validator';
+/**
+ * SHOWCASE: NestJS DTO Validation Schema
+ * ================================
+ * Conceptual type definitions for Portfolio showcase.
+ * 
+ * In a production NestJS project:
+ * 1. npm install class-validator class-transformer
+ * 2. Apply decorators to validate incoming data
+ * 3. Use ValidationPipe in controller
+ */
 
-export class CreateJobOfferDto {
-  @IsNotEmpty({ message: 'El título es obligatorio' })
-  @IsString()
-  @Length(5, 100, { message: 'El título debe tener entre 5 y 100 caracteres' })
+type ValidationRule = {
+  message: string;
+  // Additional rule options (e.g., { min: 5, max: 100 })
+  [key: string]: unknown;
+};
+
+// ============================================================
+// CreateJobOfferDto Schema
+// ============================================================
+/**
+ * title: Required, string, 5-100 chars
+ * - @IsNotEmpty()
+ * - @IsString()
+ * - @Length(5, 100)
+ */
+interface CreateJobOfferDto {
   title: string;
-
-  @IsNotEmpty({ message: 'La descripción es obligatoria' })
-  @IsString()
-  @Length(20, 2000, { message: 'La descripción debe tener entre 20 y 2000 caracteres' })
   description: string;
-
-  @IsNotEmpty({ message: 'La empresa es obligatoria' })
-  @IsString()
-  @Length(2, 100, { message: 'El nombre de la empresa debe tener entre 2 y 100 caracteres' })
   company: string;
-
-  @IsEmail({}, { message: 'Debe proporcionar un email válido' })
   contactEmail: string;
-
-  @Matches(/^\+?[\d\s\-\(\)]{10,20}$/, { message: 'Formato de teléfono no válido' })
   contactPhone?: string;
-
-  @IsNotEmpty({ message: 'La ubicación es obligatoria' })
-  @IsString()
   location: string;
-
-  @IsString()
-  @Length(0, 500, { message: 'Los requisitos no pueden superar los 500 caracteres' })
   requirements?: string;
-
-  @IsString()
-  @Length(0, 500, { message: 'Los beneficios no pueden superar los 500 caracteres' })
   benefits?: string;
 }
 
-export class UpdateJobOfferDto extends PartialType(CreateJobOfferDto) {
-  @IsOptional()
-  @IsBoolean()
+// ============================================================
+// UpdateJobOfferDto Schema
+// ============================================================
+/**
+ * Partial of CreateJobOfferDto + isActive flag
+ */
+interface UpdateJobOfferDto extends Partial<CreateJobOfferDto> {
   isActive?: boolean;
 }
+
+// ============================================================
+// NestJS Controller Usage
+// ============================================================
+/*
+  @Post()
+  @UsePipes(new ValidationPipe({ whitelist: true }))
+  create(@Body() dto: CreateJobOfferDto) {
+    return this.jobOffersService.create(dto);
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() dto: UpdateJobOfferDto) {
+    return this.jobOffersService.update(id, dto);
+  }
+*/

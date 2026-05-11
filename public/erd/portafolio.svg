@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420">
+  <rect width="800" height="420" fill="#0f172a"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" fill="#e2e8f0" font-size="22" font-weight="bold">Portafolio Profesional - Diagrama Entidad-Relación</text>
+  
+  <!-- Entity: Perfil (Center) -->
+  <rect x="300" y="70" width="200" height="90" rx="6" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+  <text x="400" y="95" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="bold">Perfil</text>
+  <line x1="300" y1="110" x2="500" y2="110" stroke="#475569"/>
+  <text x="310" y="130" fill="#94a3b8" font-size="12">- id: UUID (PK)</text>
+  <text x="310" y="148" fill="#94a3b8" font-size="12">- nombre: String</text>
+  
+  <!-- Child Entities (aligned in a row) -->
+  
+  <!-- Entity: Experiencia -->
+  <rect x="50" y="220" width="160" height="100" rx="6" fill="#1e293b" stroke="#22c55e" stroke-width="2"/>
+  <text x="130" y="245" text-anchor="middle" fill="#22c55e" font-size="14" font-weight="bold">Experiencia</text>
+  <line x1="50" y1="260" x2="210" y2="260" stroke="#475569"/>
+  <text x="60" y="280" fill="#94a3b8" font-size="12">- id: UUID (PK)</text>
+  <text x="60" y="298" fill="#94a3b8" font-size="12">- id_perfil: FK</text>
+  <text x="60" y="316" fill="#94a3b8" font-size="12">- empresa: String</text>
+  
+  <!-- Entity: Proyecto -->
+  <rect x="235" y="220" width="160" height="110" rx="6" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+  <text x="315" y="245" text-anchor="middle" fill="#f59e0b" font-size="14" font-weight="bold">Proyecto</text>
+  <line x1="235" y1="260" x2="395" y2="260" stroke="#475569"/>
+  <text x="245" y="280" fill="#94a3b8" font-size="12">- id: UUID (PK)</text>
+  <text x="245" y="298" fill="#94a3b8" font-size="12">- id_perfil: FK</text>
+  <text x="245" y="316" fill="#94a3b8" font-size="12">- nombre: String</text>
+  
+  <!-- Entity: Habilidad -->
+  <rect x="420" y="220" width="160" height="90" rx="6" fill="#1e293b" stroke="#ec4899" stroke-width="2"/>
+  <text x="500" y="245" text-anchor="middle" fill="#ec4899" font-size="14" font-weight="bold">Habilidad</text>
+  <line x1="420" y1="260" x2="580" y2="260" stroke="#475569"/>
+  <text x="430" y="280" fill="#94a3b8" font-size="12">- id: UUID (PK)</text>
+  <text x="430" y="298" fill="#94a3b8" font-size="12">- id_perfil: FK</text>
+  <text x="430" y="316" fill="#94a3b8" font-size="12">- nombre: String</text>
+  
+  <!-- Entity: Educacion -->
+  <rect x="605" y="220" width="160" height="90" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="685" y="245" text-anchor="middle" fill="#8b5cf6" font-size="14" font-weight="bold">Educacion</text>
+  <line x1="605" y1="260" x2="765" y2="260" stroke="#475569"/>
+  <text x="615" y="280" fill="#94a3b8" font-size="12">- id: UUID (PK)</text>
+  <text x="615" y="298" fill="#94a3b8" font-size="12">- id_perfil: FK</text>
+  <text x="615" y="316" fill="#94a3b8" font-size="12">- titulo: String</text>
+  
+  <!-- Relationships (vertical from Perfil to each child) -->
+  <!-- Perfil -> Experiencia -->
+  <line x1="130" y1="160" x2="130" y2="220" stroke="#94a3b8" stroke-width="2"/>
+  <text x="120" y="195" text-anchor="middle" fill="#94a3b8" font-size="10">1:N</text>
+  
+  <!-- Perfil -> Proyecto -->
+  <line x1="315" y1="160" x2="315" y2="220" stroke="#94a3b8" stroke-width="2"/>
+  <text x="305" y="195" text-anchor="middle" fill="#94a3b8" font-size="10">1:N</text>
+  
+  <!-- Perfil -> Habilidad -->
+  <line x1="500" y1="160" x2="500" y2="220" stroke="#94a3b8" stroke-width="2"/>
+  <text x="490" y="195" text-anchor="middle" fill="#94a3b8" font-size="10">1:N</text>
+  
+  <!-- Perfil -> Educacion -->
+  <line x1="685" y1="160" x2="685" y2="220" stroke="#94a3b8" stroke-width="2"/>
+  <text x="675" y="195" text-anchor="middle" fill="#94a3b8" font-size="10">1:N</text>
+  
+  <!-- Legend -->
+  <rect x="50" y="360" width="700" height="40" rx="4" fill="#1e293b"/>
+  <text x="60" y="380" fill="#94a3b8" font-size="11">Leyenda:</text>
+  <rect x="110" y="372" width="10" height="10" fill="#3b82f6"/> <text x="128" y="380" fill="#94a3b8" font-size="11">Entidad</text>
+  <circle cx="190" cy="377" r="5" fill="none" stroke="#94a3b8" stroke-width="2"/> <text x="205" y="380" fill="#94a3b8" font-size="11">PK</text>
+  <circle cx="240" cy="377" r="5" fill="none" stroke="#94a3b8" stroke-width="2"/> <text x="255" y="380" fill="#94a3b8" font-size="11">FK</text>
+</svg>

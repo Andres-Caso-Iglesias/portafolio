@@ -103,27 +103,59 @@ export default function Home() {
       <section className="py-20 px-6 bg-slate-800">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold mb-8 text-white">{t(lang, 'home.skillsTitle')}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {skills.map((skill) => (
-              <div
-                key={skill.category}
-                className="bg-slate-900 rounded-lg p-6 border border-slate-700"
-              >
-                <h3 className="text-lg font-semibold text-blue-400 mb-4">
-                  {skill.category}
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {skill.items.map((item) => (
-                    <span
-                      key={item}
-                      className="px-3 py-1 bg-slate-700 rounded-full text-sm text-slate-200"
-                    >
-                      {item}
-                    </span>
-                  ))}
+          
+          {/* Ciberseguridad */}
+          <div className="mb-8">
+            <h3 className="text-xl font-semibold text-teal-400 mb-4">Ciberseguridad</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {skills.filter(s => ['OSINT', 'Sistemas Operativos', 'Redes'].includes(s.category)).map((skill) => (
+                <div
+                  key={skill.category}
+                  className="bg-slate-900 rounded-lg p-6 border border-slate-700"
+                >
+                  <h4 className="text-lg font-semibold text-blue-400 mb-4">
+                    {skill.category}
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {skill.items.map((item) => (
+                      <span
+                        key={item}
+                        className="px-3 py-1 bg-slate-700 rounded-full text-sm text-slate-200"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          </div>
+          
+          {/* Desarrollo */}
+          <div>
+            <h3 className="text-xl font-semibold text-teal-400 mb-4">Desarrollo</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {skills.filter(s => !['OSINT', 'Sistemas Operativos', 'Redes'].includes(s.category)).map((skill) => (
+                <div
+                  key={skill.category}
+                  className="bg-slate-900 rounded-lg p-6 border border-slate-700"
+                >
+                  <h4 className="text-lg font-semibold text-blue-400 mb-4">
+                    {skill.category}
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {skill.items.map((item) => (
+                      <span
+                        key={item}
+                        className="px-3 py-1 bg-slate-700 rounded-full text-sm text-slate-200"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

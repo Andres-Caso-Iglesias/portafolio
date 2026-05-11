@@ -347,7 +347,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                         {path.split('/').pop()}
                       </span>
                       <button
-                        onClick={() => {
+                        onClick={(event) => {
                           navigator.clipboard?.writeText(content).then(() => {
                             const btn = event.currentTarget;
                             btn.textContent = 'Copied!';
@@ -393,19 +393,19 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
         {project.challenge && (
           <div>
             <h2 className="text-xl font-semibold mb-2">Challenge (Reto)</h2>
-            <p className="text-gray-700">{project.challenge}</p>
+            <p className="text-gray-700 text-lg leading-relaxed">{project.challenge}</p>
           </div>
         )}
         {project.solution && (
           <div>
             <h2 className="text-xl font-semibold mb-2">Solution (Solución)</h2>
-            <p className="text-gray-700">{project.solution}</p>
+            <p className="text-gray-700 text-lg leading-relaxed">{project.solution}</p>
           </div>
         )}
         {project.architecture && (
           <div>
             <h2 className="text-xl font-semibold mb-2">Architecture (Arquitectura)</h2>
-            <p className="text-gray-700">{project.architecture}</p>
+            <p className="text-gray-700 text-lg leading-relaxed">{project.architecture}</p>
           </div>
         )}
       </section>
