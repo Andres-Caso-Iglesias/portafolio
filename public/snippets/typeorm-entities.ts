@@ -1,7 +1,8 @@
+// @ts-nocheck - Display-only code example
 // Entidades TypeORM del proyecto Bolsa de Empleo - Mapeo relacional
 // Patron: 1:1 herencia de perfiles (User -> AspirantProfile / CompanyProfile)
 
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany, JoinColumn, ManyToOne } from 'typeorm';
+// import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany, JoinColumn, ManyToOne } from 'typeorm';
 
 export enum UserRole {
   ASPIRANTE = 'aspirante',

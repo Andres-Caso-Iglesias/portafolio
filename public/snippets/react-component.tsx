@@ -1,3 +1,4 @@
+// @ts-nocheck - Display-only code example
 // Ejemplo de componente React con TypeScript para el Portafolio Profesional
 // Demuestra uso de tipado estric y patrones de clean architecture
 

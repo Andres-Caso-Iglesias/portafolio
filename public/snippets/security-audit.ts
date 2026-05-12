@@ -1,3 +1,4 @@
+// @ts-nocheck - Display-only code example
 // Ejemplo de la arquitectura de checkers en NestJS - HeaderChecker interface + ScoreCalculator
 // Patron de diseno: Strategy con 15 implementaciones de HeaderChecker
 

@@ -1,7 +1,8 @@
+// @ts-nocheck - Display-only code example
 // DTOs de autenticación con class-validator - NestJS 11 + Passport JWT
 // Validación estricta en la capa de entrada con decoradores
 
-import { IsEmail, IsString, IsNotEmpty, MinLength, IsEnum, IsOptional } from 'class-validator';
+// import { IsEmail, IsString, IsNotEmpty, MinLength, IsEnum, IsOptional } from 'class-validator';
 
 export enum UserRole {
   ASPIRANTE = 'aspirante',
