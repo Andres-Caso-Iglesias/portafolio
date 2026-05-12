@@ -61,6 +61,31 @@ export class JobOffer {
   @ManyToOne(() => CompanyProfile, (c) => c.offers)
   company: CompanyProfile;
 }`,
+  '/snippets/bancal-entity.java': `// Entidad JPA Bancal - Spring Boot 3.2 + MySQL
+// Relaciones: N:1 con Huerto, 1:1 con Semilla
+
+@Entity
+@Table(name = "bancales")
+@Getter @Setter
+public class Bancal {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String nombre;
+
+    private String dimensiones;
+
+    @ManyToOne
+    @JoinColumn(name = "huerto_id", nullable = false)
+    private Huerto huerto;
+
+    @OneToOne
+    @JoinColumn(name = "semilla_id")
+    private Semilla semilla;
+}`,
   '/snippets/java-record-entity.java': `// Entidad JPA con Lombok - FoodTruck entity
 // Spring Boot 3.2 + MySQL + @Getter/@Setter
 
