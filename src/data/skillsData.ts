@@ -7,7 +7,7 @@ export const skills: SkillCategory[] = [
   // Ciberseguridad
   {
     category: "OSINT",
-    items: ["Margaret", "Sherlock", "Whatsmyname", "OSINTgram", "OSINT-Framework", "Google Dorks"],
+    items: ["Maigret", "Sherlock", "Whatsmyname", "OSINT-Framework", "Google Dorks"],
   },
   {
     category: "Sistemas Operativos",
@@ -15,7 +15,7 @@ export const skills: SkillCategory[] = [
   },
   {
     category: "Redes",
-    items: ["Firewalls", "VPN", "Wireshark", "TCP/IP"],
+    items: ["Firewalls", "VPN", "Wireshark", "TCP/IP", "NMAP"],
   },
   // Desarrollo - Lenguajes
   {
