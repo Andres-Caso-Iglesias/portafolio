@@ -107,7 +107,7 @@ Puedes ver el detalle tecnico de cada proyecto en las siguientes paginas o hacie
 - [FoodBites](https://andres-caso-iglesias.vercel.app/projects/foodbites) - Backend Java Spring Boot + MySQL, diagrama ER disponible
 - [Gestor Huertos Urbanos](https://andres-caso-iglesias.vercel.app/projects/gestor-huertos) - Java Spring Boot + MySQL
 - [Portafolio Profesional](https://andres-caso-iglesias.vercel.app/projects/portafolio-profesional) - Next.js 16 + React 19 + TypeScript
-- [Auditoria de Seguridad](https://andres-caso-iglesias.vercel.app/projects/auditoria-seguridad) - Next.js 16 + TypeScript
+- [Auditoria de Seguridad](https://andres-caso-iglesias.vercel.app/projects/auditoria-web) - NestJS 11 + React 19 + TypeScript
 
 ### Estrategia de Visualizacion Tecnica
 
@@ -124,7 +124,7 @@ Proyectos con contenido disponible:
 | FoodBites | foodbites.svg | react-component.tsx | /projects/foodbites |
 | Gestor Huertos | gestor-huertos.svg | - | /projects/gestor-huertos |
 | Portafolio | portafolio.svg | - | /projects/portafolio-profesional |
-| Auditoria Seguridad | auditoria-seguridad.svg | security-audit.ts | /projects/auditoria-seguridad |
+| Auditoria Seguridad | auditoria-seguridad.svg | security-audit.ts | /projects/auditoria-web |
 
 ---
 

@@ -134,7 +134,7 @@ export function cn(...inputs: ClassValue[]) {
 
 ### 4. Proyectos (components/sections/ProjectsSection.tsx)
 - Datos separados en `src/data/projectsData.ts`
-- 5 proyectos: Bolsa_Empleo, FoodBites, Gestor_Huertos_Urbanos, Portafolio_Profesional, Auditoria_Seguridad
+- 5 proyectos: Bolsa_Empleo, FoodBites, Gestor_Huertos_Urbanos, Portafolio_Profesional, Auditoria_Web
 - Modal con pestanas: Reto, Solucion, Arquitectura, Snippets
 - Pagina de detalle individual en `/projects/[slug]`
 
@@ -158,7 +158,7 @@ Cada proyecto muestra:
 | FoodBites | foodbites | /erd/foodbites.svg | react-component.tsx |
 | Gestor Huertos Urbanos | gestor-huertos | /erd/gestor-huertos.svg | - |
 | Portafolio Profesional | portafolio-profesional | /erd/portafolio.svg | - |
-| Auditoria de Seguridad | auditoria-seguridad | /erd/auditoria-seguridad.svg | security-audit.ts |
+| Auditoria de Seguridad | auditoria-web | /erd/auditoria-seguridad.svg | security-audit.ts |
 
 ## Informacion del Usuario
 

@@ -238,42 +238,59 @@ export function useProjects() {
   const getProjectBySlug = (slug: string) => { /* ... */ };
   return { getProjects, getProjectBySlug };
 }`,
-  '/snippets/security-audit.ts': `// Ejemplo de auditoría de seguridad en Next.js - Verificación de headers
-// Implementa análisis de respuestas HTTP y detección de patrones inseguros
+  '/snippets/security-audit.ts': `// HeaderChecker interface + CspChecker + ScoreCalculator
+// NestJS 11 - Patron Strategy con 15 implementaciones
 
-interface SecurityHeader {
+export type HeaderSeverity = 'critical' | 'high' | 'medium' | 'low';
+
+export interface HeaderResult {
+  header: string;
+  present: boolean;
+  grade: number;
+  severity: HeaderSeverity;
+  weight: number;
+  finding: string;
+  recommendation: string;
+}
+
+export interface HeaderChecker {
   name: string;
-  expectedValue: string;
-  required: boolean;
+  severity: HeaderSeverity;
+  weight: number;
+  analyze(value: string | undefined): HeaderResult;
 }
 
-const REQUIRED_HEADERS: SecurityHeader[] = [
-  { name: 'Strict-Transport-Security', expectedValue: 'max-age=31536000; includeSubDomains', required: true },
-  { name: 'Content-Security-Policy', expectedValue: "default-src 'self'", required: true },
-  { name: 'X-Content-Type-Options', expectedValue: 'nosniff', required: true },
-  { name: 'X-Frame-Options', expectedValue: 'DENY', required: true },
-];
-
-export function auditSecurityHeaders(url: string): Promise<AuditResult[]> {
-  return fetch(url)
-    .then(response => {
-      return REQUIRED_HEADERS.map(header => {
-        const value = response.headers.get(header.name);
-        if (!value) return { header: header.name, status: 'missing' };
-        const pass = header.required ? value.includes(header.expectedValue) : value.length > 0;
-        return { header: header.name, status: pass ? 'pass' : 'fail', currentValue: value };
-      });
-    });
+// ScoreCalculator: weighted scoring (max 165pts)
+export class ScoreCalculator {
+  calculate(headers: HeaderResult[]) {
+    const total = headers.reduce((s, h) => s + h.weight * h.grade, 0);
+    const score = Math.round((total / 165) * 100);
+    const grade = score >= 90 ? 'A' : score >= 80 ? 'B'
+                : score >= 70 ? 'C' : score >= 60 ? 'D'
+                : score >= 50 ? 'E' : 'F';
+    return { score, grade };
+  }
 }
 
-export function detectXSS(input: string): boolean {
-  const xssPatterns = [/<script/i, /javascript:/i, /on\\w+\\s*=/i, /expression\s*\(/i];
-  return xssPatterns.some(pattern => pattern.test(input));
-}
+// CspChecker: critical severity, weight 25
+export class CspChecker implements HeaderChecker {
+  readonly name = 'CSP';
+  readonly severity: HeaderSeverity = 'critical';
+  readonly weight = 25;
 
-export function detectSQLInjection(input: string): boolean {
-  const sqlPatterns = [/(\b|\W)(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|EXEC|EXECUTE)\\b/i, /'/, /--/, /\\/\\*|\\*\\//];
-  return sqlPatterns.some(pattern => pattern.test(input));
+  analyze(value: string | undefined): HeaderResult {
+    if (!value) return {
+      header: 'Content-Security-Policy', present: false, value: null,
+      grade: 0, severity: this.severity, weight: this.weight,
+      finding: 'CSP missing — vulnerable to XSS',
+      recommendation: "default-src 'self'; script-src 'self'; object-src 'none'",
+    };
+    const hasUE = /'unsafe-eval'/.test(value);
+    const hasUI = /'unsafe-inline'/.test(value);
+    let grade = hasUI || hasUE ? 0.4 : /\bdefault-src\s/.test(value) ? 0.8 : 0.3;
+    if (/\bdefault-src\s/.test(value) && /\bscript-src\s/.test(value) && /\bobject-src\s/.test(value) && !hasUI && !hasUE) grade = 1.0;
+    return { header: 'Content-Security-Policy', present: true, value, grade, severity: this.severity, weight: this.weight, finding: 'CSP present', recommendation: 'Review CSP policy' };
+  }
 }`,
 };
 

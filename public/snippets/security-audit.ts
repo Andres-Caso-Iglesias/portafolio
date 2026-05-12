@@ -1,76 +1,97 @@
-// Ejemplo de auditoría de seguridad en Next.js - Verificación de headers
-// Implementa análisis de respuestas HTTP y detección de patrones inseguros
+// Ejemplo de la arquitectura de checkers en NestJS - HeaderChecker interface + ScoreCalculator
+// Patron de diseno: Strategy con 15 implementaciones de HeaderChecker
 
-interface SecurityHeader {
-  name: string;
-  expectedValue: string;
-  required: boolean;
-}
+// --- Common Module: Interfaces compartidas ---
 
-const REQUIRED_HEADERS: SecurityHeader[] = [
-  { name: 'Strict-Transport-Security', expectedValue: 'max-age=31536000; includeSubDomains', required: true },
-  { name: 'Content-Security-Policy', expectedValue: "default-src 'self'", required: true },
-  { name: 'X-Content-Type-Options', expectedValue: 'nosniff', required: true },
-  { name: 'X-Frame-Options', expectedValue: 'DENY', required: true },
-  { name: 'X-XSS-Protection', expectedValue: '1; mode=block', required: false },
-];
+export type HeaderSeverity = 'critical' | 'high' | 'medium' | 'low';
 
-interface AuditResult {
+export interface HeaderResult {
   header: string;
-  status: string;
-  currentValue?: string;
+  present: boolean;
+  value: string | null;
+  grade: number;
+  severity: HeaderSeverity;
+  weight: number;
+  finding: string;
+  recommendation: string;
 }
 
-// Función para auditar headers de seguridad
-export function auditSecurityHeaders(url: string): Promise<AuditResult[]> {
-  return fetch(url)
-    .then(response => {
-      return REQUIRED_HEADERS.map(header => {
-        const value = response.headers.get(header.name);
-        
-        if (!value) {
-          return { header: header.name, status: 'missing' };
-        }
-        
-        const pass = header.required 
-          ? value.includes(header.expectedValue)
-          : value.length > 0;
-        
-        const resultStatus = pass ? 'pass' : 'fail';
-        
-        return { 
-          header: header.name, 
-          status: resultStatus,
-          currentValue: value 
-        };
-      });
-    })
-    .catch(error => {
-      throw new Error(`Audit failed: ${error.message}`);
-    });
+export interface HeaderChecker {
+  name: string;
+  severity: HeaderSeverity;
+  weight: number;
+  analyze(value: string | undefined): HeaderResult;
 }
 
-// Función para verificar patrones XSS en inputs
-export function detectXSS(input: string): boolean {
-  const xssPatterns = [
-    /<script/i,
-    /javascript:/i,
-    /on\w+\s*=/i,
-    /expression\s*\(/i,
-  ];
-  
-  return xssPatterns.some(pattern => pattern.test(input));
+// --- Analyzer Module: Score Calculator ---
+
+export class ScoreCalculator {
+  private readonly MAX_POSSIBLE_SCORE = 165;
+  // critical=25, high=15, medium=10, low=5 = 165 total
+
+  calculate(headers: HeaderResult[]): { score: number; grade: string } {
+    const totalWeightedScore = headers.reduce(
+      (sum, h) => sum + h.weight * h.grade,
+      0,
+    );
+    const score = Math.round((totalWeightedScore / this.MAX_POSSIBLE_SCORE) * 100);
+    const grade = score >= 90 ? 'A' : score >= 80 ? 'B'
+                : score >= 70 ? 'C' : score >= 60 ? 'D'
+                : score >= 50 ? 'E' : 'F';
+    return { score, grade };
+  }
 }
 
-// Función para detectar inyecciones SQL
-export function detectSQLInjection(input: string): boolean {
-  const sqlPatterns = [
-    /(\b|\W)(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|EXEC|EXECUTE)\b/i,
-    /(\b|\W)(UNION|ORDER BY|GROUP BY)\b/i,
-    /'/,
-    /--/,
-    /\/\*|\*\//,
-  ];
-  
-  return sqlPatterns.some(pattern => pattern.test(input));
+// --- Analyzer Module: CSP Checker ---
+
+export class CspChecker implements HeaderChecker {
+  readonly name = 'CSP';
+  readonly severity: HeaderSeverity = 'critical';
+  readonly weight = 25;
+
+  analyze(value: string | undefined): HeaderResult {
+    if (!value) {
+      return {
+        header: 'Content-Security-Policy',
+        present: false,
+        value: null,
+        expected: 'Restrictive policy without unsafe-inline or unsafe-eval',
+        grade: 0,
+        severity: this.severity,
+        weight: this.weight,
+        finding: 'Content-Security-Policy header is missing — site is vulnerable to XSS',
+        recommendation: "Implement a strict CSP: default-src 'self'; script-src 'self'; object-src 'none'",
+      };
+    }
+
+    const hasUnsafeInline = /'unsafe-inline'/.test(value);
+    const hasUnsafeEval = /'unsafe-eval'/.test(value);
+    const hasDefaultSrc = /\bdefault-src\s/.test(value);
+    const hasScriptSrc = /\bscript-src\s/.test(value);
+    const hasObjectSrc = /\bobject-src\s/.test(value);
+
+    let grade = 0.3;
+    if (hasDefaultSrc) grade = 0.5;
+    if (hasScriptSrc) grade = 0.7;
+    if (hasDefaultSrc && (hasScriptSrc || hasObjectSrc)) grade = 0.8;
+    if (hasUnsafeInline) grade = Math.min(grade, 0.4);
+    if (hasUnsafeEval) grade = Math.min(grade, 0.4);
+    if (!hasUnsafeInline && !hasUnsafeEval && hasDefaultSrc && hasScriptSrc && hasObjectSrc) grade = 1.0;
+
+    return {
+      header: 'Content-Security-Policy',
+      present: true,
+      value,
+      expected: 'Restrictive policy without unsafe-inline or unsafe-eval',
+      grade,
+      severity: this.severity,
+      weight: this.weight,
+      finding: hasUnsafeInline
+        ? 'CSP is present but contains unsafe-inline'
+        : 'CSP is present',
+      recommendation: hasUnsafeInline
+        ? 'Remove unsafe directives. Use nonces or hashes for inline scripts.'
+        : 'Review CSP policy and consider adding reporting via report-uri or report-to.',
+    };
+  }
 }
