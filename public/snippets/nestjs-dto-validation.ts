@@ -1,62 +1,47 @@
-/**
- * SHOWCASE: NestJS DTO Validation Schema
- * ================================
- * Conceptual type definitions for Portfolio showcase.
- * 
- * In a production NestJS project:
- * 1. npm install class-validator class-transformer
- * 2. Apply decorators to validate incoming data
- * 3. Use ValidationPipe in controller
- */
+// DTOs de autenticación con class-validator - NestJS 11 + Passport JWT
+// Validación estricta en la capa de entrada con decoradores
 
-type ValidationRule = {
-  message: string;
-  // Additional rule options (e.g., { min: 5, max: 100 })
-  [key: string]: unknown;
-};
+import { IsEmail, IsString, IsNotEmpty, MinLength, IsEnum, IsOptional } from 'class-validator';
 
-// ============================================================
-// CreateJobOfferDto Schema
-// ============================================================
-/**
- * title: Required, string, 5-100 chars
- * - @IsNotEmpty()
- * - @IsString()
- * - @Length(5, 100)
- */
-interface CreateJobOfferDto {
-  title: string;
-  description: string;
-  company: string;
-  contactEmail: string;
-  contactPhone?: string;
-  location: string;
-  requirements?: string;
-  benefits?: string;
+export enum UserRole {
+  ASPIRANTE = 'aspirante',
+  EMPRESA = 'empresa',
 }
 
-// ============================================================
-// UpdateJobOfferDto Schema
-// ============================================================
-/**
- * Partial of CreateJobOfferDto + isActive flag
- */
-interface UpdateJobOfferDto extends Partial<CreateJobOfferDto> {
-  isActive?: boolean;
+// Register DTO: validación de email + password + rol + nombre de empresa
+export class RegisterDto {
+  @IsNotEmpty()
+  @IsEmail()
+  email: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @MinLength(6)
+  password: string;
+
+  @IsNotEmpty()
+  @IsEnum(UserRole)
+  role: UserRole;
+
+  @IsOptional()
+  @IsString()
+  companyName?: string;
 }
 
-// ============================================================
-// NestJS Controller Usage
-// ============================================================
-/*
-  @Post()
-  @UsePipes(new ValidationPipe({ whitelist: true }))
-  create(@Body() dto: CreateJobOfferDto) {
-    return this.jobOffersService.create(dto);
-  }
+// Login DTO: solo email + password
+export class LoginDto {
+  @IsNotEmpty()
+  @IsEmail()
+  email: string;
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() dto: UpdateJobOfferDto) {
-    return this.jobOffersService.update(id, dto);
-  }
-*/
+  @IsNotEmpty()
+  @IsString()
+  password: string;
+}
+
+// Uso en AuthController:
+// @Post('register')
+// @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+// async register(@Body() dto: RegisterDto) {
+//   return this.authService.register(dto);
+// }

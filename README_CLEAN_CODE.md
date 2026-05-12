@@ -105,7 +105,7 @@ Cada proyecto tiene un diagrama Entidad-Relacion en formato SVG:
 #### Code Snippets
 Fragmentos de codigo representativos:
 - `public/snippets/nestjs-dto-validation.ts`
-- `public/snippets/postgres-index-optimization.sql`
+- `public/snippets/typeorm-entities.ts`
 - `public/snippets/react-component.tsx`
 - `public/snippets/security-audit.ts`
 

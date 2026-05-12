@@ -1,28 +1,32 @@
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
+import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.Setter;
+
+// Entidad JPA con Lombok - Spring Boot 3.2 + MySQL
+// Patron: @Entity con @Getter/@Setter en lugar de Records
 
 @Entity
-@Table(name = "pedidos")
+@Table(name = "food_trucks")
 @Getter
-@ToString
-@EqualsAndHashCode
-@NoArgsConstructor
-@AllArgsConstructor
-public record Pedido(
-        @Id
-        Long id,
-        String producto,
-        int cantidad,
-        Double precioTotal,
-        String estado,
-        String clienteId
-) {
-    // Records are immutable by default, which ensures thread-safety and prevents accidental state changes
-    // Additional business logic can be added in companion objects or service layer
+@Setter
+public class FoodTruck {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String nombre;
+
+    @Column(name = "tipo_cocina")
+    private String tipoCocina;
+
+    @Column(name = "ubicacion_actual")
+    private String ubicacionActual; // Formato: "ciudad, calle"
 }
+
+// --- Otras entidades del proyecto ---
+// Menu: @ManyToOne -> FoodTruck, atributos: nombre, descripcion, precio, imagenUrl
+// Pedido: @ManyToOne -> Usuario + FoodTruck, atributos: items, montoTotal, estado
+// Usuario: atributos: nombre, email, password, ubicacion
+// Notificacion: @ManyToOne -> Usuario, atributos: mensaje, fechaEnvio

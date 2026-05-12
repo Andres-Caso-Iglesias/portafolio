@@ -75,9 +75,11 @@ portfolio/
 │   │   └── auditoria-seguridad.svg
 │   └── snippets/                # Fragmentos de codigo
 │       ├── nestjs-dto-validation.ts
-│       ├── postgres-index-optimization.sql
+│       ├── typeorm-entities.ts
 │       ├── react-component.tsx
-│       └── security-audit.ts
+│       ├── security-audit.ts
+│       ├── java-record-entity.java
+│       └── spring-boot-transactional-service.java
 ├── package.json
 ├── tsconfig.json
 ├── next.config.ts
@@ -154,8 +156,8 @@ Cada proyecto muestra:
 
 | Proyecto | slug | erdPath | snippetPaths |
 |----------|------|---------|--------------|
-| Bolsa de Empleo | bolsa-empleo | /erd/bolsa-empleo.svg | nestjs-dto-validation.ts, postgres-index-optimization.sql |
-| FoodBites | foodbites | /erd/foodbites.svg | react-component.tsx |
+| Bolsa de Empleo | bolsa-empleo | /erd/bolsa-empleo.svg | nestjs-dto-validation.ts, typeorm-entities.ts |
+| FoodBites | foodbites | /erd/foodbites.svg | java-record-entity.java, spring-boot-transactional-service.java |
 | Gestor Huertos Urbanos | gestor-huertos | /erd/gestor-huertos.svg | - |
 | Portafolio Profesional | portafolio-profesional | /erd/portafolio.svg | - |
 | Auditoria de Seguridad | auditoria-web | /erd/auditoria-seguridad.svg | security-audit.ts |

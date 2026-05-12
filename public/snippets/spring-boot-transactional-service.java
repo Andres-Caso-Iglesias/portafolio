@@ -1,68 +1,70 @@
+import com.foodbites.truck_bites.dto.FoodTruckDTO;
+import com.foodbites.truck_bites.model.FoodTruck;
+import com.foodbites.truck_bites.repository.FoodTruckRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+// Servicio con inyeccion por constructor (no @Autowired)
+// Patron: @Service + @Transactional + constructor injection
 
 @Service
-public class PedidoService {
+public class FoodTruckService {
 
-    @Autowired
-    private PedidoRepository pedidoRepository;
+    private final FoodTruckRepository foodTruckRepository;
+
+    // Constructor injection - mejor practica que @Autowired
+    public FoodTruckService(FoodTruckRepository foodTruckRepository) {
+        this.foodTruckRepository = foodTruckRepository;
+    }
 
     @Transactional
-    public Pedido crearPedido(Pedido pedido) {
-        // Validaciones de negocio antes de persistir
-        validarProducto(pedido.getProducto());
-        validarCantidad(pedido.getCantidad());
-        
-        // Lógica de negocio: calcular precio total basado en descuentos por volumen
-        Double precioConDescuento = calcularPrecioConDescuento(
-            pedido.getProducto(), 
-            pedido.getCantidad()
-        );
-        
-        // Crear entidad inmutable con el precio calculado
-        Pedido pedidoConPrecio = new Pedido(
-            null, 
-            pedido.getProducto(), 
-            pedido.getCantidad(), 
-            precioConDescuento,
-            "PENDIENTE",
-            pedido.getClienteId()
-        );
-        
-        return pedidoRepository.save(pedidoConPrecio);
+    public FoodTruckDTO crearFoodTruck(FoodTruckDTO dto) {
+        FoodTruck entity = new FoodTruck();
+        entity.setNombre(dto.getNombre());
+        entity.setTipoCocina(dto.getTipoCocina());
+        entity.setUbicacionActual(dto.getUbicacionActual());
+        entity = foodTruckRepository.save(entity);
+        return toDTO(entity);
     }
 
-    @Transactional(readOnly = true)
-    public Pedido obtenerPedidoPorId(Long id) {
-        return pedidoRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Pedido no encontrado"));
+    public List<FoodTruckDTO> obtenerFoodTrucks() {
+        return foodTruckRepository.findAll()
+                .stream().map(this::toDTO).collect(Collectors.toList());
     }
 
-    private void validarProducto(String producto) {
-        if (producto == null || producto.trim().isEmpty()) {
-            throw new IllegalArgumentException("El producto no puede estar vacío");
-        }
-        // Otras validaciones de producto...
+    public FoodTruckDTO obtenerFoodTruckPorId(Long id) {
+        return foodTruckRepository.findById(id)
+                .map(this::toDTO)
+                .orElseThrow(() -> new IllegalArgumentException(
+                    "FoodTruck no encontrado con ID: " + id));
     }
 
-    private void validarCantidad(int cantidad) {
-        if (cantidad <= 0) {
-            throw new IllegalArgumentException("La cantidad debe ser mayor que cero");
-        }
-        if (cantidad > 1000) {
-            throw new IllegalArgumentException("Cantidad excede el límite permitido por pedido");
-        }
+    @Transactional
+    public FoodTruckDTO actualizarFoodTruck(Long id, FoodTruckDTO dto) {
+        return foodTruckRepository.findById(id).map(entity -> {
+            if (dto.getNombre() != null) entity.setNombre(dto.getNombre());
+            if (dto.getTipoCocina() != null) entity.setTipoCocina(dto.getTipoCocina());
+            if (dto.getUbicacionActual() != null) entity.setUbicacionActual(dto.getUbicacionActual());
+            return toDTO(foodTruckRepository.save(entity));
+        }).orElseThrow(() -> new IllegalArgumentException("FoodTruck no encontrado"));
     }
 
-    private Double calcularPrecioConDescuento(String producto, int cantidad) {
-        // Lógica de descuentos por volumen
-        Double precioBase = obtenerPrecioBase(producto);
-        if (cantidad >= 100) {
-            return precioBase * 0.9; // 10% de descuento
-        } else if (cantidad >= 50) {
-            return precioBase * 0.95; // 5% de descuento
-        }
-        return precioBase;
+    public List<FoodTruckDTO> obtenerFoodTrucksCerca(String ciudad, String calle) {
+        return foodTruckRepository
+                .findByUbicacionActualContainingIgnoreCase(ciudad)
+                .stream()
+                .filter(ft -> calle == null || calle.isEmpty()
+                    || ft.getUbicacionActual().toLowerCase().contains(calle.toLowerCase()))
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    private FoodTruckDTO toDTO(FoodTruck entity) {
+        return new FoodTruckDTO(entity.getId(), entity.getNombre(),
+                entity.getTipoCocina(), entity.getUbicacionActual(), 0);
     }
 }

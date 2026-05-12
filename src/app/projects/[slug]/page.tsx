@@ -2,152 +2,123 @@ import { projects } from '@/data/projectsData';
 
 // Map of snippet paths to their actual content for display
 const snippetContents: Record<string, string> = {
-  '/snippets/nestjs-dto-validation.ts': `import { IsEmail, IsNotEmpty, IsString, Length, Matches } from 'class-validator';
+  '/snippets/nestjs-dto-validation.ts': `// DTOs con class-validator - NestJS 11 + Passport JWT
+// Validacion estricta con decoradores en la capa de entrada
 
-export class CreateJobOfferDto {
-  @IsNotEmpty({ message: 'El título es obligatorio' })
-  @IsString()
-  @Length(5, 100, { message: 'El título debe tener entre 5 y 100 caracteres' })
-  title: string;
+import { IsEmail, IsString, IsNotEmpty, MinLength, IsEnum, IsOptional } from 'class-validator';
 
-  @IsNotEmpty({ message: 'La descripción es obligatoria' })
-  @IsString()
-  @Length(20, 2000, { message: 'La descripción debe tener entre 20 y 2000 caracteres' })
-  description: string;
-
-  @IsNotEmpty({ message: 'La empresa es obligatoria' })
-  @IsString()
-  @Length(2, 100, { message: 'El nombre de la empresa debe tener entre 2 y 100 caracteres' })
-  company: string;
-
-  @IsEmail({}, { message: 'Debe proporcionar un email válido' })
-  contactEmail: string;
-
-  @Matches(/^\\+?[\\d\\s\\-\\(\\)]{10,20}$/, { message: 'Formato de teléfono no válido' })
-  contactPhone?: string;
-
-  @IsNotEmpty({ message: 'La ubicación es obligatoria' })
-  @IsString()
-  location: string;
-
-  @IsString()
-  @Length(0, 500, { message: 'Los requisitos no pueden superar los 500 caracteres' })
-  requirements?: string;
-
-  @IsString()
-  @Length(0, 500, { message: 'Los beneficios no pueden superar los 500 caracteres' })
-  benefits?: string;
+export enum UserRole {
+  ASPIRANTE = 'aspirante',
+  EMPRESA = 'empresa',
 }
 
-export class UpdateJobOfferDto extends PartialType(CreateJobOfferDto) {
-  @IsOptional()
-  @IsBoolean()
-  isActive?: boolean;
+export class RegisterDto {
+  @IsNotEmpty() @IsEmail() email: string;
+  @IsNotEmpty() @IsString() @MinLength(6) password: string;
+  @IsNotEmpty() @IsEnum(UserRole) role: UserRole;
+  @IsOptional() @IsString() companyName?: string;
+}
+
+export class LoginDto {
+  @IsNotEmpty() @IsEmail() email: string;
+  @IsNotEmpty() @IsString() password: string;
 }`,
-  '/snippets/postgres-index-optimization.sql': `-- Índices optimizados para alta concurrencia en tabla de ofertas de empleo
--- Índice compuesto para búsquedas frecuentes por ubicación y estado activo
-CREATE INDEX idx_job_offers_location_active ON job_offers (location, is_active) WHERE is_active = true;
+  '/snippets/typeorm-entities.ts': `// Entidades TypeORM - User + CompanyProfile + JobOffer
+// Patron: 1:1 inheritance + 1:N relations
 
--- Índice para búsqueda full-text en título y descripción
-CREATE INDEX idx_job_offers_search ON job_offers USING gin(to_tsvector('spanish', title || ' ' || description));
+export enum UserRole { ASPIRANTE = 'aspirante', EMPRESA = 'empresa' }
 
--- Índice para ordenación por fecha de creación (más recientes primero)
-CREATE INDEX idx_job_offers_created_at ON job_offers (created_at DESC);
+@Entity('users')
+export class User {
+  @PrimaryGeneratedColumn() id: number;
+  @Column({ length: 100, unique: true }) email: string;
+  @Column({ length: 255 }) password: string;
+  @Column({ type: 'enum', enum: UserRole }) role: UserRole;
 
--- Índice para evitar duplicados en empresa + título (dependiendo de requisitos de negocio)
-CREATE UNIQUE INDEX idx_job_offers_company_title_unique ON job_offers (company, title) WHERE is_active = true;`,
-  '/snippets/java-record-entity.java': `import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+  @OneToOne(() => CompanyProfile, (p) => p.user)
+  companyProfile: CompanyProfile;
+}
+
+@Entity('company_profiles')
+export class CompanyProfile {
+  @PrimaryGeneratedColumn() id: number;
+  @Column({ length: 255 }) companyName: string;
+  @Column({ unique: true }) email: string;
+  @Column({ type: 'text', nullable: true }) description: string;
+
+  @OneToOne(() => User, (u) => u.companyProfile, { onDelete: 'CASCADE' })
+  @JoinColumn() user: User;
+
+  @OneToMany(() => JobOffer, (o) => o.company)
+  offers: JobOffer[];
+}
+
+@Entity('job_offers')
+export class JobOffer {
+  @PrimaryGeneratedColumn() id: number;
+  @Column({ length: 255 }) title: string;
+  @Column({ type: 'text' }) description: string;
+  @ManyToOne(() => CompanyProfile, (c) => c.offers)
+  company: CompanyProfile;
+}`,
+  '/snippets/java-record-entity.java': `// Entidad JPA con Lombok - FoodTruck entity
+// Spring Boot 3.2 + MySQL + @Getter/@Setter
 
 @Entity
-@Table(name = "pedidos")
-@Getter
-@ToString
-@EqualsAndHashCode
-@NoArgsConstructor
-@AllArgsConstructor
-public record Pedido(
-        @Id
-        Long id,
-        String producto,
-        int cantidad,
-        Double precioTotal,
-        String estado,
-        String clienteId
-) {
-    // Records are immutable by default, which ensures thread-safety and prevents accidental state changes
-    // Additional business logic can be added in companion objects or service layer
+@Table(name = "food_trucks")
+@Getter @Setter
+public class FoodTruck {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String nombre;
+
+    @Column(name = "tipo_cocina")
+    private String tipoCocina;
+
+    @Column(name = "ubicacion_actual")
+    private String ubicacionActual;
 }`,
-  '/snippets/spring-boot-transactional-service.java': `import jakarta.transaction.Transactional;
-import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
+  '/snippets/spring-boot-transactional-service.java': `// Servicio con inyeccion por constructor + @Transactional
+// Spring Boot 3.2 - MVC pattern
 
 @Service
-public class PedidoService {
+public class FoodTruckService {
 
-    @Autowired
-    private PedidoRepository pedidoRepository;
+    private final FoodTruckRepository foodTruckRepository;
+
+    // Constructor injection (mejor que @Autowired)
+    public FoodTruckService(FoodTruckRepository foodTruckRepository) {
+        this.foodTruckRepository = foodTruckRepository;
+    }
 
     @Transactional
-    public Pedido crearPedido(Pedido pedido) {
-        // Validaciones de negocio antes de persistir
-        validarProducto(pedido.getProducto());
-        validarCantidad(pedido.getCantidad());
-        
-        // Lógica de negocio: calcular precio total basado en descuentos por volumen
-        Double precioConDescuento = calcularPrecioConDescuento(
-            pedido.getProducto(), 
-            pedido.getCantidad()
-        );
-        
-        // Crear entidad inmutable con el precio calculado
-        Pedido pedidoConPrecio = new Pedido(
-            null, 
-            pedido.getProducto(), 
-            pedido.getCantidad(), 
-            precioConDescuento,
-            "PENDIENTE",
-            pedido.getClienteId()
-        );
-        
-        return pedidoRepository.save(pedidoConPrecio);
+    public FoodTruckDTO crearFoodTruck(FoodTruckDTO dto) {
+        FoodTruck entity = new FoodTruck();
+        entity.setNombre(dto.getNombre());
+        entity.setTipoCocina(dto.getTipoCocina());
+        entity.setUbicacionActual(dto.getUbicacionActual());
+        return toDTO(foodTruckRepository.save(entity));
     }
 
-    @Transactional(readOnly = true)
-    public Pedido obtenerPedidoPorId(Long id) {
-        return pedidoRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Pedido no encontrado"));
+    public List<FoodTruckDTO> obtenerFoodTrucks() {
+        return foodTruckRepository.findAll()
+                .stream().map(this::toDTO).toList();
     }
 
-    private void validarProducto(String producto) {
-        if (producto == null || producto.trim().isEmpty()) {
-            throw new IllegalArgumentException("El producto no puede estar vacío");
-        }
+    public List<FoodTruckDTO> obtenerFoodTrucksCerca(String ciudad, String calle) {
+        return foodTruckRepository.findByUbicacionActualContainingIgnoreCase(ciudad)
+                .stream()
+                .filter(ft -> calle == null || ft.getUbicacionActual()
+                    .toLowerCase().contains(calle.toLowerCase()))
+                .map(this::toDTO).toList();
     }
 
-    private void validarCantidad(int cantidad) {
-        if (cantidad <= 0) {
-            throw new IllegalArgumentException("La cantidad debe ser mayor que cero");
-        }
-        if (cantidad > 1000) {
-            throw new IllegalArgumentException("Cantidad excede el límite permitido por pedido");
-        }
-    }
-
-    private Double calcularPrecioConDescuento(String producto, int cantidad) {
-        Double precioBase = obtenerPrecioBase(producto);
-        if (cantidad >= 100) {
-            return precioBase * 0.9;
-        } else if (cantidad >= 50) {
-            return precioBase * 0.95;
-        }
-        return precioBase;
+    private FoodTruckDTO toDTO(FoodTruck entity) {
+        return new FoodTruckDTO(entity.getId(), entity.getNombre(),
+            entity.getTipoCocina(), entity.getUbicacionActual(), 0);
     }
 }`,
   '/snippets/linq-csharp.cs': `using System;

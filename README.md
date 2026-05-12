@@ -120,8 +120,8 @@ Cada proyecto incluye una vista detallada con:
 Proyectos con contenido disponible:
 | Proyecto | ERD | Snippets | Pagina Detalle |
 |----------|-----|----------|----------------|
-| Bolsa de Empleo | bolsa-empleo.svg | nestjs-dto-validation.ts, postgres-index-optimization.sql | /projects/bolsa-empleo |
-| FoodBites | foodbites.svg | react-component.tsx | /projects/foodbites |
+| Bolsa de Empleo | bolsa-empleo.svg | nestjs-dto-validation.ts, typeorm-entities.ts | /projects/bolsa-empleo |
+| FoodBites | foodbites.svg | java-record-entity.java, spring-boot-transactional-service.java | /projects/foodbites |
 | Gestor Huertos | gestor-huertos.svg | - | /projects/gestor-huertos |
 | Portafolio | portafolio.svg | - | /projects/portafolio-profesional |
 | Auditoria Seguridad | auditoria-seguridad.svg | security-audit.ts | /projects/auditoria-web |
