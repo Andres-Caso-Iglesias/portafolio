@@ -38,7 +38,7 @@ export default function EducationSection() {
   return (
     <section className="py-20 px-6 bg-slate-800">
     <div className="max-w-4xl mx-auto">
-      <h2 className="text-3xl font-bold mb-8 text-white">
+      <h2 className="text-3xl min-[1440px]:text-4xl font-bold mb-8 text-white">
         {t(lang, 'home.educationTitle')}
       </h2>
         <div className="space-y-6">
@@ -49,14 +49,14 @@ export default function EducationSection() {
             const details = lang === 'en' && edu.enDetails ? edu.enDetails : edu.details
             return (
               <div key={edu.id} className="bg-slate-900 rounded-lg p-6 border border-slate-700">
-                <h3 className="text-lg font-semibold text-blue-400 mb-2 flex items-center gap-2">
+                <h3 className="text-lg min-[1440px]:text-xl font-semibold text-blue-400 mb-2 flex items-center gap-2">
                   {title}
                 </h3>
-                <p className="text-sm text-slate-400 mb-2">
+                <p className="text-sm min-[1440px]:text-base text-slate-400 mb-2">
                   {institution} · {period}
                 </p>
                 {details && details.length > 0 && (
-                  <ul className="list-disc list-inside text-slate-300 text-sm space-y-1">
+                  <ul className="list-disc list-inside text-slate-300 text-sm min-[1440px]:text-base space-y-1">
                     {details.map((detail, idx) => (
                       <li key={idx}>{detail}</li>
                     ))}

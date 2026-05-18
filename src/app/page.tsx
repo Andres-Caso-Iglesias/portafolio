@@ -100,20 +100,21 @@ export default function Home() {
       <EducationSection />
 
       {/* Skills Section */}
-      <section className="py-20 px-6 bg-slate-800">
+      <section className="py-20 px-6 bg-slate-800 w-full">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8 text-white">{t(lang, 'home.skillsTitle')}</h2>
-          
+          <h2 className="text-3xl min-[1440px]:text-4xl font-bold mb-8 text-white">{t(lang, 'home.skillsTitle')}</h2>
+        </div>
+        <div className="w-full max-w-screen-2xl mx-auto">
           {/* Ciberseguridad */}
           <div className="mb-8">
-            <h3 className="text-xl font-semibold text-teal-400 mb-4">{t(lang, 'home.skillsCybersecurity')}</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <h3 className="text-xl min-[1440px]:text-2xl font-semibold text-teal-400 mb-4 max-w-4xl mx-auto text-center">{t(lang, 'home.skillsCybersecurity')}</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {skills.filter(s => ['OSINT', 'Sistemas Operativos', 'Redes'].includes(s.category)).map((skill) => (
                 <div
                   key={skill.category}
                   className="bg-slate-900 rounded-lg p-6 border border-slate-700"
                 >
-                  <h4 className="text-lg font-semibold text-blue-400 mb-4">
+                  <h4 className="text-lg min-[1440px]:text-xl font-semibold text-blue-400 mb-4">
                     {skill.category}
                   </h4>
                   <div className="flex flex-wrap gap-2">
@@ -133,14 +134,14 @@ export default function Home() {
           
           {/* Desarrollo */}
           <div>
-            <h3 className="text-xl font-semibold text-teal-400 mb-4">{t(lang, 'home.skillsDevelopment')}</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <h3 className="text-xl min-[1440px]:text-2xl font-semibold text-teal-400 mb-4 max-w-4xl mx-auto text-center">{t(lang, 'home.skillsDevelopment')}</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {skills.filter(s => !['OSINT', 'Sistemas Operativos', 'Redes'].includes(s.category)).map((skill) => (
                 <div
                   key={skill.category}
                   className="bg-slate-900 rounded-lg p-6 border border-slate-700"
                 >
-                  <h4 className="text-lg font-semibold text-blue-400 mb-4">
+                  <h4 className="text-lg min-[1440px]:text-xl font-semibold text-blue-400 mb-4">
                     {skill.category}
                   </h4>
                   <div className="flex flex-wrap gap-2">
@@ -162,8 +163,10 @@ export default function Home() {
 
       {/* Projects Section */}
       <section className="py-20 px-6 bg-slate-800 w-full">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl min-[1440px]:text-4xl font-bold mb-8 text-white">{t(lang, 'home.projectsTitle')}</h2>
+        </div>
         <div className="w-full max-w-screen-2xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8 text-white">{t(lang, 'home.projectsTitle')}</h2>
           <ProjectsGrid />
         </div>
       </section>
