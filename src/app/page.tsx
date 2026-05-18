@@ -161,8 +161,8 @@ export default function Home() {
       </section>
 
       {/* Projects Section */}
-      <section className="py-20 px-6 bg-slate-800">
-        <div className="max-w-4xl mx-auto">
+      <section className="py-20 px-6 bg-slate-800 w-full">
+        <div className="w-full max-w-screen-2xl mx-auto">
           <h2 className="text-3xl font-bold mb-8 text-white">{t(lang, 'home.projectsTitle')}</h2>
           <ProjectsGrid />
         </div>

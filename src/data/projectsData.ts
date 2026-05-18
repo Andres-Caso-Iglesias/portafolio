@@ -28,8 +28,8 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    name: "Auditoría de Seguridad Web",
-    enName: "Web Security Audit",
+    name: "Security Header Scanner & Quick Assessment Tool",
+    enName: "Security Header Scanner & Quick Assessment Tool",
     description: "Herramienta de auditoría pasiva de seguridad web que analiza los headers HTTP de respuesta de cualquier URL pública, genera un puntaje de seguridad (0-100), identifica headers faltantes o mal configurados, y mapea los resultados contra OWASP Top 10 y Directiva NIS2. Incluye verificación TLS/SSL, DNS (SPF/DKIM/DMARC), archivos de seguridad (RFC 9116), SRI, fingerprinting tecnológico con base de datos de CVEs y exportación PDF/JSON.",
     enDescription: "Passive web security auditing tool that analyzes HTTP response headers from any public URL, generates a security score (0-100), identifies missing or misconfigured headers, and maps results against OWASP Top 10 and NIS2 Directive. Includes TLS/SSL verification, DNS (SPF/DKIM/DMARC), security files (RFC 9116), SRI, tech fingerprinting with CVE database, and PDF/JSON export.",
     tech: ["NestJS 11", "React 19", "TypeScript 5", "Vite 8", "Node.js 22", "Swagger/OpenAPI"],
