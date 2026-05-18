@@ -106,7 +106,7 @@ export default function Home() {
           
           {/* Ciberseguridad */}
           <div className="mb-8">
-            <h3 className="text-xl font-semibold text-teal-400 mb-4">Ciberseguridad</h3>
+            <h3 className="text-xl font-semibold text-teal-400 mb-4">{t(lang, 'home.skillsCybersecurity')}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {skills.filter(s => ['OSINT', 'Sistemas Operativos', 'Redes'].includes(s.category)).map((skill) => (
                 <div
@@ -133,7 +133,7 @@ export default function Home() {
           
           {/* Desarrollo */}
           <div>
-            <h3 className="text-xl font-semibold text-teal-400 mb-4">Desarrollo</h3>
+            <h3 className="text-xl font-semibold text-teal-400 mb-4">{t(lang, 'home.skillsDevelopment')}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {skills.filter(s => !['OSINT', 'Sistemas Operativos', 'Redes'].includes(s.category)).map((skill) => (
                 <div
@@ -177,14 +177,14 @@ export default function Home() {
             href="mailto:andrescasoiglesias@gmail.com"
             className="inline-block px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium transition-colors"
           >
-            Enviar email
+            {t(lang, 'home.contactEmail')}
           </a>
         </div>
       </section>
 
       {/* Footer */}
       <footer className="py-8 px-6 bg-slate-950 text-center text-slate-500 text-sm">
-        <p>© {new Date().getFullYear()} Andrés Caso Iglesias. Todos los derechos reservados.</p>
+        <p>© {new Date().getFullYear()} Andrés Caso Iglesias. {t(lang, 'home.footerRights')}</p>
       </footer>
     </main>
   );

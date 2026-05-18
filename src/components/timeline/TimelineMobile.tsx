@@ -1,12 +1,15 @@
 import { TimelineItem } from "@/data/timelineData";
 import { calculateTimelinePositions } from "@/lib/timelineUtils";
 import { cn } from "@/lib/utils";
+import { t } from '@/i18n/locales'
+import { useGlobalLang } from '@/hooks/useGlobalLang'
 
 interface TimelineMobileProps {
   items: TimelineItem[];
 }
 
 export default function TimelineMobile({ items }: TimelineMobileProps) {
+  const { lang } = useGlobalLang()
   const positionedTimelineData = calculateTimelinePositions(items);
 
   return (
@@ -14,7 +17,7 @@ export default function TimelineMobile({ items }: TimelineMobileProps) {
       {/* Experience Section */}
       <div>
         <h3 className="text-lg font-semibold text-green-400 mb-4">
-          Experiencia
+          {t(lang, 'home.timelineExperience')}
         </h3>
         {positionedTimelineData
           .filter((item) => item.expTitle)
@@ -29,7 +32,7 @@ export default function TimelineMobile({ items }: TimelineMobileProps) {
       {/* Education Section */}
       <div>
         <h3 className="text-lg font-semibold text-purple-400 mb-4">
-          Educación
+          {t(lang, 'home.timelineEducation')}
         </h3>
         {positionedTimelineData
           .filter((item) => item.eduTitle)

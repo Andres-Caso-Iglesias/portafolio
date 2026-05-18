@@ -22,8 +22,8 @@ export default function ProjectsGrid() {
 
   // Language changes are handled by useLocale context; no local listener needed here
 
-  const displayName = (p: any) => (lang === 'en' && p.enName) ? p.enName : p.name
-  const displayDesc = (p: any) => (lang === 'en' && p.enDescription) ? p.enDescription : p.description
+  const displayName = (p: Project) => (lang === 'en' && p.enName) ? p.enName : p.name
+  const displayDesc = (p: Project) => (lang === 'en' && p.enDescription) ? p.enDescription : p.description
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 w-full">

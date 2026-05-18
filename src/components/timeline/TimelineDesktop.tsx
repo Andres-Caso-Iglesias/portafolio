@@ -2,12 +2,15 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { TimelineItem } from "@/data/timelineData";
 import { calculateTimelinePositions } from "@/lib/timelineUtils";
+import { t } from '@/i18n/locales'
+import { useGlobalLang } from '@/hooks/useGlobalLang'
 
 interface TimelineDesktopProps {
   items: TimelineItem[];
 }
 
 export default function TimelineDesktop({ items }: TimelineDesktopProps) {
+  const { lang } = useGlobalLang()
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const positioned = calculateTimelinePositions(items);
   
@@ -73,13 +76,13 @@ export default function TimelineDesktop({ items }: TimelineDesktopProps) {
         className="absolute left-[4%] text-slate-400 text-xs font-semibold uppercase tracking-widest pl-2 border-l-2 border-slate-600" 
         style={{ top: "calc(40% - 30px)" }}
       >
-        Experiencia Profesional
+        {t(lang, 'home.timelineExperience')}
       </div>
       <div 
         className="absolute left-[4%] text-slate-400 text-xs font-semibold uppercase tracking-widest pl-2 border-l-2 border-slate-600" 
         style={{ top: "calc(60% - 30px)" }}
       >
-        Educación y Formación
+        {t(lang, 'home.timelineEducation')}
       </div>
 
       {/* Hover Duration Bar */}
@@ -174,19 +177,19 @@ export default function TimelineDesktop({ items }: TimelineDesktopProps) {
       <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex flex-wrap items-center justify-center gap-6 z-20 w-full px-4">
         <div className="flex items-center gap-2">
           <div className="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
-          <span className="text-slate-400 text-[11px] font-medium tracking-wide uppercase">Hostelería</span>
+          <span className="text-slate-400 text-[11px] font-medium tracking-wide uppercase">{t(lang, 'home.legendHospitality')}</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.6)]" />
-          <span className="text-slate-400 text-[11px] font-medium tracking-wide uppercase">Logística</span>
+          <span className="text-slate-400 text-[11px] font-medium tracking-wide uppercase">{t(lang, 'home.legendLogistics')}</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.6)]" />
-          <span className="text-slate-400 text-[11px] font-medium tracking-wide uppercase">IT</span>
+          <span className="text-slate-400 text-[11px] font-medium tracking-wide uppercase">{t(lang, 'home.legendIT')}</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-2.5 h-2.5 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.6)]" />
-          <span className="text-slate-400 text-[11px] font-medium tracking-wide uppercase">Formación</span>
+          <span className="text-slate-400 text-[11px] font-medium tracking-wide uppercase">{t(lang, 'home.legendTraining')}</span>
         </div>
       </div>
     </div>

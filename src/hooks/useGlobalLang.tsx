@@ -2,6 +2,12 @@
 import { Lang } from '@/i18n/types'
 import { useEffect, useState } from 'react'
 
+declare global {
+  interface WindowEventMap {
+    langChanged: CustomEvent
+  }
+}
+
 // Global language hook based on a simple client-side store with hydration-safe initial render
 export function useGlobalLang(): { lang: Lang; setLang: (l: Lang) => void } {
   const [lang, setLangState] = useState<Lang>('es')
@@ -23,8 +29,8 @@ export function useGlobalLang(): { lang: Lang; setLang: (l: Lang) => void } {
         if (v === 'es' || v === 'en') setLangState(v)
       } catch {}
     }
-    window.addEventListener('langChanged', onLangChanged as any)
-    return () => window.removeEventListener('langChanged', onLangChanged as any)
+    window.addEventListener('langChanged', onLangChanged)
+    return () => window.removeEventListener('langChanged', onLangChanged)
   }, [])
 
   return { lang, setLang }

@@ -43,10 +43,10 @@ export default function EducationSection() {
       </h2>
         <div className="space-y-6">
           {sortedEducation.map((edu) => {
-            const title = lang === 'en' && (edu as any).enTitle ? (edu as any).enTitle : edu.title
-            const institution = lang === 'en' && (edu as any).enInstitution ? (edu as any).enInstitution : edu.institution
-            const period = lang === 'en' && (edu as any).enPeriod ? (edu as any).enPeriod : edu.period
-            const details = (lang === 'en' && (edu as any).enDetails) ? (edu as any).enDetails as string[] : (edu as any).details as string[]
+            const title = lang === 'en' && edu.enTitle ? edu.enTitle : edu.title
+            const institution = lang === 'en' && edu.enInstitution ? edu.enInstitution : edu.institution
+            const period = lang === 'en' && edu.enPeriod ? edu.enPeriod : edu.period
+            const details = lang === 'en' && edu.enDetails ? edu.enDetails : edu.details
             return (
               <div key={edu.id} className="bg-slate-900 rounded-lg p-6 border border-slate-700">
                 <h3 className="text-lg font-semibold text-blue-400 mb-2 flex items-center gap-2">

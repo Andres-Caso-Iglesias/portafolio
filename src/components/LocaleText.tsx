@@ -1,6 +1,12 @@
 "use client";
 import React from 'react'
 
+declare global {
+  interface WindowEventMap {
+    langChanged: CustomEvent
+  }
+}
+
 type Props = {
   es: string
   en: string
@@ -23,8 +29,8 @@ export default function LocaleText({ es, en, className }: Props) {
         if (v === 'es' || v === 'en') setLang(v)
       } catch {}
     }
-    window.addEventListener('langChanged', onLangChanged as any)
-    return () => window.removeEventListener('langChanged', onLangChanged as any)
+    window.addEventListener('langChanged', onLangChanged)
+    return () => window.removeEventListener('langChanged', onLangChanged)
   }, [])
 
   return (

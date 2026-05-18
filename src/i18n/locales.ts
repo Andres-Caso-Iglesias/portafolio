@@ -15,13 +15,23 @@ type HomeKeys = {
   educationTitle: string
   educationIntro: string
   skillsTitle: string
+  skillsCybersecurity: string
+  skillsDevelopment: string
   contactTitle: string
   contactIntro: string
+  contactEmail: string
+  footerRights: string
   resume: string
   github: string
   linkedin: string
   viewGithub: string
   timelineTitle: string
+  timelineExperience: string
+  timelineEducation: string
+  legendHospitality: string
+  legendLogistics: string
+  legendIT: string
+  legendTraining: string
 }
 
 type LocalesMap = {
@@ -48,13 +58,23 @@ export const locales: LocalesMap = {
       educationTitle: 'Educación y Formación',
       educationIntro: 'Formación académica y práctica en desarrollo de software, gestión de proyectos y seguridad.',
       skillsTitle: 'Habilidades Técnicas',
+      skillsCybersecurity: 'Ciberseguridad',
+      skillsDevelopment: 'Desarrollo',
       contactTitle: 'Contacto',
       contactIntro: 'Buscando una oportunidad como Developer (España, híbrido o remoto).',
+      contactEmail: 'Enviar email',
+      footerRights: 'Todos los derechos reservados.',
       resume: 'Resumen',
       github: 'GitHub',
       linkedin: 'LinkedIn',
       viewGithub: 'Ver en GitHub',
       timelineTitle: 'Mi Trayectoria',
+      timelineExperience: 'Experiencia Profesional',
+      timelineEducation: 'Educación y Formación',
+      legendHospitality: 'Hostelería',
+      legendLogistics: 'Logística',
+      legendIT: 'IT',
+      legendTraining: 'Formación',
       seoTitle: 'Andrés Caso Iglesias | Developer',
       seoDescription: 'Portfolio de Andrés Caso Iglesias - Developer especializado en C#/.NET, Java y TypeScript',
     },
@@ -73,13 +93,23 @@ export const locales: LocalesMap = {
       educationTitle: 'Education and Training',
       educationIntro: 'Academic and practical training in software development, project management, and security.',
       skillsTitle: 'Technical Skills',
+      skillsCybersecurity: 'Cybersecurity',
+      skillsDevelopment: 'Development',
       contactTitle: 'Contact',
       contactIntro: 'Seeking an opportunity as a Developer (Spain, hybrid or remote).',
+      contactEmail: 'Send email',
+      footerRights: 'All rights reserved.',
       resume: 'Resume',
       github: 'GitHub',
       linkedin: 'LinkedIn',
       viewGithub: 'View on GitHub',
       timelineTitle: 'My Timeline',
+      timelineExperience: 'Professional Experience',
+      timelineEducation: 'Education and Training',
+      legendHospitality: 'Hospitality',
+      legendLogistics: 'Logistics',
+      legendIT: 'IT',
+      legendTraining: 'Education',
       seoTitle: 'Andrés Caso Iglesias | Developer',
       seoDescription: 'Portfolio of Andrés Caso Iglesias - Developer specialized in C#/.NET, Java and TypeScript',
     },
@@ -89,11 +119,12 @@ export const locales: LocalesMap = {
 // Simple translator: path format like 'home.title'
 export function t(lang: Lang, path: string): string {
   const parts = path.split('.')
-  // @ts-ignore
-  let cur: any = locales[lang]
+  let cur: Record<string, unknown> = locales[lang] as Record<string, unknown>
   for (const p of parts) {
-    if (!cur) return ''
-    cur = cur[p as keyof typeof cur]
+    const next = cur[p]
+    if (next == null) return ''
+    if (typeof next === 'string') return next
+    cur = next as Record<string, unknown>
   }
   return typeof cur === 'string' ? cur : ''
 }
