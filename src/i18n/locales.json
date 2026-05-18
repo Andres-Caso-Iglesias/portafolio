@@ -2,7 +2,7 @@
   "es": {
     "home": {
       "title": "Andrés Caso Iglesias",
-      "subtitle": "Desarrollador Backend Senior",
+      "subtitle": "Desarrollador",
       "projectsTitle": "Proyectos",
       "profileTitle": "Perfil Profesional",
       "profileIntro": "Desarrollador Backend bilingüe (Nativo Inglés/Español) con capacidad probada para diseñar sistemas robustos en C# y Java. Aporto dos décadas de experiencia en liderazgo operativo y logística crítica, lo que me permite abordar el desarrollo de software no solo como código, sino como una solución de negocio escalable, segura y preparada para entornos de alta presión.",
@@ -13,20 +13,20 @@
       "educationIntro": "Formación académica y práctica en desarrollo de software, gestión de proyectos y seguridad. Actualmente cursando Máster en Ciberseguridad e IA con enfoque en desarrollo seguro e inteligencia aplicada.",
       "skillsTitle": "Habilidades Técnicas",
       "contactTitle": "Contacto",
-      "contactIntro": "Buscando una oportunidad como Backend Developer Senior (España, híbrido o remoto) especializado en sistemas críticos y seguridad NIS2.",
+      "contactIntro": "Buscando una oportunidad como Developer (España, híbrido o remoto).",
       "resume": "Resumen",
       "github": "GitHub",
       "linkedin": "LinkedIn",
       "viewGithub": "Ver en GitHub",
       "timelineTitle": "Mi Trayectoria",
-      "seoTitle": "Andrés Caso Iglesias | Backend Developer Senior | Especialista en NIS2",
-      "seoDescription": "Portfolio de Andrés Caso Iglesias - Backend Developer Senior especializado en C#/.NET, Java, TypeScript y seguridad NIS2 para entornos críticos"
+      "seoTitle": "Andrés Caso Iglesias | Developer",
+      "seoDescription": "Portfolio de Andrés Caso Iglesias - Developer especializado en C#/.NET, Java y TypeScript"
     }
   },
   "en": {
     "home": {
       "title": "Andrés Caso Iglesias",
-      "subtitle": "Senior Backend Developer",
+      "subtitle": "Developer",
       "projectsTitle": "Projects",
       "profileTitle": "Professional Profile",
       "profileIntro": "Bilingual Backend Developer (Native English/Spanish) with proven ability to design robust systems in C# and Java. I bring two decades of operational leadership and critical logistics experience, enabling me to approach software development not just as code, but as a scalable, secure business solution ready for high-pressure environments.",
@@ -37,14 +37,14 @@
       "educationIntro": "Academic and practical training in software development, project management, and security. Currently pursuing Master's in Cybersecurity & AI with focus on secure development and applied intelligence.",
       "skillsTitle": "Technical Skills",
       "contactTitle": "Contact",
-      "contactIntro": "Seeking a Senior Backend Developer opportunity (Spain, hybrid or remote) specializing in critical systems and NIS2 compliance.",
+      "contactIntro": "Seeking a Developer opportunity (Spain, hybrid or remote).",
       "resume": "Resume",
       "github": "GitHub",
       "linkedin": "LinkedIn",
       "viewGithub": "View on GitHub",
       "timelineTitle": "My Timeline",
-      "seoTitle": "Andrés Caso Iglesias | Senior Backend Developer | NIS2 Specialist",
-      "seoDescription": "Portfolio of Andrés Caso Iglesias - Senior Backend Developer specializing in C#/.NET, Java, TypeScript and NIS2 security for critical environments"
+      "seoTitle": "Andrés Caso Iglesias | Developer",
+      "seoDescription": "Portfolio of Andrés Caso Iglesias - Developer specialized in C#/.NET, Java and TypeScript"
     }
   }
 }

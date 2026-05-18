@@ -1,7 +1,7 @@
 # Portfolio - Andres Caso Iglesias
 
 ## Descripcion
-Portfolio profesional para Backend Developer mostrando trayectoria, proyectos y habilidades tecnicas.
+Portfolio profesional para Developer mostrando trayectoria, proyectos y habilidades tecnicas.
 
 ## Stack Tecnologico
 
@@ -116,7 +116,7 @@ export function cn(...inputs: ClassValue[]) {
 
 ### 1. Hero (page.tsx)
 - Nombre: "Andres Caso Iglesias"
-- Titulo: "Backend Developer"
+- Titulo: "Developer"
 - Pitch personal con experiencia previa
 - Botones: GitHub, LinkedIn
 
