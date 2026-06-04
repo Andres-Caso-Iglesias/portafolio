@@ -66,6 +66,20 @@ export function useChat(): ChatState & ChatActions {
     setMessages([welcomeMsg]);
   }, [lang]);
 
+  // Update welcome message when language changes
+  useEffect(() => {
+    if (messages.length > 0 && messages[0].sender === "assistant") {
+      setMessages((prev) => {
+        const updated = [...prev];
+        updated[0] = {
+          ...updated[0],
+          content: welcomeMessage[lang],
+        };
+        return updated;
+      });
+    }
+  }, [lang]);
+
   // Scroll to bottom when new messages arrive
   useEffect(() => {
     if (messagesEndRef.current) {
