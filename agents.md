@@ -37,16 +37,24 @@ Este portafolio presenta la trayectoria, proyectos y habilidades de Andres Caso 
     Modal.tsx       # Modal de vista rapida de proyectos
     Timeline.tsx   # Componente principal del timeline
     /timeline      # Componentes especializados (TimelineDesktop, TimelineMobile)
+    /chat          # Componentes del chat interactivo
+      Chat.tsx     # Contenedor principal del chat
+      ChatMessage.tsx # Presentacion de mensajes con parseo de markdown
+      ChatInput.tsx   # Input del usuario con envio por Enter
+      index.ts     # Barrel exports
   /data             # Capa de Datos (arrays estaticos y tipados)
     projectsData.ts
     skillsData.ts
     timelineData.ts
     educationData.ts
+    chatData.ts    # Respuestas del chat, follow-ups y quick actions
   /lib              # Capa de Logica (utilidades, calculos puros y helpers)
     utils.ts
     timelineUtils.ts
+    chatUtils.ts   # Logica de matching, contexto conversacional y futuro soporte IA
   /hooks            # Hooks personalizados
     useGlobalLang.ts
+    useChat.ts     # Estado del chat con tracking de contexto
 /public
   /erd              # Diagramas ERD (SVG) de cada proyecto
   /snippets         # Fragmentos de codigo representativos
@@ -79,6 +87,19 @@ Pagina estatica para cada proyecto con:
 - Diagrama ERD
 - Codigo snippets
 - Links a GitHub y demo
+
+#### Chat Interactivo ("Pinche de Andres")
+Chatbot rule-based para responder preguntas de reclutadores sobre el perfil profesional:
+- **Arquitectura en Capas**: Datos (`/data`), Logica (`/lib`), Presentacion (`/components/chat`)
+- **35+ Categorias de Respuesta**: Experiencia, habilidades, formacion, proyectos, contacto, certificaciones, idiomas, seguridad, arquitectura, testing, etc.
+- **Contexto Conversacional**: Trackea el ultimo tema discutido para follow-ups (ej. despues de "contacto" pregunta si quiere los enlaces)
+- **Deteccion de Afirmaciones**: Detecta "si", "dale", "claro", "ok" para responder follow-ups
+- **Respuestas de Seguimiento**: Enlaces reales clickeables (LinkedIn, GitHub, Email) despues de preguntar
+- **Bilingue**: Soporte completo para espanol e ingles
+- **Quick Actions**: Botones para preguntas frecuentes
+- **Markdown Links**: Parseo de syntax `[texto](url)` para enlaces clickeables
+- **Preparado para IA**: Interfaz `AIProvider` y `ChatConfig` para futuro soporte de Gemini/OpenAI
+- **Matching Mejorado**: Fuzzy matching con Levenshtein para tolerancia a typos
 
 ## Guia de Estilo y Convenciones
 
@@ -154,9 +175,10 @@ Pagina estatica para cada proyecto con:
 2. **Modo Claro/Oscuro con Persistencia** - Usando `next-themes` correctamente configurado.
 3. **Internacionalizacion (i18n)** - Soporte completo para espanol e ingles usando `next-intl`.
 4. **Seccion de Descarga de CV** - Enlace directo a PDF en `/public/cv.pdf`.
-5. **Pruebas Unitarias** - Para utilidades en `/lib` y components complejos.
+5. **Pruebas Unitarias** - Para utilidades en `/lib` y componentes complejos.
 6. **Optimizacion de Imagenes** - Cuando se anadan fotos o screenshots de proyectos.
 7. **Analisis de Rendimiento** - Uso de Lighthouse y Web Vitals para monitorear y mejorar.
+8. **Chat con IA** - Integrar Gemini API para respuestas mas naturales (previamente configurado en `ChatConfig`).
 
 ## NOTA IMPORTANTE: Sin Emojis
 Este proyecto **NO utiliza emojis** en ninguna parte del codigo, documentacion o mensajes de commit. Al trabajar en este proyecto:
