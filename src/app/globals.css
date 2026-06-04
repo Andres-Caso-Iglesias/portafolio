@@ -3,3 +3,15 @@
 @theme {
   --font-sans: var(--font-cabinet-grotesk);
 }
+
+/* Chat link styles */
+.chat-link {
+  color: #60a5fa;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s ease;
+}
+
+.chat-link:hover {
+  color: #93c5fd;
+}

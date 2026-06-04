@@ -5,6 +5,7 @@ import { Lang } from "@/i18n/types";
 import { useGlobalLang } from "./useGlobalLang";
 import { processUserMessage, isValidInput, generateMessageId } from "@/lib/chatUtils";
 import { welcomeMessage, quickActions } from "@/data/chatData";
+import { type ProjectData } from "@/components/chat/ProjectCard";
 
 // ──────────────────────────────────────────────────────────────
 // Message Interface
@@ -14,6 +15,7 @@ export interface ChatMessage {
   content: string;
   sender: "user" | "assistant";
   timestamp: Date;
+  project?: ProjectData; // Optional project card data
 }
 
 // ──────────────────────────────────────────────────────────────
@@ -93,7 +95,7 @@ export function useChat(): ChatState & ChatActions {
 
       setTimeout(() => {
         // Process and get response with context
-        const { response: responseContent, topic: newTopic } = processUserMessage(
+        const { response: responseContent, topic: newTopic, project } = processUserMessage(
           content, 
           lang, 
           lastTopicRef.current
@@ -107,6 +109,7 @@ export function useChat(): ChatState & ChatActions {
           content: responseContent,
           sender: "assistant",
           timestamp: new Date(),
+          project, // Include project data if available
         };
 
         setMessages((prev) => [...prev, assistantMessage]);

@@ -295,8 +295,108 @@ export const chatResponses: ChatResponse[] = [
       "creations",
     ],
     message: {
-      es: "Puedes ver mis proyectos en la sección de arriba. Cada uno incluye descripción técnica, diagramas ERD y fragmentos de código representativos. Destaco proyectos de gestión de restaurantes, sistemas logísticos y aplicaciones web fullstack.",
-      en: "You can see my projects in the section above. Each one includes technical descriptions, ERD diagrams, and representative code snippets. I highlight projects in restaurant management, logistics systems, and fullstack web applications.",
+      es: "Mis proyectos destacados son:\n\nBolsa de Empleo - NestJS + PostgreSQL\nFoodBites - Spring Boot + MySQL\nGestor Huertos Urbanos - Java Spring Boot\nAuditoria de Seguridad - NestJS + React\nPortafolio - Next.js 19 + TypeScript\n\nEscribe el nombre de un proyecto para ver más detalles.",
+      en: "My featured projects are:\n\nBolsa de Empleo - NestJS + PostgreSQL\nFoodBites - Spring Boot + MySQL\nGestor Huertos Urbanos - Java Spring Boot\nSecurity Audit - NestJS + React\nPortfolio - Next.js 19 + TypeScript\n\nType a project name to see more details.",
+    },
+  },
+
+  // ─── PROYECTO: Bolsa de Empleo ──────────────────────────────
+  {
+    id: "project-bolsa",
+    keywords: [
+      "bolsa",
+      "bolsa de empleo",
+      "bolsa empleo",
+      "empleo",
+      "job",
+      "jobs",
+      "bolsa-empleo",
+      "bolsaempleo",
+    ],
+    message: {
+      es: "Bolsa de Empleo - API RESTful con NestJS 11 + PostgreSQL + TypeORM + Flutter 3. Autenticación JWT, roles por usuario, gestión de ofertas laborales y notificaciones.",
+      en: "Bolsa de Empleo - RESTful API with NestJS 11 + PostgreSQL + TypeORM + Flutter 3. JWT authentication, role-based users, job offers management and notifications.",
+    },
+  },
+
+  // ─── PROYECTO: FoodBites ────────────────────────────────────
+  {
+    id: "project-foodbites",
+    keywords: [
+      "foodbites",
+      "food",
+      "bites",
+      "food bites",
+      "food-bites",
+      "foodtruck",
+      "food truck",
+      "comida",
+      "restaurant",
+      "restaurante",
+    ],
+    message: {
+      es: "FoodBites - Backend Spring Boot 3.2.0 + Java 17 + MySQL 8.2. Gestión de food trucks con 6 entidades, búsqueda por ubicación y recomendaciones por tipo de cocina.",
+      en: "FoodBites - Spring Boot 3.2.0 Backend + Java 17 + MySQL 8.2. Food truck management with 6 entities, location search and cuisine recommendations.",
+    },
+  },
+
+  // ─── PROYECTO: Gestor Huertos Urbanos ───────────────────────
+  {
+    id: "project-huertos",
+    keywords: [
+      "huertos",
+      "huerto",
+      "urbanos",
+      "urbano",
+      "gestor",
+      "garden",
+      "gardens",
+      "urban",
+      "huertos-urbanos",
+      "huertosurbanos",
+    ],
+    message: {
+      es: "Gestor Huertos Urbanos - Java 17 + Spring Boot 3.2.0 + MySQL 8.2 + Bootstrap 5. Aplicación web para gestión de huertos urbanos con CRUD completo.",
+      en: "Gestor Huertos Urbanos - Java 17 + Spring Boot 3.2.0 + MySQL 8.2 + Bootstrap 5. Web application for urban garden management with full CRUD.",
+    },
+  },
+
+  // ─── PROYECTO: Auditoria de Seguridad ──────────────────────
+  {
+    id: "project-auditoria",
+    keywords: [
+      "auditoria",
+      "auditoría",
+      "seguridad",
+      "security",
+      "audit",
+      "auditoria-web",
+      "auditoriaweb",
+      "penetration",
+      "pentest",
+    ],
+    message: {
+      es: "Auditoria de Seguridad - NestJS 11 + React 19 + TypeScript. Herramienta de auditoría que analiza vulnerabilidades OWASP Top 10.",
+      en: "Security Audit - NestJS 11 + React 19 + TypeScript. Auditing tool that analyzes OWASP Top 10 vulnerabilities.",
+    },
+  },
+
+  // ─── PROYECTO: Portafolio ──────────────────────────────────
+  {
+    id: "project-portfolio",
+    keywords: [
+      "portafolio",
+      "portfolio",
+      "este proyecto",
+      "this project",
+      "este sitio",
+      "this site",
+      "esta web",
+      "this web",
+    ],
+    message: {
+      es: "Portafolio Profesional - Next.js 16 + React 19 + TypeScript + Tailwind CSS v4. Arquitectura en capas con chat interactivo bilingüe.",
+      en: "Professional Portfolio - Next.js 16 + React 19 + TypeScript + Tailwind CSS v4. Layered architecture with bilingual interactive chat.",
     },
   },
 
@@ -1971,8 +2071,8 @@ export const followUpResponses: FollowUpResponse[] = [
       "gracias",
     ],
     message: {
-      es: "Aquí tienes mis enlaces:\n\n[LinkedIn](https://www.linkedin.com/in/andrescasoiglesias/)\n[GitHub](https://github.com/Andres-Caso-Iglesias)\n[Email](mailto:andrescasoiglesias@gmail.com)\n\n¿Hay algo más que quieras saber?",
-      en: "Here are my links:\n\n[LinkedIn](https://www.linkedin.com/in/andrescasoiglesias/?locale=en-US)\n[GitHub](https://github.com/Andres-Caso-Iglesias)\n[Email](mailto:andrescasoiglesias@gmail.com)\n\nIs there anything else you'd like to know?",
+      es: "Aquí tienes los enlaces:\n\nLinkedIn: linkedin.com/in/andrescasoiglesias\nGitHub: github.com/Andres-Caso-Iglesias\nEmail: andrescasoiglesias@gmail.com\n\n¿Hay algo más que quieras saber?",
+      en: "Here are the links:\n\nLinkedIn: linkedin.com/in/andrescasoiglesias\nGitHub: github.com/Andres-Caso-Iglesias\nEmail: andrescasoiglesias@gmail.com\n\nIs there anything else you'd like to know?",
     },
   },
 
@@ -1993,8 +2093,8 @@ export const followUpResponses: FollowUpResponse[] = [
       "i would like",
     ],
     message: {
-      es: "Perfecto. Puedes contactarme por [LinkedIn](https://www.linkedin.com/in/andrescasoiglesias/) o [email](mailto:andrescasoiglesias@gmail.com) para agendar una llamada. ¿Prefieres que te escriba yo o prefieres contactarme directamente?",
-      en: "Perfect. You can reach me via [LinkedIn](https://www.linkedin.com/in/andrescasoiglesias/?locale=en-US) or [email](mailto:andrescasoiglesias@gmail.com) to schedule a call. Would you prefer me to write to you or contact me directly?",
+      es: "Perfecto. Puedes contactarme por LinkedIn o email para agendar una llamada. ¿Prefieres que te escriba yo o prefieres contactarme directamente?",
+      en: "Perfect. You can reach me via LinkedIn or email to schedule a call. Would you prefer me to write to you or contact me directly?",
     },
   },
 
@@ -2016,8 +2116,8 @@ export const followUpResponses: FollowUpResponse[] = [
       "i want to see",
     ],
     message: {
-      es: "Puedes ver todos mis proyectos en la sección de arriba. Cada uno tiene:\n- Descripción técnica detallada\n- Diagrama ERD\n- Fragmentos de código\n- Enlaces a GitHub y demo\n\n¿Hay alguno que te interese especialmente?",
-      en: "You can see all my projects in the section above. Each one has:\n- Detailed technical description\n- ERD diagram\n- Code snippets\n- GitHub and demo links\n\nIs there any that interests you especially?",
+      es: "Aquí tienes los enlaces a cada proyecto:\n\n<a href='https://andres-caso-iglesias.vercel.app/projects/bolsa-empleo' target='_blank' rel='noopener noreferrer' class='chat-link'>Bolsa de Empleo</a> - API NestJS + PostgreSQL con Swagger\n<a href='https://andres-caso-iglesias.vercel.app/projects/foodbites' target='_blank' rel='noopener noreferrer' class='chat-link'>FoodBites</a> - Backend Spring Boot + MySQL\n<a href='https://andres-caso-iglesias.vercel.app/projects/gestor-huertos' target='_blank' rel='noopener noreferrer' class='chat-link'>Gestor Huertos Urbanos</a> - Java Spring Boot + MySQL\n<a href='https://andres-caso-iglesias.vercel.app/projects/auditoria-web' target='_blank' rel='noopener noreferrer' class='chat-link'>Auditoria de Seguridad</a> - NestJS 11 + React 19\n<a href='https://github.com/Andres-Caso-Iglesias/portafolio' target='_blank' rel='noopener noreferrer' class='chat-link'>Portafolio</a> - Next.js 16 + React 19 + TypeScript\n\n¿Hay alguno que te interese especialmente?",
+      en: "Here are the links to each project:\n\n<a href='https://andres-caso-iglesias.vercel.app/projects/bolsa-empleo' target='_blank' rel='noopener noreferrer' class='chat-link'>Bolsa de Empleo</a> - NestJS API + PostgreSQL with Swagger\n<a href='https://andres-caso-iglesias.vercel.app/projects/foodbites' target='_blank' rel='noopener noreferrer' class='chat-link'>FoodBites</a> - Spring Boot Backend + MySQL\n<a href='https://andres-caso-iglesias.vercel.app/projects/gestor-huertos' target='_blank' rel='noopener noreferrer' class='chat-link'>Gestor Huertos Urbanos</a> - Java Spring Boot + MySQL\n<a href='https://andres-caso-iglesias.vercel.app/projects/auditoria-web' target='_blank' rel='noopener noreferrer' class='chat-link'>Security Audit</a> - NestJS 11 + React 19\n<a href='https://github.com/Andres-Caso-Iglesias/portafolio' target='_blank' rel='noopener noreferrer' class='chat-link'>Portfolio</a> - Next.js 16 + React 19 + TypeScript\n\nIs there any that interests you especially?",
     },
   },
 
