@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import SeoClient from "@/components/SeoClient";
+import { Chat } from "@/components/chat/Chat";
 
 const cabinetGrotesk = localFont({
   src: [
@@ -33,6 +34,7 @@ export default function RootLayout({
       <body className="bg-slate-900 text-white antialiased font-sans">
         <SeoClient />
         {children}
+        <Chat />
       </body>
     </html>
   );
