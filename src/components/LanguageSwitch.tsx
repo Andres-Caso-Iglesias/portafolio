@@ -21,10 +21,14 @@ export default function LanguageSwitch() {
     <button
       onClick={onClick}
       aria-label="Toggle language"
-      className="px-3 py-1 border border-slate-500 rounded text-sm text-slate-100 bg-slate-800 hover:bg-slate-700"
-      title="Change language"
+      className="w-12 h-12 rounded-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 shadow-lg transition-all duration-200 hover:scale-105 active:scale-95"
+      title={lang === 'es' ? 'Switch to English' : 'Cambiar a Español'}
     >
-      ES/EN
+      <img
+        src={lang === 'es' ? '/ingles.png' : '/espanola.png'}
+        alt={lang === 'es' ? 'English' : 'Español'}
+        className="w-8 h-8"
+      />
     </button>
   )
 }

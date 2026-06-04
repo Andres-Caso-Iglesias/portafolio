@@ -298,7 +298,24 @@ export function findBestResponse(
   let bestMatch: ChatResponse | null = null;
   let bestScore = 0;
 
-  for (const response of responses) {
+  // FIRST: Check for specific project matches (higher priority)
+  const projectResponses = responses.filter(r => r.id.startsWith("project-"));
+  for (const response of projectResponses) {
+    const score = calculateMatchScore(userInput, response.keywords);
+    if (score > bestScore && score >= threshold) {
+      bestScore = score;
+      bestMatch = response;
+    }
+  }
+
+  // If we found a project match, return it
+  if (bestMatch) {
+    return bestMatch;
+  }
+
+  // OTHERWISE: Check other categories
+  const otherResponses = responses.filter(r => !r.id.startsWith("project-"));
+  for (const response of otherResponses) {
     const score = calculateMatchScore(userInput, response.keywords);
     if (score > bestScore && score >= threshold) {
       bestScore = score;

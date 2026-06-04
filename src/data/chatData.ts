@@ -312,6 +312,9 @@ export const chatResponses: ChatResponse[] = [
       "jobs",
       "bolsa-empleo",
       "bolsaempleo",
+      "trabajo",
+      "empleo",
+      "ofertas",
     ],
     message: {
       es: "Bolsa de Empleo - API RESTful con NestJS 11 + PostgreSQL + TypeORM + Flutter 3. Autenticación JWT, roles por usuario, gestión de ofertas laborales y notificaciones.",
@@ -333,6 +336,9 @@ export const chatResponses: ChatResponse[] = [
       "comida",
       "restaurant",
       "restaurante",
+      "camion",
+      "camión",
+      "furgoneta",
     ],
     message: {
       es: "FoodBites - Backend Spring Boot 3.2.0 + Java 17 + MySQL 8.2. Gestión de food trucks con 6 entidades, búsqueda por ubicación y recomendaciones por tipo de cocina.",
@@ -354,6 +360,9 @@ export const chatResponses: ChatResponse[] = [
       "urban",
       "huertos-urbanos",
       "huertosurbanos",
+      "jardin",
+      "jardín",
+      "plantas",
     ],
     message: {
       es: "Gestor Huertos Urbanos - Java 17 + Spring Boot 3.2.0 + MySQL 8.2 + Bootstrap 5. Aplicación web para gestión de huertos urbanos con CRUD completo.",
@@ -374,6 +383,9 @@ export const chatResponses: ChatResponse[] = [
       "auditoriaweb",
       "penetration",
       "pentest",
+      "owasp",
+      "vulnerabilidades",
+      "hacking",
     ],
     message: {
       es: "Auditoria de Seguridad - NestJS 11 + React 19 + TypeScript. Herramienta de auditoría que analiza vulnerabilidades OWASP Top 10.",
@@ -2071,8 +2083,8 @@ export const followUpResponses: FollowUpResponse[] = [
       "gracias",
     ],
     message: {
-      es: "Aquí tienes los enlaces:\n\nLinkedIn: linkedin.com/in/andrescasoiglesias\nGitHub: github.com/Andres-Caso-Iglesias\nEmail: andrescasoiglesias@gmail.com\n\n¿Hay algo más que quieras saber?",
-      en: "Here are the links:\n\nLinkedIn: linkedin.com/in/andrescasoiglesias\nGitHub: github.com/Andres-Caso-Iglesias\nEmail: andrescasoiglesias@gmail.com\n\nIs there anything else you'd like to know?",
+      es: "Aquí tienes los enlaces:\n\n[LinkedIn](https://www.linkedin.com/in/andrescasoiglesias/)\n[GitHub](https://github.com/Andres-Caso-Iglesias)\n[Email](mailto:andrescasoiglesias@gmail.com)\n\n¿Hay algo más que quieras saber?",
+      en: "Here are the links:\n\n[LinkedIn](https://www.linkedin.com/in/andrescasoiglesias/?locale=en-US)\n[GitHub](https://github.com/Andres-Caso-Iglesias)\n[Email](mailto:andrescasoiglesias@gmail.com)\n\nIs there anything else you'd like to know?",
     },
   },
 
@@ -2093,8 +2105,8 @@ export const followUpResponses: FollowUpResponse[] = [
       "i would like",
     ],
     message: {
-      es: "Perfecto. Puedes contactarme por LinkedIn o email para agendar una llamada. ¿Prefieres que te escriba yo o prefieres contactarme directamente?",
-      en: "Perfect. You can reach me via LinkedIn or email to schedule a call. Would you prefer me to write to you or contact me directly?",
+      es: "Perfecto. Puedes contactarme por [LinkedIn](https://www.linkedin.com/in/andrescasoiglesias/) o [email](mailto:andrescasoiglesias@gmail.com) para agendar una llamada. ¿Prefieres que te escriba yo o prefieres contactarme directamente?",
+      en: "Perfect. You can reach me via [LinkedIn](https://www.linkedin.com/in/andrescasoiglesias/?locale=en-US) or [email](mailto:andrescasoiglesias@gmail.com) to schedule a call. Would you prefer me to write to you or contact me directly?",
     },
   },
 
