@@ -1,26 +1,14 @@
 "use client";
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { projects, Project } from '@/data/projectsData'
 import { motion } from 'framer-motion'
 import { createPortal } from 'react-dom'
 import Modal from './Modal'
-import { useGlobalLang } from '@/hooks/useGlobalLang'
-import { t } from '@/i18n/locales'
+import { useLanguage, t } from '@/lib/i18n'
 
 export default function ProjectsGrid() {
-  const { lang } = useGlobalLang()
+  const { lang } = useLanguage()
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  
-  useEffect(() => {
-    try {
-      const v = localStorage.getItem('lang') as 'es'|'en' | null
-      // Lang is managed by useLocale; this local state is deprecated but kept for compatibility
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const _ = v
-    } catch {}
-  }, [])
-
-  // Language changes are handled by useLocale context; no local listener needed here
 
   const displayName = (p: Project) => (lang === 'en' && p.enName) ? p.enName : p.name
   const displayDesc = (p: Project) => (lang === 'en' && p.enDescription) ? p.enDescription : p.description
