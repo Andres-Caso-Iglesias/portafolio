@@ -1,15 +1,14 @@
 import { TimelineItem } from "@/data/timelineData";
 import { calculateTimelinePositions } from "@/lib/timelineUtils";
 import { cn } from "@/lib/utils";
-import { t } from '@/i18n/locales'
-import { useGlobalLang } from '@/hooks/useGlobalLang'
+import { t, useLanguage } from '@/lib/i18n'
 
 interface TimelineMobileProps {
   items: TimelineItem[];
 }
 
 export default function TimelineMobile({ items }: TimelineMobileProps) {
-  const { lang } = useGlobalLang()
+  const { lang } = useLanguage()
   const positionedTimelineData = calculateTimelinePositions(items);
 
   return (
