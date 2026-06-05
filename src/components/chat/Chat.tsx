@@ -1,7 +1,7 @@
 "use client";
 
 import { useChat } from "@/hooks/useChat";
-import { useGlobalLang } from "@/hooks/useGlobalLang";
+import { useLanguage } from "@/lib/i18n";
 import { ChatMessage } from "./ChatMessage";
 import { ChatInput } from "./ChatInput";
 import { cn } from "@/lib/utils";
@@ -23,7 +23,7 @@ export function Chat() {
     messagesEndRef,
   } = useChat();
 
-  const { lang } = useGlobalLang();
+  const { lang } = useLanguage();
 
   const handleQuickAction = (keywords: string[]) => {
     // Use the first keyword as the search term
