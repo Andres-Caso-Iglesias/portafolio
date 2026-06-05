@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { createPortal } from 'react-dom';
 import { Project } from '@/data/projectsData';
-import { useGlobalLang } from '@/hooks/useGlobalLang';
+import { useLanguage } from '@/lib/i18n';
 
 interface ModalProps {
   project: Project;
@@ -11,7 +11,7 @@ interface ModalProps {
 }
 
 export default function Modal({ project, onClose }: ModalProps) {
-  const { lang } = useGlobalLang();
+  const { lang } = useLanguage();
   const [activeTab, setActiveTab] = useState<'challenge' | 'solution' | 'architecture' | 'snippets'>('challenge');
   const [snippetsContent, setSnippetsContent] = useState<{path: string, content: string}[]>([]);
   const [isLoadingSnippets, setIsLoadingSnippets] = useState(false);
