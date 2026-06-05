@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import SeoClient from "@/components/SeoClient";
 import { Chat } from "@/components/chat/Chat";
+import { LanguageProvider, getLangFromCookie, type LocaleData } from "@/lib/i18n";
+import locales from "@/i18n/locales.json";
 
 const cabinetGrotesk = localFont({
   src: [
@@ -24,16 +26,21 @@ export const metadata: Metadata = {
   description: "Portfolio de Andrés Caso Iglesias - Developer especializado en C#/.NET, Java y TypeScript",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const lang = await getLangFromCookie();
+  const initialLocales = locales as unknown as LocaleData;
+
   return (
-    <html lang="es" className={cabinetGrotesk.variable}>
+    <html lang={lang} className={cabinetGrotesk.variable} suppressHydrationWarning>
       <body className="bg-slate-900 text-white antialiased font-sans">
         <SeoClient />
-        {children}
+        <LanguageProvider initialLang={lang} initialLocales={initialLocales}>
+          {children}
+        </LanguageProvider>
         <Chat />
       </body>
     </html>
