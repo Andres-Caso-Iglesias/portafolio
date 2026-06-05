@@ -20,9 +20,81 @@ const cabinetGrotesk = localFont({
   display: "swap",
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://andres-caso-portfolio.vercel.app";
+
 export const metadata: Metadata = {
-  title: "Andrés Caso Iglesias | Developer",
-  description: "Portfolio de Andrés Caso Iglesias - Developer especializado en C#/.NET, Java y TypeScript",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Andres Caso Iglesias - Senior Backend Developer",
+    template: "%s - Andres Caso Iglesias",
+  },
+  description: "Senior Backend Developer con 20 anos de experiencia en liderazgo operativo, transicion a desarrollo backend. Master en Ciberseguridad e IA. NestJS, Spring Boot, TypeORM, React, Next.js.",
+  keywords: [
+    "Backend Developer",
+    "Senior Developer",
+    "Cybersecurity",
+    "NIS2",
+    "NestJS",
+    "Spring Boot",
+    "TypeScript",
+    "Next.js",
+    "React",
+    "Pentesting",
+    "eJPT",
+    "Andres Caso Iglesias",
+  ],
+  authors: [
+    {
+      name: "Andres Caso Iglesias",
+      url: siteUrl,
+    },
+  ],
+  creator: "Andres Caso Iglesias",
+  openGraph: {
+    type: "website",
+    locale: "es_ES",
+    alternateLocale: ["en_US"],
+    url: siteUrl,
+    siteName: "Andres Caso Iglesias Portfolio",
+    title: "Andres Caso Iglesias - Senior Backend Developer",
+    description: "Senior Backend Developer con experiencia en ciberseguridad, NestJS, Spring Boot, y liderazgo tecnico.",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Andres Caso Iglesias - Senior Backend Developer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Andres Caso Iglesias - Senior Backend Developer",
+    description: "Senior Backend Developer con experiencia en ciberseguridad, NestJS, Spring Boot, y liderazgo tecnico.",
+    images: ["/opengraph-image"],
+    creator: "@andrescaso",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: siteUrl,
+    languages: {
+      es: siteUrl,
+      en: `${siteUrl}/?lang=en`,
+    },
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default async function RootLayout({
