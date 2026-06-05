@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import SeoClient from "@/components/SeoClient";
 import { Chat } from "@/components/chat/Chat";
 import { LanguageProvider, getLangFromCookie, type LocaleData } from "@/lib/i18n";
 import locales from "@/i18n/locales.json";
@@ -37,7 +36,6 @@ export default async function RootLayout({
   return (
     <html lang={lang} className={cabinetGrotesk.variable} suppressHydrationWarning>
       <body className="bg-slate-900 text-white antialiased font-sans">
-        <SeoClient />
         <LanguageProvider initialLang={lang} initialLocales={initialLocales}>
           {children}
         </LanguageProvider>
