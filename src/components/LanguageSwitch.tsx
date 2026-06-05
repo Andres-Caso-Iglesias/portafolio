@@ -1,17 +1,14 @@
 "use client";
 import React from 'react'
-import { useGlobalLang } from '../hooks/useGlobalLang'
+import { useLanguage } from '@/lib/i18n'
 
 export default function LanguageSwitch() {
-  const { lang, setLang } = useGlobalLang()
+  const { lang, setLang } = useLanguage()
   // Simple bilingual toggle: ES <-> EN
+  // setLang now persists to localStorage + cookie + dispatches langChanged automatically
   const toggle = () => {
     const next = lang === 'es' ? 'en' : 'es'
     setLang(next)
-    // Notify other client components about language change
-    try {
-      window.dispatchEvent(new Event('langChanged'))
-    } catch {}
   }
   const onClick = () => {
     toggle()
