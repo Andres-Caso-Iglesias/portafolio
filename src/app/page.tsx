@@ -1,16 +1,11 @@
 import Timeline from "@/components/Timeline";
 import EducationSection from "@/components/EducationSection";
-import LocaleContent from "@/components/LocaleContent";
 import { HeroAboutClient, SkillsProjectsContactClient } from "@/components/HomeClientContent";
 
 export default function Home() {
-  const defaultLang = 'es' as const;
-
   return (
     <main className="min-h-screen">
-      <LocaleContent defaultLang={defaultLang}>
-        <HeroAboutClient />
-      </LocaleContent>
+      <HeroAboutClient />
 
       {/* Timeline Section */}
       <Timeline />
@@ -18,9 +13,7 @@ export default function Home() {
       {/* Education Section */}
       <EducationSection />
 
-      <LocaleContent defaultLang={defaultLang}>
-        <SkillsProjectsContactClient />
-      </LocaleContent>
+      <SkillsProjectsContactClient />
     </main>
   );
 }

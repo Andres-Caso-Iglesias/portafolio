@@ -6,15 +6,14 @@ import { skills } from "@/data/skillsData";
 import LanguageSwitch from "@/components/LanguageSwitch";
 import ProjectsGrid from "@/components/ProjectsGrid";
 import ProfileIntroText from "@/components/ProfileIntroText";
-import { useLang } from "@/components/LocaleContent";
-import { t } from "@/i18n/locales";
+import { useLanguage, t } from "@/lib/i18n";
 import { useState } from "react";
 import Modal from "./Modal";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 
 function HeroSection() {
-  const lang = useLang();
+  const { lang } = useLanguage();
   return (
     <section className="min-h-screen flex flex-col justify-center items-center px-6 bg-gradient-to-b from-slate-900 to-slate-800 relative">
       <div className="absolute top-6 right-6">
@@ -72,7 +71,7 @@ function HeroSection() {
 }
 
 function AboutSection() {
-  const lang = useLang();
+  const { lang } = useLanguage();
   return (
     <section className="py-20 px-6 bg-slate-800">
       <div className="max-w-4xl mx-auto">
@@ -95,7 +94,7 @@ function AboutSection() {
 }
 
 function SkillsSection() {
-  const lang = useLang();
+  const { lang } = useLanguage();
   const cyberCategories = ['OSINT', 'Sistemas Operativos', 'Redes'];
   return (
     <section className="py-20 px-6 bg-slate-800 w-full">
@@ -139,7 +138,7 @@ function SkillsSection() {
 }
 
 function ProjectsSection() {
-  const lang = useLang();
+  const { lang } = useLanguage();
   return (
     <section className="py-20 px-6 bg-slate-800 w-full">
       <div className="max-w-4xl mx-auto">
@@ -153,7 +152,7 @@ function ProjectsSection() {
 }
 
 function ContactSection() {
-  const lang = useLang();
+  const { lang } = useLanguage();
   return (
     <section className="py-20 px-6 bg-slate-900 text-center">
       <div className="max-w-4xl mx-auto">
@@ -171,7 +170,7 @@ function ContactSection() {
 }
 
 function Footer() {
-  const lang = useLang();
+  const { lang } = useLanguage();
   return (
     <footer className="py-8 px-6 bg-slate-950 text-center text-slate-500 text-sm">
       <p>© {new Date().getFullYear()} Andrés Caso Iglesias. {t(lang, 'home.footerRights')}</p>
