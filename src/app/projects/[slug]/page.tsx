@@ -1,12 +1,67 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { projects } from "@/data/projectsData";
 import { loadSnippetsServer } from "@/lib/snippetLoader";
+import { getLangFromCookie } from "@/lib/i18n";
 import SnippetViewer from "@/components/SnippetViewer";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://andres-caso-portfolio.vercel.app";
 
 export const dynamicParams = false;
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const project = projects.find((p) => p.slug === slug);
+  const lang = await getLangFromCookie();
+
+  if (!project) {
+    return { title: "Proyecto no encontrado" };
+  }
+
+  const name = lang === "en" && project.enName ? project.enName : project.name;
+  const description =
+    lang === "en" && project.enDescription
+      ? project.enDescription
+      : project.description;
+
+  return {
+    title: name,
+    description,
+    keywords: project.tech,
+    openGraph: {
+      type: "article",
+      locale: "es_ES",
+      alternateLocale: ["en_US"],
+      url: `${siteUrl}/projects/${slug}`,
+      title: name,
+      description,
+      images: [
+        {
+          url: "/opengraph-image",
+          width: 1200,
+          height: 630,
+          alt: name,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: name,
+      description,
+      images: ["/opengraph-image"],
+    },
+    alternates: {
+      canonical: `${siteUrl}/projects/${slug}`,
+    },
+  };
 }
 
 export default async function ProjectPage({
