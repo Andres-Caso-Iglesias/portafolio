@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Lang } from "@/i18n/types";
-import { useGlobalLang } from "./useGlobalLang";
+import { useLanguage } from "@/lib/i18n";
 import { processUserMessage, isValidInput, generateMessageId } from "@/lib/chatUtils";
 import { welcomeMessage, quickActions } from "@/data/chatData";
 import { type ProjectData } from "@/components/chat/ProjectCard";
@@ -45,7 +45,7 @@ export interface ChatActions {
 // useChat Hook
 // ──────────────────────────────────────────────────────────────
 export function useChat(): ChatState & ChatActions {
-  const { lang } = useGlobalLang();
+  const { lang } = useLanguage();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
