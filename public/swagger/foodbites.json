@@ -1,0 +1,170 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "FoodBites API (PLACEHOLDER)",
+    "description": "PLACEHOLDER. Esta es una especificacion OpenAPI minima y ficticia incluida unicamente para evitar el 404 que existia cuando projectsData.ts referenciaba este archivo. La API real de FoodBites (Java 17 + Spring Boot 3.2 + MySQL + JPA/Hibernate) no esta documentada publicamente en este portafolio. Para detalles tecnicos reales del proyecto consultar el repositorio enlazado.",
+    "version": "0.0.1-placeholder",
+    "contact": {
+      "name": "Andres Caso Iglesias",
+      "url": "https://github.com/Andres-Caso-Iglesias/FoodBites"
+    },
+    "license": {
+      "name": "Placeholder - no production license"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "PLACEHOLDER local development server. La API real no esta desplegada publicamente."
+    }
+  ],
+  "tags": [
+    {
+      "name": "food-trucks",
+      "description": "Gestion de food trucks (PLACEHOLDER)"
+    },
+    {
+      "name": "auth",
+      "description": "Autenticacion de usuarios (PLACEHOLDER)"
+    }
+  ],
+  "paths": {
+    "/api/food-trucks": {
+      "get": {
+        "tags": ["food-trucks"],
+        "summary": "Listar food trucks (PLACEHOLDER)",
+        "description": "PLACEHOLDER endpoint. En la API real retornaria la lista paginada de food trucks registrados.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/FoodTruck" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/food-trucks/{id}": {
+      "get": {
+        "tags": ["food-trucks"],
+        "summary": "Obtener food truck por ID (PLACEHOLDER)",
+        "description": "PLACEHOLDER endpoint. En la API real retornaria un food truck especifico por su identificador.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Identificador del food truck",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/FoodTruck" }
+              }
+            }
+          },
+          "404": {
+            "description": "Food truck no encontrado"
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Autenticar usuario (PLACEHOLDER)",
+        "description": "PLACEHOLDER endpoint. En la API real validaria credenciales y devolveria un token JWT.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/LoginRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Autenticacion correcta",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/LoginResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Credenciales invalidas"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "FoodTruck": {
+        "type": "object",
+        "description": "Entidad ficticia que representa un food truck (PLACEHOLDER)",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          },
+          "nombre": {
+            "type": "string",
+            "example": "El Camion Vasco"
+          },
+          "tipoCocina": {
+            "type": "string",
+            "example": "vasca"
+          },
+          "ubicacionActual": {
+            "type": "string",
+            "example": "Bilbao, Calle Gran Via 1"
+          }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "user@example.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "example": "PLACEHOLDER"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.PLACEHOLDER.PLACEHOLDER"
+          },
+          "expiresIn": {
+            "type": "integer",
+            "format": "int32",
+            "example": 3600
+          }
+        }
+      }
+    }
+  }
+}
