@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { createPortal } from 'react-dom';
 import { Project } from '@/data/projectsData';
 import { useLanguage } from '@/lib/i18n';
+import { loadSnippetsClient, type Snippet } from '@/lib/snippetLoaderClient';
+import SnippetViewer from '@/components/SnippetViewer';
 
 interface ModalProps {
   project: Project;
@@ -13,7 +15,7 @@ interface ModalProps {
 export default function Modal({ project, onClose }: ModalProps) {
   const { lang } = useLanguage();
   const [activeTab, setActiveTab] = useState<'challenge' | 'solution' | 'architecture' | 'snippets'>('challenge');
-  const [snippetsContent, setSnippetsContent] = useState<{path: string, content: string}[]>([]);
+  const [snippetsContent, setSnippetsContent] = useState<Snippet[]>([]);
   const [isLoadingSnippets, setIsLoadingSnippets] = useState(false);
 
   const handleTabChange = (tab: 'challenge' | 'solution' | 'architecture' | 'snippets') => {
@@ -31,17 +33,7 @@ export default function Modal({ project, onClose }: ModalProps) {
   useEffect(() => {
     if (activeTab === 'snippets' && project.snippetPaths && project.snippetPaths.length > 0 && snippetsContent.length === 0) {
       setIsLoadingSnippets(true);
-      Promise.all(
-        project.snippetPaths.map(async (path) => {
-          try {
-            const res = await fetch(path);
-            const text = await res.text();
-            return { path, content: text };
-          } catch (e) {
-            return { path, content: 'Error loading snippet' };
-          }
-        })
-      ).then(data => {
+      loadSnippetsClient(project.snippetPaths).then((data) => {
         setSnippetsContent(data);
         setIsLoadingSnippets(false);
       });
@@ -155,23 +147,10 @@ export default function Modal({ project, onClose }: ModalProps) {
                 {isLoadingSnippets ? (
                   <p className="animate-pulse">{lang === 'en' ? 'Loading snippets...' : 'Cargando snippets...'}</p>
                 ) : (
-                  snippetsContent.map((snippet, idx) => (
-                    <div key={idx} className="bg-[#0f172a] rounded-lg border border-slate-700 overflow-hidden shadow-lg">
-                      <div className="bg-slate-800/80 px-4 py-2 border-b border-slate-700 flex items-center justify-between">
-                        <span className="text-xs font-mono text-blue-400">
-                          {snippet.path.split('/').pop()}
-                        </span>
-                        <div className="flex gap-1.5">
-                          <div className="w-2.5 h-2.5 rounded-full bg-slate-600"></div>
-                          <div className="w-2.5 h-2.5 rounded-full bg-slate-600"></div>
-                          <div className="w-2.5 h-2.5 rounded-full bg-slate-600"></div>
-                        </div>
-                      </div>
-                      <div className="p-4 overflow-x-auto text-xs sm:text-sm text-slate-300 font-mono leading-relaxed bg-[#0d1117]">
-                        <pre><code>{snippet.content}</code></pre>
-                      </div>
-                    </div>
-                  ))
+                  <SnippetViewer
+                    snippets={snippetsContent}
+                    emptyLabel={lang === 'en' ? 'No snippets available.' : 'No hay snippets disponibles.'}
+                  />
                 )}
               </div>
             )}
