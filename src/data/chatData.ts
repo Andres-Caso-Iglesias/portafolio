@@ -83,7 +83,6 @@ export const chatResponses: ChatResponse[] = [
       "curriculum",
       "cv",
       "profesional",
-      "职业",
       "años",
       "antigüedad",
       "experiencia laboral",
@@ -179,7 +178,6 @@ export const chatResponses: ChatResponse[] = [
       "carrera",
       "grado",
       "universidad",
-      "学院",
       "estudie",
       "formado",
       "educado",
@@ -233,8 +231,6 @@ export const chatResponses: ChatResponse[] = [
       "hablar",
       "comunicar",
       "comunicación",
-      "联络",
-      "联系",
       // Inglés
       "contact",
       "email",
@@ -275,7 +271,6 @@ export const chatResponses: ChatResponse[] = [
       "pagina",
       "página",
       "aplicación",
-      "软件",
       "trabajo",
       "realización",
       "creaciones",
@@ -429,7 +424,6 @@ export const chatResponses: ChatResponse[] = [
       "buscar",
       "oferta",
       "ofertas",
-      "位置",
       "remoto",
       "presencial",
       "hibrido",
@@ -484,7 +478,6 @@ export const chatResponses: ChatResponse[] = [
       "redes",
       "firewall",
       "vpn",
-      "网络安全",
       "hackear",
       "hackear",
       "investigador",
@@ -531,7 +524,6 @@ export const chatResponses: ChatResponse[] = [
       "certificados",
       "titulación",
       "acreditación",
-      "资质",
       "homologación",
       "reconocimiento",
       "oficial",
@@ -574,7 +566,6 @@ export const chatResponses: ChatResponse[] = [
       "bilingüe",
       "bilingue",
       "multilingüe",
-      "语言",
       "extranjero",
       // Inglés
       "languages",
@@ -613,7 +604,6 @@ export const chatResponses: ChatResponse[] = [
       "money",
       "dinero",
       "presupuesto",
-      "薪资",
       "renta",
       "ingresos",
       // Inglés
@@ -652,7 +642,6 @@ export const chatResponses: ChatResponse[] = [
       "presentar",
       "presentación",
       "presentacion",
-      "介绍",
       "perfil",
       "resumen",
       "resumir",
@@ -697,7 +686,6 @@ export const chatResponses: ChatResponse[] = [
       "html",
       "tailwind",
       "bootstrap",
-      "前端",
       // Inglés
       "frontend",
       "front-end",
@@ -745,7 +733,6 @@ export const chatResponses: ChatResponse[] = [
       "mongodb",
       "sql",
       "nosql",
-      "后端",
       "nest",
       "nestjs",
       "spring",
@@ -814,7 +801,6 @@ export const chatResponses: ChatResponse[] = [
       "hyper-v",
       "containers",
       "contenedores",
-      "运维",
       // Inglés
       "devops",
       "cloud",
@@ -868,7 +854,6 @@ export const chatResponses: ChatResponse[] = [
       "soft skills",
       "blandas",
       "habilidades blandas",
-      "人际",
       // Inglés
       "leadership",
       "leader",
@@ -911,7 +896,6 @@ export const chatResponses: ChatResponse[] = [
       "antigravity",
       "opencode",
       "notebooklm",
-      "人工智能",
       "datos",
       "data",
       // Inglés
@@ -957,7 +941,6 @@ export const chatResponses: ChatResponse[] = [
       "panadería",
       "jefe de cocina",
       "cocinero",
-      "餐饮",
       // Inglés
       "hospitality",
       "cooking",
@@ -987,7 +970,6 @@ export const chatResponses: ChatResponse[] = [
       "cuántos años",
       "viejo",
       "joven",
-      "年",
       "nacido",
       "nacimiento",
       // Inglés
@@ -1025,7 +1007,6 @@ export const chatResponses: ChatResponse[] = [
       "direccion",
       "ciudad",
       "pueblo",
-      "地址",
       // Inglés
       "location",
       "where",
@@ -1060,7 +1041,6 @@ export const chatResponses: ChatResponse[] = [
       "inventory",
       "operaciones",
       "operativo",
-      "物流",
       // Inglés
       "logistics",
       "warehouse",
@@ -1090,7 +1070,6 @@ export const chatResponses: ChatResponse[] = [
       "desarrollo",
       "workflow",
       "flujo",
-      "工序",
       "procedimientos",
       // Inglés
       "processes",
@@ -1130,7 +1109,6 @@ export const chatResponses: ChatResponse[] = [
       "pasion",
       "entusiasmo",
       "motivos",
-      "为什么",
       "anhelo",
       // Inglés
       "motivation",
@@ -1167,7 +1145,6 @@ export const chatResponses: ChatResponse[] = [
       "punto debil",
       "fracaso",
       "fracasar",
-      "困难",
       "limitación",
       "limitacion",
       // Inglés
@@ -1201,7 +1178,6 @@ export const chatResponses: ChatResponse[] = [
       "cualidades",
       "virtud",
       "virtudes",
-      "擅长",
       "fuerte",
       "bueno",
       "buena",
@@ -1239,7 +1215,6 @@ export const chatResponses: ChatResponse[] = [
       "euros",
       "dinero",
       "presupuesto",
-      "薪资",
       "cuanto",
       "cuánto",
       // Inglés
@@ -1271,7 +1246,6 @@ export const chatResponses: ChatResponse[] = [
       "pasatiempos",
       "tiempo libre",
       "ocio",
-      "兴趣",
       "side project",
       "lado",
       // Inglés
@@ -1307,7 +1281,6 @@ export const chatResponses: ChatResponse[] = [
       "empresas",
       "trabajé",
       "trabaje",
-      "前工作",
       "donde trabajaste",
       "dónde trabajaste",
       // Inglés
@@ -1340,7 +1313,6 @@ export const chatResponses: ChatResponse[] = [
       "testimonios",
       "opinión",
       "opinion",
-      "推荐",
       "calificación",
       "calificacion",
       // Inglés
@@ -1597,7 +1569,6 @@ export const chatResponses: ChatResponse[] = [
       "hash",
       "contraseña",
       "contrasena",
-      "密码",
       "firewall",
       "waf",
       "owasp",
@@ -1766,7 +1737,6 @@ export const chatResponses: ChatResponse[] = [
       "reunión",
       "reunion",
       "meetings",
-      "汇报",
       "escritura",
       "documentación",
       "documentacion",
@@ -1802,7 +1772,6 @@ export const chatResponses: ChatResponse[] = [
       "haciendo",
       "programar",
       "programando",
-      "编码",
       "code",
       "coding",
       // Inglés
@@ -1843,7 +1812,6 @@ export const chatResponses: ChatResponse[] = [
       "bootcamp",
       "master",
       "máster",
-      "学习",
       // Inglés
       "learn",
       "learning",
@@ -1877,7 +1845,6 @@ export const chatResponses: ChatResponse[] = [
       "grupal",
       "pair programming",
       "programación en pareja",
-      "合作",
       // Inglés
       "collaboration",
       "collaborate",
@@ -1909,7 +1876,6 @@ export const chatResponses: ChatResponse[] = [
       "bugs",
       "error",
       "errores",
-      "困难",
       "difícil",
       "dificil",
       "reto",
@@ -1950,7 +1916,6 @@ export const chatResponses: ChatResponse[] = [
       "planes",
       "objetivos",
       "metas",
-      "愿景",
       "año",
       "años",
       "largo plazo",
@@ -1997,7 +1962,6 @@ export const chatResponses: ChatResponse[] = [
       "zellij",
       "terminal",
       "consola",
-      "命令行",
       // Inglés
       "tools",
       "tool",
@@ -2033,7 +1997,6 @@ export const chatResponses: ChatResponse[] = [
       "contribuir",
       "contribución",
       "comunidad",
-      "开源",
       "comunitario",
       "gratuito",
       // Inglés
