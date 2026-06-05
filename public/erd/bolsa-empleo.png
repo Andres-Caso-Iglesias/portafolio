@@ -1,8 +1,0 @@
-[Placeholder for Bolsa de Empleo ERD Diagram]
-Entities: JobOffer, Company, User, Application, Category
-Relationships: 
-- JobOffer -> Company (ManyToOne)
-- JobOffer -> Category (ManyToMany)
-- JobOffer -> User (ManyToOne for applications)
-- User -> Application (OneToOne)
-- JobOffer <-> Application (OneToMany)
