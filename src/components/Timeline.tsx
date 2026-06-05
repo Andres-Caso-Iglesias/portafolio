@@ -4,11 +4,10 @@ import { TimelineItem } from "@/data/timelineData";
 import TimelineDesktop from "@/components/timeline/TimelineDesktop";
 import TimelineMobile from "@/components/timeline/TimelineMobile";
 import { rawTimelineData } from "@/data/timelineData";
-import { t } from '@/i18n/locales'
-import { useGlobalLang } from '@/hooks/useGlobalLang'
+import { t, useLanguage } from '@/lib/i18n'
 
 export default function Timeline() {
-  const { lang } = useGlobalLang()
+  const { lang } = useLanguage()
   return (
     <section className="py-20 bg-slate-900 overflow-hidden">
       <div className="w-full">
