@@ -1,10 +1,9 @@
 "use client";
 import { educationData } from "@/data/educationData";
-import { t } from '@/i18n/locales'
-import { useGlobalLang } from '@/hooks/useGlobalLang'
+import { t, useLanguage } from '@/lib/i18n'
 
 export default function EducationSection() {
-  const { lang } = useGlobalLang()
+  const { lang } = useLanguage()
   // Sort education chronologically (oldest first) so Master (2026) appears in its correct position
   const getYearFromEdu = (edu: typeof educationData[number]) => {
     const yearMatch = edu.period.match(/(\d{4})/g);
