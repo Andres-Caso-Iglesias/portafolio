@@ -2,15 +2,14 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { TimelineItem } from "@/data/timelineData";
 import { calculateTimelinePositions } from "@/lib/timelineUtils";
-import { t } from '@/i18n/locales'
-import { useGlobalLang } from '@/hooks/useGlobalLang'
+import { t, useLanguage } from '@/lib/i18n'
 
 interface TimelineDesktopProps {
   items: TimelineItem[];
 }
 
 export default function TimelineDesktop({ items }: TimelineDesktopProps) {
-  const { lang } = useGlobalLang()
+  const { lang } = useLanguage()
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const positioned = calculateTimelinePositions(items);
   
