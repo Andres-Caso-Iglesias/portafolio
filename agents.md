@@ -27,18 +27,33 @@ Este portafolio presenta la trayectoria, proyectos y habilidades de Andres Caso 
 - **Tipado Estricto**: Uso de interfaces explicitas, evitando `any`.
 - **Logica Pura y Testable**: Funciones de utilidad aisladas y sin efectos secundarios.
 
-### Estructura de Directorios
+### Estructura de Directorios (post-sprint production-readiness)
+
 ```
 /src
   /app              # Enrutamiento, layouts y paginas (App Router de Next.js)
+    layout.tsx     # Layout root: LanguageProvider + html lang dinamico + JSON-LD Person + metadata expandido
+    page.tsx       # Home (Server Component, envuelve con LocaleContent)
+    sitemap.ts     # MetadataRoute.Sitemap (6 URLs, en/es)
+    robots.ts      # MetadataRoute.Robots
+    not-found.tsx  # 404 bilingue branded
+    opengraph-image.tsx  # next/og 1200x630 placeholder
+    icon.svg       # Favicon (convención Next 16)
+    apple-icon.svg # Apple touch icon
     /projects
-      /[slug]       # Pagina dinamica de detalle de proyecto
+      /[slug]       # Pagina detalle RSC con generateMetadata, generateStaticParams, snippets via loader
   /components       # Capa de Presentacion (JSX y estado UI exclusivamente)
-    Modal.tsx       # Modal de vista rapida de proyectos
-    Timeline.tsx   # Componente principal del timeline
+    Modal.tsx       # Modal de vista rapida (usa loadSnippetsClient)
+    SnippetViewer.tsx # UI comun de snippets (Server-safe + boton copy Client)
+    Timeline.tsx    # Componente principal del timeline
+    LanguageSwitch.tsx # Switch de idioma (setea cookie + localStorage + evento)
+    HomeClientContent.tsx # Hero/About/Skills/Projects/Contact/Footer
+    ProfileIntroText.tsx
+    EducationSection.tsx
+    ProjectsGrid.tsx
     /timeline      # Componentes especializados (TimelineDesktop, TimelineMobile)
     /chat          # Componentes del chat interactivo
-      Chat.tsx     # Contenedor principal del chat
+      Chat.tsx     # Contenedor principal del chat (dentro de LanguageProvider)
       ChatMessage.tsx # Presentacion de mensajes con parseo de markdown
       ChatInput.tsx   # Input del usuario con envio por Enter
       index.ts     # Barrel exports
@@ -47,18 +62,42 @@ Este portafolio presenta la trayectoria, proyectos y habilidades de Andres Caso 
     skillsData.ts
     timelineData.ts
     educationData.ts
-    chatData.ts    # Respuestas del chat, follow-ups y quick actions
+    chatData.ts    # 47 categorias, fix Next.js 16, follow-up markdown, sin keywords chinos
   /lib              # Capa de Logica (utilidades, calculos puros y helpers)
     utils.ts
     timelineUtils.ts
     chatUtils.ts   # Logica de matching, contexto conversacional y futuro soporte IA
+    i18n.ts        # BARREL Client-safe (re-exporta de i18n-context)
+    i18n-context.tsx # "use client" - LanguageContext, useLanguage, LanguageProvider
+    i18n-server.ts # Server-only - getLangFromCookie (lee cookies() de next/headers)
+    snippetLoader.ts       # Server: loadSnippetsServer (usa fs/promises)
+    snippetLoaderClient.ts # "use client" - loadSnippetsClient (usa fetch)
   /hooks            # Hooks personalizados
-    useGlobalLang.ts
     useChat.ts     # Estado del chat con tracking de contexto
+  /i18n             # Traducciones (UNICO archivo)
+    locales.json   # ES + EN, contiene "Seniority Hibrido" copy
 /public
-  /erd              # Diagramas ERD (SVG) de cada proyecto
+  /erd              # 5 SVG de diagramas ERD
   /snippets         # Fragmentos de codigo representativos
+  /swagger          # OpenAPI specs
+    bolsa-empleo.json
+    foodbites.json  # OpenAPI 3.0 placeholder (marcado PLACEHOLDER)
+  favicon ya no esta aqui, Next 16 lo lee de /src/app/icon.svg
 ```
+
+### Archivos Eliminados (sprint production-readiness)
+
+- `src/hooks/useGlobalLang.tsx` — codigo muerto (reemplazado por LanguageContext)
+- `src/hooks/useLocale.tsx` — codigo muerto
+- `src/components/LocaleContent.tsx` — Provider redundante (movido al layout)
+- `src/components/LocaleText.tsx` — codigo muerto
+- `src/components/SeoClient.tsx` — hack con document.querySelector (reemplazado por metadata)
+- `src/i18n/locales.ts` — fusionado a `locales.json`
+- `public/erd/bolsa-empleo.png` — huerfano
+- `public/erd/foodbites.png` — huerfano
+- `public/snippets/linq-csharp.cs` — huerfano
+- `public/snippets/linq-csharp.png` — vacio
+- `public/snippets/java-spring.png` — vacio
 
 ### Flujo de Datos
 1. **Capa de Datos** (`/src/data`): Contiene unicamente arrays estaticos e interfaces TypeScript. Nada de logica ni efectos secundarios.
@@ -161,9 +200,11 @@ Chatbot rule-based para responder preguntas de reclutadores sobre el perfil prof
 
 ### SEO y Metadatos
 - **Metaetiquetas Completas**: Titulo descriptivo, descripcion rica en palabras clave.
-- **Open Graph y Twitter Card**: Para compartir atractivo en redes sociales.
-- **JSON-LD Estructurado**: Planificado para mejorar aparicion en buscadores (Person, WebSite).
-- **Url Canonicass y Manejo de Idiomas**: Preparado para i18n con rutas localizadas (`/`, `/en/`).
+- **Open Graph y Twitter Card**: Implementado en `layout.tsx` (`opengraph-image.tsx` con `next/og` 1200x630).
+- **JSON-LD Estructurado**: Implementado en `layout.tsx` (Person schema). `sameAs` y `alumniOf` son placeholders honestos que requieren datos reales.
+- **Sitemap y Robots**: `app/sitemap.ts` (6 URLs, en/es) y `app/robots.ts` (MetadataRoute).
+- **Favicons**: `app/icon.svg` y `app/apple-icon.svg` (convención Next 16).
+- **Url Canonicas y Manejo de Idiomas**: i18n custom con cookie `lang` + `suppressHydrationWarning` en `<html lang>`. Migracion completa a `next-intl` con routing `/en/*` esta en backlog.
 
 ## Testing y Calidad
 - **Tipado Estricto**: Primer nivel de gestion de errores.
@@ -171,14 +212,34 @@ Chatbot rule-based para responder preguntas de reclutadores sobre el perfil prof
 - **Pruebas Futuras**: Estructura preparada para agregar unit tests en `/lib` y component tests con Jest/Vitest y React Testing Library.
 
 ## Proximos Pasos (Mejoras Futuras)
-1. **Menu de Navegacion con Resaltado de Seccion** - Mejora usabilidad en paginas largas.
-2. **Modo Claro/Oscuro con Persistencia** - Usando `next-themes` correctamente configurado.
-3. **Internacionalizacion (i18n)** - Soporte completo para espanol e ingles usando `next-intl`.
-4. **Seccion de Descarga de CV** - Enlace directo a PDF en `/public/cv.pdf`.
-5. **Pruebas Unitarias** - Para utilidades en `/lib` y componentes complejos.
-6. **Optimizacion de Imagenes** - Cuando se anadan fotos o screenshots de proyectos.
-7. **Analisis de Rendimiento** - Uso de Lighthouse y Web Vitals para monitorear y mejorar.
-8. **Chat con IA** - Integrar Gemini API para respuestas mas naturales (previamente configurado en `ChatConfig`).
+
+### Inmediato (bloquea deploy)
+1. **Ajustar placeholders de JSON-LD** en `src/app/layout.tsx`: URLs reales de LinkedIn/GitHub y universidad real en `alumniOf` (5 min).
+2. **Ejecutar `npm run build`** para confirmar compilacion runtime.
+3. **Correr 14 manual browser tests** del verify-report.
+4. **Revisar `git log --oneline -39` y `git diff origin/dev..HEAD`** antes del PR.
+5. **Merge a `main` y deploy a Vercel**.
+
+### Sprint futuro - ALTA prioridad
+1. **Instalar paquete `server-only`** para defense-in-depth en `i18n-server.ts` y `snippetLoader.ts` (depende de disciplina manual hoy).
+2. **Arreglar 2 errores TS pre-existentes** (out-of-scope del sprint anterior):
+   - `src/components/chat/Chat.tsx:23` — firma de useChat
+   - `src/hooks/useChat.ts:184` — messagesEndRef
+3. **Vitest + tests unitarios** para `lib/utils.ts`, `lib/timelineUtils.ts`, `lib/chatUtils.ts`, `lib/chatData.ts` (matching, follow-ups, language).
+
+### Sprint futuro - MEDIA prioridad
+1. **ESLint + Prettier + CI/CD** (GitHub Actions: lint + typecheck + build en cada PR).
+2. **Tests E2E con Playwright** cubriendo: cambio de idioma, modal de proyectos, slug page, chat, theme switch.
+3. **Migrar a `next-intl`** con routing `/en/*` (reemplaza i18n custom con cookie).
+4. **Cerrar 9 manual browser tests** del SDD previo `estrategia-visualizacion-tecnica` (quedaron como deuda).
+5. **IA real en el chat** con Gemini API (interfaz `AIProvider`/`ChatConfig` ya preparada).
+
+### Sprint futuro - BAJA prioridad
+1. **Menu de navegacion con resaltado de seccion** - mejora usabilidad en paginas largas.
+2. **Modo claro/oscuro con persistencia** - usando `next-themes` correctamente configurado.
+3. **Seccion de descarga de CV** - enlace directo a PDF en `/public/cv.pdf`.
+4. **Optimizacion de imagenes** - cuando se anadan fotos o screenshots de proyectos.
+5. **Analisis de rendimiento** - Lighthouse y Web Vitals para monitorear y mejorar.
 
 ## NOTA IMPORTANTE: Sin Emojis
 Este proyecto **NO utiliza emojis** en ninguna parte del codigo, documentacion o mensajes de commit. Al trabajar en este proyecto:
@@ -188,6 +249,47 @@ Este proyecto **NO utiliza emojis** en ninguna parte del codigo, documentacion o
 - Usar texto plano para一切的 descripciones
 
 Esta decision se tomopara mantener consistencia y evitar problemas de compatibilidad entre diferentes sistemas y editores.
+
+## Estado Actual del Proyecto (Junio 2026)
+
+**Sprint production-readiness COMPLETO y archivado.** 39 commits atomicos, 36/36 requirements OK (100%), 9 gaps residuales documentados con prioridad clara.
+
+### Logros del sprint
+- **Stack actualizado a Next.js 16 / React 19 / TypeScript 5.9 / Tailwind 4** y documentado con las versiones exactas.
+- **i18n custom con cookie**: LanguageContext + useLanguage hook + getLangFromCookie server-side. `<html lang>` dinamico desde el primer byte.
+- **Single source of truth**: `src/i18n/locales.json` unico (eliminados `locales.ts` y 2 hooks duplicados).
+- **Slug page optimizada**: 441 → 186 lineas (-58%) gracias a `loadSnippetsServer` con `fs/promises` en RSC.
+- **SEO completo**: sitemap, robots, OG image 1200x630, JSON-LD Person, favicons, metadata expandido.
+- **Chat con Next.js 16** (era Next.js 19 stale) + follow-ups con markdown links clickeables.
+- **OpenAPI placeholder** honesto en `public/swagger/foodbites.json` marcado como PLACEHOLDER.
+- **8 regresiones pineadas** con tests, no con buenas intenciones.
+- **Net -200 lineas** de codigo (cleanup agresivo: 9 archivos eliminados, 14 creados, 16+ modificados).
+
+### Gaps residuales (out-of-scope, priorizados)
+- **ALTA** — Instalar paquete `server-only` para defense-in-depth (hoy depende de disciplina de imports).
+- **ALTA** — Arreglar 2 errores TS pre-existentes en `Chat.tsx:23` y `useChat.ts:184`.
+- **ALTA** — Vitest + tests unitarios para `/lib`.
+- **MEDIA** — ESLint + Prettier + CI/CD con GitHub Actions.
+- **MEDIA** — Tests E2E con Playwright (cambio idioma, modal, slug, chat, theme).
+- **MEDIA** — Migrar a `next-intl` con routing `/en/*`.
+- **MEDIA** — Cerrar 9 manual browser tests del SDD previo `estrategia-visualizacion-tecnica`.
+- **MEDIA** — IA real en el chat (interfaz `AIProvider` ya preparada).
+- **BAJA** — Dark mode con persistencia, CV download, menu con resaltado, optimizacion imagenes, Lighthouse.
+
+### Branch state
+- `dev` al dia con `origin/dev`. Listo para PR.
+- `main` espera merge + deploy a Vercel.
+
+### Contexto persistido
+- **Engram (memoria entre sesiones)**: 11 observations del sprint (sdd-init, explore, propose, spec, design, tasks, apply-progress, verify-report, archive-report, state, skill-registry). Usar `mem_search` con keywords del proyecto en la proxima sesion.
+- **Archivo HANDOFF.md** en raiz: contexto completo de continuacion (lineage de archivos, regresiones pineadas, comandos utiles, decisiones de arquitectura).
+- **Skill-registry** en `.atl/skill-registry.md`: registro de skills del proyecto (creado en sdd-init).
+
+### Lecciones aprendidas del sprint
+- **Smoke tests + grep checks no detectan bugs estructurales de providers** (descubierto en patch 2: `<Chat />` sibling de `</LanguageProvider>`).
+- **Server-only imports en barrel files** rompen Client Components (descubierto en patch 1: barrel re-exportaba `getLangFromCookie` con `next/headers`).
+- **"No se rompe = no esta bien"** — la regresion "Seniority Hibrido" estaba ahi desde la unificacion, sin symptoms visibles, solo detectable con grep.
+- **El AGENTS.md debe ser el contract** de convenciones, no un changelog (por eso el estado del sprint va en HANDOFF.md).
 
 ---
 

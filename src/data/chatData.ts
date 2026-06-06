@@ -51,7 +51,7 @@ export const defaultChatConfig: ChatConfig = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// System Prompts for AI Mode (future use)
+// System Prompts for AI Mode (en el futuro)
 // ──────────────────────────────────────────────────────────────
 export const systemPrompts: Record<Lang, string> = {
   es: `Eres el pinche virtual del portafolio de Andrés Caso Iglesias.
@@ -2151,7 +2151,7 @@ export const followUpResponses: FollowUpResponse[] = [
     ],
     message: {
       es: "Soy hispanohablante nativo (castellano). Mi nivel de inglés me permite trabajar en entornos técnicos internacionales, leer documentación y comunicarme con equipos. ¿Necesitas algún nivel específico?",
-      en: "I'm a native Spanish speaker (Castilian). My English level allows me to work in international technical environments, read documentation, and communicate with teams. Do you need a specific level?",
+      en: "I'm a native Spanish speaker. My English level allows me to work in international technical environments, read documentation, and communicate with teams. Do you need a specific level?",
     },
   },
 ];
