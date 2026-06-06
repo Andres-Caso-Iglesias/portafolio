@@ -4,7 +4,6 @@ import type { LocaleData } from "./i18n-context";
 
 export type { LocaleData, LanguageContextValue } from "./i18n-context";
 export { LanguageProvider, useLanguage } from "./i18n-context";
-export { getLangFromCookie } from "./i18n-server";
 
 const localeData = locales as unknown as LocaleData;
 

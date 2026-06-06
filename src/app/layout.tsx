@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Chat } from "@/components/chat/Chat";
-import { LanguageProvider, getLangFromCookie, type LocaleData } from "@/lib/i18n";
+import { LanguageProvider, type LocaleData } from "@/lib/i18n";
+import { getLangFromCookie } from "@/lib/i18n-server";
 import locales from "@/i18n/locales.json";
 
 const cabinetGrotesk = localFont({

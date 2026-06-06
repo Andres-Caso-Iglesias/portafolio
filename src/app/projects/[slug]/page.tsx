@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { projects } from "@/data/projectsData";
 import { loadSnippetsServer } from "@/lib/snippetLoader";
-import { getLangFromCookie } from "@/lib/i18n";
+import { getLangFromCookie } from "@/lib/i18n-server";
 import SnippetViewer from "@/components/SnippetViewer";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://andres-caso-portfolio.vercel.app";
