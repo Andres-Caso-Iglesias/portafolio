@@ -113,6 +113,46 @@ export default async function RootLayout({
           {children}
         </LanguageProvider>
         <Chat />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Andres Caso Iglesias",
+              jobTitle: "Senior Backend Developer",
+              url: siteUrl,
+              sameAs: [
+                "https://www.linkedin.com/in/andres-caso-iglesias",
+                "https://github.com/andres-caso-portfolio",
+              ],
+              knowsAbout: [
+                "Backend Development",
+                "Cybersecurity",
+                "NIS2",
+                "NestJS",
+                "Spring Boot",
+                "TypeScript",
+                "Next.js",
+                "React",
+                "Pentesting",
+                "eJPT",
+                "Hospitality Management",
+                "Logistics",
+              ],
+              alumniOf: [
+                {
+                  "@type": "EducationalOrganization",
+                  name: "Universidad [nombre real]",
+                },
+                {
+                  "@type": "EducationalOrganization",
+                  name: "Mecalux (Residencia Tecnica)",
+                },
+              ],
+            }),
+          }}
+        />
       </body>
     </html>
   );
