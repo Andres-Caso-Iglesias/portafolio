@@ -111,8 +111,8 @@ export default async function RootLayout({
       <body className="bg-slate-900 text-white antialiased font-sans">
         <LanguageProvider initialLang={lang} initialLocales={initialLocales}>
           {children}
+          <Chat />
         </LanguageProvider>
-        <Chat />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
