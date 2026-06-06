@@ -1,13 +1,13 @@
 import { Lang } from "@/i18n/types";
 import {
-  chatResponses,
+  allResponses,
   fallbackResponse,
   followUpResponses,
   affirmativeKeywords,
   type ChatResponse,
   type FollowUpResponse,
   type ChatConfig,
-} from "@/data/chatData";
+} from "@/data/chat";
 import { type ProjectData } from "@/components/chat/ProjectCard";
 
 // ──────────────────────────────────────────────────────────────
@@ -292,7 +292,7 @@ export function findFollowUpResponse(
 // ──────────────────────────────────────────────────────────────
 export function findBestResponse(
   userInput: string,
-  responses: ChatResponse[] = chatResponses,
+  responses: ChatResponse[] = allResponses,
   threshold: number = 0.15 // Lower threshold to catch more queries
 ): ChatResponse | null {
   let bestMatch: ChatResponse | null = null;
