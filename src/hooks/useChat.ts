@@ -39,6 +39,7 @@ export interface ChatActions {
   openChat: () => void;
   closeChat: () => void;
   clearMessages: () => void;
+  messagesEndRef: React.RefObject<HTMLDivElement | null>;
 }
 
 // ──────────────────────────────────────────────────────────────
