@@ -1,3 +1,5 @@
+import "server-only";
+
 import { cookies } from "next/headers";
 import type { Lang } from "@/i18n/types";
 

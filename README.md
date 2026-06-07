@@ -36,7 +36,7 @@ El proyecto ha sido disenado siguiendo principios de ingenieria de software para
 
 ### Estructura de Directorios
 ```
-/src
+src
   /app              # Enrutamiento, layouts y paginas (App Router de Next.js)
     /projects
       /[slug]       # Pagina dinamica de detalle de proyecto
@@ -54,17 +54,30 @@ El proyecto ha sido disenado siguiendo principios de ingenieria de software para
     skillsData.ts
     timelineData.ts
     educationData.ts
-    chatData.ts     # Respuestas del chat, follow-ups y quick actions
+    /chat           # Chat data modular (refactorizado desde monolito chatData.ts)
+      index.ts              # Barrel exports
+      types.ts              # Interfaces (ChatResponse, FollowUpResponse, etc.)
+      config.ts             # ChatConfig, defaultChatConfig, systemPrompts
+      fallback.ts           # fallbackResponse, welcomeMessage, affirmativeKeywords
+      followUps.ts          # Follow-up responses (context-aware)
+      quickActions.ts       # Quick action buttons
+      allResponses.ts       # Array ordenado por prioridad explicita
+      /responses            # 35 archivos individuales (uno por categoria)
   /lib              # Capa de Logica (utilidades, calculos puros y helpers)
     utils.ts
     timelineUtils.ts
     chatUtils.ts    # Logica de matching, contexto conversacional y futuro soporte IA
+    i18n.ts                 # Barrel Client-safe (re-exporta de i18n-context)
+    i18n-context.tsx        # LanguageContext + useLanguage + LanguageProvider ("use client")
+    i18n-server.ts          # getLangFromCookie server-only (importa "server-only")
+    snippetLoader.ts        # loadSnippetsServer con fs/promises (importa "server-only")
+    snippetLoaderClient.ts  # loadSnippetsClient con fetch ("use client")
   /hooks            # Hooks personalizados
-    useGlobalLang.ts
     useChat.ts      # Estado del chat con tracking de contexto
 /public
   /erd              # Diagramas ERD (SVG) de cada proyecto
   /snippets         # Fragmentos de codigo representativos
+  /swagger          # OpenAPI specs (bolsa-empleo.json, foodbites.json placeholder)
 ```
 
 ### Flujo de Datos
@@ -79,14 +92,16 @@ El proyecto ha sido disenado siguiendo principios de ingenieria de software para
 ### Chat Interactivo "Pinche de Andres"
 Chatbot rule-based para responder preguntas de reclutadores sobre mi perfil profesional:
 
-- **35+ Categorias de Respuesta:** Experiencia, habilidades, formacion, proyectos, contacto, certificaciones, idiomas, seguridad, arquitectura, testing, frontend, backend, devops, soft skills, IA, hosteleria, edad, ubicacion, logistica, procesos, motivacion, debilidades, fortalezas, salario, proyectos personales, empleo anterior, referencias, tecnologias especificas, frameworks, bases de datos, testing, seguridad, arquitectura, git, metodologia, comunicacion, aprendiendo, colaboracion, problemas, futuro, herramientas, open source.
-- **Contexto Conversacional:** Trackea el ultimo tema discutido para follow-ups (ej. despues de "contacto" pregunta si quiere los enlaces y los da).
-- **Deteccion de Afirmaciones:** Detecta "si", "dale", "claro", "ok" para responder follow-ups.
-- **Enlaces Clickeables:** Links reales a LinkedIn, GitHub y email con parseo de markdown.
-- **Bilingue:** Soporte completo para espanol e ingles.
-- **Quick Actions:** Botones para preguntas frecuentes.
-- **Matching Mejorado:** Fuzzy matching con Levenshtein para tolerancia a typos.
+- **37 Categorias de Respuesta** (refactorizadas a archivos individuales): Experiencia, habilidades, formacion, contacto, proyectos, certificaciones, idiomas, disponibilidad, salario, sobre mi, frontend, backend, devops, soft skills, IA, hosteleria, edad, ubicacion, logistica, procesos, motivacion, debilidades, fortalezas, proyectos personales, empleo anterior, referencias, tecnologias especificas, frameworks, bases de datos, testing, git, metodologia, comunicacion, creando, aprendiendo, colaboracion, problemas, futuro, herramientas, open source.
+- **Arquitectura Modular:** Datos en `/data/chat/responses/` (35 archivos), logica en `/lib/chatUtils.ts`, presentacion en `/components/chat/`. Eliminado monolito `chatData.ts` de 2300+ lineas.
+- **Deduplicacion:** `salary` + `compensation` (respuestas identicas) fusionados en uno solo.
+- **Contexto Conversacional:** Trackea el ultimo tema discutido para follow-ups (ej. despues de "contacto" pregunta si quiere los enlaces y los da con markdown clickeable).
+- **Deteccion de Afirmaciones:** Detecta "si", "dale", "claro", "ok", "yes", "sure" para responder follow-ups.
+- **Bilingue:** Soporte completo para espanol e ingles en todas las respuestas.
+- **Quick Actions:** 10 botones para preguntas frecuentes (Experiencia, Habilidades, Formacion, Proyectos, Contacto, Certificaciones, Idiomas, Sobre mi, Ciberseguridad, Disponibilidad).
+- **Matching Mejorado:** Fuzzy matching con Levenshtein para tolerancia a typos, prioridad explicita project-specific > general > broader.
 - **Preparado para IA:** Interfaz `AIProvider` y `ChatConfig` para futuro soporte de Gemini/OpenAI.
+- **Defense-in-depth:** `server-only` package en `i18n-server.ts` y `snippetLoader.ts` para evitar imports accidentales en Client Components.
 
 ### Proyectos con Extension Visual
 Cada proyecto incluye:
@@ -161,8 +176,8 @@ Proyectos con contenido disponible:
 |----------|-----|----------|----------------|
 | Bolsa de Empleo | bolsa-empleo.svg | nestjs-dto-validation.ts, typeorm-entities.ts | /projects/bolsa-empleo |
 | FoodBites | foodbites.svg | java-record-entity.java, spring-boot-transactional-service.java | /projects/foodbites |
-| Gestor Huertos | gestor-huertos.svg | - | /projects/gestor-huertos |
-| Portafolio | portafolio.svg | - | /projects/portafolio-profesional |
+| Gestor Huertos | gestor-huertos.svg | bancal-entity.java | /projects/gestor-huertos |
+| Portafolio | portafolio.svg | react-component.tsx | /projects/portafolio-profesional |
 | Auditoria Seguridad | auditoria-seguridad.svg | security-audit.ts | /projects/auditoria-web |
 
 ---

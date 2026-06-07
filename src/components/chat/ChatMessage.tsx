@@ -15,6 +15,25 @@ function parseLinks(text: string): React.ReactNode[] {
   // Match email addresses
   const emailRegex = /[\w.-]+@[\w.-]+\.\w+/g;
   
+  // Dangerous protocols to reject
+  const DANGEROUS_PROTOCOLS = ["javascript:", "data:", "vbscript:", "file:", "about:"];
+  
+  function isSafeUrl(url: string): boolean {
+    const lower = url.toLowerCase().trim();
+    return !DANGEROUS_PROTOCOLS.some((proto) => lower.startsWith(proto));
+  }
+  
+  function sanitizeUrl(url: string): string {
+    if (!isSafeUrl(url)) {
+      return "#"; // Safe fallback
+    }
+    // Ensure http/https URLs are absolute
+    if (url.startsWith("www.")) {
+      return `https://${url}`;
+    }
+    return url;
+  }
+  
   let lastIndex = 0;
   let match;
   
@@ -23,11 +42,12 @@ function parseLinks(text: string): React.ReactNode[] {
   const markdownMatches: Array<{ start: number; end: number; text: string; url: string }> = [];
   
   while ((match = markdownLinkRegex.exec(fullText)) !== null) {
+    const url = sanitizeUrl(match[2]);
     markdownMatches.push({
       start: match.index,
       end: match.index + match[0].length,
       text: match[1],
-      url: match[2],
+      url,
     });
   }
   
@@ -35,21 +55,23 @@ function parseLinks(text: string): React.ReactNode[] {
   if (markdownMatches.length === 0) {
     // Check for plain URLs
     while ((match = urlRegex.exec(fullText)) !== null) {
+      const url = sanitizeUrl(match[0]);
       markdownMatches.push({
         start: match.index,
         end: match.index + match[0].length,
         text: match[0],
-        url: match[0].startsWith('http') ? match[0] : `https://${match[0]}`,
+        url,
       });
     }
     
     // Check for emails
     while ((match = emailRegex.exec(fullText)) !== null) {
+      const url = sanitizeUrl(`mailto:${match[0]}`);
       markdownMatches.push({
         start: match.index,
         end: match.index + match[0].length,
         text: match[0],
-        url: `mailto:${match[0]}`,
+        url,
       });
     }
   }

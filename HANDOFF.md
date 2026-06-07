@@ -2,7 +2,7 @@
 
 > **Proposito**: Este archivo es el puente entre sesiones. Si arrancas una sesion nueva en este proyecto, lee este archivo PRIMERO. Te ahorra 20 minutos de "que carajo hicimos la ultima vez".
 >
-> **Ultima actualizacion**: Junio 2026, cierre del sprint `production-readiness-sprint`.
+> **Ultima actualizacion**: Junio 2026, post-sprint `production-readiness-sprint` + refactor chatData + server-only install.
 
 ---
 
@@ -10,7 +10,12 @@
 
 Sprint **production-readiness** cerrado y archivado. 39 commits atomicos, 36/36 requirements OK. Branch `dev` listo para PR a `main`. Lo unico que falta para deploy: ajustar placeholders de JSON-LD, hacer `npm run build`, correr 14 manual browser tests, mergear y deployar a Vercel.
 
-Hay 9 gaps residuales priorizados en 3 niveles (ALTA, MEDIA, BAJA). Los mas importantes: instalar `server-only` package, arreglar 2 errores TS pre-existentes, y agregar Vitest con tests unitarios para `/lib`.
+**Completados post-sprint:**
+- ✅ Refactor `chatData.ts` monolito (2300+ lineas) → arquitectura modular `/data/chat/` (35 archivos individuales, deduplicado salary+compensation, keywords limpias, prioridad explicita)
+- ✅ Fix 2 errores TS pre-existentes (`messagesEndRef` tipado en `ChatActions`)
+- ✅ Instalado `server-only` package en `i18n-server.ts` y `snippetLoader.ts` (defense-in-depth)
+
+**Pendiente ALTA:** Vitest + tests unitarios para `/lib` (utils, timelineUtils, chatUtils, chatData matching)
 
 ---
 
@@ -57,6 +62,17 @@ git merge dev
 git push origin main
 # Vercel detectara el push y deployara automaticamente
 ```
+
+---
+
+### Estado de Gaps ALTA (Post-Sprint)
+
+| Gap | Estado | Detalle |
+|-----|--------|---------|
+| Fix 2 errores TS (`messagesEndRef`) | ✅ **DONE** | Agregado `messagesEndRef: React.RefObject<HTMLDivElement \| null>` a `ChatActions` |
+| Instalar `server-only` | ✅ **DONE** | `npm i server-only`, agregado a `i18n-server.ts` y `snippetLoader.ts` |
+| Refactor `chatData.ts` monolito | ✅ **DONE** | 2300+ lineas → 35 archivos en `/data/chat/responses/`, deduplicado, keywords limpias |
+| **Vitest + tests unitarios `/lib`** | 🔴 **PENDIENTE** | utils, timelineUtils, chatUtils, chatData matching |
 
 ---
 
@@ -112,8 +128,8 @@ Path aliases: `@/*` -> `./src/*` (definido en `tsconfig.json`).
 ### Nuevos (creados en el sprint)
 - `src/lib/i18n.ts` — barrel Client-safe
 - `src/lib/i18n-context.tsx` — Context Provider + useLanguage (`"use client"`)
-- `src/lib/i18n-server.ts` — getLangFromCookie + cookies() de next/headers
-- `src/lib/snippetLoader.ts` — loadSnippetsServer con fs/promises
+- `src/lib/i18n-server.ts` — getLangFromCookie + cookies() de next/headers (**+ `import "server-only"`**)
+- `src/lib/snippetLoader.ts` — loadSnippetsServer con fs/promises (**+ `import "server-only"`**)
 - `src/lib/snippetLoaderClient.ts` — loadSnippetsClient con fetch
 - `src/components/SnippetViewer.tsx` — UI comun de snippets
 - `src/app/sitemap.ts` — MetadataRoute.Sitemap 6 URLs
@@ -125,10 +141,21 @@ Path aliases: `@/*` -> `./src/*` (definido en `tsconfig.json`).
 - `public/swagger/foodbites.json` — OpenAPI 3.0 placeholder
 - `.atl/skill-registry.md` — skill registry (sdd-init)
 
+### Nuevos (post-sprint: refactor chatData)
+- `src/data/chat/index.ts` — barrel exports
+- `src/data/chat/types.ts` — interfaces
+- `src/data/chat/config.ts` — ChatConfig, systemPrompts
+- `src/data/chat/fallback.ts` — fallbackResponse, welcomeMessage, affirmativeKeywords
+- `src/data/chat/followUps.ts` — follow-up responses
+- `src/data/chat/quickActions.ts` — quick action buttons
+- `src/data/chat/allResponses.ts` — array ordenado por prioridad
+- `src/data/chat/responses/*.ts` — 35 archivos individuales (uno por categoria)
+
 ### Modificados (high-impact)
 - `src/app/layout.tsx` — metadata expandido + LanguageProvider + JSON-LD
 - `src/app/projects/[slug]/page.tsx` — RSC + generateMetadata + loadSnippetsServer
-- `src/data/chatData.ts` — Next.js 19 → 16, follow-up markdown, 37 keywords chinos eliminadas
+- `src/data/chatData.ts` — **ELIMINADO** (era monolito 2300+ lineas)
+- `src/hooks/useChat.ts` — fix TS: `messagesEndRef` tipado en `ChatActions`
 - `src/i18n/locales.json` — unico archivo i18n, contiene "Seniority Hibrido"
 - `tests/i18n_smoke.js` — pinea "Seniority Hibrido"
 - `tests/seo_smoke.js` — migrado a locales.json
@@ -144,17 +171,14 @@ Path aliases: `@/*` -> `./src/*` (definido en `tsconfig.json`).
 - `public/erd/bolsa-empleo.png` y `foodbites.png` — huerfanos
 - `public/snippets/linq-csharp.cs` — huerfano
 - `public/snippets/linq-csharp.png` y `java-spring.png` — vacios
+- `src/data/chatData.ts` — **refactorizado a `/data/chat/` modular**
 
 ---
 
 ## Gaps Residuales (Priorizados)
 
 ### ALTA prioridad
-1. **Instalar `server-only` package** para defense-in-depth en `i18n-server.ts` y `snippetLoader.ts`. Hoy depende de disciplina de imports.
-2. **Arreglar 2 errores TS pre-existentes** (out-of-scope del sprint):
-   - `src/components/chat/Chat.tsx:23` — firma de useChat
-   - `src/hooks/useChat.ts:184` — messagesEndRef
-3. **Vitest + tests unitarios** para `lib/utils.ts`, `lib/timelineUtils.ts`, `lib/chatUtils.ts`, `lib/chatData.ts`.
+1. **Vitest + tests unitarios** para `lib/utils.ts`, `lib/timelineUtils.ts`, `lib/chatUtils.ts`, `lib/chatData.ts` matching logic.
 
 ### MEDIA prioridad
 1. **ESLint + Prettier + CI/CD** con GitHub Actions (lint + typecheck + build por PR)
@@ -252,10 +276,9 @@ mem_get_observation id=<id>
 1. **Ajustar placeholders de JSON-LD** (5 min, desbloquea deploy)
 2. **Build + manual tests** (30 min, valida el sprint)
 3. **Merge a main + deploy Vercel** (5 min, saca el portfolio a produccion)
-4. **Sprint de instalacion `server-only` + fix de 2 TS errors** (2-3 horas, cleanup pre-emptivo)
-5. **Sprint de Vitest + tests unitarios** (1-2 dias, base para refactors seguros)
-6. **Sprint de `next-intl` migration** (1-2 dias, mejora DX de i18n)
-7. **Sprint de CI/CD + Playwright** (2-3 dias, profesionaliza el workflow)
+4. **Sprint de Vitest + tests unitarios `/lib`** (1-2 dias, base para refactors seguros)
+5. **Sprint de `next-intl` migration** (1-2 dias, mejora DX de i18n)
+6. **Sprint de CI/CD + Playwright** (2-3 dias, profesionaliza el workflow)
 
 ---
 

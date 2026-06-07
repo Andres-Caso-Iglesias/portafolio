@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import Script from "next/script";
 import "./globals.css";
 import { Chat } from "@/components/chat/Chat";
 import { LanguageProvider, type LocaleData } from "@/lib/i18n";
@@ -113,7 +114,8 @@ export default async function RootLayout({
           {children}
           <Chat />
         </LanguageProvider>
-        <script
+        <Script
+          id="json-ld-person"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({

@@ -62,7 +62,15 @@ Este portafolio presenta la trayectoria, proyectos y habilidades de Andres Caso 
     skillsData.ts
     timelineData.ts
     educationData.ts
-    chatData.ts    # 47 categorias, fix Next.js 16, follow-up markdown, sin keywords chinos
+    /chat           # Chat data modular (refactorizado desde monolito chatData.ts)
+      index.ts              # Barrel exports
+      types.ts              # Interfaces (ChatResponse, FollowUpResponse, etc.)
+      config.ts             # ChatConfig, defaultChatConfig, systemPrompts
+      fallback.ts           # fallbackResponse, welcomeMessage, affirmativeKeywords
+      followUps.ts          # Follow-up responses (context-aware)
+      quickActions.ts       # Quick action buttons
+      allResponses.ts       # Array ordenado por prioridad explicita
+      /responses            # 35 archivos individuales (uno por categoria)
   /lib              # Capa de Logica (utilidades, calculos puros y helpers)
     utils.ts
     timelineUtils.ts
@@ -129,16 +137,20 @@ Pagina estatica para cada proyecto con:
 
 #### Chat Interactivo ("Pinche de Andres")
 Chatbot rule-based para responder preguntas de reclutadores sobre el perfil profesional:
-- **Arquitectura en Capas**: Datos (`/data`), Logica (`/lib`), Presentacion (`/components/chat`)
-- **35+ Categorias de Respuesta**: Experiencia, habilidades, formacion, proyectos, contacto, certificaciones, idiomas, seguridad, arquitectura, testing, etc.
-- **Contexto Conversacional**: Trackea el ultimo tema discutido para follow-ups (ej. despues de "contacto" pregunta si quiere los enlaces)
-- **Deteccion de Afirmaciones**: Detecta "si", "dale", "claro", "ok" para responder follow-ups
-- **Respuestas de Seguimiento**: Enlaces reales clickeables (LinkedIn, GitHub, Email) despues de preguntar
-- **Bilingue**: Soporte completo para espanol e ingles
-- **Quick Actions**: Botones para preguntas frecuentes
-- **Markdown Links**: Parseo de syntax `[texto](url)` para enlaces clickeables
-- **Preparado para IA**: Interfaz `AIProvider` y `ChatConfig` para futuro soporte de Gemini/OpenAI
-- **Matching Mejorado**: Fuzzy matching con Levenshtein para tolerancia a typos
+- **Arquitectura en Capas**: Datos (`/data/chat`), Logica (`/lib/chatUtils.ts`), Presentacion (`/components/chat/`)
+- **37 Categorias de Respuesta** (refactorizadas a archivos individuales en `/data/chat/responses/`): Experiencia, habilidades, formacion, contacto, proyectos, certificaciones, idiomas, disponibilidad, salario, sobre mi, frontend, backend, devops, soft skills, IA, hosteleria, edad, ubicacion, logistica, procesos, motivacion, debilidades, fortalezas, proyectos personales, empleo anterior, referencias, tecnologias especificas, frameworks, bases de datos, testing, git, metodologia, comunicacion, creando, aprendiendo, colaboracion, problemas, futuro, herramientas, open source.
+- **Arquitectura Modular**: Eliminado monolito `chatData.ts` (2300+ lineas) → 35 archivos en `/data/chat/responses/`, `allResponses.ts` con prioridad explicita project-specific > general > broader.
+- **Deduplicacion**: `salary` + `compensation` (respuestas identicas) fusionados en uno solo.
+- **Keywords Limpias**: Sin solapamiento entre categorias, especificas no genericas.
+- **Contexto Conversacional**: Trackea el ultimo tema discutido para follow-ups (ej. despues de "contacto" pregunta si quiere los enlaces y los da con markdown clickeable).
+- **Deteccion de Afirmaciones**: Detecta "si", "dale", "claro", "ok", "yes", "sure" para responder follow-ups.
+- **Respuestas de Seguimiento**: Enlaces reales clickeables (LinkedIn, GitHub, Email) despues de preguntar.
+- **Bilingue**: Soporte completo para espanol e ingles en todas las respuestas.
+- **Quick Actions**: 10 botones para preguntas frecuentes.
+- **Markdown Links**: Parseo de syntax `[texto](url)` para enlaces clickeables.
+- **Preparado para IA**: Interfaz `AIProvider` y `ChatConfig` para futuro soporte de Gemini/OpenAI.
+- **Matching Mejorado**: Fuzzy matching con Levenshtein para tolerancia a typos.
+- **Defense-in-depth**: `server-only` package en `i18n-server.ts` y `snippetLoader.ts` para evitar imports accidentales en Client Components.
 
 ## Guia de Estilo y Convenciones
 
@@ -221,11 +233,7 @@ Chatbot rule-based para responder preguntas de reclutadores sobre el perfil prof
 5. **Merge a `main` y deploy a Vercel**.
 
 ### Sprint futuro - ALTA prioridad
-1. **Instalar paquete `server-only`** para defense-in-depth en `i18n-server.ts` y `snippetLoader.ts` (depende de disciplina manual hoy).
-2. **Arreglar 2 errores TS pre-existentes** (out-of-scope del sprint anterior):
-   - `src/components/chat/Chat.tsx:23` — firma de useChat
-   - `src/hooks/useChat.ts:184` — messagesEndRef
-3. **Vitest + tests unitarios** para `lib/utils.ts`, `lib/timelineUtils.ts`, `lib/chatUtils.ts`, `lib/chatData.ts` (matching, follow-ups, language).
+1. **Vitest + tests unitarios** para `lib/utils.ts`, `lib/timelineUtils.ts`, `lib/chatUtils.ts`, `lib/chatData.ts` (matching, follow-ups, language).
 
 ### Sprint futuro - MEDIA prioridad
 1. **ESLint + Prettier + CI/CD** (GitHub Actions: lint + typecheck + build en cada PR).
@@ -265,9 +273,12 @@ Esta decision se tomopara mantener consistencia y evitar problemas de compatibil
 - **8 regresiones pineadas** con tests, no con buenas intenciones.
 - **Net -200 lineas** de codigo (cleanup agresivo: 9 archivos eliminados, 14 creados, 16+ modificados).
 
+### Logros post-sprint (Junio 2026)
+- **Refactor `chatData.ts` monolito** (2300+ lineas) → arquitectura modular `/data/chat/` (35 archivos individuales, deduplicado salary+compensation, keywords limpias, prioridad explicita en `allResponses.ts`).
+- **Fix 2 errores TS pre-existentes** (`messagesEndRef` tipado en `ChatActions`).
+- **Instalado `server-only` package** en `i18n-server.ts` y `snippetLoader.ts` (defense-in-depth: build falla si se importa en Client Component).
+
 ### Gaps residuales (out-of-scope, priorizados)
-- **ALTA** — Instalar paquete `server-only` para defense-in-depth (hoy depende de disciplina de imports).
-- **ALTA** — Arreglar 2 errores TS pre-existentes en `Chat.tsx:23` y `useChat.ts:184`.
 - **ALTA** — Vitest + tests unitarios para `/lib`.
 - **MEDIA** — ESLint + Prettier + CI/CD con GitHub Actions.
 - **MEDIA** — Tests E2E con Playwright (cambio idioma, modal, slug, chat, theme).
