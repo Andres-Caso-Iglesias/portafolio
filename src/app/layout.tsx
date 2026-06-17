@@ -27,13 +27,13 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://andres-caso-portfol
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Andres Caso Iglesias - Senior Backend Developer",
+    default: "Andres Caso Iglesias - Backend Developer",
     template: "%s - Andres Caso Iglesias",
   },
-  description: "Senior Backend Developer con 20 anos de experiencia en liderazgo operativo, transicion a desarrollo backend. Master en Ciberseguridad e IA. NestJS, Spring Boot, TypeORM, React, Next.js.",
+  description: "Backend Developer con 20 anos de experiencia en liderazgo operativo, transicion a desarrollo backend. Master en Ciberseguridad e IA. NestJS, Spring Boot, TypeORM, React, Next.js.",
   keywords: [
     "Backend Developer",
-    "Senior Developer",
+    "Software Developer",
     "Cybersecurity",
     "NIS2",
     "NestJS",
@@ -58,21 +58,21 @@ export const metadata: Metadata = {
     alternateLocale: ["en_US"],
     url: siteUrl,
     siteName: "Andres Caso Iglesias Portfolio",
-    title: "Andres Caso Iglesias - Senior Backend Developer",
-    description: "Senior Backend Developer con experiencia en ciberseguridad, NestJS, Spring Boot, y liderazgo tecnico.",
+    title: "Andres Caso Iglesias - Backend Developer",
+    description: "Backend Developer con experiencia en ciberseguridad, NestJS, Spring Boot, y liderazgo tecnico.",
     images: [
       {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Andres Caso Iglesias - Senior Backend Developer",
+        alt: "Andres Caso Iglesias - Backend Developer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Andres Caso Iglesias - Senior Backend Developer",
-    description: "Senior Backend Developer con experiencia en ciberseguridad, NestJS, Spring Boot, y liderazgo tecnico.",
+    title: "Andres Caso Iglesias - Backend Developer",
+    description: "Backend Developer con experiencia en ciberseguridad, NestJS, Spring Boot, y liderazgo tecnico.",
     images: ["/opengraph-image"],
     creator: "@andrescaso",
   },
@@ -122,7 +122,7 @@ export default async function RootLayout({
               "@context": "https://schema.org",
               "@type": "Person",
               name: "Andres Caso Iglesias",
-              jobTitle: "Senior Backend Developer",
+              jobTitle: "Backend Developer",
               url: siteUrl,
               sameAs: [
                 "https://www.linkedin.com/in/andres-caso-iglesias",

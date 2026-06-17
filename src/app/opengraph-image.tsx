@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Andres Caso Iglesias - Senior Backend Developer";
+export const alt = "Andres Caso Iglesias - Backend Developer";
 
 export default async function OpengraphImage() {
   return new ImageResponse(
@@ -38,7 +38,7 @@ export default async function OpengraphImage() {
             marginBottom: 16,
           }}
         >
-          Senior Backend Developer
+          Backend Developer
         </div>
         <div
           style={{
