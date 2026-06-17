@@ -21,10 +21,10 @@ export default tseslint.config(
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
-      ecmaFeatures: {
-        jsx: true,
-      },
       parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
         project: "./tsconfig.json",
         tsconfigRootDir: import.meta.dirname,
       },
