@@ -219,35 +219,53 @@ Chatbot rule-based para responder preguntas de reclutadores sobre el perfil prof
 - **Url Canonicas y Manejo de Idiomas**: i18n custom con cookie `lang` + `suppressHydrationWarning` en `<html lang>`. Migracion completa a `next-intl` con routing `/en/*` esta en backlog.
 
 ## Testing y Calidad
-- **Tipado Estricto**: Primer nivel de gestion de errores.
+
+### Unit Tests (Vitest)
+- **252 tests** en `/src/lib/__tests__/` (6 archivos, 100% pass)
+- `utils.test.ts` — 6 tests: `cn()` (clsx + twMerge)
+- `timelineUtils.test.ts` — 71 tests: fechas espanolas, duraciones, posiciones timeline
+- `chatUtils.test.ts` — 117 tests: matching, scoring, fuzzy match, follow-ups, pipeline completo
+- `i18n.test.ts` — 13 tests: traducciones, interpolacion, bilingual
+- `snippetLoader.test.ts` — 22 tests: deteccion idioma (15 extensions), carga server (mock fs)
+- `snippetLoaderClient.test.ts` — 23 tests: deteccion idioma, carga client (mock fetch)
+
+### E2E Tests (Playwright)
+- **36 tests** en `/tests/e2e/` (4 archivos, 100% pass en chromium)
+- `navigation.spec.ts` — 9 tests: home, secciones, footer
+- `i18n.spec.ts` — 5 tests: toggle idioma, persistencia, traducciones
+- `projects.spec.ts` — 14 tests: cards, modal 4 tabs, slug pages
+- `chat.spec.ts` — 10 tests: toggle, mensajes, quick actions
+
+### CI/CD (GitHub Actions)
+- `.github/workflows/ci.yml` — lint + typecheck + build en cada PR/push a main
+- Protege la rama principal: si alguno falla, el PR no se puede mergear
+
+### Scripts de testing
+```bash
+npm run test:unit    # Vitest unit tests (252 tests)
+npm run test:e2e     # Playwright E2E (36 tests)
+npm run lint         # ESLint + Prettier
+npm run typecheck    # TypeScript --noEmit
+```
+
+### Tipado Estricto
+- **TS strict**: sin `any`, `@ts-ignore`, `console.log`
 - **Revision de Codigo**: Estandares altos para pull requests (descripciones claras, convencional commits).
-- **Pruebas Futuras**: Estructura preparada para agregar unit tests en `/lib` y component tests con Jest/Vitest y React Testing Library.
 
 ## Proximos Pasos (Mejoras Futuras)
 
-### Inmediato (bloquea deploy)
-1. **Ajustar placeholders de JSON-LD** en `src/app/layout.tsx`: URLs reales de LinkedIn/GitHub y universidad real en `alumniOf` (5 min).
-2. **Ejecutar `npm run build`** para confirmar compilacion runtime.
-3. **Correr 14 manual browser tests** del verify-report.
-4. **Revisar `git log --oneline -39` y `git diff origin/dev..HEAD`** antes del PR.
-5. **Merge a `main` y deploy a Vercel**.
-
 ### Sprint futuro - ALTA prioridad
-1. **Vitest + tests unitarios** para `lib/utils.ts`, `lib/timelineUtils.ts`, `lib/chatUtils.ts`, `lib/chatData.ts` (matching, follow-ups, language).
+1. **Migrar a `next-intl`** con routing `/en/*` (reemplaza i18n custom con cookie, mejora SEO).
 
 ### Sprint futuro - MEDIA prioridad
-1. **ESLint + Prettier + CI/CD** (GitHub Actions: lint + typecheck + build en cada PR).
-2. **Tests E2E con Playwright** cubriendo: cambio de idioma, modal de proyectos, slug page, chat, theme switch.
-3. **Migrar a `next-intl`** con routing `/en/*` (reemplaza i18n custom con cookie).
-4. **Cerrar 9 manual browser tests** del SDD previo `estrategia-visualizacion-tecnica` (quedaron como deuda).
-5. **IA real en el chat** con Gemini API (interfaz `AIProvider`/`ChatConfig` ya preparada).
+1. **IA real en el chat** con Gemini API (interfaz `AIProvider`/`ChatConfig` ya preparada).
+2. **Cerrar 9 manual browser tests** del SDD previo `estrategia-visualizacion-tecnica`.
 
 ### Sprint futuro - BAJA prioridad
 1. **Menu de navegacion con resaltado de seccion** - mejora usabilidad en paginas largas.
 2. **Modo claro/oscuro con persistencia** - usando `next-themes` correctamente configurado.
-3. **Seccion de descarga de CV** - enlace directo a PDF en `/public/cv.pdf`.
-4. **Optimizacion de imagenes** - cuando se anadan fotos o screenshots de proyectos.
-5. **Analisis de rendimiento** - Lighthouse y Web Vitals para monitorear y mejorar.
+3. **Optimizacion de imagenes** - cuando se anadan fotos o screenshots de proyectos.
+4. **Analisis de rendimiento** - Lighthouse y Web Vitals para monitorear y mejorar.
 
 ## NOTA IMPORTANTE: Sin Emojis
 Este proyecto **NO utiliza emojis** en ninguna parte del codigo, documentacion o mensajes de commit. Al trabajar en este proyecto:
@@ -277,19 +295,19 @@ Esta decision se tomopara mantener consistencia y evitar problemas de compatibil
 - **Refactor `chatData.ts` monolito** (2300+ lineas) → arquitectura modular `/data/chat/` (35 archivos individuales, deduplicado salary+compensation, keywords limpias, prioridad explicita en `allResponses.ts`).
 - **Fix 2 errores TS pre-existentes** (`messagesEndRef` tipado en `ChatActions`).
 - **Instalado `server-only` package** en `i18n-server.ts` y `snippetLoader.ts` (defense-in-depth: build falla si se importa en Client Component).
+- **252 tests unitarios** en `/src/lib/__tests__/` (6 archivos, 100% pass).
+- **36 tests E2E** con Playwright en `/tests/e2e/` (4 archivos, 100% pass en chromium).
+- **GitHub Actions CI/CD** configurado (lint + typecheck + build en cada PR/push a main).
 
 ### Gaps residuales (out-of-scope, priorizados)
-- **ALTA** — Vitest + tests unitarios para `/lib`.
-- **MEDIA** — ESLint + Prettier + CI/CD con GitHub Actions.
-- **MEDIA** — Tests E2E con Playwright (cambio idioma, modal, slug, chat, theme).
 - **MEDIA** — Migrar a `next-intl` con routing `/en/*`.
 - **MEDIA** — Cerrar 9 manual browser tests del SDD previo `estrategia-visualizacion-tecnica`.
 - **MEDIA** — IA real en el chat (interfaz `AIProvider` ya preparada).
-- **BAJA** — Dark mode con persistencia, CV download, menu con resaltado, optimizacion imagenes, Lighthouse.
+- **BAJA** — Dark mode con persistencia, menu con resaltado, optimizacion imagenes, Lighthouse.
 
 ### Branch state
-- `dev` al dia con `origin/dev`. Listo para PR.
-- `main` espera merge + deploy a Vercel.
+- `feat/vitest-unit-tests` activa, al dia con `origin/feat/vitest-unit-tests`. Listo para PR a `main`.
+- `main` deployado en produccion.
 
 ### Contexto persistido
 - **Engram (memoria entre sesiones)**: 11 observations del sprint (sdd-init, explore, propose, spec, design, tasks, apply-progress, verify-report, archive-report, state, skill-registry). Usar `mem_search` con keywords del proyecto en la proxima sesion.
