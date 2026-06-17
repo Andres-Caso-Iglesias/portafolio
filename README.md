@@ -124,8 +124,38 @@ El componente `Modal.tsx` muestra proyectos con pestanas:
 - **Arquitectura Limpia:** Capas bien definidas con dependencias unidireccionales (Presentacion -> Logica -> Datos).
 - **Rendimiento y Optimizacion:** Code splitting automatico de Next.js 16, CSS optimo con Tailwind (elimina unused CSS), y uso de fuentes del sistema.
 - **Accesibilidad (a11y):** Contraste de colores adecuado, navegacion por teclado, uso de labels/ARIA y enfoque visible.
-- **SEO y Metadatos:** Metaetiquetas completas, Open Graph, Twitter Card y preparado para JSON-LD.
-- **Testing y Calidad:** Tipado estricto y estructura preparada para unit tests.
+- **SEO y Metadatos:** Metaetiquetas completas, Open Graph, Twitter Card, JSON-LD, sitemap dinamico y robots.txt.
+- **Testing y Calidad:** 252 tests unitarios (Vitest) + 36 tests E2E (Playwright) + CI/CD con GitHub Actions.
+
+## Testing y Calidad
+
+### Unit Tests (Vitest)
+252 tests cubriendo toda la capa `/src/lib/`:
+
+| Archivo | Tests | Funciones |
+|---------|-------|-----------|
+| `utils.test.ts` | 6 | `cn()` (clsx + twMerge) |
+| `timelineUtils.test.ts` | 71 | Fechas espanolas, duraciones, posiciones timeline |
+| `chatUtils.test.ts` | 117 | Matching, scoring, fuzzy match, follow-ups, pipeline |
+| `i18n.test.ts` | 13 | Traducciones, interpolacion, bilingual |
+| `snippetLoader.test.ts` | 22 | Deteccion idioma (15 extensions), carga server |
+| `snippetLoaderClient.test.ts` | 23 | Deteccion idioma, carga client |
+
+### E2E Tests (Playwright)
+36 tests en chromium cubriendo los flujos principales:
+
+| Archivo | Tests | Cobertura |
+|---------|-------|-----------|
+| `navigation.spec.ts` | 9 | Home, secciones, footer |
+| `i18n.spec.ts` | 5 | Toggle idioma, persistencia, traducciones |
+| `projects.spec.ts` | 14 | Cards, modal 4 tabs, slug pages |
+| `chat.spec.ts` | 10 | Toggle, mensajes, quick actions |
+
+### CI/CD (GitHub Actions)
+Pipeline automatico en cada PR y push a `main`:
+- **Lint** (ESLint + Prettier)
+- **Typecheck** (TypeScript --noEmit)
+- **Build** (Next.js production build)
 
 ---
 
@@ -146,7 +176,15 @@ npm run dev
 ```
 La aplicacion estara disponible en `http://localhost:3000`.
 
-### 3. Build para Produccion
+### 3. Tests
+```bash
+npm run test:unit    # 252 tests unitarios (Vitest)
+npm run test:e2e     # 36 tests E2E (Playwright)
+npm run lint         # ESLint + Prettier
+npm run typecheck    # TypeScript --noEmit
+```
+
+### 4. Build para Produccion
 ```bash
 npm run build
 npm run start
