@@ -1,20 +1,8 @@
 import type { NextConfig } from "next";
 
-const securityHeaders = [
-  {
-    key: "Content-Security-Policy",
-    value: [
-      "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval'", // Next.js needs inline/eval for dev, prod uses nonces
-      "style-src 'self' 'unsafe-inline'", // Tailwind uses inline styles
-      "img-src 'self' data: blob:", // Allow data URIs for images
-      "font-src 'self' data:", // Local fonts + data URIs
-      "connect-src 'self'", // API calls to same origin
-      "frame-ancestors 'none'", // Prevent clickjacking
-      "base-uri 'self'",
-      "form-action 'self'",
-    ].join("; "),
-  },
+const isDev = process.env.NODE_ENV === "development";
+
+const baseHeaders = [
   {
     key: "X-Frame-Options",
     value: "DENY",
@@ -54,17 +42,35 @@ const securityHeaders = [
   },
 ];
 
+function getCspHeader(): string {
+  const scriptSrc = isDev
+    ? "'self' 'unsafe-inline' 'unsafe-eval'" // eval required by React in dev mode
+    : "'self' 'unsafe-inline'"; // production: no eval needed
+  return [
+    "default-src 'self'",
+    `script-src ${scriptSrc}`,
+    "style-src 'self' 'unsafe-inline'", // Tailwind uses inline styles
+    "img-src 'self' data: blob:", // Allow data URIs for images
+    "font-src 'self' data:", // Local fonts + data URIs
+    "connect-src 'self'", // API calls to same origin
+    "frame-ancestors 'none'", // Prevent clickjacking
+    "base-uri 'self'",
+    "form-action 'self'",
+  ].join("; ");
+}
+
 const nextConfig: NextConfig = {
   async headers() {
     return [
       {
         source: "/:path*",
-        headers: securityHeaders,
+        headers: [
+          { key: "Content-Security-Policy", value: getCspHeader() },
+          ...baseHeaders,
+        ],
       },
     ];
   },
-  // Ensure strict CSP in production by not allowing unsafe-inline for scripts
-  // This is handled via the CSP header above
 };
 
 export default nextConfig;

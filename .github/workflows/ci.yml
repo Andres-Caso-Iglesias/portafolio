@@ -35,6 +35,9 @@ jobs:
       - name: Typecheck
         run: npx tsc --noEmit
 
+      - name: Security Audit
+        run: npm audit --audit-level=high
+
       - name: Unit Tests
         run: npm run test:unit
 

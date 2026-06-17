@@ -9,8 +9,6 @@ import ProfileIntroText from "@/components/ProfileIntroText";
 import { useLanguage, t } from "@/lib/i18n";
 import { useState } from "react";
 import Modal from "./Modal";
-import { createPortal } from "react-dom";
-import { motion } from "framer-motion";
 
 function HeroSection() {
   const { lang } = useLanguage();

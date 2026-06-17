@@ -136,8 +136,8 @@ export const followUpResponses: FollowUpResponse[] = [
       "which",
     ],
     message: {
-      es: "Soy hispanohablante nativo (castellano). Mi nivel de inglés me permite trabajar en entornos técnicos internacionales, leer documentación y comunicarme con equipos. ¿Necesitas algún nivel específico?",
-      en: "I'm a native Spanish speaker. My English level allows me to work in international technical environments, read documentation, and communicate with teams. Do you need a specific level?",
+      es: "Soy bilingüe nativo español-inglés. Mi familia es bilingüe, trabajé en UK y el inglés es mi idioma cotidiano. ¿Necesitas algún nivel específico o certificación?",
+      en: "I'm a bilingual native Spanish-English speaker. My family is bilingual, I've worked in the UK, and English is my daily language. Do you need a specific level or certification?",
     },
   },
 ];
