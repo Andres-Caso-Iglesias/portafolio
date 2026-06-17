@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "node tests/i18n_smoke.js && node tests/seo_smoke.js"
+    "typecheck": "tsc --noEmit",
+    "test": "node tests/i18n_smoke.js && node tests/seo_smoke.js",
+    "test:unit": "vitest run"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.2.2",
