@@ -2,20 +2,21 @@
 
 > **Proposito**: Este archivo es el puente entre sesiones. Si arrancas una sesion nueva en este proyecto, lee este archivo PRIMERO. Te ahorra 20 minutos de "que carajo hicimos la ultima vez".
 >
-> **Ultima actualizacion**: Junio 2026, post-sprint `production-readiness-sprint` + refactor chatData + server-only install.
+> **Ultima actualizacion**: Junio 2026, sesion post-merge a main + testing + CI/CD.
 
 ---
 
 ## TL;DR (30 segundos)
 
-Sprint **production-readiness** cerrado y archivado. 39 commits atomicos, 36/36 requirements OK. Branch `dev` listo para PR a `main`. Lo unico que falta para deploy: ajustar placeholders de JSON-LD, hacer `npm run build`, correr 14 manual browser tests, mergear y deployar a Vercel.
+El proyecto esta **deployado en produccion**. Sprint production-readiness completado y mergado a `main`. Branch `feat/vitest-unit-tests` activa con 252 tests unitarios + 36 tests E2E + GitHub Actions CI/CD configurado.
 
-**Completados post-sprint:**
-- ✅ Refactor `chatData.ts` monolito (2300+ lineas) → arquitectura modular `/data/chat/` (35 archivos individuales, deduplicado salary+compensation, keywords limpias, prioridad explicita)
-- ✅ Fix 2 errores TS pre-existentes (`messagesEndRef` tipado en `ChatActions`)
-- ✅ Instalado `server-only` package en `i18n-server.ts` y `snippetLoader.ts` (defense-in-depth)
-
-**Pendiente ALTA:** Vitest + tests unitarios para `/lib` (utils, timelineUtils, chatUtils, chatData matching)
+**Completados en esta sesion:**
+- Merge `ref` -> `main` (fast-forward, 3 commits: refactor chat, headers/protocols, CV)
+- Eliminadas branches obsoletas (`dev`, `ref`, `cambios-en-proyecto`) local y remotamente
+- 252 tests unitarios en `/src/lib/__tests__/` (6 archivos, 100% pass)
+- 36 tests E2E con Playwright en `/tests/e2e/` (4 archivos, 100% pass en chromium)
+- GitHub Actions CI/CD (lint + typecheck + build en cada PR/push a main)
+- Scripts nuevos: `typecheck`, `test:unit`, `test:e2e`
 
 ---
 
@@ -23,87 +24,71 @@ Sprint **production-readiness** cerrado y archivado. 39 commits atomicos, 36/36 
 
 | Recurso | Estado |
 |---------|--------|
-| Branch actual | `dev` |
-| Sync con `origin/dev` | Al dia |
-| `main` | Espera merge + deploy |
-| Ultimo commit | cierre del sprint (39 commits desde inicio) |
-| Working tree | Limpio (cambios de docs en `AGENTS.md` + `HANDOFF.md` por este handoff) |
+| Branch actual | `feat/vitest-unit-tests` |
+| `main` | Deployado, al dia con `origin/main` |
+| Working tree | Limpio |
+| Ultimo commit | `bf9f0ab test(e2e): add Playwright E2E tests` |
 
-Comando para ver el sprint entero:
+Commits en `feat/vitest-unit-tests` desde `main`:
 ```bash
-git log --oneline -39
-git diff origin/dev..HEAD
+git log --oneline main..feat/vitest-unit-tests
+# bf9f0ab test(e2e): add Playwright E2E tests for navigation, i18n, projects and chat
+# 02317d1 ci: add GitHub Actions workflow for lint, typecheck and build
+# aa8cc12 test(lib): add unit tests for timelineUtils, chatUtils, i18n, snippetLoader
 ```
 
 ---
 
-## Lo que Falta Para Deploy (INMEDIATO)
+## Lo que Queda Para Merge
 
-### 1. Ajustar placeholders de JSON-LD (5 min)
-Archivo: `src/app/layout.tsx`
+La branch `feat/vitest-unit-tests` esta lista para PR a `main`. Contiene:
 
-Buscar el bloque `JSON-LD Person` y reemplazar:
-- `sameAs`: URLs reales de LinkedIn y GitHub del autor (estan vacias hoy)
-- `alumniOf`: nombre real de la universidad donde curso el master
+### Tests Unitarios (252 tests)
 
-### 2. Build local
-```bash
-npm run build
-```
-Verificar que compile sin errores. El proyecto no usa `npm run build` durante desarrollo (norma), pero para deploy hay que confirmar que compila.
+| Archivo | Tests | Funciones cubiertas |
+|---------|-------|---------------------|
+| `utils.test.ts` | 6 | `cn()` (clsx + twMerge) |
+| `timelineUtils.test.ts` | 71 | `parseSpanishDate`, `computeDurationInMonths`, `computeDurationString`, `calculateTimelinePositions`, `expColors` |
+| `chatUtils.test.ts` | 117 | `normalizeText`, `tokenize`, `calculateMatchScore`, `isAffirmativeResponse`, `findFollowUpResponse`, `findBestResponse`, `getResponseMessage`, `processUserMessage`, `isValidInput` |
+| `i18n.test.ts` | 13 | `t()`, lookup, interpolation, bilingual |
+| `snippetLoader.test.ts` | 22 | `detectLanguage` (15 extensions), `loadSnippetsServer` (mock fs) |
+| `snippetLoaderClient.test.ts` | 23 | `detectLanguage` (15 extensions), `loadSnippetsClient` (mock fetch) |
 
-### 3. Manual browser tests
-Hay **14 test cases** documentados en el verify-report (engram ID #180) que requieren validacion manual. Cubren: cambio de idioma, modal de proyectos, slug page, chat, theme switch, JSON-LD rendering, OG image, etc.
+### Tests E2E (36 tests)
 
-### 4. Merge a main y deploy
+| Archivo | Tests | Qué cubre |
+|---------|-------|-----------|
+| `navigation.spec.ts` | 9 | Home, secciones, footer, links |
+| `i18n.spec.ts` | 5 | Default ES, toggle EN, persistencia, traducciones |
+| `projects.spec.ts` | 14 | Cards, modal 4 tabs, close, slug pages |
+| `chat.spec.ts` | 10 | Toggle, open, welcome, quick actions, send, close |
+
+### CI/CD
+
+- `.github/workflows/ci.yml` — lint + typecheck + build en cada PR/push a main
+- `package.json` — scripts `typecheck`, `test:unit`, `test:e2e`
+
+### Para mergear:
 ```bash
 git checkout main
-git merge dev
+git merge feat/vitest-unit-tests
 git push origin main
-# Vercel detectara el push y deployara automaticamente
 ```
 
 ---
 
-### Estado de Gaps ALTA (Post-Sprint)
+## Gaps Residuales (Priorizados)
 
-| Gap | Estado | Detalle |
-|-----|--------|---------|
-| Fix 2 errores TS (`messagesEndRef`) | ✅ **DONE** | Agregado `messagesEndRef: React.RefObject<HTMLDivElement \| null>` a `ChatActions` |
-| Instalar `server-only` | ✅ **DONE** | `npm i server-only`, agregado a `i18n-server.ts` y `snippetLoader.ts` |
-| Refactor `chatData.ts` monolito | ✅ **DONE** | 2300+ lineas → 35 archivos en `/data/chat/responses/`, deduplicado, keywords limpias |
-| **Vitest + tests unitarios `/lib`** | 🔴 **PENDIENTE** | utils, timelineUtils, chatUtils, chatData matching |
+### MEDIA prioridad
+1. **Migrar a `next-intl`** con routing `/en/*` (reemplaza i18n custom con cookie)
+2. **Cerrar 9 manual browser tests** del SDD previo `estrategia-visualizacion-tecnica`
+3. **IA real en el chat** con Gemini API (interfaz `AIProvider`/`ChatConfig` ya preparada)
 
----
-
-## Contexto del Sprint Anterior (production-readiness)
-
-### 5 puntos originales del sprint
-1. Stack actualizado a Next.js 16 + React 19 + TypeScript 5.9 + Tailwind 4
-2. i18n custom con cookie (LanguageContext + useLanguage + getLangFromCookie)
-3. Slug page optimizada con loadSnippetsServer (441 → 186 lineas)
-4. SEO completo (sitemap, robots, OG image, JSON-LD, favicons)
-5. Chat con Next.js 16 (era Next.js 19 stale) + follow-ups con markdown links
-
-### Logros cuantificables
-- 39 commits atomicos (1 task = 1 commit)
-- 36/36 requirements OK en verify
-- 14 archivos creados
-- 16+ archivos modificados
-- 9 archivos eliminados
-- Net **-200 lineas de codigo** (cleanup agresivo)
-
-### Decisiones de arquitectura clave
-- **Approach B** para fix de `next/headers` en barrel: `i18n.ts` solo re-exporta Client-safe, server components importan `getLangFromCookie` directo de `@/lib/i18n-server`
-- **Chat dentro de `<LanguageProvider>`** en layout.tsx (no era `not-found.tsx` el problema del bug del patch 2, era `<Chat />` como sibling del Provider)
-- **8 regresiones pineadas con tests** (no con buenas intenciones), incluyendo la silenciosa "Seniority Hibrido" que llevaba ahi desde la unificacion
-- **OpenAPI 3.0 placeholder honesto** en `public/swagger/foodbites.json` marcado como PLACEHOLDER (no se lleno con datos inventados)
-
-### Lecciones aprendidas
-- Smoke tests + grep checks **NO detectan** bugs estructurales de providers
-- Server-only imports en barrel files **rompen** Client Components
-- "No se rompe = no esta bien" — la regresion "Seniority Hibrido" no daba symptoms visibles
-- El AGENTS.md debe ser el contract de convenciones, no un changelog
+### BAJA prioridad
+1. Menu de navegacion con resaltado de seccion
+2. Modo claro/oscuro con persistencia (next-themes)
+3. Optimizacion de imagenes
+4. Analisis de rendimiento (Lighthouse, Web Vitals)
 
 ---
 
@@ -116,120 +101,71 @@ git push origin main
 | TypeScript | 5.9.3 (strict) |
 | Tailwind CSS | 4.2.2 |
 | framer-motion | 12.38.0 |
+| Vitest | 4.1.8 |
+| Playwright | latest |
 | npm | gestor de paquetes |
-| Node | (revisar `package.json` engines) |
 
 Path aliases: `@/*` -> `./src/*` (definido en `tsconfig.json`).
 
 ---
 
+## Scripts Disponibles
+
+```bash
+npm run dev          # Next.js dev server
+npm run build        # Next.js production build
+npm run lint         # ESLint + Prettier check
+npm run typecheck    # TypeScript --noEmit
+npm run test         # Smoke tests (i18n + seo)
+npm run test:unit    # Vitest unit tests (252 tests)
+npm run test:e2e     # Playwright E2E tests (36 tests)
+```
+
+---
+
+## Estructura de Tests
+
+```
+/src/lib/__tests__/
+  utils.test.ts           # 6 tests - cn()
+  timelineUtils.test.ts   # 71 tests - fechas, duraciones, posiciones
+  chatUtils.test.ts       # 117 tests - matching, respuestas, pipeline
+  i18n.test.ts            # 13 tests - traducciones, interpolacion
+  snippetLoader.test.ts   # 22 tests - deteccion idioma, carga server
+  snippetLoaderClient.test.ts # 23 tests - deteccion idioma, carga client
+
+/tests/e2e/
+  navigation.spec.ts      # 9 tests - home, secciones, footer
+  i18n.spec.ts            # 5 tests - toggle idioma, persistencia
+  projects.spec.ts        # 14 tests - cards, modal, slug pages
+  chat.spec.ts            # 10 tests - toggle, mensajes, quick actions
+  tsconfig.json           # Config TS para tests E2E
+```
+
+---
+
 ## Lineage de Archivos Importantes
 
-### Nuevos (creados en el sprint)
-- `src/lib/i18n.ts` — barrel Client-safe
-- `src/lib/i18n-context.tsx` — Context Provider + useLanguage (`"use client"`)
-- `src/lib/i18n-server.ts` — getLangFromCookie + cookies() de next/headers (**+ `import "server-only"`**)
-- `src/lib/snippetLoader.ts` — loadSnippetsServer con fs/promises (**+ `import "server-only"`**)
-- `src/lib/snippetLoaderClient.ts` — loadSnippetsClient con fetch
-- `src/components/SnippetViewer.tsx` — UI comun de snippets
-- `src/app/sitemap.ts` — MetadataRoute.Sitemap 6 URLs
-- `src/app/robots.ts` — MetadataRoute.Robots
-- `src/app/not-found.tsx` — 404 bilingue branded
-- `src/app/opengraph-image.tsx` — ImageResponse next/og 1200x630
-- `src/app/icon.svg` — favicon
-- `src/app/apple-icon.svg` — apple-touch-icon
-- `public/swagger/foodbites.json` — OpenAPI 3.0 placeholder
-- `.atl/skill-registry.md` — skill registry (sdd-init)
+### Nuevos (esta sesion)
+- `.github/workflows/ci.yml` — GitHub Actions CI/CD
+- `src/lib/__tests__/timelineUtils.test.ts` — 71 tests unitarios
+- `src/lib/__tests__/chatUtils.test.ts` — 117 tests unitarios
+- `src/lib/__tests__/i18n.test.ts` — 13 tests unitarios
+- `src/lib/__tests__/snippetLoader.test.ts` — 22 tests unitarios
+- `src/lib/__tests__/snippetLoaderClient.test.ts` — 23 tests unitarios
+- `playwright.config.ts` — Config Playwright
+- `tests/e2e/navigation.spec.ts` — 9 tests E2E
+- `tests/e2e/i18n.spec.ts` — 5 tests E2E
+- `tests/e2e/projects.spec.ts` — 14 tests E2E
+- `tests/e2e/chat.spec.ts` — 10 tests E2E
+- `tests/e2e/tsconfig.json` — Config TS para E2E
 
-### Nuevos (post-sprint: refactor chatData)
-- `src/data/chat/index.ts` — barrel exports
-- `src/data/chat/types.ts` — interfaces
-- `src/data/chat/config.ts` — ChatConfig, systemPrompts
-- `src/data/chat/fallback.ts` — fallbackResponse, welcomeMessage, affirmativeKeywords
-- `src/data/chat/followUps.ts` — follow-up responses
-- `src/data/chat/quickActions.ts` — quick action buttons
-- `src/data/chat/allResponses.ts` — array ordenado por prioridad
-- `src/data/chat/responses/*.ts` — 35 archivos individuales (uno por categoria)
+### Modificados (esta sesion)
+- `package.json` — scripts `typecheck`, `test:unit`, `test:e2e` + devDeps (vitest, playwright, testing-library)
 
-### Modificados (high-impact)
-- `src/app/layout.tsx` — metadata expandido + LanguageProvider + JSON-LD
-- `src/app/projects/[slug]/page.tsx` — RSC + generateMetadata + loadSnippetsServer
-- `src/data/chatData.ts` — **ELIMINADO** (era monolito 2300+ lineas)
-- `src/hooks/useChat.ts` — fix TS: `messagesEndRef` tipado en `ChatActions`
-- `src/i18n/locales.json` — unico archivo i18n, contiene "Seniority Hibrido"
-- `tests/i18n_smoke.js` — pinea "Seniority Hibrido"
-- `tests/seo_smoke.js` — migrado a locales.json
-- `.gitignore` — `+*.tsbuildinfo`
-
-### Eliminados
-- `src/hooks/useGlobalLang.tsx` — codigo muerto
-- `src/hooks/useLocale.tsx` — codigo muerto
-- `src/components/LocaleContent.tsx` — Provider redundante
-- `src/components/LocaleText.tsx` — codigo muerto
-- `src/components/SeoClient.tsx` — hack con document.querySelector
-- `src/i18n/locales.ts` — fusionado a locales.json
-- `public/erd/bolsa-empleo.png` y `foodbites.png` — huerfanos
-- `public/snippets/linq-csharp.cs` — huerfano
-- `public/snippets/linq-csharp.png` y `java-spring.png` — vacios
-- `src/data/chatData.ts` — **refactorizado a `/data/chat/` modular**
-
----
-
-## Gaps Residuales (Priorizados)
-
-### ALTA prioridad
-1. **Vitest + tests unitarios** para `lib/utils.ts`, `lib/timelineUtils.ts`, `lib/chatUtils.ts`, `lib/chatData.ts` matching logic.
-
-### MEDIA prioridad
-1. **ESLint + Prettier + CI/CD** con GitHub Actions (lint + typecheck + build por PR)
-2. **Tests E2E con Playwright** cubriendo: cambio de idioma, modal, slug, chat, theme
-3. **Migrar a `next-intl`** con routing `/en/*` (reemplaza i18n custom con cookie)
-4. **Cerrar 9 manual browser tests** del SDD previo `estrategia-visualizacion-tecnica`
-5. **IA real en el chat** con Gemini API (interfaz `AIProvider`/`ChatConfig` ya preparada)
-
-### BAJA prioridad
-1. Menu de navegacion con resaltado de seccion
-2. Modo claro/oscuro con persistencia (next-themes)
-3. Seccion de descarga de CV
-4. Optimizacion de imagenes
-5. Analisis de rendimiento (Lighthouse, Web Vitals)
-
----
-
-## Como Recuperar Contexto en una Sesion Nueva
-
-### Paso 1: Engram (memoria entre sesiones)
-```bash
-# Si tenes acceso a la CLI de engram
-mem_search query="production-readiness portfolio" project="C:\Users\intri\Desktop\openCodeProy\portfolio"
-mem_context project="C:\Users\intri\Desktop\openCodeProy\portfolio"
-```
-
-Las observations persistidas (11 total del sprint):
-- `#172` sdd-init
-- `#173` skill-registry
-- `#174` explore
-- `#175` propose
-- `#176` spec
-- `#177` design
-- `#178` tasks
-- `#179` apply-progress
-- `#180` verify-report
-- `#182` archive-report
-- `#183` state
-
-### Paso 2: Este archivo
-Leer `HANDOFF.md` (este) + `AGENTS.md` (convenciones + estado actual).
-
-### Paso 3: Git
-```bash
-git log --oneline -39
-git status
-git diff origin/dev..HEAD --stat
-```
-
-### Paso 4: Skill registry
-Leer `.atl/skill-registry.md` para saber que skills hay disponibles en el proyecto.
+### Eliminados (esta sesion)
+- `src/data/chatData.ts` — monolito 2300+ lineas (refactorizado a `/data/chat/` modular)
+- Branches: `dev`, `ref`, `cambios-en-proyecto` (locales y remotas)
 
 ---
 
@@ -252,33 +188,50 @@ Leer `.atl/skill-registry.md` para saber que skills hay disponibles en el proyec
 # Estado del repo
 git status
 git log --oneline -10
-git diff origin/dev..HEAD
+git diff main..feat/vitest-unit-tests --stat
 
-# Verificar que el codigo compila (SOLO cuando el usuario lo pida)
+# Tests
+npm run test:unit                    # 252 unit tests
+npx vitest run --reporter=verbose    # verbose output
+npm run test:e2e                     # 36 E2E tests
+npx playwright test --project=chromium  # solo chromium (rapido)
+npx playwright test --ui             # UI interactiva
+
+# CI/CD local
+npm run lint
+npm run typecheck
 npm run build
 
-# Smoke tests (grep-based, rapidos)
+# Smoke tests (rapidos)
 node tests/i18n_smoke.js
 node tests/seo_smoke.js
 
-# Buscar regresiones pineadas
+# Buscar regresiones
 grep -r "Seniority Hibrido" src/ tests/
-
-# Engram
-mem_search query="<keyword>" project="<project-path>"
-mem_get_observation id=<id>
 ```
 
 ---
 
-## Proximos Pasos Sugeridos (en orden de valor)
+## Como Recuperar Contexto en una Sesion Nueva
 
-1. **Ajustar placeholders de JSON-LD** (5 min, desbloquea deploy)
-2. **Build + manual tests** (30 min, valida el sprint)
-3. **Merge a main + deploy Vercel** (5 min, saca el portfolio a produccion)
-4. **Sprint de Vitest + tests unitarios `/lib`** (1-2 dias, base para refactors seguros)
-5. **Sprint de `next-intl` migration** (1-2 dias, mejora DX de i18n)
-6. **Sprint de CI/CD + Playwright** (2-3 dias, profesionaliza el workflow)
+### Paso 1: Engram (memoria entre sesiones)
+```bash
+mem_search query="production-readiness portfolio" project="C:\Users\intri\Desktop\openCodeProy\portfolio"
+mem_context project="C:\Users\intri\Desktop\openCodeProy\portfolio"
+```
+
+### Paso 2: Este archivo
+Leer `HANDOFF.md` (este) + `AGENTS.md` (convenciones + estado actual).
+
+### Paso 3: Git
+```bash
+git log --oneline -10
+git status
+git branch -a
+```
+
+### Paso 4: Skill registry
+Leer `.atl/skill-registry.md` para saber que skills hay disponibles en el proyecto.
 
 ---
 
