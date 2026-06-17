@@ -125,7 +125,8 @@ El componente `Modal.tsx` muestra proyectos con pestanas:
 - **Rendimiento y Optimizacion:** Code splitting automatico de Next.js 16, CSS optimo con Tailwind (elimina unused CSS), y uso de fuentes del sistema.
 - **Accesibilidad (a11y):** Contraste de colores adecuado, navegacion por teclado, uso de labels/ARIA y enfoque visible.
 - **SEO y Metadatos:** Metaetiquetas completas, Open Graph, Twitter Card, JSON-LD, sitemap dinamico y robots.txt.
-- **Testing y Calidad:** 252 tests unitarios (Vitest) + 36 tests E2E (Playwright) + CI/CD con GitHub Actions.
+- **Seguridad:** CSP environment-aware (unsafe-eval solo en dev), HSTS, X-Frame-Options DENY, X-Content-Type-Options nosniff, Permissions-Policy, COOP/CORP. URL sanitization en chat (bloquea javascript:, data:, vbscript:).
+- **Testing y Calidad:** 252 tests unitarios (Vitest) + 36 tests E2E (Playwright) + CI/CD con GitHub Actions (lint + typecheck + audit + tests + build).
 
 ## Testing y Calidad
 
@@ -155,7 +156,10 @@ El componente `Modal.tsx` muestra proyectos con pestanas:
 Pipeline automatico en cada PR y push a `main`:
 - **Lint** (ESLint + Prettier)
 - **Typecheck** (TypeScript --noEmit)
+- **Security Audit** (npm audit --audit-level=high)
+- **Unit Tests** (Vitest - 252 tests)
 - **Build** (Next.js production build)
+- **E2E Tests** (Playwright - 36 tests en chromium)
 
 ---
 

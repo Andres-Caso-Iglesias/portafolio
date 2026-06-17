@@ -2,21 +2,22 @@
 
 > **Proposito**: Este archivo es el puente entre sesiones. Si arrancas una sesion nueva en este proyecto, lee este archivo PRIMERO. Te ahorra 20 minutos de "que carajo hicimos la ultima vez".
 >
-> **Ultima actualizacion**: Junio 2026, sesion post-merge a main + testing + CI/CD.
+> **Ultima actualizacion**: Junio 2026, sesion security hardening + metadata cleanup.
 
 ---
 
 ## TL;DR (30 segundos)
 
-El proyecto esta **deployado en produccion**. Sprint production-readiness completado y mergado a `main`. Branch `feat/vitest-unit-tests` activa con 252 tests unitarios + 36 tests E2E + GitHub Actions CI/CD configurado.
+El proyecto esta **deployado en produccion**. Sprint production-readiness completado y mergado a `main`. Branch `dev` activa con security hardening, CI/CD mejorado y metadata cleanup.
 
 **Completados en esta sesion:**
-- Merge `ref` -> `main` (fast-forward, 3 commits: refactor chat, headers/protocols, CV)
-- Eliminadas branches obsoletas (`dev`, `ref`, `cambios-en-proyecto`) local y remotamente
-- 252 tests unitarios en `/src/lib/__tests__/` (6 archivos, 100% pass)
-- 36 tests E2E con Playwright en `/tests/e2e/` (4 archivos, 100% pass en chromium)
-- GitHub Actions CI/CD (lint + typecheck + build en cada PR/push a main)
-- Scripts nuevos: `typecheck`, `test:unit`, `test:e2e`
+- Eliminado "Senior" del metadata (layout.tsx, opengraph-image.tsx) — titulo honesto "Backend Developer"
+- CI/CD mejorado: + unit tests, + E2E tests, + security audit (npm audit)
+- HSTS header agregado (max-age=63072000, includeSubDomains, preload)
+- CSP environment-aware: unsafe-eval solo en development, eliminado en production
+- Imports muertos eliminados (createPortal, framer-motion en HomeClientContent.tsx)
+- robots.ts limpiado (disallow /api/ inexistente eliminado)
+- Nivel de inglés aclarado en chat: bilingüe nativo con contexto familiar real
 
 ---
 
@@ -24,24 +25,26 @@ El proyecto esta **deployado en produccion**. Sprint production-readiness comple
 
 | Recurso | Estado |
 |---------|--------|
-| Branch actual | `feat/vitest-unit-tests` |
+| Branch actual | `dev` |
 | `main` | Deployado, al dia con `origin/main` |
 | Working tree | Limpio |
-| Ultimo commit | `bf9f0ab test(e2e): add Playwright E2E tests` |
+| Ultimo commit | `2b0eed8 fix(security): CSP environment-aware, dead imports cleanup, robots, CI audit, i18n consistency` |
 
-Commits en `feat/vitest-unit-tests` desde `main`:
+Commits en `dev` recientes:
 ```bash
-git log --oneline main..feat/vitest-unit-tests
-# bf9f0ab test(e2e): add Playwright E2E tests for navigation, i18n, projects and chat
-# 02317d1 ci: add GitHub Actions workflow for lint, typecheck and build
-# aa8cc12 test(lib): add unit tests for timelineUtils, chatUtils, i18n, snippetLoader
+git log --oneline -5
+# 2b0eed8 fix(security): CSP environment-aware, dead imports cleanup, robots, CI audit, i18n consistency
+# b6fb9e7 tests al CI pipeline,Agregar HSTS header
+# 18ca816 chore: update lock file and agents.md testing section
+# 01bfb84 docs: update README with testing infrastructure and CI/CD
+# 0edb098 docs: update HANDOFF.md and AGENTS.md with current project state
 ```
 
 ---
 
 ## Lo que Queda Para Merge
 
-La branch `feat/vitest-unit-tests` esta lista para PR a `main`. Contiene:
+La branch `dev` esta lista para PR a `main`. Contiene los cambios del sprint anterior + security hardening de esta sesion.
 
 ### Tests Unitarios (252 tests)
 
@@ -65,13 +68,15 @@ La branch `feat/vitest-unit-tests` esta lista para PR a `main`. Contiene:
 
 ### CI/CD
 
-- `.github/workflows/ci.yml` — lint + typecheck + build en cada PR/push a main
+- `.github/workflows/ci.yml` — lint + typecheck + security audit + unit tests + build + E2E tests
 - `package.json` — scripts `typecheck`, `test:unit`, `test:e2e`
+- **Security audit** (`npm audit --audit-level=high`) ejecuta antes de los tests
+- **E2E tests** instalan chromium automaticamente en CI
 
 ### Para mergear:
 ```bash
 git checkout main
-git merge feat/vitest-unit-tests
+git merge dev
 git push origin main
 ```
 
@@ -79,16 +84,30 @@ git push origin main
 
 ## Gaps Residuales (Priorizados)
 
+### Completados en esta sesion
+- ~~Quitar "Senior" del metadata~~ (layout.tsx, opengraph-image.tsx)
+- ~~Tests en CI pipeline~~ (unit + E2E + security audit)
+- ~~HSTS header~~ (next.config.ts)
+- ~~CSP environment-aware~~ (unsafe-eval solo en dev)
+- ~~Imports muertos eliminados~~ (createPortal, framer-motion)
+- ~~robots.ts limpiado~~ (disallow /api/ eliminado)
+- ~~Nivel de inglés aclarado~~ (chat responses: bilingüe nativo con contexto familiar)
+
 ### MEDIA prioridad
 1. **Migrar a `next-intl`** con routing `/en/*` (reemplaza i18n custom con cookie)
 2. **Cerrar 9 manual browser tests** del SDD previo `estrategia-visualizacion-tecnica`
 3. **IA real en el chat** con Gemini API (interfaz `AIProvider`/`ChatConfig` ya preparada)
+4. **Dynamic import del Chat** en layout (carga en cada pagina incluyendo 404)
+5. **Mover "use client"** de Timeline.tsx a TimelineDesktop/Mobile
+6. **Agregar error.tsx** en app/ y projects/[slug]/
 
 ### BAJA prioridad
 1. Menu de navegacion con resaltado de seccion
 2. Modo claro/oscuro con persistencia (next-themes)
-3. Optimizacion de imagenes
+3. Optimizacion de imagenes (reemplazar <img> por next/image)
 4. Analisis de rendimiento (Lighthouse, Web Vitals)
+5. Tests de componentes (@testing-library/react)
+6. Deployar Security Header Scanner como live demo
 
 ---
 
@@ -162,6 +181,14 @@ npm run test:e2e     # Playwright E2E tests (36 tests)
 
 ### Modificados (esta sesion)
 - `package.json` — scripts `typecheck`, `test:unit`, `test:e2e` + devDeps (vitest, playwright, testing-library)
+- `src/app/layout.tsx` — "Senior" eliminado de todos los metadatos (title, OG, Twitter, JSON-LD)
+- `src/app/opengraph-image.tsx` — "Senior" eliminado de alt text y titulo visible
+- `.github/workflows/ci.yml` — +security audit, +unit tests, +E2E tests
+- `next.config.ts` — CSP environment-aware, +HSTS header
+- `src/app/robots.ts` — disallow /api/ eliminado
+- `src/components/HomeClientContent.tsx` — imports muertos eliminados (createPortal, framer-motion)
+- `src/data/chat/responses/languages.ts` — nivel de inglés actualizado a bilingüe nativo
+- `src/data/chat/followUps.ts` — follow-up de idiomas actualizado
 
 ### Eliminados (esta sesion)
 - `src/data/chatData.ts` — monolito 2300+ lineas (refactorizado a `/data/chat/` modular)
@@ -188,7 +215,7 @@ npm run test:e2e     # Playwright E2E tests (36 tests)
 # Estado del repo
 git status
 git log --oneline -10
-git diff main..feat/vitest-unit-tests --stat
+git diff main..dev --stat
 
 # Tests
 npm run test:unit                    # 252 unit tests
