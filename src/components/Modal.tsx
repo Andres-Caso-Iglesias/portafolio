@@ -1,6 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { Project } from '@/data/projectsData';
 import { useLanguage } from '@/lib/i18n';
@@ -19,10 +18,18 @@ export default function Modal({ project, onClose }: ModalProps) {
   >('challenge');
   const [snippetsContent, setSnippetsContent] = useState<Snippet[]>([]);
   const [isLoadingSnippets, setIsLoadingSnippets] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  const handleTabChange = (tab: 'challenge' | 'solution' | 'architecture' | 'snippets') => {
-    setActiveTab(tab);
-  };
+  const handleTabChange = useCallback(
+    (tab: 'challenge' | 'solution' | 'architecture' | 'snippets') => {
+      setActiveTab(tab);
+    },
+    [],
+  );
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -48,20 +55,18 @@ export default function Modal({ project, onClose }: ModalProps) {
     }
   }, [activeTab, project.snippetPaths, snippetsContent.length]);
 
+  if (!mounted) return null;
+
   return createPortal(
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center"
-        onClick={onClose}
+    <div
+      className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center transition-opacity duration-200"
+      style={{ opacity: mounted ? 1 : 0 }}
+      onClick={onClose}
+    >
+      <div
+        className="relative z-10 w-[95%] max-w-[800px] h-[85vh] overflow-y-auto bg-slate-900 rounded-xl p-6 md:p-8 mx-auto"
+        onClick={e => e.stopPropagation()}
       >
-        <motion.div
-          layoutId={project.name}
-          className="relative z-10 w-[95%] max-w-[800px] h-[85vh] overflow-y-auto bg-slate-900 rounded-xl p-6 md:p-8 mx-auto"
-          onClick={e => e.stopPropagation()}
-        >
           <button
             onClick={onClose}
             className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors text-xl"
@@ -193,9 +198,8 @@ export default function Modal({ project, onClose }: ModalProps) {
               </div>
             )}
           </div>
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>,
-    document.body
+        </div>
+      </div>,
+    document.body,
   );
 }

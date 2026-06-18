@@ -22,7 +22,7 @@ function HeroSection() {
               src="/profile.jpg"
               alt="Andrés Caso Iglesias"
               fill
-              sizes="100vw"
+              sizes="(max-width: 768px) 224px, 288px"
               className="object-cover"
               priority
             />

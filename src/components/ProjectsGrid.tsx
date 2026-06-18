@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import { projects, Project } from '@/data/projectsData';
-import { motion } from 'framer-motion';
 import { createPortal } from 'react-dom';
 import Modal from './Modal';
 import { useLanguage, t } from '@/lib/i18n';
@@ -17,8 +16,7 @@ export default function ProjectsGrid() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 w-full">
       {projects.map(p => (
-        <motion.div
-          layoutId={p.name}
+        <div
           key={p.name}
           className="bg-slate-900 rounded-lg p-6 border border-slate-700 hover:border-blue-500 transition-colors cursor-pointer"
           onClick={() => setSelectedProject(p)}
@@ -39,7 +37,7 @@ export default function ProjectsGrid() {
           >
             {t(lang, 'home.viewGithub')} →
           </a>
-        </motion.div>
+        </div>
       ))}
       {selectedProject &&
         createPortal(

@@ -77,7 +77,6 @@ export const metadata: Metadata = {
     description:
       'Backend Developer con experiencia en ciberseguridad, NestJS, Spring Boot, y liderazgo tecnico.',
     images: ['/opengraph-image'],
-    creator: '@andrescaso',
   },
   robots: {
     index: true,
@@ -98,7 +97,7 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
+    apple: '/apple-icon.svg',
   },
 };
 
@@ -148,7 +147,7 @@ export default async function RootLayout({
               alumniOf: [
                 {
                   '@type': 'EducationalOrganization',
-                  name: 'Universidad [nombre real]',
+                  name: 'IES Juan Jose Calvo Miguel',
                 },
                 {
                   '@type': 'EducationalOrganization',
