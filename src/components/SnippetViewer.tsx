@@ -1,14 +1,17 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import type { Snippet } from "@/lib/snippetLoaderClient";
+import { useState } from 'react';
+import type { Snippet } from '@/lib/snippetLoaderClient';
 
 interface SnippetViewerProps {
   snippets: Snippet[];
   emptyLabel?: string;
 }
 
-export default function SnippetViewer({ snippets, emptyLabel = "No hay snippets disponibles." }: SnippetViewerProps) {
+export default function SnippetViewer({
+  snippets,
+  emptyLabel = 'No hay snippets disponibles.',
+}: SnippetViewerProps) {
   const [copiedPath, setCopiedPath] = useState<string | null>(null);
 
   if (!snippets || snippets.length === 0) {
@@ -28,8 +31,8 @@ export default function SnippetViewer({ snippets, emptyLabel = "No hay snippets 
 
   return (
     <div className="space-y-6">
-      {snippets.map((snippet) => {
-        const fileName = snippet.path.split("/").pop() ?? snippet.path;
+      {snippets.map(snippet => {
+        const fileName = snippet.path.split('/').pop() ?? snippet.path;
         const isCopied = copiedPath === snippet.path;
         return (
           <div
@@ -44,7 +47,7 @@ export default function SnippetViewer({ snippets, emptyLabel = "No hay snippets 
                 className="px-2 py-1 bg-slate-700 hover:bg-slate-600 text-xs rounded text-slate-200 transition-colors font-mono"
                 aria-label={`Copy snippet ${fileName}`}
               >
-                {isCopied ? "Copied!" : "Copy"}
+                {isCopied ? 'Copied!' : 'Copy'}
               </button>
             </div>
             <div className="p-4 overflow-x-auto text-xs sm:text-sm text-slate-300 font-mono leading-relaxed bg-[#0d1117]">

@@ -1,18 +1,17 @@
-"use client";
-import React from 'react'
-import { useLanguage } from '@/lib/i18n'
+'use client';
+import { useLanguage } from '@/lib/i18n';
 
 export default function LanguageSwitch() {
-  const { lang, setLang } = useLanguage()
+  const { lang, setLang } = useLanguage();
   // Simple bilingual toggle: ES <-> EN
   // setLang now persists to localStorage + cookie + dispatches langChanged automatically
   const toggle = () => {
-    const next = lang === 'es' ? 'en' : 'es'
-    setLang(next)
-  }
+    const next = lang === 'es' ? 'en' : 'es';
+    setLang(next);
+  };
   const onClick = () => {
-    toggle()
-  }
+    toggle();
+  };
 
   return (
     <button
@@ -27,5 +26,5 @@ export default function LanguageSwitch() {
         className="w-8 h-8"
       />
     </button>
-  )
+  );
 }

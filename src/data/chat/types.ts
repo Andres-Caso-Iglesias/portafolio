@@ -1,4 +1,4 @@
-import { Lang } from "@/i18n/types";
+import { Lang } from '@/i18n/types';
 
 // ──────────────────────────────────────────────────────────────
 // Chat Response Interface
@@ -31,8 +31,8 @@ export interface QuickAction {
 // Chat Config Interface (for future AI integration)
 // ──────────────────────────────────────────────────────────────
 export interface ChatConfig {
-  mode: "rule-based" | "ai" | "hybrid";
-  aiProvider?: "gemini" | "openai" | "anthropic";
+  mode: 'rule-based' | 'ai' | 'hybrid';
+  aiProvider?: 'gemini' | 'openai' | 'anthropic';
   apiKey?: string;
   maxTokens?: number;
   systemPrompt?: Record<Lang, string>;

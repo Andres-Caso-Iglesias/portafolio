@@ -1,11 +1,11 @@
-import { Lang } from "@/i18n/types";
-import { type ChatConfig } from "./types";
+import { Lang } from '@/i18n/types';
+import { type ChatConfig } from './types';
 
 // ──────────────────────────────────────────────────────────────
 // Default Chat Configuration
 // ──────────────────────────────────────────────────────────────
 export const defaultChatConfig: ChatConfig = {
-  mode: "rule-based",
+  mode: 'rule-based',
   // Future AI config:
   // mode: "hybrid",
   // aiProvider: "gemini",

@@ -1,7 +1,7 @@
-import type { MetadataRoute } from "next";
-import { projects } from "@/data/projectsData";
+import type { MetadataRoute } from 'next';
+import { projects } from '@/data/projectsData';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://andres-caso-portfolio.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://andres-caso-portfolio.vercel.app';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -10,7 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: siteUrl,
       lastModified: now,
-      changeFrequency: "monthly",
+      changeFrequency: 'monthly',
       priority: 1.0,
       alternates: {
         languages: {
@@ -21,10 +21,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const projectUrls: MetadataRoute.Sitemap = projects.map((project) => ({
+  const projectUrls: MetadataRoute.Sitemap = projects.map(project => ({
     url: `${siteUrl}/projects/${project.slug}`,
     lastModified: now,
-    changeFrequency: "monthly",
+    changeFrequency: 'monthly',
     priority: 0.8,
     alternates: {
       languages: {

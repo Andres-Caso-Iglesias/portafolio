@@ -1,80 +1,83 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import Script from "next/script";
-import "./globals.css";
-import { Chat } from "@/components/chat/Chat";
-import { LanguageProvider, type LocaleData } from "@/lib/i18n";
-import { getLangFromCookie } from "@/lib/i18n-server";
-import locales from "@/i18n/locales.json";
+import type { Metadata } from 'next';
+import localFont from 'next/font/local';
+import Script from 'next/script';
+import './globals.css';
+import { Chat } from '@/components/chat/Chat';
+import { LanguageProvider, type LocaleData } from '@/lib/i18n';
+import { getLangFromCookie } from '@/lib/i18n-server';
+import locales from '@/i18n/locales.json';
 
 const cabinetGrotesk = localFont({
   src: [
-    { path: "../../public/fonts/CabinetGrotesk-Thin.otf", weight: "100" },
-    { path: "../../public/fonts/CabinetGrotesk-Extralight.otf", weight: "200" },
-    { path: "../../public/fonts/CabinetGrotesk-Light.otf", weight: "300" },
-    { path: "../../public/fonts/CabinetGrotesk-Regular.otf", weight: "400" },
-    { path: "../../public/fonts/CabinetGrotesk-Medium.otf", weight: "500" },
-    { path: "../../public/fonts/CabinetGrotesk-Bold.otf", weight: "700" },
-    { path: "../../public/fonts/CabinetGrotesk-Extrabold.otf", weight: "800" },
-    { path: "../../public/fonts/CabinetGrotesk-Black.otf", weight: "900" },
+    { path: '../../public/fonts/CabinetGrotesk-Thin.otf', weight: '100' },
+    { path: '../../public/fonts/CabinetGrotesk-Extralight.otf', weight: '200' },
+    { path: '../../public/fonts/CabinetGrotesk-Light.otf', weight: '300' },
+    { path: '../../public/fonts/CabinetGrotesk-Regular.otf', weight: '400' },
+    { path: '../../public/fonts/CabinetGrotesk-Medium.otf', weight: '500' },
+    { path: '../../public/fonts/CabinetGrotesk-Bold.otf', weight: '700' },
+    { path: '../../public/fonts/CabinetGrotesk-Extrabold.otf', weight: '800' },
+    { path: '../../public/fonts/CabinetGrotesk-Black.otf', weight: '900' },
   ],
-  variable: "--font-cabinet-grotesk",
-  display: "swap",
+  variable: '--font-cabinet-grotesk',
+  display: 'swap',
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://andres-caso-portfolio.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://andres-caso-portfolio.vercel.app';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Andres Caso Iglesias - Backend Developer",
-    template: "%s - Andres Caso Iglesias",
+    default: 'Andres Caso Iglesias - Backend Developer',
+    template: '%s - Andres Caso Iglesias',
   },
-  description: "Backend Developer con 20 anos de experiencia en liderazgo operativo, transicion a desarrollo backend. Master en Ciberseguridad e IA. NestJS, Spring Boot, TypeORM, React, Next.js.",
+  description:
+    'Backend Developer con 20 anos de experiencia en liderazgo operativo, transicion a desarrollo backend. Master en Ciberseguridad e IA. NestJS, Spring Boot, TypeORM, React, Next.js.',
   keywords: [
-    "Backend Developer",
-    "Software Developer",
-    "Cybersecurity",
-    "NIS2",
-    "NestJS",
-    "Spring Boot",
-    "TypeScript",
-    "Next.js",
-    "React",
-    "Pentesting",
-    "eJPT",
-    "Andres Caso Iglesias",
+    'Backend Developer',
+    'Software Developer',
+    'Cybersecurity',
+    'NIS2',
+    'NestJS',
+    'Spring Boot',
+    'TypeScript',
+    'Next.js',
+    'React',
+    'Pentesting',
+    'eJPT',
+    'Andres Caso Iglesias',
   ],
   authors: [
     {
-      name: "Andres Caso Iglesias",
+      name: 'Andres Caso Iglesias',
       url: siteUrl,
     },
   ],
-  creator: "Andres Caso Iglesias",
+  creator: 'Andres Caso Iglesias',
   openGraph: {
-    type: "website",
-    locale: "es_ES",
-    alternateLocale: ["en_US"],
+    type: 'website',
+    locale: 'es_ES',
+    alternateLocale: ['en_US'],
     url: siteUrl,
-    siteName: "Andres Caso Iglesias Portfolio",
-    title: "Andres Caso Iglesias - Backend Developer",
-    description: "Backend Developer con experiencia en ciberseguridad, NestJS, Spring Boot, y liderazgo tecnico.",
+    siteName: 'Andres Caso Iglesias Portfolio',
+    title: 'Andres Caso Iglesias - Backend Developer',
+    description:
+      'Backend Developer con experiencia en ciberseguridad, NestJS, Spring Boot, y liderazgo tecnico.',
     images: [
       {
-        url: "/opengraph-image",
+        url: '/opengraph-image',
         width: 1200,
         height: 630,
-        alt: "Andres Caso Iglesias - Backend Developer",
+        alt: 'Andres Caso Iglesias - Backend Developer',
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Andres Caso Iglesias - Backend Developer",
-    description: "Backend Developer con experiencia en ciberseguridad, NestJS, Spring Boot, y liderazgo tecnico.",
-    images: ["/opengraph-image"],
-    creator: "@andrescaso",
+    card: 'summary_large_image',
+    title: 'Andres Caso Iglesias - Backend Developer',
+    description:
+      'Backend Developer con experiencia en ciberseguridad, NestJS, Spring Boot, y liderazgo tecnico.',
+    images: ['/opengraph-image'],
+    creator: '@andrescaso',
   },
   robots: {
     index: true,
@@ -82,8 +85,8 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
     },
   },
   alternates: {
@@ -94,8 +97,8 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
   },
 };
 
@@ -119,37 +122,37 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              name: "Andres Caso Iglesias",
-              jobTitle: "Backend Developer",
+              '@context': 'https://schema.org',
+              '@type': 'Person',
+              name: 'Andres Caso Iglesias',
+              jobTitle: 'Backend Developer',
               url: siteUrl,
               sameAs: [
-                "https://www.linkedin.com/in/andres-caso-iglesias",
-                "https://github.com/andres-caso-portfolio",
+                'https://www.linkedin.com/in/andres-caso-iglesias',
+                'https://github.com/andres-caso-portfolio',
               ],
               knowsAbout: [
-                "Backend Development",
-                "Cybersecurity",
-                "NIS2",
-                "NestJS",
-                "Spring Boot",
-                "TypeScript",
-                "Next.js",
-                "React",
-                "Pentesting",
-                "eJPT",
-                "Hospitality Management",
-                "Logistics",
+                'Backend Development',
+                'Cybersecurity',
+                'NIS2',
+                'NestJS',
+                'Spring Boot',
+                'TypeScript',
+                'Next.js',
+                'React',
+                'Pentesting',
+                'eJPT',
+                'Hospitality Management',
+                'Logistics',
               ],
               alumniOf: [
                 {
-                  "@type": "EducationalOrganization",
-                  name: "Universidad [nombre real]",
+                  '@type': 'EducationalOrganization',
+                  name: 'Universidad [nombre real]',
                 },
                 {
-                  "@type": "EducationalOrganization",
-                  name: "Mecalux (Residencia Tecnica)",
+                  '@type': 'EducationalOrganization',
+                  name: 'Mecalux (Residencia Tecnica)',
                 },
               ],
             }),

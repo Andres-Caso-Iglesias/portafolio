@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { type KeyboardEvent } from "react";
+import { type KeyboardEvent } from 'react';
 
 // ──────────────────────────────────────────────────────────────
 // ChatInput Props
@@ -21,10 +21,10 @@ export function ChatInput({
   onChange,
   onSend,
   disabled = false,
-  placeholder = "Escribe tu pregunta...",
+  placeholder = 'Escribe tu pregunta...',
 }: ChatInputProps) {
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+    if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       if (value.trim() && !disabled) {
         onSend(value);
@@ -42,7 +42,7 @@ export function ChatInput({
     <div className="flex items-end gap-2 p-3 bg-slate-800 border-t border-slate-700">
       <textarea
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={e => onChange(e.target.value)}
         onKeyDown={handleKeyDown}
         disabled={disabled}
         placeholder={placeholder}
@@ -51,7 +51,7 @@ export function ChatInput({
                    placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500
                    disabled:opacity-50 disabled:cursor-not-allowed
                    min-h-[44px] max-h-[120px]"
-        style={{ height: "auto" }}
+        style={{ height: 'auto' }}
       />
       <button
         onClick={handleSend}

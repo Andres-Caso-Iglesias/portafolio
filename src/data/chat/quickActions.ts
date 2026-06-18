@@ -1,87 +1,87 @@
-import { type QuickAction } from "./types";
+import { type QuickAction } from './types';
 
 // ──────────────────────────────────────────────────────────────
 // Quick Action Buttons
 // ──────────────────────────────────────────────────────────────
 export const quickActions: QuickAction[] = [
   {
-    id: "experience",
+    id: 'experience',
     label: {
-      es: "Experiencia",
-      en: "Experience",
+      es: 'Experiencia',
+      en: 'Experience',
     },
-    keywords: ["experiencia laboral", "experience"],
+    keywords: ['experiencia laboral', 'experience'],
   },
   {
-    id: "skills",
+    id: 'skills',
     label: {
-      es: "Habilidades",
-      en: "Skills",
+      es: 'Habilidades',
+      en: 'Skills',
     },
-    keywords: ["habilidades técnicas", "skills"],
+    keywords: ['habilidades técnicas', 'skills'],
   },
   {
-    id: "education",
+    id: 'education',
     label: {
-      es: "Formación",
-      en: "Education",
+      es: 'Formación',
+      en: 'Education',
     },
-    keywords: ["formación académica", "education"],
+    keywords: ['formación académica', 'education'],
   },
   {
-    id: "projects",
+    id: 'projects',
     label: {
-      es: "Proyectos",
-      en: "Projects",
+      es: 'Proyectos',
+      en: 'Projects',
     },
-    keywords: ["proyectos destacados", "projects"],
+    keywords: ['proyectos destacados', 'projects'],
   },
   {
-    id: "contact",
+    id: 'contact',
     label: {
-      es: "Contacto",
-      en: "Contact",
+      es: 'Contacto',
+      en: 'Contact',
     },
-    keywords: ["información contacto", "contact"],
+    keywords: ['información contacto', 'contact'],
   },
   {
-    id: "certifications",
+    id: 'certifications',
     label: {
-      es: "Certificaciones",
-      en: "Certifications",
+      es: 'Certificaciones',
+      en: 'Certifications',
     },
-    keywords: ["certificación ejpt", "certifications"],
+    keywords: ['certificación ejpt', 'certifications'],
   },
   {
-    id: "languages",
+    id: 'languages',
     label: {
-      es: "Idiomas",
-      en: "Languages",
+      es: 'Idiomas',
+      en: 'Languages',
     },
-    keywords: ["idiomas hablas", "languages"],
+    keywords: ['idiomas hablas', 'languages'],
   },
   {
-    id: "about",
+    id: 'about',
     label: {
-      es: "Sobre mí",
-      en: "About me",
+      es: 'Sobre mí',
+      en: 'About me',
     },
-    keywords: ["sobre andrés", "about me"],
+    keywords: ['sobre andrés', 'about me'],
   },
   {
-    id: "cybersecurity",
+    id: 'cybersecurity',
     label: {
-      es: "Ciberseguridad",
-      en: "Cybersecurity",
+      es: 'Ciberseguridad',
+      en: 'Cybersecurity',
     },
-    keywords: ["ciberseguridad máster", "cybersecurity"],
+    keywords: ['ciberseguridad máster', 'cybersecurity'],
   },
   {
-    id: "availability",
+    id: 'availability',
     label: {
-      es: "Disponibilidad",
-      en: "Availability",
+      es: 'Disponibilidad',
+      en: 'Availability',
     },
-    keywords: ["disponibilidad laboral", "availability"],
+    keywords: ['disponibilidad laboral', 'availability'],
   },
 ];

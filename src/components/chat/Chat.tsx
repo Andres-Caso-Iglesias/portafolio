@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useChat } from "@/hooks/useChat";
-import { useLanguage } from "@/lib/i18n";
-import { ChatMessage } from "./ChatMessage";
-import { ChatInput } from "./ChatInput";
-import { cn } from "@/lib/utils";
+import { useChat } from '@/hooks/useChat';
+import { useLanguage } from '@/lib/i18n';
+import { ChatMessage } from './ChatMessage';
+import { ChatInput } from './ChatInput';
+import { cn } from '@/lib/utils';
 
 // ──────────────────────────────────────────────────────────────
 // Chat Component (Container)
@@ -37,16 +37,14 @@ export function Chat() {
       <button
         onClick={toggleChat}
         className={cn(
-          "fixed bottom-6 right-6 z-50",
-          "w-14 h-14 rounded-full",
-          "flex items-center justify-center",
-          "shadow-lg transition-all duration-200",
-          "hover:scale-105 active:scale-95",
-          isOpen
-            ? "bg-slate-700 hover:bg-slate-600"
-            : "bg-blue-600 hover:bg-blue-700"
+          'fixed bottom-6 right-6 z-50',
+          'w-14 h-14 rounded-full',
+          'flex items-center justify-center',
+          'shadow-lg transition-all duration-200',
+          'hover:scale-105 active:scale-95',
+          isOpen ? 'bg-slate-700 hover:bg-slate-600' : 'bg-blue-600 hover:bg-blue-700'
         )}
-        aria-label={isOpen ? "Cerrar chat" : "Abrir chat"}
+        aria-label={isOpen ? 'Cerrar chat' : 'Abrir chat'}
       >
         {isOpen ? (
           // Close icon
@@ -64,11 +62,7 @@ export function Chat() {
           </svg>
         ) : (
           // Custom chat icon
-          <img
-            src="/chat.png"
-            alt="Chat"
-            className="w-10 h-10"
-          />
+          <img src="/chat.png" alt="Chat" className="w-10 h-10" />
         )}
       </button>
 
@@ -76,13 +70,13 @@ export function Chat() {
       {isOpen && (
         <div
           className={cn(
-            "fixed bottom-24 right-6 z-50",
-            "w-[380px] max-w-[calc(100vw-3rem)]",
-            "bg-slate-900 rounded-2xl shadow-2xl",
-            "border border-slate-700",
-            "flex flex-col",
-            "overflow-hidden",
-            "animate-in fade-in slide-in-from-bottom-4 duration-200"
+            'fixed bottom-24 right-6 z-50',
+            'w-[380px] max-w-[calc(100vw-3rem)]',
+            'bg-slate-900 rounded-2xl shadow-2xl',
+            'border border-slate-700',
+            'flex flex-col',
+            'overflow-hidden',
+            'animate-in fade-in slide-in-from-bottom-4 duration-200'
           )}
         >
           {/* Header */}
@@ -93,12 +87,10 @@ export function Chat() {
               </div>
               <div>
                 <h3 className="text-white font-medium text-sm">
-                  {lang === "es" ? "Pinche de Andrés" : "Andrés' Sous-chef"}
+                  {lang === 'es' ? 'Pinche de Andrés' : "Andrés' Sous-chef"}
                 </h3>
                 <p className="text-slate-400 text-xs">
-                  {lang === "es"
-                    ? "Respuestas sobre su perfil"
-                    : "Profile information"}
+                  {lang === 'es' ? 'Respuestas sobre su perfil' : 'Profile information'}
                 </p>
               </div>
             </div>
@@ -124,7 +116,7 @@ export function Chat() {
 
           {/* Messages Container */}
           <div className="flex-1 overflow-y-auto p-4 space-y-1 min-h-[300px] max-h-[400px]">
-            {messages.map((message) => (
+            {messages.map(message => (
               <ChatMessage key={message.id} message={message} />
             ))}
 
@@ -136,11 +128,11 @@ export function Chat() {
                     <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" />
                     <div
                       className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"
-                      style={{ animationDelay: "0.1s" }}
+                      style={{ animationDelay: '0.1s' }}
                     />
                     <div
                       className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"
-                      style={{ animationDelay: "0.2s" }}
+                      style={{ animationDelay: '0.2s' }}
                     />
                   </div>
                 </div>
@@ -155,10 +147,10 @@ export function Chat() {
           {messages.length <= 1 && (
             <div className="px-4 pb-3">
               <p className="text-slate-500 text-xs mb-2">
-                {lang === "es" ? "Preguntas frecuentes:" : "Quick questions:"}
+                {lang === 'es' ? 'Preguntas frecuentes:' : 'Quick questions:'}
               </p>
               <div className="flex flex-wrap gap-2">
-                {quickActions.map((action) => (
+                {quickActions.map(action => (
                   <button
                     key={action.id}
                     onClick={() => handleQuickAction(action.keywords)}
@@ -179,11 +171,7 @@ export function Chat() {
             onChange={setInputValue}
             onSend={sendMessage}
             disabled={isTyping}
-            placeholder={
-              lang === "es"
-                ? "Escribe tu pregunta..."
-                : "Type your question..."
-            }
+            placeholder={lang === 'es' ? 'Escribe tu pregunta...' : 'Type your question...'}
           />
         </div>
       )}

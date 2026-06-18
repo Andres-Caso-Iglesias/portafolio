@@ -1,16 +1,16 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { projects } from "@/data/projectsData";
-import { loadSnippetsServer } from "@/lib/snippetLoader";
-import { getLangFromCookie } from "@/lib/i18n-server";
-import SnippetViewer from "@/components/SnippetViewer";
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { projects } from '@/data/projectsData';
+import { loadSnippetsServer } from '@/lib/snippetLoader';
+import { getLangFromCookie } from '@/lib/i18n-server';
+import SnippetViewer from '@/components/SnippetViewer';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://andres-caso-portfolio.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://andres-caso-portfolio.vercel.app';
 
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return projects.map((p) => ({ slug: p.slug }));
+  return projects.map(p => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({
@@ -19,33 +19,31 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const project = projects.find((p) => p.slug === slug);
+  const project = projects.find(p => p.slug === slug);
   const lang = await getLangFromCookie();
 
   if (!project) {
-    return { title: "Proyecto no encontrado" };
+    return { title: 'Proyecto no encontrado' };
   }
 
-  const name = lang === "en" && project.enName ? project.enName : project.name;
+  const name = lang === 'en' && project.enName ? project.enName : project.name;
   const description =
-    lang === "en" && project.enDescription
-      ? project.enDescription
-      : project.description;
+    lang === 'en' && project.enDescription ? project.enDescription : project.description;
 
   return {
     title: name,
     description,
     keywords: project.tech,
     openGraph: {
-      type: "article",
-      locale: "es_ES",
-      alternateLocale: ["en_US"],
+      type: 'article',
+      locale: 'es_ES',
+      alternateLocale: ['en_US'],
       url: `${siteUrl}/projects/${slug}`,
       title: name,
       description,
       images: [
         {
-          url: "/opengraph-image",
+          url: '/opengraph-image',
           width: 1200,
           height: 630,
           alt: name,
@@ -53,10 +51,10 @@ export async function generateMetadata({
       ],
     },
     twitter: {
-      card: "summary_large_image",
+      card: 'summary_large_image',
       title: name,
       description,
-      images: ["/opengraph-image"],
+      images: ['/opengraph-image'],
     },
     alternates: {
       canonical: `${siteUrl}/projects/${slug}`,
@@ -64,21 +62,18 @@ export async function generateMetadata({
   };
 }
 
-export default async function ProjectPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const project = projects.find((p) => p.slug === slug);
+  const project = projects.find(p => p.slug === slug);
 
   if (!project) {
     notFound();
   }
 
-  const snippets = project.snippetPaths && project.snippetPaths.length > 0
-    ? await loadSnippetsServer(project.snippetPaths)
-    : [];
+  const snippets =
+    project.snippetPaths && project.snippetPaths.length > 0
+      ? await loadSnippetsServer(project.snippetPaths)
+      : [];
 
   return (
     <div className="max-w-4xl mx-auto py-12 px-4">
@@ -107,7 +102,7 @@ export default async function ProjectPage({
                 rel="noopener noreferrer"
                 className="block p-4 bg-gray-50 hover:bg-gray-100"
               >
-                View API Spec ({project.apiDocPath.split("/").pop()})
+                View API Spec ({project.apiDocPath.split('/').pop()})
               </a>
             </div>
           </div>
@@ -124,14 +119,17 @@ export default async function ProjectPage({
           <div>
             <h2 className="text-xl font-semibold mb-4">Docker Configuration</h2>
             <div className="border rounded-lg p-4 bg-gray-50">
-              <p className="font-semibold mb-2">This project includes Docker Compose configuration:</p>
+              <p className="font-semibold mb-2">
+                This project includes Docker Compose configuration:
+              </p>
               <ul className="list-disc list-inside space-y-2">
                 <li>MySQL service for FoodBites and Urban Garden Manager</li>
                 <li>PostgreSQL service for Bolsa de Empleo</li>
                 <li>Backend services (Java Spring Boot, NestJS)</li>
               </ul>
               <p className="mt-2 text-sm text-gray-600">
-                See <code className="bg-gray-200 px-1 rounded">docker-compose.yml</code> in the repository root for full details.
+                See <code className="bg-gray-200 px-1 rounded">docker-compose.yml</code> in the
+                repository root for full details.
               </p>
             </div>
           </div>

@@ -1,14 +1,11 @@
-"use client";
-import Link from "next/link";
-import Image from "next/image";
-import { projects, Project } from "@/data/projectsData";
-import { skills } from "@/data/skillsData";
-import LanguageSwitch from "@/components/LanguageSwitch";
-import ProjectsGrid from "@/components/ProjectsGrid";
-import ProfileIntroText from "@/components/ProfileIntroText";
-import { useLanguage, t } from "@/lib/i18n";
-import { useState } from "react";
-import Modal from "./Modal";
+'use client';
+import Link from 'next/link';
+import Image from 'next/image';
+import { skills } from '@/data/skillsData';
+import LanguageSwitch from '@/components/LanguageSwitch';
+import ProjectsGrid from '@/components/ProjectsGrid';
+import ProfileIntroText from '@/components/ProfileIntroText';
+import { useLanguage, t } from '@/lib/i18n';
 
 function HeroSection() {
   const { lang } = useLanguage();
@@ -36,9 +33,7 @@ function HeroSection() {
           <h1 className="text-4xl md:text-6xl font-bold mb-4 text-white">
             {t(lang, 'home.title')}
           </h1>
-          <p className="text-xl md:text-2xl text-blue-400 mb-6">
-            {t(lang, 'home.subtitle')}
-          </p>
+          <p className="text-xl md:text-2xl text-blue-400 mb-6">{t(lang, 'home.subtitle')}</p>
           <ProfileIntroText />
           <div className="flex flex-wrap justify-center md:justify-start gap-4">
             <Link
@@ -48,7 +43,11 @@ function HeroSection() {
               {t(lang, 'home.github')}
             </Link>
             <Link
-              href={lang === 'en' ? 'https://www.linkedin.com/in/andrescasoiglesias/?locale=en-US' : 'https://www.linkedin.com/in/andrescasoiglesias/'}
+              href={
+                lang === 'en'
+                  ? 'https://www.linkedin.com/in/andrescasoiglesias/?locale=en-US'
+                  : 'https://www.linkedin.com/in/andrescasoiglesias/'
+              }
               className="px-6 py-3 border border-slate-500 hover:border-slate-400 rounded-lg font-medium transition-colors"
             >
               {t(lang, 'home.linkedin')}
@@ -79,10 +78,14 @@ function AboutSection() {
           <p>{t(lang, 'home.profileIntro2')}</p>
           <div className="mt-6 p-4 bg-slate-900 rounded-lg border-l-4 border-blue-500">
             <p className="text-blue-400 font-medium">
-              {t(lang, 'home.profileDifferTitle') || (lang === 'en' ? 'Why am I different?' : '¿Por qué soy diferente?')}
+              {t(lang, 'home.profileDifferTitle') ||
+                (lang === 'en' ? 'Why am I different?' : '¿Por qué soy diferente?')}
             </p>
             <p className="text-slate-400 mt-1">
-              {t(lang, 'home.profileDifferText') || (lang === 'en' ? 'I know what excellence under constant pressure means. I understand the end user because I have been there. I bring discipline, resilience and leadership that few can offer.' : 'Sé lo que es la excelencia bajo presión constante. Entiendo al usuario final porque yo lo fui. Traigo disciplina, resiliencia y capacidad de liderazgo que pocos pueden ofrecer.')}
+              {t(lang, 'home.profileDifferText') ||
+                (lang === 'en'
+                  ? 'I know what excellence under constant pressure means. I understand the end user because I have been there. I bring discipline, resilience and leadership that few can offer.'
+                  : 'Sé lo que es la excelencia bajo presión constante. Entiendo al usuario final porque yo lo fui. Traigo disciplina, resiliencia y capacidad de liderazgo que pocos pueden ofrecer.')}
             </p>
           </div>
         </div>
@@ -97,37 +100,67 @@ function SkillsSection() {
   return (
     <section className="py-20 px-6 bg-slate-800 w-full">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl min-[1440px]:text-4xl font-bold mb-8 text-white">{t(lang, 'home.skillsTitle')}</h2>
+        <h2 className="text-3xl min-[1440px]:text-4xl font-bold mb-8 text-white">
+          {t(lang, 'home.skillsTitle')}
+        </h2>
       </div>
       <div className="w-full max-w-screen-2xl mx-auto">
         <div className="mb-8">
-          <h3 className="text-xl min-[1440px]:text-2xl font-semibold text-teal-400 mb-4 max-w-4xl mx-auto text-center">{t(lang, 'home.skillsCybersecurity')}</h3>
+          <h3 className="text-xl min-[1440px]:text-2xl font-semibold text-teal-400 mb-4 max-w-4xl mx-auto text-center">
+            {t(lang, 'home.skillsCybersecurity')}
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {skills.filter(s => cyberCategories.includes(s.category)).map((skill) => (
-              <div key={skill.category} className="bg-slate-900 rounded-lg p-6 border border-slate-700">
-                <h4 className="text-lg min-[1440px]:text-xl font-semibold text-blue-400 mb-4">{skill.category}</h4>
-                <div className="flex flex-wrap gap-2">
-                  {skill.items.map((item) => (
-                    <span key={item} className="px-3 py-1 bg-slate-700 rounded-full text-sm text-slate-200">{item}</span>
-                  ))}
+            {skills
+              .filter(s => cyberCategories.includes(s.category))
+              .map(skill => (
+                <div
+                  key={skill.category}
+                  className="bg-slate-900 rounded-lg p-6 border border-slate-700"
+                >
+                  <h4 className="text-lg min-[1440px]:text-xl font-semibold text-blue-400 mb-4">
+                    {skill.category}
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {skill.items.map(item => (
+                      <span
+                        key={item}
+                        className="px-3 py-1 bg-slate-700 rounded-full text-sm text-slate-200"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
         <div>
-          <h3 className="text-xl min-[1440px]:text-2xl font-semibold text-teal-400 mb-4 max-w-4xl mx-auto text-center">{t(lang, 'home.skillsDevelopment')}</h3>
+          <h3 className="text-xl min-[1440px]:text-2xl font-semibold text-teal-400 mb-4 max-w-4xl mx-auto text-center">
+            {t(lang, 'home.skillsDevelopment')}
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {skills.filter(s => !cyberCategories.includes(s.category)).map((skill) => (
-              <div key={skill.category} className="bg-slate-900 rounded-lg p-6 border border-slate-700">
-                <h4 className="text-lg min-[1440px]:text-xl font-semibold text-blue-400 mb-4">{skill.category}</h4>
-                <div className="flex flex-wrap gap-2">
-                  {skill.items.map((item) => (
-                    <span key={item} className="px-3 py-1 bg-slate-700 rounded-full text-sm text-slate-200">{item}</span>
-                  ))}
+            {skills
+              .filter(s => !cyberCategories.includes(s.category))
+              .map(skill => (
+                <div
+                  key={skill.category}
+                  className="bg-slate-900 rounded-lg p-6 border border-slate-700"
+                >
+                  <h4 className="text-lg min-[1440px]:text-xl font-semibold text-blue-400 mb-4">
+                    {skill.category}
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {skill.items.map(item => (
+                      <span
+                        key={item}
+                        className="px-3 py-1 bg-slate-700 rounded-full text-sm text-slate-200"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </div>
@@ -140,7 +173,9 @@ function ProjectsSection() {
   return (
     <section className="py-20 px-6 bg-slate-800 w-full">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl min-[1440px]:text-4xl font-bold mb-8 text-white">{t(lang, 'home.projectsTitle')}</h2>
+        <h2 className="text-3xl min-[1440px]:text-4xl font-bold mb-8 text-white">
+          {t(lang, 'home.projectsTitle')}
+        </h2>
       </div>
       <div className="w-full max-w-screen-2xl mx-auto">
         <ProjectsGrid />
@@ -171,7 +206,9 @@ function Footer() {
   const { lang } = useLanguage();
   return (
     <footer className="py-8 px-6 bg-slate-950 text-center text-slate-500 text-sm">
-      <p>© {new Date().getFullYear()} Andrés Caso Iglesias. {t(lang, 'home.footerRights')}</p>
+      <p>
+        © {new Date().getFullYear()} Andrés Caso Iglesias. {t(lang, 'home.footerRights')}
+      </p>
     </footer>
   );
 }

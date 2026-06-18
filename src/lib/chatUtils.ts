@@ -1,97 +1,106 @@
-import { Lang } from "@/i18n/types";
+import { Lang } from '@/i18n/types';
 import {
   allResponses,
   fallbackResponse,
   followUpResponses,
   affirmativeKeywords,
   type ChatResponse,
-  type FollowUpResponse,
   type ChatConfig,
-} from "@/data/chat";
-import { type ProjectData } from "@/components/chat/ProjectCard";
+} from '@/data/chat';
+import { type ProjectData } from '@/components/chat/ProjectCard';
 
 // ──────────────────────────────────────────────────────────────
 // Project Data for inline display
 // ──────────────────────────────────────────────────────────────
 const projectsData: Record<string, Record<Lang, ProjectData>> = {
-  "project-bolsa": {
+  'project-bolsa': {
     es: {
-      name: "Bolsa de Empleo",
-      description: "API RESTful completa para gestión de bolsa de empleo con autenticación JWT, roles por usuario (Aspirantes/Empresas), gestión de ofertas laborales, postulaciones y notificaciones.",
-      techStack: "NestJS 11, PostgreSQL, TypeORM, Flutter 3, JWT, Docker",
-      detailUrl: "https://andres-caso-iglesias.vercel.app/projects/bolsa-empleo",
-      githubUrl: "https://github.com/Andres-Caso-Iglesias/Bolsa_Empleo",
+      name: 'Bolsa de Empleo',
+      description:
+        'API RESTful completa para gestión de bolsa de empleo con autenticación JWT, roles por usuario (Aspirantes/Empresas), gestión de ofertas laborales, postulaciones y notificaciones.',
+      techStack: 'NestJS 11, PostgreSQL, TypeORM, Flutter 3, JWT, Docker',
+      detailUrl: 'https://andres-caso-iglesias.vercel.app/projects/bolsa-empleo',
+      githubUrl: 'https://github.com/Andres-Caso-Iglesias/Bolsa_Empleo',
     },
     en: {
-      name: "Bolsa de Empleo",
-      description: "Complete RESTful API for job board management with JWT authentication, role-based users (Applicants/Companies), job offers, applications and notifications.",
-      techStack: "NestJS 11, PostgreSQL, TypeORM, Flutter 3, JWT, Docker",
-      detailUrl: "https://andres-caso-iglesias.vercel.app/projects/bolsa-empleo",
-      githubUrl: "https://github.com/Andres-Caso-Iglesias/Bolsa_Empleo",
+      name: 'Bolsa de Empleo',
+      description:
+        'Complete RESTful API for job board management with JWT authentication, role-based users (Applicants/Companies), job offers, applications and notifications.',
+      techStack: 'NestJS 11, PostgreSQL, TypeORM, Flutter 3, JWT, Docker',
+      detailUrl: 'https://andres-caso-iglesias.vercel.app/projects/bolsa-empleo',
+      githubUrl: 'https://github.com/Andres-Caso-Iglesias/Bolsa_Empleo',
     },
   },
-  "project-foodbites": {
+  'project-foodbites': {
     es: {
-      name: "FoodBites",
-      description: "Backend Spring Boot para gestión de food trucks con 6 entidades interrelacionadas. Búsqueda por ubicación geográfica, recomendaciones por tipo de cocina, ranking y cálculo de beneficios.",
-      techStack: "Java 17, Spring Boot 3.2.0, MySQL 8.2, Spring Data JPA, Hibernate, Lombok",
-      detailUrl: "https://andres-caso-iglesias.vercel.app/projects/foodbites",
-      githubUrl: "https://github.com/Andres-Caso-Iglesias/FoodBites",
+      name: 'FoodBites',
+      description:
+        'Backend Spring Boot para gestión de food trucks con 6 entidades interrelacionadas. Búsqueda por ubicación geográfica, recomendaciones por tipo de cocina, ranking y cálculo de beneficios.',
+      techStack: 'Java 17, Spring Boot 3.2.0, MySQL 8.2, Spring Data JPA, Hibernate, Lombok',
+      detailUrl: 'https://andres-caso-iglesias.vercel.app/projects/foodbites',
+      githubUrl: 'https://github.com/Andres-Caso-Iglesias/FoodBites',
     },
     en: {
-      name: "FoodBites",
-      description: "Spring Boot backend for food truck management with 6 interrelated entities. Geographic location search, cuisine recommendations, ranking and profit calculation.",
-      techStack: "Java 17, Spring Boot 3.2.0, MySQL 8.2, Spring Data JPA, Hibernate, Lombok",
-      detailUrl: "https://andres-caso-iglesias.vercel.app/projects/foodbites",
-      githubUrl: "https://github.com/Andres-Caso-Iglesias/FoodBites",
+      name: 'FoodBites',
+      description:
+        'Spring Boot backend for food truck management with 6 interrelated entities. Geographic location search, cuisine recommendations, ranking and profit calculation.',
+      techStack: 'Java 17, Spring Boot 3.2.0, MySQL 8.2, Spring Data JPA, Hibernate, Lombok',
+      detailUrl: 'https://andres-caso-iglesias.vercel.app/projects/foodbites',
+      githubUrl: 'https://github.com/Andres-Caso-Iglesias/FoodBites',
     },
   },
-  "project-huertos": {
+  'project-huertos': {
     es: {
-      name: "Gestor Huertos Urbanos",
-      description: "Aplicación web para gestión de huertos urbanos con CRUD completo. Frontend con Bootstrap 5 y vanilla JS, backend Spring Boot.",
-      techStack: "Java 17, Spring Boot 3.2.0, MySQL 8.2, JPA/Hibernate, Bootstrap 5",
-      detailUrl: "https://andres-caso-iglesias.vercel.app/projects/gestor-huertos",
-      githubUrl: "https://github.com/Andres-Caso-Iglesias/Gestor_Huertos_Urbanos",
+      name: 'Gestor Huertos Urbanos',
+      description:
+        'Aplicación web para gestión de huertos urbanos con CRUD completo. Frontend con Bootstrap 5 y vanilla JS, backend Spring Boot.',
+      techStack: 'Java 17, Spring Boot 3.2.0, MySQL 8.2, JPA/Hibernate, Bootstrap 5',
+      detailUrl: 'https://andres-caso-iglesias.vercel.app/projects/gestor-huertos',
+      githubUrl: 'https://github.com/Andres-Caso-Iglesias/Gestor_Huertos_Urbanos',
     },
     en: {
-      name: "Gestor Huertos Urbanos",
-      description: "Web application for urban garden management with full CRUD. Frontend with Bootstrap 5 and vanilla JS, Spring Boot backend.",
-      techStack: "Java 17, Spring Boot 3.2.0, MySQL 8.2, JPA/Hibernate, Bootstrap 5",
-      detailUrl: "https://andres-caso-iglesias.vercel.app/projects/gestor-huertos",
-      githubUrl: "https://github.com/Andres-Caso-Iglesias/Gestor_Huertos_Urbanos",
+      name: 'Gestor Huertos Urbanos',
+      description:
+        'Web application for urban garden management with full CRUD. Frontend with Bootstrap 5 and vanilla JS, Spring Boot backend.',
+      techStack: 'Java 17, Spring Boot 3.2.0, MySQL 8.2, JPA/Hibernate, Bootstrap 5',
+      detailUrl: 'https://andres-caso-iglesias.vercel.app/projects/gestor-huertos',
+      githubUrl: 'https://github.com/Andres-Caso-Iglesias/Gestor_Huertos_Urbanos',
     },
   },
-  "project-auditoria": {
+  'project-auditoria': {
     es: {
-      name: "Auditoria de Seguridad",
-      description: "Herramienta de auditoría de seguridad web que analiza vulnerabilidades OWASP Top 10. Backend NestJS con endpoints para análisis, frontend React con resultados visualizados.",
-      techStack: "NestJS 11, React 19, TypeScript, OWASP",
-      detailUrl: "https://andres-caso-iglesias.vercel.app/projects/auditoria-web",
-      githubUrl: "https://github.com/Andres-Caso-Iglesias/Auditoria-web",
+      name: 'Auditoria de Seguridad',
+      description:
+        'Herramienta de auditoría de seguridad web que analiza vulnerabilidades OWASP Top 10. Backend NestJS con endpoints para análisis, frontend React con resultados visualizados.',
+      techStack: 'NestJS 11, React 19, TypeScript, OWASP',
+      detailUrl: 'https://andres-caso-iglesias.vercel.app/projects/auditoria-web',
+      githubUrl: 'https://github.com/Andres-Caso-Iglesias/Auditoria-web',
     },
     en: {
-      name: "Security Audit",
-      description: "Web security auditing tool that analyzes OWASP Top 10 vulnerabilities. NestJS backend with analysis endpoints, React frontend with visualized results.",
-      techStack: "NestJS 11, React 19, TypeScript, OWASP",
-      detailUrl: "https://andres-caso-iglesias.vercel.app/projects/auditoria-web",
-      githubUrl: "https://github.com/Andres-Caso-Iglesias/Auditoria-web",
+      name: 'Security Audit',
+      description:
+        'Web security auditing tool that analyzes OWASP Top 10 vulnerabilities. NestJS backend with analysis endpoints, React frontend with visualized results.',
+      techStack: 'NestJS 11, React 19, TypeScript, OWASP',
+      detailUrl: 'https://andres-caso-iglesias.vercel.app/projects/auditoria-web',
+      githubUrl: 'https://github.com/Andres-Caso-Iglesias/Auditoria-web',
     },
   },
-  "project-portfolio": {
+  'project-portfolio': {
     es: {
-      name: "Portafolio Profesional",
-      description: "Este portafolio con arquitectura en capas, chat interactivo bilingüe, timeline de experiencia y grid de proyectos.",
-      techStack: "Next.js 16, React 19, TypeScript, Tailwind CSS v4",
-      detailUrl: "https://github.com/Andres-Caso-Iglesias/portafolio",
-      githubUrl: "https://github.com/Andres-Caso-Iglesias/portafolio",
+      name: 'Portafolio Profesional',
+      description:
+        'Este portafolio con arquitectura en capas, chat interactivo bilingüe, timeline de experiencia y grid de proyectos.',
+      techStack: 'Next.js 16, React 19, TypeScript, Tailwind CSS v4',
+      detailUrl: 'https://github.com/Andres-Caso-Iglesias/portafolio',
+      githubUrl: 'https://github.com/Andres-Caso-Iglesias/portafolio',
     },
     en: {
-      name: "Professional Portfolio",
-      description: "This portfolio with layered architecture, bilingual interactive chat, experience timeline and project grid.",
-      techStack: "Next.js 16, React 19, TypeScript, Tailwind CSS v4",
-      detailUrl: "https://github.com/Andres-Caso-Iglesias/portafolio",
-      githubUrl: "https://github.com/Andres-Caso-Iglesias/portafolio",
+      name: 'Professional Portfolio',
+      description:
+        'This portfolio with layered architecture, bilingual interactive chat, experience timeline and project grid.',
+      techStack: 'Next.js 16, React 19, TypeScript, Tailwind CSS v4',
+      detailUrl: 'https://github.com/Andres-Caso-Iglesias/portafolio',
+      githubUrl: 'https://github.com/Andres-Caso-Iglesias/portafolio',
     },
   },
 };
@@ -100,7 +109,7 @@ const projectsData: Record<string, Record<Lang, ProjectData>> = {
 // Get project data for inline display
 // ──────────────────────────────────────────────────────────────
 function getProjectData(topicId: string | null, lang: Lang): ProjectData | undefined {
-  if (!topicId || !topicId.startsWith("project-")) return undefined;
+  if (!topicId || !topicId.startsWith('project-')) return undefined;
   return projectsData[topicId]?.[lang];
 }
 
@@ -110,10 +119,10 @@ function getProjectData(topicId: string | null, lang: Lang): ProjectData | undef
 export function normalizeText(text: string): string {
   return text
     .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "") // Remove accents
-    .replace(/[¿¡!?,.;:\"']/g, "") // Remove punctuation
-    .replace(/\s+/g, " ") // Collapse whitespace
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '') // Remove accents
+    .replace(/[¿¡!?,.;:"']/g, '') // Remove punctuation
+    .replace(/\s+/g, ' ') // Collapse whitespace
     .trim();
 }
 
@@ -122,8 +131,8 @@ export function normalizeText(text: string): string {
 // ──────────────────────────────────────────────────────────────
 export function tokenize(text: string): string[] {
   return normalizeText(text)
-    .split(" ")
-    .filter((word) => word.length > 1); // Filter single chars
+    .split(' ')
+    .filter(word => word.length > 1); // Filter single chars
 }
 
 // ──────────────────────────────────────────────────────────────
@@ -168,10 +177,7 @@ function isFuzzyMatch(input: string, keyword: string): boolean {
 // Calculate match score between user input and keywords
 // Returns a score between 0 and 1 (0 = no match, 1 = perfect match)
 // ──────────────────────────────────────────────────────────────
-export function calculateMatchScore(
-  userInput: string,
-  keywords: string[]
-): number {
+export function calculateMatchScore(userInput: string, keywords: string[]): number {
   const normalizedInput = normalizeText(userInput);
   const tokens = tokenize(userInput);
 
@@ -197,7 +203,10 @@ export function calculateMatchScore(
     }
 
     // 2. Keyword contains the input or input contains keyword (strong match)
-    if (normalizedInput.includes(normalizedKeyword) || normalizedKeyword.includes(normalizedInput)) {
+    if (
+      normalizedInput.includes(normalizedKeyword) ||
+      normalizedKeyword.includes(normalizedInput)
+    ) {
       // Longer keywords matching = better
       const lengthBonus = normalizedKeyword.length / 10;
       totalScore += 5 + lengthBonus;
@@ -233,7 +242,7 @@ export function calculateMatchScore(
   // Normalize based on number of matches vs keywords
   // More matches = higher confidence
   const matchRatio = matchCount / Math.min(keywords.length, 5);
-  
+
   // Bonus for single-word exact matches
   const singleWordBonus = isSingleWord && matchCount > 0 ? 0.3 : 0;
 
@@ -299,7 +308,7 @@ export function findBestResponse(
   let bestScore = 0;
 
   // FIRST: Check for specific project matches (higher priority)
-  const projectResponses = responses.filter(r => r.id.startsWith("project-"));
+  const projectResponses = responses.filter(r => r.id.startsWith('project-'));
   for (const response of projectResponses) {
     const score = calculateMatchScore(userInput, response.keywords);
     if (score > bestScore && score >= threshold) {
@@ -314,7 +323,7 @@ export function findBestResponse(
   }
 
   // OTHERWISE: Check other categories
-  const otherResponses = responses.filter(r => !r.id.startsWith("project-"));
+  const otherResponses = responses.filter(r => !r.id.startsWith('project-'));
   for (const response of otherResponses) {
     const score = calculateMatchScore(userInput, response.keywords);
     if (score > bestScore && score >= threshold) {
@@ -345,10 +354,7 @@ export function findBestResponse(
 // ──────────────────────────────────────────────────────────────
 // Get response message in the correct language
 // ──────────────────────────────────────────────────────────────
-export function getResponseMessage(
-  response: ChatResponse | null,
-  lang: Lang
-): string {
+export function getResponseMessage(response: ChatResponse | null, lang: Lang): string {
   if (!response) {
     return fallbackResponse[lang];
   }
@@ -362,7 +368,7 @@ export function processUserMessage(
   userInput: string,
   lang: Lang,
   lastTopic: string | null = null,
-  _config: ChatConfig = { mode: "rule-based" }
+  _config: ChatConfig = { mode: 'rule-based' }
 ): { response: string; topic: string | null; project?: ProjectData } {
   // 1. First, check if this is a follow-up response to a previous topic
   const followUpResponse = findFollowUpResponse(userInput, lastTopic, lang);
@@ -373,15 +379,15 @@ export function processUserMessage(
   // 2. Otherwise, find the best matching response
   const bestMatch = findBestResponse(userInput);
   const response = getResponseMessage(bestMatch, lang);
-  
+
   // Check if this is a project response and return project data
   const project = getProjectData(bestMatch?.id || null, lang);
-  
+
   // Return the topic ID if a match was found
-  return { 
-    response, 
+  return {
+    response,
     topic: bestMatch?.id || null,
-    project 
+    project,
   };
 
   // Future AI integration placeholder:
