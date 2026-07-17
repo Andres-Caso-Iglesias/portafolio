@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useChat } from '@/hooks/useChat';
 import { useLanguage } from '@/lib/i18n';
 import { ChatMessage } from './ChatMessage';
@@ -62,7 +63,7 @@ export function Chat() {
           </svg>
         ) : (
           // Custom chat icon
-          <img src="/chat.png" alt="Chat" className="w-10 h-10" />
+          <Image src="/chat.png" alt="Chat" width={40} height={40} className="w-10 h-10" />
         )}
       </button>
 

@@ -1,6 +1,8 @@
 'use client';
+
 import { useState, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
+import Image from 'next/image';
 import { Project } from '@/data/projectsData';
 import { useLanguage } from '@/lib/i18n';
 import { loadSnippetsClient, type Snippet } from '@/lib/snippetLoaderClient';
@@ -13,71 +15,74 @@ interface ModalProps {
 
 export default function Modal({ project, onClose }: ModalProps) {
   const { lang } = useLanguage();
+  const [isMounted, setIsMounted] = useState(false);
   const [activeTab, setActiveTab] = useState<
     'challenge' | 'solution' | 'architecture' | 'snippets'
   >('challenge');
   const [snippetsContent, setSnippetsContent] = useState<Snippet[]>([]);
   const [isLoadingSnippets, setIsLoadingSnippets] = useState(false);
-  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const handleClose = useCallback(() => {
+    setActiveTab('challenge');
+    onClose();
+  }, [onClose]);
 
   const handleTabChange = useCallback(
     (tab: 'challenge' | 'solution' | 'architecture' | 'snippets') => {
       setActiveTab(tab);
+      if (tab === 'snippets' && snippetsContent.length === 0 && !isLoadingSnippets) {
+        setIsLoadingSnippets(true);
+        loadSnippetsClient(project.snippetPaths || []).then((snippets) => {
+          setSnippetsContent(snippets);
+          setIsLoadingSnippets(false);
+        });
+      }
     },
-    [],
+    [project.snippetPaths, snippetsContent.length, isLoadingSnippets]
   );
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleClose();
+      }
     };
-    document.addEventListener('keydown', handleEsc);
-    return () => document.removeEventListener('keydown', handleEsc);
-  }, [onClose]);
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [handleClose]);
 
-  useEffect(() => {
-    if (
-      activeTab === 'snippets' &&
-      project.snippetPaths &&
-      project.snippetPaths.length > 0 &&
-      snippetsContent.length === 0
-    ) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setIsLoadingSnippets(true);
-      loadSnippetsClient(project.snippetPaths).then(data => {
-        setSnippetsContent(data);
-        setIsLoadingSnippets(false);
-      });
-    }
-  }, [activeTab, project.snippetPaths, snippetsContent.length]);
-
-  if (!mounted) return null;
+  if (!isMounted) return null;
 
   return createPortal(
     <div
-      className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center transition-opacity duration-200"
-      style={{ opacity: mounted ? 1 : 0 }}
-      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+      onClick={handleClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
     >
       <div
-        className="relative z-10 w-[95%] max-w-[800px] h-[85vh] overflow-y-auto bg-slate-900 rounded-xl p-6 md:p-8 mx-auto"
-        onClick={e => e.stopPropagation()}
+        className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-slate-900 rounded-xl border border-slate-700 shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
       >
+        <div className="sticky top-0 flex items-center justify-between p-4 border-b border-slate-700 bg-slate-900/95 backdrop-blur-sm z-10 rounded-t-xl">
+          <h2 id="modal-title" className="text-xl font-semibold text-white">
+            {lang === 'en' && project.enName ? project.enName : project.name}
+          </h2>
           <button
-            onClick={onClose}
-            className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors text-xl"
+            onClick={handleClose}
+            aria-label={lang === 'en' ? 'Close modal' : 'Cerrar modal'}
+            className="p-1 text-slate-400 hover:text-white transition-colors rounded-lg hover:bg-slate-800"
           >
             &times;
           </button>
+        </div>
 
-          <h2 className="text-2xl font-semibold mb-2 text-white">
-            {lang === 'en' && project.enName ? project.enName : project.name}
-          </h2>
-
+        <div className="p-6 md:p-8">
           <p className="text-slate-300 mb-4">
             {lang === 'en' && project.enDescription ? project.enDescription : project.description}
           </p>
@@ -171,9 +176,11 @@ export default function Modal({ project, onClose }: ModalProps) {
                         : 'Diagrama Entidad-Relación (ERD)'}
                     </h3>
                     <div className="border rounded-lg overflow-hidden bg-white">
-                      <img
+                      <Image
                         src={project.erdPath}
                         alt={`${project.name} ERD`}
+                        width={800}
+                        height={600}
                         className="w-full h-auto"
                       />
                     </div>
@@ -199,7 +206,8 @@ export default function Modal({ project, onClose }: ModalProps) {
             )}
           </div>
         </div>
-      </div>,
-    document.body,
+      </div>
+    </div>,
+    document.body
   );
 }

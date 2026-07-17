@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import { projects } from '@/data/projectsData';
 import { loadSnippetsServer } from '@/lib/snippetLoader';
 import { getLangFromCookie } from '@/lib/i18n-server';
@@ -87,7 +88,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           <div>
             <h2 className="text-xl font-semibold mb-4">Entity Relationship Diagram (ERD)</h2>
             <div className="border rounded-lg overflow-hidden shadow">
-              <img src={project.erdPath} alt={`${project.name} ERD`} className="w-full h-auto" />
+              <Image
+                src={project.erdPath}
+                alt={`${project.name} ERD`}
+                width={800}
+                height={600}
+                className="w-full h-auto"
+              />
             </div>
           </div>
         )}
