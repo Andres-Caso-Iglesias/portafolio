@@ -223,15 +223,33 @@ export function calculateMatchScore(userInput: string, keywords: string[]): numb
         break;
       }
 
-      // Partial token match (one contains the other)
-      if (token.includes(normalizedKeyword) || normalizedKeyword.includes(token)) {
+      // Partial token match - ONLY for single-word keywords (no spaces)
+      // For multi-word keywords, require exact phrase match or multiple tokens
+      const keywordIsPhrase = normalizedKeyword.includes(' ');
+      if (!keywordIsPhrase && (token.includes(normalizedKeyword) || normalizedKeyword.includes(token))) {
         totalScore += 3;
         matchCount++;
         break;
       }
 
-      // Fuzzy match (typo tolerance)
-      if (isFuzzyMatch(token, normalizedKeyword)) {
+      // For multi-word keywords, check if at least 2 tokens match
+      if (keywordIsPhrase) {
+        const keywordTokens = normalizedKeyword.split(' ').filter(t => t.length > 1);
+        let matchingTokens = 0;
+        for (const kwToken of keywordTokens) {
+          if (tokens.includes(kwToken)) {
+            matchingTokens++;
+          }
+        }
+        if (matchingTokens >= 2) {
+          totalScore += 4;
+          matchCount++;
+          break;
+        }
+      }
+
+      // Fuzzy match (typo tolerance) - only for single-word keywords
+      if (!keywordIsPhrase && isFuzzyMatch(token, normalizedKeyword)) {
         totalScore += 2;
         matchCount++;
         break;

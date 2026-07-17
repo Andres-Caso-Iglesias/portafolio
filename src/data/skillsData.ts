@@ -15,7 +15,7 @@ export const skills: SkillCategory[] = [
   },
   {
     category: 'Redes',
-    items: ['Firewalls', 'VPN', 'Wireshark', 'TCP/IP', 'NMAP'],
+    items: ['Firewalls', 'VPN', 'Wireshark', 'TCP/IP', 'NMAP', 'Gobuster', 'Burp Suite'],
   },
   // Desarrollo - Lenguajes
   {

@@ -3,8 +3,9 @@ import { type ChatResponse } from '../types';
 export const availabilityResponse: ChatResponse = {
   id: 'availability',
   keywords: [
-    // Español - específicos
-    'disponibilidad laboral',
+    // Español - específicos (más específicos primero)
+    'disponibilidad laboral inmediata',
+    'disponibilidad para trabajar',
     'disponible para trabajar',
     'busco empleo',
     'busco trabajo',
@@ -12,6 +13,9 @@ export const availabilityResponse: ChatResponse = {
     'disponibilidad inmediata',
     'trabajo remoto',
     'empleo híbrido',
+    'disponibilidad laboral',
+    'inmediatamente disponible',
+    'seeking employment',
     // Inglés
     'job availability',
     'available for work',
@@ -20,9 +24,10 @@ export const availabilityResponse: ChatResponse = {
     'remote work',
     'hybrid work',
     'hiring now',
+    'immediately available',
   ],
   message: {
-    es: 'Estoy disponible para oportunidades laborales, tanto presenciales en España como en remoto. Mi disponibilidad es inmediata. ¿Te gustaría agendar una llamada para conversar sobre oportunidades?',
-    en: "I'm available for job opportunities, both onsite in Spain and remote. My availability is immediate. Would you like to schedule a call to discuss opportunities?",
+    es: 'Estoy disponible para oportunidades laborales, tanto presenciales en España como en remoto, y no tendría ningún inconveniente en recolocar mi lugar de residencia. Mi disponibilidad es inmediata. ¿Te gustaría agendar una llamada para conversar sobre oportunidades?',
+    en: "I'm available for job opportunities, both onsite in Spain and remote, and I would have no issue relocating. My availability is immediate. Would you like to schedule a call to discuss opportunities?",
   },
 };

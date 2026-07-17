@@ -37,20 +37,20 @@ function HeroSection() {
           <ProfileIntroText />
           <div className="flex flex-wrap justify-center md:justify-start gap-4">
             <Link
-              href="https://github.com/Andres-Caso-Iglesias"
-              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium transition-colors"
-            >
-              {t(lang, 'home.github')}
-            </Link>
-            <Link
               href={
                 lang === 'en'
                   ? 'https://www.linkedin.com/in/andrescasoiglesias/?locale=en-US'
                   : 'https://www.linkedin.com/in/andrescasoiglesias/'
               }
-              className="px-6 py-3 border border-slate-500 hover:border-slate-400 rounded-lg font-medium transition-colors"
+              className="px-6 py-3 bg-blue-700 hover:bg-blue-800 rounded-lg font-medium transition-colors"
             >
               {t(lang, 'home.linkedin')}
+            </Link>
+            <Link
+              href="https://github.com/Andres-Caso-Iglesias"
+              className="px-6 py-3 bg-slate-900 hover:bg-slate-700 border border-slate-700 rounded-lg font-medium transition-colors"
+            >
+              {t(lang, 'home.github')}
             </Link>
             <a
               href={lang === 'en' ? '/andres_caso_iglesias_EN.pdf' : '/andres_caso_iglesias_Es.pdf'}
@@ -59,6 +59,32 @@ function HeroSection() {
               className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 rounded-lg font-medium transition-colors"
             >
               {t(lang, 'home.resume')}
+            </a>
+          </div>
+          <div className="flex flex-wrap justify-center md:justify-start gap-3 mt-4 pt-4 border-t border-slate-700">
+            <a
+              href="https://app.hackthebox.com/public/users/3412608"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 border border-green-600 text-green-400 hover:bg-green-600/10 hover:text-green-300 rounded-lg font-medium text-sm transition-colors"
+            >
+              {t(lang, 'home.hackTheBox')}
+            </a>
+            <a
+              href="https://labs.thehackerslabs.com/hacker/10479"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 border border-red-600 text-red-400 hover:bg-red-600/10 hover:text-red-300 rounded-lg font-medium text-sm transition-colors"
+            >
+              {t(lang, 'home.theHackersLabs')}
+            </a>
+            <a
+              href="https://tryhackme.com/p/Drosc0"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 border border-orange-600 text-orange-400 hover:bg-orange-600/10 hover:text-orange-300 rounded-lg font-medium text-sm transition-colors"
+            >
+              {t(lang, 'home.tryHackMe')}
             </a>
           </div>
         </div>

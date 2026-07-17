@@ -70,11 +70,11 @@ export const allResponses: ChatResponse[] = [
   projectsResponse,
 
   // ─── CORE PROFILE CATEGORIES ───
+  availabilityResponse,
   experienceResponse,
   skillsResponse,
   educationResponse,
   contactResponse,
-  availabilityResponse,
   aboutResponse,
 
   // ─── TECHNICAL CATEGORIES ───
