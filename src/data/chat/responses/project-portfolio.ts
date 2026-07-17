@@ -3,6 +3,8 @@ import { type ChatResponse } from '../types';
 export const projectPortfolioResponse: ChatResponse = {
   id: 'project-portfolio',
   keywords: [
+    'portafolio profesional',
+    'professional portfolio',
     'este portafolio',
     'este portfolio',
     'this portfolio',
