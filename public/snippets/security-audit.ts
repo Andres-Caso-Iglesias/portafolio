@@ -31,14 +31,20 @@ export class ScoreCalculator {
   // critical=25, high=15, medium=10, low=5 = 165 total
 
   calculate(headers: HeaderResult[]): { score: number; grade: string } {
-    const totalWeightedScore = headers.reduce(
-      (sum, h) => sum + h.weight * h.grade,
-      0,
-    );
+    const totalWeightedScore = headers.reduce((sum, h) => sum + h.weight * h.grade, 0);
     const score = Math.round((totalWeightedScore / this.MAX_POSSIBLE_SCORE) * 100);
-    const grade = score >= 90 ? 'A' : score >= 80 ? 'B'
-                : score >= 70 ? 'C' : score >= 60 ? 'D'
-                : score >= 50 ? 'E' : 'F';
+    const grade =
+      score >= 90
+        ? 'A'
+        : score >= 80
+          ? 'B'
+          : score >= 70
+            ? 'C'
+            : score >= 60
+              ? 'D'
+              : score >= 50
+                ? 'E'
+                : 'F';
     return { score, grade };
   }
 }
@@ -61,7 +67,8 @@ export class CspChecker implements HeaderChecker {
         severity: this.severity,
         weight: this.weight,
         finding: 'Content-Security-Policy header is missing — site is vulnerable to XSS',
-        recommendation: "Implement a strict CSP: default-src 'self'; script-src 'self'; object-src 'none'",
+        recommendation:
+          "Implement a strict CSP: default-src 'self'; script-src 'self'; object-src 'none'",
       };
     }
 
@@ -77,7 +84,8 @@ export class CspChecker implements HeaderChecker {
     if (hasDefaultSrc && (hasScriptSrc || hasObjectSrc)) grade = 0.8;
     if (hasUnsafeInline) grade = Math.min(grade, 0.4);
     if (hasUnsafeEval) grade = Math.min(grade, 0.4);
-    if (!hasUnsafeInline && !hasUnsafeEval && hasDefaultSrc && hasScriptSrc && hasObjectSrc) grade = 1.0;
+    if (!hasUnsafeInline && !hasUnsafeEval && hasDefaultSrc && hasScriptSrc && hasObjectSrc)
+      grade = 1.0;
 
     return {
       header: 'Content-Security-Policy',
@@ -87,9 +95,7 @@ export class CspChecker implements HeaderChecker {
       grade,
       severity: this.severity,
       weight: this.weight,
-      finding: hasUnsafeInline
-        ? 'CSP is present but contains unsafe-inline'
-        : 'CSP is present',
+      finding: hasUnsafeInline ? 'CSP is present but contains unsafe-inline' : 'CSP is present',
       recommendation: hasUnsafeInline
         ? 'Remove unsafe directives. Use nonces or hashes for inline scripts.'
         : 'Review CSP policy and consider adding reporting via report-uri or report-to.',

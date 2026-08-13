@@ -226,7 +226,10 @@ export function calculateMatchScore(userInput: string, keywords: string[]): numb
       // Partial token match - ONLY for single-word keywords (no spaces)
       // For multi-word keywords, require exact phrase match or multiple tokens
       const keywordIsPhrase = normalizedKeyword.includes(' ');
-      if (!keywordIsPhrase && (token.includes(normalizedKeyword) || normalizedKeyword.includes(token))) {
+      if (
+        !keywordIsPhrase &&
+        (token.includes(normalizedKeyword) || normalizedKeyword.includes(token))
+      ) {
         totalScore += 3;
         matchCount++;
         break;
@@ -412,7 +415,12 @@ export async function processUserMessage(
   lastTopic: string | null = null,
   config: ChatConfig = { mode: 'rule-based' },
   aiFetcher?: (message: string, lang: Lang) => Promise<string | null>
-): Promise<{ response: string; topic: string | null; project?: ProjectData; provider?: 'ai' | 'rule-based' }> {
+): Promise<{
+  response: string;
+  topic: string | null;
+  project?: ProjectData;
+  provider?: 'ai' | 'rule-based';
+}> {
   // 1. Check for follow-ups first (rule-based, always fast)
   const followUpResponse = findFollowUpResponse(userInput, lastTopic, lang);
   if (followUpResponse) {

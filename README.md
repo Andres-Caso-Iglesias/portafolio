@@ -10,18 +10,18 @@ Este portafolio presenta mi trayectoria, proyectos y habilidades como desarrolla
 
 ## Stack Tecnologico
 
-| Categoria | Tecnologia | Detalles |
-|-----------|------------|----------|
-| **Frontend** | Next.js 16 (App Router) | Framework React para aplicaciones hibridas estaticas y servidor-side |
-| | React 19 | Biblioteca de UI con ultimas caracteristicas (React Compiler) |
-| | TypeScript 5.9 | Tipado estricto para seguridad y autocompletado |
-| **Estilos** | Tailwind CSS v4 | Framework utility-first para diseno responsivo y mantenible |
-| **Iconos** | SVG inline | Iconos personalizados y accesibles |
-| **Chat** | Gemini AI + Rule-based fallback | Chatbot interactivo para reclutadores con 46+ categorias, rate limiting e contexto conversacional |
-| **Testing** | Vitest + Playwright | 252 unit tests + 36 E2E tests |
-| **Despliegue** | Vercel | Plataforma de despliegue optimizada para Next.js |
-| **Gestion de Paquetes** | npm | Gestor de paquetes estandar |
-| **Control de Versiones** | Git | Con convenciones de commits convencionales |
+| Categoria                | Tecnologia                      | Detalles                                                                                          |
+| ------------------------ | ------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **Frontend**             | Next.js 16 (App Router)         | Framework React para aplicaciones hibridas estaticas y servidor-side                              |
+|                          | React 19                        | Biblioteca de UI con ultimas caracteristicas (React Compiler)                                     |
+|                          | TypeScript 5.9                  | Tipado estricto para seguridad y autocompletado                                                   |
+| **Estilos**              | Tailwind CSS v4                 | Framework utility-first para diseno responsivo y mantenible                                       |
+| **Iconos**               | SVG inline                      | Iconos personalizados y accesibles                                                                |
+| **Chat**                 | Gemini AI + Rule-based fallback | Chatbot interactivo para reclutadores con 46+ categorias, rate limiting e contexto conversacional |
+| **Testing**              | Vitest + Playwright             | 252 unit tests + 36 E2E tests                                                                     |
+| **Despliegue**           | Vercel                          | Plataforma de despliegue optimizada para Next.js                                                  |
+| **Gestion de Paquetes**  | npm                             | Gestor de paquetes estandar                                                                       |
+| **Control de Versiones** | Git                             | Con convenciones de commits convencionales                                                        |
 
 ---
 
@@ -30,12 +30,14 @@ Este portafolio presenta mi trayectoria, proyectos y habilidades como desarrolla
 El proyecto ha sido disenado siguiendo principios de ingenieria de software para asegurar su mantenibilidad y escalabilidad:
 
 ### Principios de Diseno
+
 - **Separacion de Responsabilidades (SRP):** Los datos deben ser datos, la logica debe ser logica, y la presentacion debe ser presentacion.
 - **Desacoplamiento:** Componentes especializados que consumen datos a traves de funciones puras, evitando monoliticos.
 - **Tipado Estricto (TypeScript):** Uso de interfaces explicitas (`TimelineItem`, `Project`, `ChatResponse`, etc.), evitando el uso de tipos `any` y garantizando contratos claros entre capas.
 - **Logica Pura y Testable:** Funciones de utilidad aisladas y sin efectos secundarios.
 
 ### Estructura de Directorios
+
 ```
 src
   /app              # Enrutamiento, layouts y paginas (App Router de Next.js)
@@ -113,6 +115,7 @@ src
 ```
 
 ### Flujo de Datos
+
 1. **Capa de Datos** (`/src/data`): Contiene unicamente arrays estaticos e interfaces TypeScript. Nada de logica ni efectos secundarios.
 2. **Capa de Logica** (`/src/lib`): Funciones puras que transforman, formatean o calculan datos. Faciles de testear unitariamente.
 3. **Capa de Presentacion** (`/src/components`): Componentes React que consumen datos y logica a traves de props. Estado limitado a UI.
@@ -137,7 +140,9 @@ Chatbot con Gemini AI y fallback rule-based para responder preguntas de reclutad
 - **Defense-in-depth:** `server-only` package en `i18n-server.ts` y `snippetLoader.ts` para evitar imports accidentales en Client Components.
 
 ### Proyectos con Extension Visual
+
 Cada proyecto incluye:
+
 - **slug**: Identificador unico para URL (`/projects/[slug]`)
 - **erdPath**: Ruta al diagrama ERD en SVG (`/erd/*.svg`)
 - **snippetPaths**: Array de rutas a fragmentos de codigo (`/snippets/*.ts`, `*.tsx`, `*.sql`, `*.java`)
@@ -146,14 +151,18 @@ Cada proyecto incluye:
 - **Impacto y Rol**: impact?, role? para contexto de reclutador
 
 ### Modal de Proyectos
+
 El componente `Modal.tsx` muestra proyectos con pestanas:
+
 - **Reto** (Challenge): Descripcion del problema
 - **Solucion** (Solution): Enfoque tecnico
 - **Arquitectura** (Architecture): Diagrama ERD + descripcion
 - **Snippets** (Code): Fragmentos de codigo representativos
 
 ### Pagina de Detalle (`/projects/[slug]`)
+
 Pagina estatica (RSC) para cada proyecto con:
+
 - Descripcion completa bilingue
 - Diagrama ERD
 - Codigo snippets (cargados via `loadSnippetsServer` con `fs/promises`)
@@ -174,29 +183,33 @@ Pagina estatica (RSC) para cada proyecto con:
 ## Testing y Calidad
 
 ### Unit Tests (Vitest)
+
 252 tests cubriendo toda la capa `/src/lib/`:
 
-| Archivo | Tests | Funciones |
-|---------|-------|-----------|
-| `utils.test.ts` | 6 | `cn()` (clsx + twMerge) |
-| `timelineUtils.test.ts` | 71 | Fechas espanolas, duraciones, posiciones timeline |
-| `chatUtils.test.ts` | 117 | Matching, scoring, fuzzy match, follow-ups, pipeline |
-| `i18n.test.ts` | 13 | Traducciones, interpolacion, bilingual |
-| `snippetLoader.test.ts` | 22 | Deteccion idioma (15 extensions), carga server |
-| `snippetLoaderClient.test.ts` | 23 | Deteccion idioma, carga client |
+| Archivo                       | Tests | Funciones                                            |
+| ----------------------------- | ----- | ---------------------------------------------------- |
+| `utils.test.ts`               | 6     | `cn()` (clsx + twMerge)                              |
+| `timelineUtils.test.ts`       | 71    | Fechas espanolas, duraciones, posiciones timeline    |
+| `chatUtils.test.ts`           | 117   | Matching, scoring, fuzzy match, follow-ups, pipeline |
+| `i18n.test.ts`                | 13    | Traducciones, interpolacion, bilingual               |
+| `snippetLoader.test.ts`       | 22    | Deteccion idioma (15 extensions), carga server       |
+| `snippetLoaderClient.test.ts` | 23    | Deteccion idioma, carga client                       |
 
 ### E2E Tests (Playwright)
+
 36 tests en chromium cubriendo los flujos principales:
 
-| Archivo | Tests | Cobertura |
-|---------|-------|-----------|
-| `navigation.spec.ts` | 9 | Home, secciones, footer |
-| `i18n.spec.ts` | 5 | Toggle idioma, persistencia, traducciones |
-| `projects.spec.ts` | 14 | Cards, modal 4 tabs, slug pages |
-| `chat.spec.ts` | 10 | Toggle, mensajes, quick actions |
+| Archivo              | Tests | Cobertura                                 |
+| -------------------- | ----- | ----------------------------------------- |
+| `navigation.spec.ts` | 9     | Home, secciones, footer                   |
+| `i18n.spec.ts`       | 5     | Toggle idioma, persistencia, traducciones |
+| `projects.spec.ts`   | 14    | Cards, modal 4 tabs, slug pages           |
+| `chat.spec.ts`       | 10    | Toggle, mensajes, quick actions           |
 
 ### CI/CD (GitHub Actions)
+
 Pipeline automatico en cada PR y push a `main`:
+
 - **Lint** (ESLint + Prettier)
 - **Typecheck** (TypeScript --noEmit)
 - **Security Audit** (npm audit --audit-level=high)
@@ -211,6 +224,7 @@ Pipeline automatico en cada PR y push a `main`:
 Para ejecutar este portfolio en tu entorno local, sigue estos pasos:
 
 ### 1. Clonar e Instalar
+
 ```bash
 git clone https://github.com/Andres-Caso-Iglesias/portafolio.git
 cd portafolio
@@ -218,19 +232,25 @@ npm install
 ```
 
 ### 2. Variable de Entorno (opcional)
+
 Para habilitar el chat con IA real, crear un archivo `.env.local`:
+
 ```bash
 GEMINI_API_KEY=tu-api-key-de-gemini
 ```
+
 Sin esta variable, el chat usa el fallback rule-based (funcional sin IA).
 
 ### 3. Servidor de Desarrollo
+
 ```bash
 npm run dev
 ```
+
 La aplicacion estara disponible en `http://localhost:3000`.
 
 ### 4. Tests
+
 ```bash
 npm run test:unit    # 252 tests unitarios (Vitest)
 npm run test:e2e     # 36 tests E2E (Playwright)
@@ -239,6 +259,7 @@ npm run typecheck    # TypeScript --noEmit
 ```
 
 ### 5. Build para Produccion
+
 ```bash
 npm run build
 npm run start
@@ -249,6 +270,7 @@ npm run start
 ## Proyectos Destacados
 
 Puedes ver el detalle tecnico de cada proyecto en las siguientes paginas o haciendo click en cualquier proyecto desde la home:
+
 - [Security Header Scanner](https://andres-caso-iglesias.vercel.app/projects/auditoria-web) - NestJS 11 + React 19 + TypeScript
 - [Bolsa de Empleo](https://andres-caso-iglesias.vercel.app/projects/bolsa-empleo) - API NestJS + PostgreSQL, documentacion Swagger disponible
 - [FoodBites](https://andres-caso-iglesias.vercel.app/projects/foodbites) - Backend Java Spring Boot + MySQL, diagrama ER disponible
@@ -258,6 +280,7 @@ Puedes ver el detalle tecnico de cada proyecto en las siguientes paginas o hacie
 ### Estrategia de Visualizacion Tecnica
 
 Cada proyecto incluye una vista detallada con:
+
 - **Diagramas ER** (Entity Relationship) en formato SVG en `public/erd/`
 - **Fragmentos de codigo** representativos en `public/snippets/` (7 archivos)
 - **Documentacion OpenAPI** en `public/swagger/`
@@ -265,13 +288,14 @@ Cada proyecto incluye una vista detallada con:
 - **Pagina de detalle** accesible mediante `/projects/[slug]`
 
 Proyectos con contenido disponible:
-| Proyecto | ERD | Snippets | Pagina Detalle |
-|----------|-----|----------|----------------|
-| Security Header Scanner | auditoria-seguridad.svg | security-audit.ts | /projects/auditoria-web |
-| Bolsa de Empleo | bolsa-empleo.svg | nestjs-dto-validation.ts, typeorm-entities.ts | /projects/bolsa-empleo |
-| FoodBites | foodbites.svg | java-record-entity.java, spring-boot-transactional-service.java | /projects/foodbites |
-| Gestor Huertos | gestor-huertos.svg | bancal-entity.java | /projects/gestor-huertos |
-| Portafolio | portafolio.svg | react-component.tsx | /projects/portafolio-profesional |
+
+| Proyecto                | ERD                     | Snippets                                                        | Pagina Detalle                   |
+| ----------------------- | ----------------------- | --------------------------------------------------------------- | -------------------------------- |
+| Security Header Scanner | auditoria-seguridad.svg | security-audit.ts                                               | /projects/auditoria-web          |
+| Bolsa de Empleo         | bolsa-empleo.svg        | nestjs-dto-validation.ts, typeorm-entities.ts                   | /projects/bolsa-empleo           |
+| FoodBites               | foodbites.svg           | java-record-entity.java, spring-boot-transactional-service.java | /projects/foodbites              |
+| Gestor Huertos          | gestor-huertos.svg      | bancal-entity.java                                              | /projects/gestor-huertos         |
+| Portafolio              | portafolio.svg          | react-component.tsx                                             | /projects/portafolio-profesional |
 
 ---
 

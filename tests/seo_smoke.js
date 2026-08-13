@@ -13,7 +13,7 @@ function t(lang, path) {
 
 try {
   // seoTitle / seoDescription exist for both locales
-  ['es', 'en'].forEach((l) => {
+  ['es', 'en'].forEach(l => {
     const title = t(l, 'home.seoTitle');
     const desc = t(l, 'home.seoDescription');
     assert.ok(typeof title === 'string' && title.length > 0, `${l} seoTitle missing`);
@@ -23,14 +23,8 @@ try {
   // PINNED: Seniority Hibrido copy is reachable via the same path
   // the HomeClientContent section uses, so the SEO description cannot
   // regress to the legacy "Desarrollador con formacion tecnica" copy.
-  assert.ok(
-    t('es', 'home.profileIntro').length > 0,
-    'es home.profileIntro must exist for SEO'
-  );
-  assert.ok(
-    t('en', 'home.profileIntro').length > 0,
-    'en home.profileIntro must exist for SEO'
-  );
+  assert.ok(t('es', 'home.profileIntro').length > 0, 'es home.profileIntro must exist for SEO');
+  assert.ok(t('en', 'home.profileIntro').length > 0, 'en home.profileIntro must exist for SEO');
 
   console.log('seo_smoke: OK');
 } catch (e) {

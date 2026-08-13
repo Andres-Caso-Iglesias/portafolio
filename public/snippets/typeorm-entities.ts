@@ -23,10 +23,10 @@ export class User {
   @Column({ type: 'enum', enum: UserRole, default: UserRole.ASPIRANTE })
   role: UserRole;
 
-  @OneToOne(() => AspirantProfile, (profile) => profile.user)
+  @OneToOne(() => AspirantProfile, profile => profile.user)
   aspirantProfile: AspirantProfile;
 
-  @OneToOne(() => CompanyProfile, (profile) => profile.user)
+  @OneToOne(() => CompanyProfile, profile => profile.user)
   companyProfile: CompanyProfile;
 }
 
@@ -47,11 +47,11 @@ export class CompanyProfile {
   @Column({ unique: true })
   userId: number;
 
-  @OneToOne(() => User, (user) => user.companyProfile, { onDelete: 'CASCADE' })
+  @OneToOne(() => User, user => user.companyProfile, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
   user: User;
 
-  @OneToMany(() => JobOffer, (offer) => offer.company)
+  @OneToMany(() => JobOffer, offer => offer.company)
   offers: JobOffer[];
 }
 
@@ -69,6 +69,6 @@ export class JobOffer {
   @Column({ type: 'decimal', nullable: true })
   salary: number;
 
-  @ManyToOne(() => CompanyProfile, (company) => company.offers)
+  @ManyToOne(() => CompanyProfile, company => company.offers)
   company: CompanyProfile;
 }

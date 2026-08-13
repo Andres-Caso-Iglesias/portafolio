@@ -6,27 +6,29 @@ Portfolio profesional para Developer mostrando trayectoria, proyectos y habilida
 
 ## Stack Tecnologico
 
-| Categoria | Tecnologia | Version |
-|-----------|------------|---------|
-| **Framework** | Next.js (App Router) | 16.2.1 |
-| **Lenguaje** | TypeScript (strict) | 5.9.3 |
-| **UI** | React | 19.2.4 |
-| **Estilos** | Tailwind CSS v4 | 4.2.2 |
-| **Testing** | Vitest + Playwright | 4.1.8 / 1.61.0 |
-| **Hosting** | Vercel | - |
-| **Gestor** | npm | - |
-| **Chat AI** | Google Gemini | API |
-| **CI/CD** | GitHub Actions | - |
+| Categoria     | Tecnologia           | Version        |
+| ------------- | -------------------- | -------------- |
+| **Framework** | Next.js (App Router) | 16.2.1         |
+| **Lenguaje**  | TypeScript (strict)  | 5.9.3          |
+| **UI**        | React                | 19.2.4         |
+| **Estilos**   | Tailwind CSS v4      | 4.2.2          |
+| **Testing**   | Vitest + Playwright  | 4.1.8 / 1.61.0 |
+| **Hosting**   | Vercel               | -              |
+| **Gestor**    | npm                  | -              |
+| **Chat AI**   | Google Gemini        | API            |
+| **CI/CD**     | GitHub Actions       | -              |
 
 ## Configuracion del Proyecto
 
 ### Instalacion de dependencias
+
 ```bash
 cd portfolio
 npm install
 ```
 
 ### Variable de Entorno (opcional)
+
 ```bash
 # .env.local - Para habilitar Gemini AI en el chat
 GEMINI_API_KEY=tu-api-key-de-gemini
@@ -34,28 +36,32 @@ GEMINI_API_KEY=tu-api-key-de-gemini
 ```
 
 ### Desarrollo local
+
 ```bash
 npm run dev
 ```
+
 Abre http://localhost:3000
 
 ### Build para produccion
+
 ```bash
 npm run build
 npm run start
 ```
 
 ### Scripts disponibles
-| Script | Descripcion |
-|--------|-------------|
-| `npm run dev` | Servidor de desarrollo (con --webpack) |
-| `npm run build` | Build de produccion |
-| `npm run start` | Iniciar servidor de produccion |
-| `npm run lint` | ESLint |
-| `npm run typecheck` | TypeScript --noEmit |
-| `npm run test` | Smoke tests (i18n + seo) |
-| `npm run test:unit` | Vitest unit tests (252 tests) |
-| `npm run test:e2e` | Playwright E2E tests (36 tests) |
+
+| Script              | Descripcion                            |
+| ------------------- | -------------------------------------- |
+| `npm run dev`       | Servidor de desarrollo (con --webpack) |
+| `npm run build`     | Build de produccion                    |
+| `npm run start`     | Iniciar servidor de produccion         |
+| `npm run lint`      | ESLint                                 |
+| `npm run typecheck` | TypeScript --noEmit                    |
+| `npm run test`      | Smoke tests (i18n + seo)               |
+| `npm run test:unit` | Vitest unit tests (252 tests)          |
+| `npm run test:e2e`  | Playwright E2E tests (36 tests)        |
 
 ## Estructura del Proyecto
 
@@ -157,35 +163,41 @@ portfolio/
 ## Decisiones de Diseno
 
 ### Tailwind CSS v4
+
 - **NO usa** `tailwind.config.js` ni `npx tailwindcss init`
 - **USA** `@import "tailwindcss"` en globals.css
 - **PostCSS** configurado con `@tailwindcss/postcss`
 
 ### cn() Utility
+
 ```typescript
 // lib/utils.ts
-import { clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 ```
+
 - Usar para **clases condicionales** y **merging** de clases
 - NO usar para clases estaticas simples
 
 ### Reglas de Estilos Tailwind v4
+
 1. **NUNCA usar `var()` en className** -> usar clases semanticas de Tailwind
 2. **NUNCA usar colores hex** -> usar clases como `text-white`, `bg-slate-900`
 3. **Arbitrary values** (`w-[327px]`) -> OK para valores unicos, NO para colores
 
 ### TypeScript Strict
+
 - `strict: true` en tsconfig.json
 - Sin `any`, `@ts-ignore`, `console.log`
 - Interfaces explicitas para todos los objetos
 - Path alias: `@/*` -> `./src/*`
 
 ### Seguridad
+
 - CSP environment-aware (unsafe-eval solo en dev)
 - HSTS (max-age=63072000, includeSubDomains, preload)
 - X-Frame-Options DENY, X-Content-Type-Options nosniff
@@ -194,6 +206,7 @@ export function cn(...inputs: ClassValue[]) {
 - `server-only` en imports criticos (defense-in-depth)
 
 ### i18n Custom
+
 - Cookie `lang` + localStorage + LanguageContext
 - `<html lang>` dinamico desde el primer byte
 - `suppressHydrationWarning` en `<html>` para evitar hydration mismatch
@@ -202,12 +215,14 @@ export function cn(...inputs: ClassValue[]) {
 ## Secciones del Portfolio
 
 ### 1. Hero (page.tsx)
+
 - Nombre: "Andres Caso Iglesias"
 - Titulo: "Backend Developer"
 - Pitch personal con experiencia previa
 - Botones: GitHub, LinkedIn
 
 ### 2. Timeline Interactivo (components/Timeline.tsx)
+
 - **Arquitectura refactorizada**: Separacion de datos, logica y presentacion
 - **Dos tracks paralelos** (lineas horizontales fijas):
   - Track superior: eventos de experiencia profesional
@@ -217,17 +232,20 @@ export function cn(...inputs: ClassValue[]) {
 - Codigo dividido en componentes especializados para desktop y movil
 
 ### 3. Skills (components/HomeClientContent.tsx)
+
 - Datos separados en `src/data/skillsData.ts`
 - Grid responsive con categorias
 - 8 categorias: OSINT, Sistemas Operativos, Redes, Lenguajes, Frameworks, Bases de Datos, DevOps & Cloud, Herramientas de IA
 
 ### 4. Proyectos (components/ProjectsGrid.tsx)
+
 - Datos separados en `src/data/projectsData.ts`
 - 5 proyectos: Security Header Scanner, Bolsa Empleo, FoodBites, Gestor Huertos Urbanos, Portafolio Profesional
 - Modal con pestanas: Reto, Solucion, Arquitectura, Snippets
 - Pagina de detalle individual en `/projects/[slug]`
 
 ### 5. Chat Interactivo "Pinche de Andres"
+
 - **Gemini AI**: `/api/chat/route.ts` con rate limiting y contexto del perfil
 - **Fallback Rule-based**: 46 categorias de respuesta en `/data/chat/responses/`
 - **Contexto Conversacional**: Trackea ultimo tema para follow-ups
@@ -235,23 +253,25 @@ export function cn(...inputs: ClassValue[]) {
 - **Quick Actions**: 10 botones para preguntas frecuentes
 
 ### 6. Contenido Bilingue
+
 - Todos los proyectos tienen contenido en espanol e ingles
 - Interfaces: `name/enName`, `description/enDescription`, `challenge/enChallenge`, `solution/enSolution`, `architecture/enArchitecture`
 - LanguageProvider con cookie + localStorage
 
 ## Proyectos con Extension Visual
 
-| Proyecto | slug | erdPath | snippetPaths |
-|----------|------|---------|--------------|
-| Security Header Scanner | auditoria-web | /erd/auditoria-seguridad.svg | security-audit.ts |
-| Bolsa de Empleo | bolsa-empleo | /erd/bolsa-empleo.svg | nestjs-dto-validation.ts, typeorm-entities.ts |
-| FoodBites | foodbites | /erd/foodbites.svg | java-record-entity.java, spring-boot-transactional-service.java |
-| Gestor Huertos Urbanos | gestor-huertos | /erd/gestor-huertos.svg | bancal-entity.java |
-| Portafolio Profesional | portafolio-profesional | /erd/portafolio.svg | react-component.tsx |
+| Proyecto                | slug                   | erdPath                      | snippetPaths                                                    |
+| ----------------------- | ---------------------- | ---------------------------- | --------------------------------------------------------------- |
+| Security Header Scanner | auditoria-web          | /erd/auditoria-seguridad.svg | security-audit.ts                                               |
+| Bolsa de Empleo         | bolsa-empleo           | /erd/bolsa-empleo.svg        | nestjs-dto-validation.ts, typeorm-entities.ts                   |
+| FoodBites               | foodbites              | /erd/foodbites.svg           | java-record-entity.java, spring-boot-transactional-service.java |
+| Gestor Huertos Urbanos  | gestor-huertos         | /erd/gestor-huertos.svg      | bancal-entity.java                                              |
+| Portafolio Profesional  | portafolio-profesional | /erd/portafolio.svg          | react-component.tsx                                             |
 
 ## Informacion del Usuario
 
 ### Datos Personales
+
 - **Nombre**: Andres Caso Iglesias
 - **GitHub**: https://github.com/Andres-Caso-Iglesias
 - **LinkedIn**: https://linkedin.com/in/andrescasoiglesias
@@ -259,12 +279,14 @@ export function cn(...inputs: ClassValue[]) {
 - **Ubicacion**: Asturias, Espana
 
 ### Trayectoria Resumida
+
 - **2006-2023**: Hosteleria y logistica (20 anos)
 - **2021-2025**: Formacion IT
 - **2025**: Practicas en Mecalux Software Solutions
 - **2025-2026**: Master en Ciberseguridad & IA (en curso, objetivo eJPT)
 
 ### Diferenciador Principal
+
 "Despues de casi 20 anos liderando equipos en hosteleria y logistica bajo presion, di un giro radical hacia IT. Traigo disciplina, resiliencia y liderazgo que pocos pueden ofrecer."
 
 ## Notas para Agentes
@@ -283,7 +305,9 @@ export function cn(...inputs: ClassValue[]) {
 ## Testing
 
 ### Unit Tests (Vitest)
+
 252 tests en `src/lib/__tests__/` (6 archivos):
+
 - `utils.test.ts` — 6 tests: cn()
 - `timelineUtils.test.ts` — 71 tests: fechas, duraciones, posiciones
 - `chatUtils.test.ts` — 117 tests: matching, scoring, pipeline
@@ -292,14 +316,18 @@ export function cn(...inputs: ClassValue[]) {
 - `snippetLoaderClient.test.ts` — 23 tests: deteccion idioma, carga client
 
 ### E2E Tests (Playwright)
+
 36 tests en `tests/e2e/` (4 archivos):
+
 - `navigation.spec.ts` — 9 tests: home, secciones, footer
 - `i18n.spec.ts` — 5 tests: toggle idioma, persistencia
 - `projects.spec.ts` — 14 tests: cards, modal, slug pages
 - `chat.spec.ts` — 10 tests: toggle, mensajes, quick actions
 
 ### CI/CD (GitHub Actions)
+
 Pipeline en `.github/workflows/ci.yml`:
+
 1. Lint (ESLint)
 2. Typecheck (TypeScript --noEmit)
 3. Security Audit (npm audit --audit-level=high)

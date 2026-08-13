@@ -90,7 +90,7 @@ export const projects: Project[] = [
     challenge:
       'Las PYMEs no pueden priorizar vulnerabilidades de forma efectiva. Los herramientas existentes son demasiado complejas, caras o no consideran el contexto del negocio. El 60% de las brechas en PYMEs se podrian haber evitado con priorizacion correcta. Ademas, NIS2 exige compliance que las PYMEs no saben como implementar.',
     enChallenge:
-      'SMEs cannot effectively prioritize vulnerabilities. Existing tools are too complex, expensive, or don\'t consider business context. 60% of SME breaches could have been prevented with correct prioritization. Additionally, NIS2 requires compliance that SMEs don\'t know how to implement.',
+      "SMEs cannot effectively prioritize vulnerabilities. Existing tools are too complex, expensive, or don't consider business context. 60% of SME breaches could have been prevented with correct prioritization. Additionally, NIS2 requires compliance that SMEs don't know how to implement.",
     solution:
       'Monorepo con Turborepo: API Express.js (24 servicios, 9 repositorios, DI via composition root), Dashboard Next.js 14 (App Router, Tailwind, Recharts), PostgreSQL 16 (11 tablas, Drizzle ORM), Redis 7 (cache + BullMQ queue). Pipeline de 5 etapas: SBOM (Syft) -> Enrichment (OSV, NVD, GHSA, EPSS, CISA KEV) -> Scoring deterministico (CVSS 30% + EPSS 25% + criticality 25% + exposure 20% + KEV bonus) -> AI (Claude Sonnet con fallback) -> Persistencia. GitHub Action con security gates. Stripe billing (4 tiers). Multi-tenant con RBAC (4 roles). MFA TOTP. SSRF protection, command injection prevention.',
     enSolution:

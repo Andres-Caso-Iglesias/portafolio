@@ -6,14 +6,14 @@
 
 ## Project Conventions (read FIRST)
 
-| File | Purpose |
-|------|---------|
-| `agents.md` | Project style guide, stack, architecture, conventions (Spanish) |
-| `README.md` | Project overview and quickstart |
-| `README_CLEAN_CODE.md` | Clean code reference (Spanish) |
-| `SPEC.md` | Project specification |
-| `package.json` | Dependencies and scripts (npm) |
-| `tsconfig.json` | TypeScript strict config + path alias `@/*` -> `./src/*` |
+| File                   | Purpose                                                         |
+| ---------------------- | --------------------------------------------------------------- |
+| `agents.md`            | Project style guide, stack, architecture, conventions (Spanish) |
+| `README.md`            | Project overview and quickstart                                 |
+| `README_CLEAN_CODE.md` | Clean code reference (Spanish)                                  |
+| `SPEC.md`              | Project specification                                           |
+| `package.json`         | Dependencies and scripts (npm)                                  |
+| `tsconfig.json`        | TypeScript strict config + path alias `@/*` -> `./src/*`        |
 
 ## User Skills (global, in `~/.config/opencode/skills/`)
 
@@ -21,19 +21,19 @@
 
 ### Frontend / Web
 
-| Skill | Trigger |
-|-------|---------|
-| `nextjs-15` | Next.js App Router patterns, routing, Server Actions, data fetching (also applies to Next.js 16) |
-| `react-19` | React 19 patterns with React Compiler — no useMemo/useCallback needed |
-| `tailwind-4` | Tailwind v4 patterns: `cn()`, theme variables, no `var()` in className |
-| `typescript` | TypeScript strict patterns and best practices |
-| `ai-sdk-5` | Vercel AI SDK 5 patterns (chat features, breaking changes from v4) |
-| `zod-4` | Zod 4 schema validation patterns |
-| `zustand-5` | Zustand 5 state management patterns |
-| `angular-core` | Angular standalone, signals, inject, control flow, zoneless (NOT applicable to this project) |
-| `angular-architecture` | Angular Scope Rule, project structure, file naming (NOT applicable) |
-| `angular-forms` | Angular Signal Forms / Reactive Forms (NOT applicable) |
-| `angular-performance` | NgOptimizedImage, @defer, lazy loading (NOT applicable) |
+| Skill                  | Trigger                                                                                          |
+| ---------------------- | ------------------------------------------------------------------------------------------------ |
+| `nextjs-15`            | Next.js App Router patterns, routing, Server Actions, data fetching (also applies to Next.js 16) |
+| `react-19`             | React 19 patterns with React Compiler — no useMemo/useCallback needed                            |
+| `tailwind-4`           | Tailwind v4 patterns: `cn()`, theme variables, no `var()` in className                           |
+| `typescript`           | TypeScript strict patterns and best practices                                                    |
+| `ai-sdk-5`             | Vercel AI SDK 5 patterns (chat features, breaking changes from v4)                               |
+| `zod-4`                | Zod 4 schema validation patterns                                                                 |
+| `zustand-5`            | Zustand 5 state management patterns                                                              |
+| `angular-core`         | Angular standalone, signals, inject, control flow, zoneless (NOT applicable to this project)     |
+| `angular-architecture` | Angular Scope Rule, project structure, file naming (NOT applicable)                              |
+| `angular-forms`        | Angular Signal Forms / Reactive Forms (NOT applicable)                                           |
+| `angular-performance`  | NgOptimizedImage, @defer, lazy loading (NOT applicable)                                          |
 
 ### Mobile (Flutter / Dart) — NOT applicable to this project
 
@@ -41,27 +41,27 @@
 
 ### Backend / Testing / Tooling
 
-| Skill | Trigger |
-|-------|---------|
-| `go-testing` | Go testing patterns incl. Bubbletea TUI testing (NOT applicable) |
+| Skill        | Trigger                                                                        |
+| ------------ | ------------------------------------------------------------------------------ |
+| `go-testing` | Go testing patterns incl. Bubbletea TUI testing (NOT applicable)               |
 | `playwright` | E2E tests with Playwright, Page Objects, MCP workflow (relevant if adding E2E) |
-| `github-pr` | High-quality PRs with conventional commits (use when creating PRs) |
-| `jira-task` | Jira task creation (only if user works with Jira) |
+| `github-pr`  | High-quality PRs with conventional commits (use when creating PRs)             |
+| `jira-task`  | Jira task creation (only if user works with Jira)                              |
 
 ### Workflow / Skills meta
 
-| Skill | Trigger |
-|-------|---------|
-| `sdd-init` | Initialize SDD context in a project (this skill was used) |
-| `sdd-explore` | Explore and investigate ideas before committing to a change |
-| `sdd-propose` | Create a change proposal with intent, scope, and approach |
-| `sdd-spec` | Write delta specifications with requirements and scenarios |
-| `sdd-design` | Create technical design with architecture decisions |
-| `sdd-tasks` | Break a change into an implementation task checklist |
-| `sdd-apply` | Implement tasks from a change following specs and design |
-| `sdd-verify` | Validate implementation matches specs, design, tasks |
-| `sdd-archive` | Sync delta specs to main specs and archive a change |
-| `skill-creator` | Create new AI agent skills following the Agent Skills spec |
+| Skill           | Trigger                                                     |
+| --------------- | ----------------------------------------------------------- |
+| `sdd-init`      | Initialize SDD context in a project (this skill was used)   |
+| `sdd-explore`   | Explore and investigate ideas before committing to a change |
+| `sdd-propose`   | Create a change proposal with intent, scope, and approach   |
+| `sdd-spec`      | Write delta specifications with requirements and scenarios  |
+| `sdd-design`    | Create technical design with architecture decisions         |
+| `sdd-tasks`     | Break a change into an implementation task checklist        |
+| `sdd-apply`     | Implement tasks from a change following specs and design    |
+| `sdd-verify`    | Validate implementation matches specs, design, tasks        |
+| `sdd-archive`   | Sync delta specs to main specs and archive a change         |
+| `skill-creator` | Create new AI agent skills following the Agent Skills spec  |
 
 ## Project Skills (in `.agent/skills/`)
 
@@ -69,23 +69,23 @@
 
 ## Shared Conventions
 
-| File | Path |
-|------|------|
-| Engram convention (global) | `~/.config/opencode/skills/_shared/engram-convention.md` |
-| Persistence contract (global) | `~/.config/opencode/skills/_shared/persistence-contract.md` |
-| Engram convention (project) | `C:\Users\intri\Desktop\openCodeProy\portfolio\.agent\skills\_shared\engram-convention.md` (EMPTY — use global) |
+| File                          | Path                                                                                                            |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Engram convention (global)    | `~/.config/opencode/skills/_shared/engram-convention.md`                                                        |
+| Persistence contract (global) | `~/.config/opencode/skills/_shared/persistence-contract.md`                                                     |
+| Engram convention (project)   | `C:\Users\intri\Desktop\openCodeProy\portfolio\.agent\skills\_shared\engram-convention.md` (EMPTY — use global) |
 
 ## Recommended Loading for Common Tasks in This Project
 
-| Task | Skills to load |
-|------|----------------|
-| Build new page or component | `react-19`, `nextjs-15`, `tailwind-4`, `typescript` |
-| Refactor data layer (`/src/data`) | `typescript` |
-| Add tests | `playwright` (E2E), use Node assert for smoke tests |
-| Start a new SDD change | `sdd-explore` then `sdd-propose` |
-| Add chat / AI features | `ai-sdk-5` (Vercel AI SDK), `react-19` |
-| Validate commit / open PR | `github-pr` |
-| Style with Tailwind v4 | `tailwind-4` |
+| Task                              | Skills to load                                      |
+| --------------------------------- | --------------------------------------------------- |
+| Build new page or component       | `react-19`, `nextjs-15`, `tailwind-4`, `typescript` |
+| Refactor data layer (`/src/data`) | `typescript`                                        |
+| Add tests                         | `playwright` (E2E), use Node assert for smoke tests |
+| Start a new SDD change            | `sdd-explore` then `sdd-propose`                    |
+| Add chat / AI features            | `ai-sdk-5` (Vercel AI SDK), `react-19`              |
+| Validate commit / open PR         | `github-pr`                                         |
+| Style with Tailwind v4            | `tailwind-4`                                        |
 
 ## Skipped / Excluded
 

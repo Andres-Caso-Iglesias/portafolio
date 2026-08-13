@@ -30,10 +30,7 @@ export async function POST(request: NextRequest) {
 
   // Validate input
   if (!message || message.length === 0 || message.length > 500) {
-    return NextResponse.json(
-      { error: 'Message must be 1-500 characters' },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: 'Message must be 1-500 characters' }, { status: 400 });
   }
 
   // Rate limiting
@@ -61,7 +58,11 @@ export async function POST(request: NextRequest) {
         signal: controller.signal,
         body: JSON.stringify({
           systemInstruction: {
-            parts: [{ text: `${systemPrompts[lang]}\n\n${lang === 'en' ? profileContextEN : profileContextES}` }],
+            parts: [
+              {
+                text: `${systemPrompts[lang]}\n\n${lang === 'en' ? profileContextEN : profileContextES}`,
+              },
+            ],
           },
           contents: [
             {
@@ -103,14 +104,10 @@ export async function POST(request: NextRequest) {
       remaining,
     });
   } catch (err: unknown) {
-    const isAbort =
-      err instanceof DOMException && err.name === 'AbortError';
+    const isAbort = err instanceof DOMException && err.name === 'AbortError';
     const message = isAbort ? 'Request timed out' : (err as Error).message;
 
-    return NextResponse.json(
-      { error: message, fallback: true },
-      { status: 502 }
-    );
+    return NextResponse.json({ error: message, fallback: true }, { status: 502 });
   } finally {
     clearTimeout(timeoutId);
   }

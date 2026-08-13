@@ -8,20 +8,21 @@ Este portafolio presenta la trayectoria, proyectos y habilidades de Andres Caso 
 
 ## Stack Tecnologico
 
-| Categoria | Tecnologia | Detalles |
-|-----------|------------|----------|
-| **Frontend** | Next.js 16 (App Router) | Framework React para aplicaciones hibridas estaticas y servidor-side |
-| | React 19 | Biblioteca de UI con ultimas caracteristicas (React Compiler) |
-| | TypeScript | Tipado estricto para seguridad y autocompletado |
-| **Estilos** | Tailwind CSS v4 | Framework utility-first para diseno responsivo y mantenible |
-| **Iconos** | SVG inline | Iconos personalizados y accesibles |
-| **Despliegue** | Vercel | Plataforma de despliegue optimizada para Next.js |
-| **Gestion de Paquetes** | npm | Gestor de paquetes estandar |
-| **Control de Versiones** | Git | Con convenciones de commits convencionales |
+| Categoria                | Tecnologia              | Detalles                                                             |
+| ------------------------ | ----------------------- | -------------------------------------------------------------------- |
+| **Frontend**             | Next.js 16 (App Router) | Framework React para aplicaciones hibridas estaticas y servidor-side |
+|                          | React 19                | Biblioteca de UI con ultimas caracteristicas (React Compiler)        |
+|                          | TypeScript              | Tipado estricto para seguridad y autocompletado                      |
+| **Estilos**              | Tailwind CSS v4         | Framework utility-first para diseno responsivo y mantenible          |
+| **Iconos**               | SVG inline              | Iconos personalizados y accesibles                                   |
+| **Despliegue**           | Vercel                  | Plataforma de despliegue optimizada para Next.js                     |
+| **Gestion de Paquetes**  | npm                     | Gestor de paquetes estandar                                          |
+| **Control de Versiones** | Git                     | Con convenciones de commits convencionales                           |
 
 ## Arquitectura y Organizacion del Codigo
 
 ### Principios de Diseno
+
 - **Separacion de Responsabilidades (SRP)**: Los datos deben ser datos, la logica debe ser logica, y la presentacion debe ser presentacion.
 - **Desacoplamiento**: Componentes especializados que consumen datos a traves de funciones puras, evitando monoliticos.
 - **Tipado Estricto**: Uso de interfaces explicitas, evitando `any`.
@@ -142,6 +143,7 @@ Este portafolio presenta la trayectoria, proyectos y habilidades de Andres Caso 
 - `public/snippets/java-spring.png` — vacio
 
 ### Flujo de Datos
+
 1. **Capa de Datos** (`/src/data`): Contiene unicamente arrays estaticos e interfaces TypeScript. Nada de logica ni efectos secundarios.
 2. **Capa de Logica** (`/src/lib`): Funciones puras que transforman, formatean o calculan datos. Faciles de testear unitariamente.
 3. **Capa de Presentacion** (`/src/components`): Componentes React que consumen datos y logica a traves de props. Estado limitado a UI (ej. toggles, animaciones, modales).
@@ -149,28 +151,36 @@ Este portafolio presenta la trayectoria, proyectos y habilidades de Andres Caso 
 ### Funcionalidades Actuales
 
 #### Proyectos con Extension Visual
+
 Cada proyecto en `projectsData.ts` ahora incluye:
+
 - **slug**: Identificador unico para URL (`/projects/[slug]`)
 - **erdPath**: Ruta al diagrama ERD en SVG (`/erd/*.svg`)
 - **snippetPaths**: Array de rutas a fragmentos de codigo (`/snippets/*.ts`, `*.tsx`, `*.sql`)
 - **Contenido Bilingue**: name/enName, description/enDescription, challenge/enChallenge, solution/enSolution, architecture/enArchitecture
 
 #### Modal de Proyectos
+
 El componente `Modal.tsx` muestra proyectos con pestanas:
+
 - **Reto** (Challenge): Descripcion del problema
 - **Solucion** (Solution): Enfoque tecnico
 - **Arquitectura** (Architecture): Diagrama ERD + descripcion
 - **Snippets** (Code): Fragmentos de codigo representativos
 
 #### Pagina de Detalle (`/projects/[slug]`)
+
 Pagina estatica para cada proyecto con:
+
 - Descripcion completa
 - Diagrama ERD
 - Codigo snippets
 - Links a GitHub y demo
 
 #### Chat Interactivo ("Pinche de Andres")
+
 Chatbot rule-based para responder preguntas de reclutadores sobre el perfil profesional:
+
 - **Arquitectura en Capas**: Datos (`/data/chat`), Logica (`/lib/chatUtils.ts`), Presentacion (`/components/chat/`)
 - **37 Categorias de Respuesta** (refactorizadas a archivos individuales en `/data/chat/responses/`): Experiencia, habilidades, formacion, contacto, proyectos, certificaciones, idiomas, disponibilidad, salario, sobre mi, frontend, backend, devops, soft skills, IA, hosteleria, edad, ubicacion, logistica, procesos, motivacion, debilidades, fortalezas, proyectos personales, empleo anterior, referencias, tecnologias especificas, frameworks, bases de datos, testing, git, metodologia, comunicacion, creando, aprendiendo, colaboracion, problemas, futuro, herramientas, open source.
 - **Arquitectura Modular**: Eliminado monolito `chatData.ts` (2300+ lineas) → 46 archivos en `/data/chat/responses/`, `allResponses.ts` con prioridad explicita project-specific > general > broader.
@@ -188,17 +198,20 @@ Chatbot rule-based para responder preguntas de reclutadores sobre el perfil prof
 ## Guia de Estilo y Convenciones
 
 ### Convenciones de Nombrado
+
 - **Archivos**: `kebab-case` para componentes y utilidades (`timelineDesktop.tsx`, `dateUtils.ts`).
 - **Interfaces y Types**: `PascalCase` (`TimelineItem`, `SkillCategory`, `Project`).
 - **Constantes**: `UPPER_SNAKE_CASE` cuando aplique (poco usado en este proyecto).
 - **Funciones y Variables**: `camelCase` (`getTimelineItems`, `formatDate`).
 
 ### Organizacion de Components
+
 - **Presentacion Pura**: Componentes que solo renderizan props y no usan estado o efectos.
 - **Components con Estado**: Solo cuando es necesario para UI (modos, toggles, animaciones, modales). Deben marcarse con `"use client"` en Next.js App Router.
 - **Reutilizacion**: Crear components genericos cuando se repitan patrones (tarjetas, botones, enlaces).
 
 ### Estilos con Tailwind
+
 - **Orden de Clases**: Seguir el orden logico (layout -> posicionamiento -> espaciado -> tipografia -> colores -> efectos).
 - **Responsividad**: Utilizar los prefijos de breakpoint (`md:`, `lg:`, `xl:`) en lugar de media queries custom.
 - **Colores**: Usar la paleta de Tailwind (`slate`, `blue`, etc.) en lugar de valores hexadecimales hardcodeados.
@@ -206,6 +219,7 @@ Chatbot rule-based para responder preguntas de reclutadores sobre el perfil prof
 - **Tipografia**: Aprovechar los tamanos de fuente responsive (`text-base md:text-lg`) y utilidades como `leading-relaxed`, `tracking-tight`.
 
 ### TypeScript Strict
+
 - **Modo Estricto**: `strict: true` en `tsconfig.json`.
 - **No `any`**: Evitar el tipo `any` en cualquier circunstancia. Usar `unknown` cuando el tipo sea realmente desconocido y hacer narrowing.
 - **Interfaces Explicitas**: Definir interfaces para objetos, incluso si parecen simples.
@@ -213,6 +227,7 @@ Chatbot rule-based para responder preguntas de reclutadores sobre el perfil prof
 - **Funciones**: Especificar tipos de parametros y retorno.
 
 ### Commits y Git
+
 - **Convencional Commits**: Usar formato `<tipo>(<alcance>): <descripcion>` (feat, fix, docs, style, refactor, perf, test, chore).
 - **No AI Attribution**: Nunca agregar "Co-Authored-By" o menciones de IA en los commits.
 - **No Emojis**: Este proyecto no utiliza emojis en commits, documentacion ni codigo.
@@ -222,29 +237,34 @@ Chatbot rule-based para responder preguntas de reclutadores sobre el perfil prof
 ## Buenas Practicas Implementadas
 
 ### Arquitectura Limpia
+
 - **Capas Bien Definidas**: Cada capa tiene una unica responsabilidad y conoce minimamente sobre las otras.
 - **Dependencias Unidireccionales**: La presentacion depende de la logica, la logica depende de los datos, pero nunca al reves.
 - **Testabilidad**: La logica pura en `/lib` puede ser testeada de forma aislada y sencilla.
 
 ### Extension de Proyectos
+
 - **Diagramas ERD**: Cada proyecto tiene un diagrama Entidad-Relacion en formato SVG (`/public/erd/*.svg`)
 - **Code Snippets**: 7 fragmentos de codigo representativos en `/public/snippets/`
 - **Documentacion OpenAPI**: Specs en `/public/swagger/`
 - **Contenido Bilingue**: Soporte completo para espanol e ingles en todos los campos de proyectos
 
 ### Rendimiento y Optimizacion
+
 - **Code Splitting Automatico**: Next.js 16 con App Router optimiza la carga por rutas.
 - **Imagenes Optimizadas**: Uso de `<NextImage>` cuando se requieran imagenes (lazy loading, tamano adecuado).
 - **CSS Optimo**: Tailwind elimina CSS unused en produccion.
 - **Fuentes Self-hosted**: CabinetGrotesk (8 variantes .otf) en `/public/fonts/`, sin dependencias externas.
 
 ### Accesibilidad (a11y)
+
 - **Contraste de Colores**: Verificacion de que las combinaciones de texto/fondo cumplan WCAG AA/AAA.
 - **Navegacion con Teclado**: Todos los elementos interactivos son accesibles mediante tab.
 - **Labels y ARIA**: Uso adecuado de atributos de accesibilidad donde sea necesario.
 - **Enfoque Visible**: Indicadores claros de foco en elementos interactivos.
 
 ### SEO y Metadatos
+
 - **Metaetiquetas Completas**: Titulo descriptivo, descripcion rica en palabras clave.
 - **Open Graph y Twitter Card**: Implementado en `layout.tsx` (`opengraph-image.tsx` con `next/og` 1200x630).
 - **JSON-LD Estructurado**: Implementado en `layout.tsx` (Person schema). `sameAs` y `alumniOf` son placeholders honestos que requieren datos reales.
@@ -255,6 +275,7 @@ Chatbot rule-based para responder preguntas de reclutadores sobre el perfil prof
 ## Testing y Calidad
 
 ### Unit Tests (Vitest)
+
 - **252 tests** en `/src/lib/__tests__/` (6 archivos, 100% pass)
 - `utils.test.ts` — 6 tests: `cn()` (clsx + twMerge)
 - `timelineUtils.test.ts` — 71 tests: fechas espanolas, duraciones, posiciones timeline
@@ -264,6 +285,7 @@ Chatbot rule-based para responder preguntas de reclutadores sobre el perfil prof
 - `snippetLoaderClient.test.ts` — 23 tests: deteccion idioma, carga client (mock fetch)
 
 ### E2E Tests (Playwright)
+
 - **36 tests** en `/tests/e2e/` (4 archivos, 100% pass en chromium)
 - `navigation.spec.ts` — 9 tests: home, secciones, footer
 - `i18n.spec.ts` — 5 tests: toggle idioma, persistencia, traducciones
@@ -271,10 +293,12 @@ Chatbot rule-based para responder preguntas de reclutadores sobre el perfil prof
 - `chat.spec.ts` — 10 tests: toggle, mensajes, quick actions
 
 ### CI/CD (GitHub Actions)
+
 - `.github/workflows/ci.yml` — lint + typecheck + security audit + unit tests + build + E2E tests en cada PR/push a main
 - Protege la rama principal: si alguno falla, el PR no se puede mergear
 
 ### Scripts de testing
+
 ```bash
 npm run test:unit    # Vitest unit tests (252 tests)
 npm run test:e2e     # Playwright E2E (36 tests)
@@ -283,25 +307,31 @@ npm run typecheck    # TypeScript --noEmit
 ```
 
 ### Tipado Estricto
+
 - **TS strict**: sin `any`, `@ts-ignore`, `console.log`
 - **Revision de Codigo**: Estandares altos para pull requests (descripciones claras, convencional commits).
 
 ## Proximos Pasos (Mejoras Futuras)
 
 ### Sprint futuro - ALTA prioridad
+
 1. **Migrar a `next-intl`** con routing `/en/*` (reemplaza i18n custom con cookie, mejora SEO).
 
 ### Sprint futuro - MEDIA prioridad
+
 1. **Cerrar 9 manual browser tests** del SDD previo `estrategia-visualizacion-tecnica`.
 
 ### Sprint futuro - BAJA prioridad
+
 1. **Menu de navegacion con resaltado de seccion** - mejora usabilidad en paginas largas.
 2. **Modo claro/oscuro con persistencia** - usando `next-themes` correctamente configurado.
 3. **Optimizacion de imagenes** - cuando se anadan fotos o screenshots de proyectos.
 4. **Analisis de rendimiento** - Lighthouse y Web Vitals para monitorear y mejorar.
 
 ## NOTA IMPORTANTE: Sin Emojis
+
 Este proyecto **NO utiliza emojis** en ninguna parte del codigo, documentacion o mensajes de commit. Al trabajar en este proyecto:
+
 - No agregar emojis en commits
 - No agregar emojis en documentacion (.md)
 - No agregar emojis en codigo o comentarios
@@ -314,6 +344,7 @@ Esta decision se tomopara mantener consistencia y evitar problemas de compatibil
 **Sprint production-readiness COMPLETO y archivado.** 39 commits atomicos, 36/36 requirements OK (100%), 9 gaps residuales documentados con prioridad clara.
 
 ### Logros del sprint
+
 - **Stack actualizado a Next.js 16 / React 19 / TypeScript 5.9 / Tailwind 4** y documentado con las versiones exactas.
 - **i18n custom con cookie**: LanguageContext + useLanguage hook + getLangFromCookie server-side. `<html lang>` dinamico desde el primer byte.
 - **Single source of truth**: `src/i18n/locales.json` unico (eliminados `locales.ts` y 2 hooks duplicados).
@@ -325,6 +356,7 @@ Esta decision se tomopara mantener consistencia y evitar problemas de compatibil
 - **Net -200 lineas** de codigo (cleanup agresivo: 9 archivos eliminados, 14 creados, 16+ modificados).
 
 ### Logros post-sprint (Junio 2026)
+
 - **Refactor `chatData.ts` monolito** (2300+ lineas) → arquitectura modular `/data/chat/` (46 archivos individuales, deduplicado salary+compensation, keywords limpias, prioridad explicita en `allResponses.ts`).
 - **Fix 2 errores TS pre-existentes** (`messagesEndRef` tipado en `ChatActions`).
 - **Instalado `server-only` package** en `i18n-server.ts` y `snippetLoader.ts` (defense-in-depth: build falla si se importa en Client Component).
@@ -334,21 +366,25 @@ Esta decision se tomopara mantener consistencia y evitar problemas de compatibil
 - **Gemini AI integrado** en chat (`/api/chat/route.ts`) con rate limiting, contexto estatico del perfil (`aiContext.ts`) y fallback rule-based.
 
 ### Gaps residuales (out-of-scope, priorizados)
+
 - **MEDIA** — Migrar a `next-intl` con routing `/en/*`.
 - **MEDIA** — Cerrar 9 manual browser tests del SDD previo `estrategia-visualizacion-tecnica`.
 - **MEDIA** — IA real en el chat (interfaz `AIProvider` ya preparada).
 - **BAJA** — Dark mode con persistencia, menu con resaltado, optimizacion imagenes, Lighthouse.
 
 ### Branch state
+
 - `feat/vitest-unit-tests` activa, al dia con `origin/feat/vitest-unit-tests`. Listo para PR a `main`.
 - `main` deployado en produccion.
 
 ### Contexto persistido
+
 - **Engram (memoria entre sesiones)**: 11 observations del sprint (sdd-init, explore, propose, spec, design, tasks, apply-progress, verify-report, archive-report, state, skill-registry). Usar `mem_search` con keywords del proyecto en la proxima sesion.
 - **Archivo HANDOFF.md** en raiz: contexto completo de continuacion (lineage de archivos, regresiones pineadas, comandos utiles, decisiones de arquitectura).
 - **Skill-registry** en `.atl/skill-registry.md`: registro de skills del proyecto (creado en sdd-init).
 
 ### Lecciones aprendidas del sprint
+
 - **Smoke tests + grep checks no detectan bugs estructurales de providers** (descubierto en patch 2: `<Chat />` sibling de `</LanguageProvider>`).
 - **Server-only imports en barrel files** rompen Client Components (descubierto en patch 1: barrel re-exportaba `getLangFromCookie` con `next/headers`).
 - **"No se rompe = no esta bien"** — la regresion "Seniority Hibrido" estaba ahi desde la unificacion, sin symptoms visibles, solo detectable con grep.
@@ -356,4 +392,4 @@ Esta decision se tomopara mantener consistencia y evitar problemas de compatibil
 
 ---
 
-*Documento mantenido como referencia para desarrolladores, colaboradores y el propio autor para asegurar consistencia en el proyecto.*
+_Documento mantenido como referencia para desarrolladores, colaboradores y el propio autor para asegurar consistencia en el proyecto._

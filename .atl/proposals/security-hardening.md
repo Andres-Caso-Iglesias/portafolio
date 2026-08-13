@@ -1,9 +1,11 @@
 ﻿# Security Hardening Proposal
 
 ## Intent
+
 Harden the portfolio against web security threats and align applicable controls with OWASP Top 10 2021, NIS2, ENS, and ISO 27001. The site is a static portfolio with an interactive chat — no auth, no DB, no user data — but has XSS surface via chat markdown links, missing security headers, and vulnerable dependencies.
 
 ## Scope (IN)
+
 1. **Security Headers** via `next.config.ts` + middleware:
    - Content-Security-Policy (nonce-based)
    - Strict-Transport-Security (verify Vercel sets it, add if not)
@@ -38,6 +40,7 @@ Harden the portfolio against web security threats and align applicable controls 
    - Reject paths with `..`, absolute URLs, non-allowlisted extensions
 
 ## Scope (OUT)
+
 - Authentication/authorization (not needed)
 - WAF/rate limiting (Vercel provides)
 - Penetration testing
@@ -45,6 +48,7 @@ Harden the portfolio against web security threats and align applicable controls 
 - SBOM generation (defer to CI/CD sprint)
 
 ## Acceptance Criteria
+
 - [ ] All security headers present on all responses (verified via `curl -I`)
 - [ ] CSP blocks inline script without nonce (test with devtools console)
 - [ ] JSON-LD script executes with nonce (no CSP violation)
@@ -55,6 +59,7 @@ Harden the portfolio against web security threats and align applicable controls 
 - [ ] No console CSP violations in production
 
 ## Approach
+
 1. **Phase 1**: Update dependencies, verify build
 2. **Phase 2**: Add security headers via `next.config.ts` (static headers)
 3. **Phase 3**: Create middleware for CSP nonce generation + dynamic headers
@@ -64,21 +69,24 @@ Harden the portfolio against web security threats and align applicable controls 
 7. **Phase 7**: Verify CSP in production, adjust if needed
 
 ## Risks & Mitigations
-| Risk | Likelihood | Impact | Mitigation |
-|------|------------|--------|------------|
-| CSP breaks Next.js runtime scripts | Medium | High | Use `'strict-dynamic'` + nonce, test thoroughly |
-| Next.js patch update breaks build | Low | Medium | Test in branch, pin if needed |
-| Vercel duplicates HSTS header | Medium | Low | Verify with `curl -I` before adding |
-| Nonce middleware adds latency | Low | Low | Minimal overhead, cache nonce per request |
+
+| Risk                               | Likelihood | Impact | Mitigation                                      |
+| ---------------------------------- | ---------- | ------ | ----------------------------------------------- |
+| CSP breaks Next.js runtime scripts | Medium     | High   | Use `'strict-dynamic'` + nonce, test thoroughly |
+| Next.js patch update breaks build  | Low        | Medium | Test in branch, pin if needed                   |
+| Vercel duplicates HSTS header      | Medium     | Low    | Verify with `curl -I` before adding             |
+| Nonce middleware adds latency      | Low        | Low    | Minimal overhead, cache nonce per request       |
 
 ## Effort Estimate
+
 - Dependency updates + test: 1-2 hrs
 - Security headers (config): 1 hr
 - CSP middleware + nonce integration: 3-4 hrs
 - parseLinks fix + test: 1 hr
 - snippetLoaderClient validation + test: 1 hr
 - Production verification: 1 hr
-**Total: ~8-10 hours**
+  **Total: ~8-10 hours**
 
 ## Dependencies
+
 - None (self-contained)

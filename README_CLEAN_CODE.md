@@ -7,17 +7,20 @@ Este documento describe la evolucion de la arquitectura del portfolio, desde la 
 ## Evolucion de la Arquitectura
 
 ### Fase 1: Clean Code (original)
+
 - Separacion de datos, logica y presentacion
 - Componentes especializados y reutilizables
 - Responsabilidad unica por archivo
 
 ### Fase 2: Production Readiness
+
 - i18n custom con cookie + LanguageContext
 - SEO completo (sitemap, robots, OG, JSON-LD)
 - Testing infrastructure (Vitest + Playwright + CI/CD)
 - Seguridad (CSP, HSTS, rate limiting)
 
 ### Fase 3: Modular Chat
+
 - Refactor de monolito `chatData.ts` (2300+ lineas) → 46 archivos modulares
 - Gemini AI integration con fallback rule-based
 - Contexto conversacional y follow-ups
@@ -95,12 +98,14 @@ src/
 ## Principios Aplicados
 
 ### 1. Separacion de Responsabilidades (SRP)
+
 - **Datos**: `src/data/*` contiene exclusivamente estructuras de datos y arrays estaticos
 - **Logica**: `src/lib/*` contiene funciones puras sin efectos secundarios
 - **Presentacion**: `src/components/*` contiene exclusivamente JSX y estado de UI
 - **Orquestacion**: `src/components/Timeline.tsx` solo coordina sub-componentes
 
 ### 2. Componentes Especializados
+
 - `Timeline.tsx` - Solo importa y coordina
 - `TimelineDesktop.tsx` - Logica especifica de escritorio
 - `TimelineMobile.tsx` - Logica especifica de movil
@@ -110,12 +115,14 @@ src/
 - `chat/Chat.tsx` - Contenedor del chat con LanguageProvider
 
 ### 3. Tipado Estricto TypeScript
+
 - Todas las interfaces definidas explicitamente (`TimelineItem`, `Project`, `SkillCategory`, `ChatResponse`)
 - Sin `any`, `@ts-ignore`, `console.log`
 - Props tipadas en todos los componentes
 - `server-only` en imports criticos (defense-in-depth)
 
 ### 4. Logica Pura y Testable
+
 - Funciones en `timelineUtils.ts` y `chatUtils.ts` son puras:
   - Mismos inputs -> mismos outputs
   - Sin efectos secundarios
@@ -125,6 +132,7 @@ src/
 ### 5. Arquitectura Modular del Chat
 
 #### Evolucion
+
 ```
 chatData.ts (2300+ lineas, monolito)
     ↓ refactor
@@ -140,6 +148,7 @@ chatData.ts (2300+ lineas, monolito)
 ```
 
 #### Capas
+
 - **Datos**: `/data/chat/` — respuestas, tipos, configuracion
 - **Logica**: `/lib/chatUtils.ts` — matching, scoring, fuzzy match (Levenshtein)
 - **Presentacion**: `/components/chat/` — Chat, ChatMessage, ChatInput, ProjectCard
@@ -148,6 +157,7 @@ chatData.ts (2300+ lineas, monolito)
 ### 6. Extension de Activos Tecnicos
 
 #### Diagramas ERD
+
 ```
 public/erd/
     ├── auditoria-seguridad.svg
@@ -158,6 +168,7 @@ public/erd/
 ```
 
 #### Code Snippets (7 archivos)
+
 ```
 public/snippets/
     ├── bancal-entity.java
@@ -170,6 +181,7 @@ public/snippets/
 ```
 
 #### Documentacion OpenAPI
+
 ```
 public/swagger/
     ├── bolsa-empleo.json
@@ -177,6 +189,7 @@ public/swagger/
 ```
 
 ### 7. i18n Custom
+
 - Cookie `lang` + localStorage + LanguageContext
 - `<html lang>` dinamico desde el primer byte
 - `server-only` en `i18n-server.ts` (no se puede importar en Client Components)
@@ -185,6 +198,7 @@ public/swagger/
 ### 8. Testing Infrastructure
 
 #### Unit Tests (Vitest - 252 tests)
+
 ```
 src/lib/__tests__/
     ├── utils.test.ts              # 6 tests - cn()
@@ -196,6 +210,7 @@ src/lib/__tests__/
 ```
 
 #### E2E Tests (Playwright - 36 tests)
+
 ```
 tests/e2e/
     ├── navigation.spec.ts  # 9 tests - home, secciones
@@ -205,7 +220,9 @@ tests/e2e/
 ```
 
 #### CI/CD (GitHub Actions)
+
 Pipeline en `.github/workflows/ci.yml`:
+
 1. Lint (ESLint)
 2. Typecheck (TypeScript --noEmit)
 3. Security Audit (npm audit)
@@ -235,6 +252,7 @@ Pipeline en `.github/workflows/ci.yml`:
 ## Conclusion
 
 La arquitectura del portfolio demuestra que **clean code no es solo estetica** — es la base que permite:
+
 - Agregar Gemini AI sin reescribir el chat
 - Agregar i18n sin romper componentes
 - Agregar testing sin mocks infinitos
