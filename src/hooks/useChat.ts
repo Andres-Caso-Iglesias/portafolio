@@ -3,6 +3,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { useLanguage } from '@/lib/i18n';
 import { processUserMessage, isValidInput, generateMessageId } from '@/lib/chatUtils';
+import { defaultChatConfig } from '@/data/chat/config';
 import { welcomeMessage, quickActions } from '@/data/chat';
 import { type ProjectData } from '@/components/chat/ProjectCard';
 
@@ -32,7 +33,7 @@ export interface ChatState {
 // Chat Actions Interface
 // ──────────────────────────────────────────────────────────────
 export interface ChatActions {
-  sendMessage: (content: string) => void;
+  sendMessage: (content: string) => Promise<void>;
   setInputValue: (value: string) => void;
   toggleChat: () => void;
   openChat: () => void;
@@ -54,6 +55,18 @@ export function useChat(): ChatState & ChatActions {
 
   // Track the last topic discussed for context-aware follow-ups
   const lastTopicRef = useRef<string | null>(null);
+
+  // Session ID for rate limiting (persisted in sessionStorage)
+  const sessionIdRef = useRef<string>('');
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    let sid = sessionStorage.getItem('chat-session-id');
+    if (!sid) {
+      sid = `sess-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+      sessionStorage.setItem('chat-session-id', sid);
+    }
+    sessionIdRef.current = sid;
+  }, []);
 
   // Add welcome message when chat is first opened
   const addWelcomeMessage = useCallback(() => {
@@ -90,9 +103,32 @@ export function useChat(): ChatState & ChatActions {
     }
   }, [messages]);
 
+  // AI fetcher: calls the server API route, returns null on failure
+  const fetchAIResponse = useCallback(
+    async (message: string, msgLang: string): Promise<string | null> => {
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message,
+            lang: msgLang,
+            sessionId: sessionIdRef.current,
+          }),
+        });
+        if (!res.ok) return null;
+        const data = await res.json();
+        return data.response ?? null;
+      } catch {
+        return null;
+      }
+    },
+    []
+  );
+
   // Send a message
   const sendMessage = useCallback(
-    (content: string) => {
+    async (content: string) => {
       if (!isValidInput(content)) return;
 
       // Add user message
@@ -107,16 +143,19 @@ export function useChat(): ChatState & ChatActions {
       setInputValue('');
       setIsTyping(true);
 
-      // Simulate typing delay (150-400ms)
-      const typingDelay = 150 + Math.random() * 250;
-
-      setTimeout(() => {
-        // Process and get response with context
+      try {
+        // Process with hybrid mode: AI first, fallback to rule-based
         const {
           response: responseContent,
           topic: newTopic,
           project,
-        } = processUserMessage(content, lang, lastTopicRef.current);
+        } = await processUserMessage(
+          content,
+          lang,
+          lastTopicRef.current,
+          defaultChatConfig,
+          fetchAIResponse
+        );
 
         // Update the last topic for context tracking
         lastTopicRef.current = newTopic;
@@ -126,14 +165,15 @@ export function useChat(): ChatState & ChatActions {
           content: responseContent,
           sender: 'assistant',
           timestamp: new Date(),
-          project, // Include project data if available
+          project,
         };
 
         setMessages(prev => [...prev, assistantMessage]);
+      } finally {
         setIsTyping(false);
-      }, typingDelay);
+      }
     },
-    [lang]
+    [lang, fetchAIResponse]
   );
 
   // Toggle chat open/close

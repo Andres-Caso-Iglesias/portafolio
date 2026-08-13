@@ -5,12 +5,10 @@ import { type ChatConfig } from './types';
 // Default Chat Configuration
 // ──────────────────────────────────────────────────────────────
 export const defaultChatConfig: ChatConfig = {
-  mode: 'rule-based',
-  // Future AI config:
-  // mode: "hybrid",
-  // aiProvider: "gemini",
-  // apiKey: process.env.NEXT_PUBLIC_AI_API_KEY,
-  // maxTokens: 150,
+  mode: 'hybrid',
+  aiProvider: 'gemini',
+  apiKey: process.env.GOOGLE_AI_API_KEY,
+  maxTokens: 150,
 };
 
 // ──────────────────────────────────────────────────────────────

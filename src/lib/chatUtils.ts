@@ -380,43 +380,59 @@ export function getResponseMessage(response: ChatResponse | null, lang: Lang): s
 }
 
 // ──────────────────────────────────────────────────────────────
-// Main chat processing function (Rule-Based with Context)
+// Rule-based response (pure function, no side effects)
 // ──────────────────────────────────────────────────────────────
-export function processUserMessage(
+function getRuleBasedResponse(
   userInput: string,
   lang: Lang,
-  lastTopic: string | null = null,
-  _config: ChatConfig = { mode: 'rule-based' }
+  lastTopic: string | null
 ): { response: string; topic: string | null; project?: ProjectData } {
-  // 1. First, check if this is a follow-up response to a previous topic
   const followUpResponse = findFollowUpResponse(userInput, lastTopic, lang);
   if (followUpResponse) {
-    return { response: followUpResponse, topic: null }; // Reset topic after follow-up
+    return { response: followUpResponse, topic: null };
   }
 
-  // 2. Otherwise, find the best matching response
   const bestMatch = findBestResponse(userInput);
   const response = getResponseMessage(bestMatch, lang);
-
-  // Check if this is a project response and return project data
   const project = getProjectData(bestMatch?.id || null, lang);
 
-  // Return the topic ID if a match was found
   return {
     response,
     topic: bestMatch?.id || null,
     project,
   };
+}
 
-  // Future AI integration placeholder:
-  // if (config.mode === "ai" || config.mode === "hybrid") {
-  //   const aiResponse = await callAIProvider(userInput, lang, config);
-  //   if (aiResponse) return aiResponse;
-  // }
-  //
-  // // Fallback to rule-based if AI fails or in hybrid mode
-  // const bestMatch = findBestResponse(userInput);
-  // return getResponseMessage(bestMatch, lang);
+// ──────────────────────────────────────────────────────────────
+// Main chat processing function (Hybrid: AI + Rule-Based fallback)
+// ──────────────────────────────────────────────────────────────
+export async function processUserMessage(
+  userInput: string,
+  lang: Lang,
+  lastTopic: string | null = null,
+  config: ChatConfig = { mode: 'rule-based' },
+  aiFetcher?: (message: string, lang: Lang) => Promise<string | null>
+): Promise<{ response: string; topic: string | null; project?: ProjectData; provider?: 'ai' | 'rule-based' }> {
+  // 1. Check for follow-ups first (rule-based, always fast)
+  const followUpResponse = findFollowUpResponse(userInput, lastTopic, lang);
+  if (followUpResponse) {
+    return { response: followUpResponse, topic: null, provider: 'rule-based' };
+  }
+
+  // 2. Try AI if mode allows it and fetcher is provided
+  if ((config.mode === 'ai' || config.mode === 'hybrid') && aiFetcher) {
+    try {
+      const aiResponse = await aiFetcher(userInput, lang);
+      if (aiResponse && aiResponse.trim().length > 0) {
+        return { response: aiResponse, topic: null, provider: 'ai' };
+      }
+    } catch {
+      // AI failed — fall through to rule-based
+    }
+  }
+
+  // 3. Fallback: rule-based matching
+  return { ...getRuleBasedResponse(userInput, lang, lastTopic), provider: 'rule-based' };
 }
 
 // ──────────────────────────────────────────────────────────────
@@ -433,20 +449,3 @@ export function isValidInput(input: string): boolean {
 export function generateMessageId(): string {
   return `msg-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 }
-
-// ──────────────────────────────────────────────────────────────
-// Future: AI Provider Interface
-// ──────────────────────────────────────────────────────────────
-export interface AIProvider {
-  name: string;
-  generateResponse(input: string, lang: Lang, config: ChatConfig): Promise<string | null>;
-}
-
-// Placeholder for future Gemini integration
-// export class GeminiProvider implements AIProvider {
-//   name = "gemini";
-//   async generateResponse(input: string, lang: Lang, config: ChatConfig): Promise<string | null> {
-//     // TODO: Implement Gemini API call
-//     return null;
-//   }
-// }
