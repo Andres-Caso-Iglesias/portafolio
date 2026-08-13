@@ -30,67 +30,101 @@ Este portafolio presenta la trayectoria, proyectos y habilidades de Andres Caso 
 ### Estructura de Directorios (post-sprint production-readiness)
 
 ```
-/src
-  /app              # Enrutamiento, layouts y paginas (App Router de Next.js)
-    layout.tsx     # Layout root: LanguageProvider + html lang dinamico + JSON-LD Person + metadata expandido
-    page.tsx       # Home (Server Component, envuelve con LocaleContent)
-    sitemap.ts     # MetadataRoute.Sitemap (6 URLs, en/es)
-    robots.ts      # MetadataRoute.Robots
-    not-found.tsx  # 404 bilingue branded
-    opengraph-image.tsx  # next/og 1200x630 placeholder
-    icon.svg       # Favicon (convención Next 16)
-    apple-icon.svg # Apple touch icon
-    /projects
-      /[slug]       # Pagina detalle RSC con generateMetadata, generateStaticParams, snippets via loader
-  /components       # Capa de Presentacion (JSX y estado UI exclusivamente)
-    Modal.tsx       # Modal de vista rapida (usa loadSnippetsClient)
-    SnippetViewer.tsx # UI comun de snippets (Server-safe + boton copy Client)
-    Timeline.tsx    # Componente principal del timeline
-    LanguageSwitch.tsx # Switch de idioma (setea cookie + localStorage + evento)
-    HomeClientContent.tsx # Hero/About/Skills/Projects/Contact/Footer
-    ProfileIntroText.tsx
-    EducationSection.tsx
-    ProjectsGrid.tsx
-    /timeline      # Componentes especializados (TimelineDesktop, TimelineMobile)
-    /chat          # Componentes del chat interactivo
-      Chat.tsx     # Contenedor principal del chat (dentro de LanguageProvider)
-      ChatMessage.tsx # Presentacion de mensajes con parseo de markdown
-      ChatInput.tsx   # Input del usuario con envio por Enter
-      index.ts     # Barrel exports
-  /data             # Capa de Datos (arrays estaticos y tipados)
-    projectsData.ts
-    skillsData.ts
-    timelineData.ts
-    educationData.ts
-    /chat           # Chat data modular (refactorizado desde monolito chatData.ts)
-      index.ts              # Barrel exports
-      types.ts              # Interfaces (ChatResponse, FollowUpResponse, etc.)
-      config.ts             # ChatConfig, defaultChatConfig, systemPrompts
-      fallback.ts           # fallbackResponse, welcomeMessage, affirmativeKeywords
-      followUps.ts          # Follow-up responses (context-aware)
-      quickActions.ts       # Quick action buttons
-      allResponses.ts       # Array ordenado por prioridad explicita
-      /responses            # 35 archivos individuales (uno por categoria)
-  /lib              # Capa de Logica (utilidades, calculos puros y helpers)
-    utils.ts
-    timelineUtils.ts
-    chatUtils.ts   # Logica de matching, contexto conversacional y futuro soporte IA
-    i18n.ts        # BARREL Client-safe (re-exporta de i18n-context)
-    i18n-context.tsx # "use client" - LanguageContext, useLanguage, LanguageProvider
-    i18n-server.ts # Server-only - getLangFromCookie (lee cookies() de next/headers)
-    snippetLoader.ts       # Server: loadSnippetsServer (usa fs/promises)
-    snippetLoaderClient.ts # "use client" - loadSnippetsClient (usa fetch)
-  /hooks            # Hooks personalizados
-    useChat.ts     # Estado del chat con tracking de contexto
-  /i18n             # Traducciones (UNICO archivo)
-    locales.json   # ES + EN, contiene "Seniority Hibrido" copy
-/public
-  /erd              # 5 SVG de diagramas ERD
-  /snippets         # Fragmentos de codigo representativos
-  /swagger          # OpenAPI specs
-    bolsa-empleo.json
-    foodbites.json  # OpenAPI 3.0 placeholder (marcado PLACEHOLDER)
-  favicon ya no esta aqui, Next 16 lo lee de /src/app/icon.svg
+/portfolio
+  /src
+    /app              # Enrutamiento, layouts y paginas (App Router de Next.js)
+      layout.tsx     # Layout root: LanguageProvider + html lang dinamico + JSON-LD Person + metadata expandido
+      page.tsx       # Home (Server Component, envuelve con LocaleContent)
+      sitemap.ts     # MetadataRoute.Sitemap (6 URLs, en/es)
+      robots.ts      # MetadataRoute.Robots
+      not-found.tsx  # 404 bilingue branded
+      opengraph-image.tsx  # next/og 1200x630 placeholder
+      icon.svg       # Favicon (convencion Next 16)
+      apple-icon.svg # Apple touch icon
+      globals.css    # Estilos globales (Tailwind v4)
+      /api
+        /chat
+          route.ts   # Endpoint Gemini AI con rate limiting e hybrid fallback
+      /projects
+        /[slug]       # Pagina detalle RSC con generateMetadata, generateStaticParams, snippets via loader
+    /components       # Capa de Presentacion (JSX y estado UI exclusivamente)
+      Modal.tsx       # Modal de vista rapida (usa createPortal)
+      SnippetViewer.tsx # UI comun de snippets (Server-safe + boton copy Client)
+      Timeline.tsx    # Componente principal del timeline
+      LanguageSwitch.tsx # Switch de idioma (setea cookie + localStorage + evento)
+      HomeClientContent.tsx # Hero/About/Skills/Projects/Contact/Footer
+      ProfileIntroText.tsx # Texto introductorio del perfil
+      EducationSection.tsx # Seccion de educacion
+      ProjectsGrid.tsx # Grid de proyectos (usa createPortal)
+      /timeline      # Componentes especializados (TimelineDesktop, TimelineMobile)
+      /chat          # Componentes del chat interactivo
+        Chat.tsx     # Contenedor principal del chat (dentro de LanguageProvider)
+        ChatMessage.tsx # Presentacion de mensajes con parseo de markdown
+        ChatInput.tsx   # Input del usuario con envio por Enter
+        ProjectCard.tsx # Tarjeta de proyecto para respuestas del chat
+        index.ts     # Barrel exports
+    /data             # Capa de Datos (arrays estaticos y tipados)
+      projectsData.ts # Interfaz Project + projects array (bilingue, sin campo id)
+      skillsData.ts   # Interfaz SkillCategory + skills array (8 categorias)
+      timelineData.ts # Interfaz TimelineItem + rawTimelineData
+      educationData.ts # Interfaz EducationItem + educationData
+      /chat           # Chat data modular (refactorizado desde monolito chatData.ts)
+        index.ts              # Barrel exports
+        types.ts              # Interfaces (ChatResponse, FollowUpResponse, etc.)
+        config.ts             # ChatConfig, defaultChatConfig, systemPrompts
+        fallback.ts           # fallbackResponse, welcomeMessage, affirmativeKeywords
+        followUps.ts          # Follow-up responses (context-aware)
+        quickActions.ts       # Quick action buttons
+        allResponses.ts       # Array ordenado por prioridad explicita
+        aiContext.ts          # Contexto estatico del perfil para system prompt del chat IA
+        /responses            # 46 archivos individuales (uno por categoria)
+    /lib              # Capa de Logica (utilidades, calculos puros y helpers)
+      utils.ts        # cn() utility (clsx + twMerge)
+      timelineUtils.ts # Funciones puras para fechas, duraciones, posiciones
+      chatUtils.ts    # Logica de matching, contexto conversacional y soporte IA
+      i18n.ts         # BARREL Client-safe (re-exporta de i18n-context)
+      i18n-context.tsx # "use client" - LanguageContext, useLanguage, LanguageProvider
+      i18n-server.ts  # Server-only - getLangFromCookie (lee cookies() de next/headers)
+      snippetLoader.ts       # Server: loadSnippetsServer (usa fs/promises, importa "server-only")
+      snippetLoaderClient.ts # "use client" - loadSnippetsClient (usa fetch)
+      rateLimiter.ts         # Rate limiter in-memory (IP + session) para API chat
+    /hooks            # Hooks personalizados
+      useChat.ts      # Estado del chat con tracking de contexto
+    /i18n             # Traducciones
+      locales.json    # ES + EN, contiene "Seniority Hibrido" copy
+      types.ts        # Tipo Lang ('es' | 'en')
+  /public
+    /erd              # 5 SVG de diagramas ERD
+    /snippets         # 7 fragmentos de codigo representativos
+    /swagger          # OpenAPI specs
+      bolsa-empleo.json
+      foodbites.json  # OpenAPI 3.0 placeholder (marcado PLACEHOLDER)
+    /fonts            # Fuente CabinetGrotesk (8 variantes .otf)
+    profile.jpg       # Foto de perfil
+    chat.png          # Screenshot del chat
+    espanola.png      # Icono bandera espanola
+    ingles.png        # Icono bandera inglesa
+    andres_caso_iglesias_Es.pdf  # CV en espanol
+    andres_caso_iglesias_EN.pdf  # CV en ingles
+    favicon.ico       # Favicon (legacy, Next 16 tambien lee /src/app/icon.svg)
+  /tests
+    /e2e              # 4 spec files (Playwright)
+    i18n_smoke.js     # Smoke test i18n
+    seo_smoke.js      # Smoke test SEO
+  /.github
+    /workflows
+      ci.yml          # GitHub Actions CI/CD
+  /.agent             # Agent skills directory
+  /.atl               # SDD artifacts (proposals, specs, skill-registry)
+  vitest.config.ts    # Vitest configuration
+  vitest.setup.tsx    # Vitest setup (jsdom, mocks)
+  playwright.config.ts # Playwright configuration
+  eslint.config.mjs   # ESLint flat config
+  postcss.config.mjs  # PostCSS configuration
+  next.config.ts      # Next.js config (CSP, security headers)
+  docker-compose.yml  # Docker Compose configuration
+  AGENTS.md           # Agent conventions (este archivo)
+  HANDOFF.md          # Session continuation context
 ```
 
 ### Archivos Eliminados (sprint production-readiness)
@@ -139,7 +173,7 @@ Pagina estatica para cada proyecto con:
 Chatbot rule-based para responder preguntas de reclutadores sobre el perfil profesional:
 - **Arquitectura en Capas**: Datos (`/data/chat`), Logica (`/lib/chatUtils.ts`), Presentacion (`/components/chat/`)
 - **37 Categorias de Respuesta** (refactorizadas a archivos individuales en `/data/chat/responses/`): Experiencia, habilidades, formacion, contacto, proyectos, certificaciones, idiomas, disponibilidad, salario, sobre mi, frontend, backend, devops, soft skills, IA, hosteleria, edad, ubicacion, logistica, procesos, motivacion, debilidades, fortalezas, proyectos personales, empleo anterior, referencias, tecnologias especificas, frameworks, bases de datos, testing, git, metodologia, comunicacion, creando, aprendiendo, colaboracion, problemas, futuro, herramientas, open source.
-- **Arquitectura Modular**: Eliminado monolito `chatData.ts` (2300+ lineas) → 35 archivos en `/data/chat/responses/`, `allResponses.ts` con prioridad explicita project-specific > general > broader.
+- **Arquitectura Modular**: Eliminado monolito `chatData.ts` (2300+ lineas) → 46 archivos en `/data/chat/responses/`, `allResponses.ts` con prioridad explicita project-specific > general > broader.
 - **Deduplicacion**: `salary` + `compensation` (respuestas identicas) fusionados en uno solo.
 - **Keywords Limpias**: Sin solapamiento entre categorias, especificas no genericas.
 - **Contexto Conversacional**: Trackea el ultimo tema discutido para follow-ups (ej. despues de "contacto" pregunta si quiere los enlaces y los da con markdown clickeable).
@@ -148,7 +182,6 @@ Chatbot rule-based para responder preguntas de reclutadores sobre el perfil prof
 - **Bilingue**: Soporte completo para espanol e ingles en todas las respuestas.
 - **Quick Actions**: 10 botones para preguntas frecuentes.
 - **Markdown Links**: Parseo de syntax `[texto](url)` para enlaces clickeables.
-- **Preparado para IA**: Interfaz `AIProvider` y `ChatConfig` para futuro soporte de Gemini/OpenAI.
 - **Matching Mejorado**: Fuzzy matching con Levenshtein para tolerancia a typos.
 - **Defense-in-depth**: `server-only` package en `i18n-server.ts` y `snippetLoader.ts` para evitar imports accidentales en Client Components.
 
@@ -195,14 +228,15 @@ Chatbot rule-based para responder preguntas de reclutadores sobre el perfil prof
 
 ### Extension de Proyectos
 - **Diagramas ERD**: Cada proyecto tiene un diagrama Entidad-Relacion en formato SVG (`/public/erd/*.svg`)
-- **Code Snippets**: Fragmentos de codigo representativos en `/public/snippets/`
+- **Code Snippets**: 7 fragmentos de codigo representativos en `/public/snippets/`
+- **Documentacion OpenAPI**: Specs en `/public/swagger/`
 - **Contenido Bilingue**: Soporte completo para espanol e ingles en todos los campos de proyectos
 
 ### Rendimiento y Optimizacion
 - **Code Splitting Automatico**: Next.js 16 con App Router optimiza la carga por rutas.
 - **Imagenes Optimizadas**: Uso de `<NextImage>` cuando se requieran imagenes (lazy loading, tamano adecuado).
 - **CSS Optimo**: Tailwind elimina CSS unused en produccion.
-- **Fuentes del Sistema**: Uso de la pila de fuentes nativa para evitar cargas externas innecesarias.
+- **Fuentes Self-hosted**: CabinetGrotesk (8 variantes .otf) en `/public/fonts/`, sin dependencias externas.
 
 ### Accesibilidad (a11y)
 - **Contraste de Colores**: Verificacion de que las combinaciones de texto/fondo cumplan WCAG AA/AAA.
@@ -237,7 +271,7 @@ Chatbot rule-based para responder preguntas de reclutadores sobre el perfil prof
 - `chat.spec.ts` — 10 tests: toggle, mensajes, quick actions
 
 ### CI/CD (GitHub Actions)
-- `.github/workflows/ci.yml` — lint + typecheck + build en cada PR/push a main
+- `.github/workflows/ci.yml` — lint + typecheck + security audit + unit tests + build + E2E tests en cada PR/push a main
 - Protege la rama principal: si alguno falla, el PR no se puede mergear
 
 ### Scripts de testing
@@ -258,8 +292,7 @@ npm run typecheck    # TypeScript --noEmit
 1. **Migrar a `next-intl`** con routing `/en/*` (reemplaza i18n custom con cookie, mejora SEO).
 
 ### Sprint futuro - MEDIA prioridad
-1. **IA real en el chat** con Gemini API (interfaz `AIProvider`/`ChatConfig` ya preparada).
-2. **Cerrar 9 manual browser tests** del SDD previo `estrategia-visualizacion-tecnica`.
+1. **Cerrar 9 manual browser tests** del SDD previo `estrategia-visualizacion-tecnica`.
 
 ### Sprint futuro - BAJA prioridad
 1. **Menu de navegacion con resaltado de seccion** - mejora usabilidad en paginas largas.
@@ -292,12 +325,13 @@ Esta decision se tomopara mantener consistencia y evitar problemas de compatibil
 - **Net -200 lineas** de codigo (cleanup agresivo: 9 archivos eliminados, 14 creados, 16+ modificados).
 
 ### Logros post-sprint (Junio 2026)
-- **Refactor `chatData.ts` monolito** (2300+ lineas) → arquitectura modular `/data/chat/` (35 archivos individuales, deduplicado salary+compensation, keywords limpias, prioridad explicita en `allResponses.ts`).
+- **Refactor `chatData.ts` monolito** (2300+ lineas) → arquitectura modular `/data/chat/` (46 archivos individuales, deduplicado salary+compensation, keywords limpias, prioridad explicita en `allResponses.ts`).
 - **Fix 2 errores TS pre-existentes** (`messagesEndRef` tipado en `ChatActions`).
 - **Instalado `server-only` package** en `i18n-server.ts` y `snippetLoader.ts` (defense-in-depth: build falla si se importa en Client Component).
 - **252 tests unitarios** en `/src/lib/__tests__/` (6 archivos, 100% pass).
 - **36 tests E2E** con Playwright en `/tests/e2e/` (4 archivos, 100% pass en chromium).
-- **GitHub Actions CI/CD** configurado (lint + typecheck + build en cada PR/push a main).
+- **GitHub Actions CI/CD** configurado (lint + typecheck + audit + unit tests + build + E2E tests en cada PR/push a main).
+- **Gemini AI integrado** en chat (`/api/chat/route.ts`) con rate limiting, contexto estatico del perfil (`aiContext.ts`) y fallback rule-based.
 
 ### Gaps residuales (out-of-scope, priorizados)
 - **MEDIA** — Migrar a `next-intl` con routing `/en/*`.

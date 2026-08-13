@@ -2,22 +2,19 @@
 
 > **Proposito**: Este archivo es el puente entre sesiones. Si arrancas una sesion nueva en este proyecto, lee este archivo PRIMERO. Te ahorra 20 minutos de "que carajo hicimos la ultima vez".
 >
-> **Ultima actualizacion**: Junio 2026, sesion security hardening + metadata cleanup.
+> **Ultima actualizacion**: Julio 2026, revision de documentacion completa.
 
 ---
 
 ## TL;DR (30 segundos)
 
-El proyecto esta **deployado en produccion**. Sprint production-readiness completado y mergado a `main`. Branch `dev` activa con security hardening, CI/CD mejorado y metadata cleanup.
+El proyecto esta **deployado en produccion**. Sprint production-readiness completado y mergado a `main`. Gemini AI integrado en el chat con rate limiting y fallback rule-based.
 
-**Completados en esta sesion:**
-- Eliminado "Senior" del metadata (layout.tsx, opengraph-image.tsx) — titulo honesto "Backend Developer"
-- CI/CD mejorado: + unit tests, + E2E tests, + security audit (npm audit)
-- HSTS header agregado (max-age=63072000, includeSubDomains, preload)
-- CSP environment-aware: unsafe-eval solo en development, eliminado en production
-- Imports muertos eliminados (createPortal, framer-motion en HomeClientContent.tsx)
-- robots.ts limpiado (disallow /api/ inexistente eliminado)
-- Nivel de inglés aclarado en chat: bilingüe nativo con contexto familiar real
+**Estado actual:**
+- Branch `main` deployada en produccion
+- Gemini AI integrado en chat (`/api/chat/route.ts`) con rate limiting, contexto del perfil y fallback rule-based
+- 252 unit tests + 36 E2E tests + CI/CD completo
+- 46 archivos de respuestas chat (refactorizado desde monolito 2300+ lineas)
 
 ---
 
@@ -25,89 +22,18 @@ El proyecto esta **deployado en produccion**. Sprint production-readiness comple
 
 | Recurso | Estado |
 |---------|--------|
-| Branch actual | `dev` |
+| Branch actual | `main` |
 | `main` | Deployado, al dia con `origin/main` |
 | Working tree | Limpio |
-| Ultimo commit | `2b0eed8 fix(security): CSP environment-aware, dead imports cleanup, robots, CI audit, i18n consistency` |
+| Ultimo commit | `04b0f2f fix: dont trust IA it boke he lint` |
 
-Commits en `dev` recientes:
+Commits recientes:
 ```bash
 git log --oneline -5
-# 2b0eed8 fix(security): CSP environment-aware, dead imports cleanup, robots, CI audit, i18n consistency
-# b6fb9e7 tests al CI pipeline,Agregar HSTS header
-# 18ca816 chore: update lock file and agents.md testing section
-# 01bfb84 docs: update README with testing infrastructure and CI/CD
-# 0edb098 docs: update HANDOFF.md and AGENTS.md with current project state
+# 04b0f2f fix: dont trust IA it boke he lint
+# 0dd39ff fix: cambio keywords por error en tests
+# cd849d8 fix: reajustes respuestas chat, cambio colores botones y sub botones enlace a hack platforms
 ```
-
----
-
-## Lo que Queda Para Merge
-
-La branch `dev` esta lista para PR a `main`. Contiene los cambios del sprint anterior + security hardening de esta sesion.
-
-### Tests Unitarios (252 tests)
-
-| Archivo | Tests | Funciones cubiertas |
-|---------|-------|---------------------|
-| `utils.test.ts` | 6 | `cn()` (clsx + twMerge) |
-| `timelineUtils.test.ts` | 71 | `parseSpanishDate`, `computeDurationInMonths`, `computeDurationString`, `calculateTimelinePositions`, `expColors` |
-| `chatUtils.test.ts` | 117 | `normalizeText`, `tokenize`, `calculateMatchScore`, `isAffirmativeResponse`, `findFollowUpResponse`, `findBestResponse`, `getResponseMessage`, `processUserMessage`, `isValidInput` |
-| `i18n.test.ts` | 13 | `t()`, lookup, interpolation, bilingual |
-| `snippetLoader.test.ts` | 22 | `detectLanguage` (15 extensions), `loadSnippetsServer` (mock fs) |
-| `snippetLoaderClient.test.ts` | 23 | `detectLanguage` (15 extensions), `loadSnippetsClient` (mock fetch) |
-
-### Tests E2E (36 tests)
-
-| Archivo | Tests | Qué cubre |
-|---------|-------|-----------|
-| `navigation.spec.ts` | 9 | Home, secciones, footer, links |
-| `i18n.spec.ts` | 5 | Default ES, toggle EN, persistencia, traducciones |
-| `projects.spec.ts` | 14 | Cards, modal 4 tabs, close, slug pages |
-| `chat.spec.ts` | 10 | Toggle, open, welcome, quick actions, send, close |
-
-### CI/CD
-
-- `.github/workflows/ci.yml` — lint + typecheck + security audit + unit tests + build + E2E tests
-- `package.json` — scripts `typecheck`, `test:unit`, `test:e2e`
-- **Security audit** (`npm audit --audit-level=high`) ejecuta antes de los tests
-- **E2E tests** instalan chromium automaticamente en CI
-
-### Para mergear:
-```bash
-git checkout main
-git merge dev
-git push origin main
-```
-
----
-
-## Gaps Residuales (Priorizados)
-
-### Completados en esta sesion
-- ~~Quitar "Senior" del metadata~~ (layout.tsx, opengraph-image.tsx)
-- ~~Tests en CI pipeline~~ (unit + E2E + security audit)
-- ~~HSTS header~~ (next.config.ts)
-- ~~CSP environment-aware~~ (unsafe-eval solo en dev)
-- ~~Imports muertos eliminados~~ (createPortal, framer-motion)
-- ~~robots.ts limpiado~~ (disallow /api/ eliminado)
-- ~~Nivel de inglés aclarado~~ (chat responses: bilingüe nativo con contexto familiar)
-
-### MEDIA prioridad
-1. **Migrar a `next-intl`** con routing `/en/*` (reemplaza i18n custom con cookie)
-2. **Cerrar 9 manual browser tests** del SDD previo `estrategia-visualizacion-tecnica`
-3. **IA real en el chat** con Gemini API (interfaz `AIProvider`/`ChatConfig` ya preparada)
-4. **Dynamic import del Chat** en layout (carga en cada pagina incluyendo 404)
-5. **Mover "use client"** de Timeline.tsx a TimelineDesktop/Mobile
-6. **Agregar error.tsx** en app/ y projects/[slug]/
-
-### BAJA prioridad
-1. Menu de navegacion con resaltado de seccion
-2. Modo claro/oscuro con persistencia (next-themes)
-3. Optimizacion de imagenes (reemplazar <img> por next/image)
-4. Analisis de rendimiento (Lighthouse, Web Vitals)
-5. Tests de componentes (@testing-library/react)
-6. Deployar Security Header Scanner como live demo
 
 ---
 
@@ -119,10 +45,11 @@ git push origin main
 | React | 19.2.4 |
 | TypeScript | 5.9.3 (strict) |
 | Tailwind CSS | 4.2.2 |
-| framer-motion | 12.38.0 |
 | Vitest | 4.1.8 |
-| Playwright | latest |
-| npm | gestor de paquetes |
+| Playwright | 1.61.0 |
+| server-only | 0.0.1 |
+
+**NOTA**: `framer-motion` NO esta instalado (solo es mockeado en `vitest.setup.tsx`).
 
 Path aliases: `@/*` -> `./src/*` (definido en `tsconfig.json`).
 
@@ -131,9 +58,10 @@ Path aliases: `@/*` -> `./src/*` (definido en `tsconfig.json`).
 ## Scripts Disponibles
 
 ```bash
-npm run dev          # Next.js dev server
+npm run dev          # Next.js dev server (--webpack)
 npm run build        # Next.js production build
-npm run lint         # ESLint + Prettier check
+npm run start        # Next.js production server
+npm run lint         # ESLint
 npm run typecheck    # TypeScript --noEmit
 npm run test         # Smoke tests (i18n + seo)
 npm run test:unit    # Vitest unit tests (252 tests)
@@ -163,36 +91,42 @@ npm run test:e2e     # Playwright E2E tests (36 tests)
 
 ---
 
-## Lineage de Archivos Importantes
+## Funcionalidades Clave
 
-### Nuevos (esta sesion)
-- `.github/workflows/ci.yml` — GitHub Actions CI/CD
-- `src/lib/__tests__/timelineUtils.test.ts` — 71 tests unitarios
-- `src/lib/__tests__/chatUtils.test.ts` — 117 tests unitarios
-- `src/lib/__tests__/i18n.test.ts` — 13 tests unitarios
-- `src/lib/__tests__/snippetLoader.test.ts` — 22 tests unitarios
-- `src/lib/__tests__/snippetLoaderClient.test.ts` — 23 tests unitarios
-- `playwright.config.ts` — Config Playwright
-- `tests/e2e/navigation.spec.ts` — 9 tests E2E
-- `tests/e2e/i18n.spec.ts` — 5 tests E2E
-- `tests/e2e/projects.spec.ts` — 14 tests E2E
-- `tests/e2e/chat.spec.ts` — 10 tests E2E
-- `tests/e2e/tsconfig.json` — Config TS para E2E
+### Chat "Pinche de Andres" (Gemini AI)
+- **Endpoint**: `/api/chat/route.ts` — Gemini AI con rate limiting in-memory
+- **Contexto**: `src/data/chat/aiContext.ts` — perfil estatico para system prompt
+- **Rate Limiter**: `src/lib/rateLimiter.ts` — IP + session
+- **Fallback**: Rule-based con 46 categorias de respuesta en `/data/chat/responses/`
+- **Config**: Sin `GEMINI_API_KEY` en `.env.local`, el chat usa fallback rule-based
 
-### Modificados (esta sesion)
-- `package.json` — scripts `typecheck`, `test:unit`, `test:e2e` + devDeps (vitest, playwright, testing-library)
-- `src/app/layout.tsx` — "Senior" eliminado de todos los metadatos (title, OG, Twitter, JSON-LD)
-- `src/app/opengraph-image.tsx` — "Senior" eliminado de alt text y titulo visible
-- `.github/workflows/ci.yml` — +security audit, +unit tests, +E2E tests
-- `next.config.ts` — CSP environment-aware, +HSTS header
-- `src/app/robots.ts` — disallow /api/ eliminado
-- `src/components/HomeClientContent.tsx` — imports muertos eliminados (createPortal, framer-motion)
-- `src/data/chat/responses/languages.ts` — nivel de inglés actualizado a bilingüe nativo
-- `src/data/chat/followUps.ts` — follow-up de idiomas actualizado
+### i18n Custom
+- Cookie `lang` + localStorage + LanguageContext
+- `<html lang>` dinamico desde el primer byte
+- `server-only` en `i18n-server.ts` y `snippetLoader.ts` (defense-in-depth)
 
-### Eliminados (esta sesion)
-- `src/data/chatData.ts` — monolito 2300+ lineas (refactorizado a `/data/chat/` modular)
-- Branches: `dev`, `ref`, `cambios-en-proyecto` (locales y remotas)
+### SEO
+- `sitemap.ts`, `robots.ts`, `opengraph-image.tsx` (1200x630)
+- JSON-LD Person en `layout.tsx`
+- Favicons: `icon.svg` + `apple-icon.svg` (Next 16 convention) + `favicon.ico` (legacy)
+
+---
+
+## Gaps Residuales (Priorizados)
+
+### MEDIA prioridad
+1. **Migrar a `next-intl`** con routing `/en/*` (reemplaza i18n custom con cookie)
+2. **Cerrar 9 manual browser tests** del SDD previo `estrategia-visualizacion-tecnica`
+3. **Dynamic import del Chat** en layout (carga en cada pagina incluyendo 404)
+4. **Mover "use client"** de Timeline.tsx a TimelineDesktop/Mobile
+5. **Agregar error.tsx** en app/ y projects/[slug]/
+
+### BAJA prioridad
+1. Menu de navegacion con resaltado de seccion
+2. Modo claro/oscuro con persistencia (next-themes)
+3. Optimizacion de imagenes (reemplazar <img> por next/image)
+4. Analisis de rendimiento (Lighthouse, Web Vitals)
+5. Tests de componentes (@testing-library/react)
 
 ---
 
