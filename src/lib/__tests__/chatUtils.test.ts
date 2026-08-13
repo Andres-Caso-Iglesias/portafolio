@@ -420,70 +420,70 @@ describe('getResponseMessage', () => {
 // processUserMessage
 // ──────────────────────────────────────────────────────────────
 describe('processUserMessage', () => {
-  it('returns a response string for valid input', () => {
-    const result = processUserMessage('experiencia laboral', 'es');
+  it('returns a response string for valid input', async () => {
+    const result = await processUserMessage('experiencia laboral', 'es');
     expect(result.response).toBeTruthy();
     expect(typeof result.response).toBe('string');
   });
 
-  it('returns topic matching the matched response id', () => {
-    const result = processUserMessage('experiencia laboral', 'es');
+  it('returns topic matching the matched response id', async () => {
+    const result = await processUserMessage('experiencia laboral', 'es');
     expect(result.topic).toBe('experience');
   });
 
-  it('returns null topic when no match found', () => {
-    const result = processUserMessage('zzzzz', 'es', null);
+  it('returns null topic when no match found', async () => {
+    const result = await processUserMessage('zzzzz', 'es', null);
     expect(result.topic).toBeNull();
   });
 
-  it('returns fallback message when no match', () => {
-    const result = processUserMessage('zzzzz', 'es', null);
+  it('returns fallback message when no match', async () => {
+    const result = await processUserMessage('zzzzz', 'es', null);
     expect(result.response).toBe(fallbackResponse.es);
   });
 
-  it('detects follow-up response when lastTopic is set and input is affirmative', () => {
-    const result = processUserMessage('si', 'es', 'contact');
+  it('detects follow-up response when lastTopic is set and input is affirmative', async () => {
+    const result = await processUserMessage('si', 'es', 'contact');
     expect(result.response).toContain('LinkedIn');
     expect(result.topic).toBeNull();
   });
 
-  it('resets topic after follow-up', () => {
-    const result = processUserMessage('dale', 'es', 'projects');
+  it('resets topic after follow-up', async () => {
+    const result = await processUserMessage('dale', 'es', 'projects');
     expect(result.topic).toBeNull();
   });
 
-  it('returns English response when lang is en', () => {
-    const result = processUserMessage('work experience', 'en');
+  it('returns English response when lang is en', async () => {
+    const result = await processUserMessage('work experience', 'en');
     expect(result.response).toBeTruthy();
   });
 
-  it('returns project data for project-specific queries', () => {
-    const result = processUserMessage('bolsa de empleo', 'es');
+  it('returns project data for project-specific queries', async () => {
+    const result = await processUserMessage('bolsa de empleo', 'es');
     expect(result.project).toBeDefined();
     expect(result.project?.name).toBe('Bolsa de Empleo');
   });
 
-  it('returns undefined project for non-project queries', () => {
-    const result = processUserMessage('experiencia laboral', 'es');
+  it('returns undefined project for non-project queries', async () => {
+    const result = await processUserMessage('experiencia laboral', 'es');
     expect(result.project).toBeUndefined();
   });
 
-  it('handles full pipeline: input -> follow-up detection -> response', () => {
-    const firstResult = processUserMessage('contacto', 'es');
+  it('handles full pipeline: input -> follow-up detection -> response', async () => {
+    const firstResult = await processUserMessage('contacto', 'es');
     expect(firstResult.topic).toBe('contact');
 
-    const followUpResult = processUserMessage('si', 'es', firstResult.topic);
+    const followUpResult = await processUserMessage('si', 'es', firstResult.topic);
     expect(followUpResult.response).toContain('LinkedIn');
   });
 
-  it('processes foodbites project query', () => {
-    const result = processUserMessage('foodbites', 'es');
+  it('processes foodbites project query', async () => {
+    const result = await processUserMessage('foodbites', 'es');
     expect(result.project).toBeDefined();
     expect(result.project?.name).toBe('FoodBites');
   });
 
-  it('processes auditoria query', () => {
-    const result = processUserMessage('auditoria de seguridad', 'es');
+  it('processes auditoria query', async () => {
+    const result = await processUserMessage('auditoria de seguridad', 'es');
     expect(result.project).toBeDefined();
   });
 });
@@ -588,46 +588,46 @@ describe('fuzzy matching (via findBestResponse)', () => {
 // Project data (tested indirectly via processUserMessage)
 // ──────────────────────────────────────────────────────────────
 describe('project data (via processUserMessage)', () => {
-  it('returns project data for project-bolsa in Spanish', () => {
-    const result = processUserMessage('bolsa de empleo', 'es');
+  it('returns project data for project-bolsa in Spanish', async () => {
+    const result = await processUserMessage('bolsa de empleo', 'es');
     expect(result.project).toBeDefined();
     expect(result.project?.name).toBe('Bolsa de Empleo');
     expect(result.project?.techStack).toContain('NestJS');
   });
 
-  it('returns project data for project-bolsa in English', () => {
-    const result = processUserMessage('bolsa de empleo', 'en');
+  it('returns project data for project-bolsa in English', async () => {
+    const result = await processUserMessage('bolsa de empleo', 'en');
     expect(result.project).toBeDefined();
     expect(result.project?.techStack).toContain('NestJS');
   });
 
-  it('returns project data for foodbites', () => {
-    const result = processUserMessage('foodbites', 'es');
+  it('returns project data for foodbites', async () => {
+    const result = await processUserMessage('foodbites', 'es');
     expect(result.project).toBeDefined();
     expect(result.project?.name).toBe('FoodBites');
     expect(result.project?.githubUrl).toContain('FoodBites');
   });
 
-  it('returns project data for huertos', () => {
-    const result = processUserMessage('huertos urbanos', 'es');
+  it('returns project data for huertos', async () => {
+    const result = await processUserMessage('huertos urbanos', 'es');
     expect(result.project).toBeDefined();
     expect(result.project?.name).toBe('Gestor Huertos Urbanos');
   });
 
-  it('returns project data for auditoria', () => {
-    const result = processUserMessage('auditoria de seguridad', 'es');
+  it('returns project data for auditoria', async () => {
+    const result = await processUserMessage('auditoria de seguridad', 'es');
     expect(result.project).toBeDefined();
     expect(result.project?.name).toBe('Auditoria de Seguridad');
   });
 
-  it('returns project data for portfolio', () => {
-    const result = processUserMessage('portafolio profesional', 'es');
+  it('returns project data for portfolio', async () => {
+    const result = await processUserMessage('portafolio profesional', 'es');
     expect(result.project).toBeDefined();
     expect(result.project?.name).toBe('Portafolio Profesional');
   });
 
-  it('returns undefined project for non-project category', () => {
-    const result = processUserMessage('experiencia laboral', 'es');
+  it('returns undefined project for non-project category', async () => {
+    const result = await processUserMessage('experiencia laboral', 'es');
     expect(result.project).toBeUndefined();
   });
 });
