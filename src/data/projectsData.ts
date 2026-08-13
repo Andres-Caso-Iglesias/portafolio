@@ -11,6 +11,7 @@ export interface Project {
   enName?: string;
   enDescription?: string;
   enImpact?: string;
+  enRole?: string;
   // New bilingual fields: Challenge-Solution-Architecture
   challenge?: string;
   enChallenge?: string;
@@ -27,6 +28,79 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+  {
+    name: 'QReaper - Analisis Anti-Quishing',
+    enName: 'QReaper - Anti-Phishing Analysis',
+    description:
+      'Herramienta de analisis de phishing oculto en QR codes. Detecta URLs maliciosas en emails, PDFs e imagenes mediante pipeline de 5 etapas: decodificacion, analisis estatico de URLs, sandbox con headless browser, scoring de riesgo y generacion de informes.',
+    enDescription:
+      'Phishing analysis tool for hidden QR codes. Detects malicious URLs in emails, PDFs, and images through a 5-stage pipeline: decoding, static URL analysis, headless browser sandbox, risk scoring, and report generation.',
+    tech: ['Python 3.10+', 'OpenCV', 'pyzbar', 'Playwright', 'ReportLab', 'Click', 'PyMuPDF'],
+    github: 'https://github.com/bdjoseluis/qreaper',
+    live: null,
+    impact:
+      'Proyecto de equipo (5 personas) para el Master en Ciberseguridad en Evolve Academy. Modulo de decodificacion completo con 6 tecnicas de preprocesamiento de imagen para deteccion robusta de QR.',
+    enImpact:
+      'Team project (5 people) for the Master in Cybersecurity at Evolve Academy. Complete decoding module with 6 image preprocessing techniques for robust QR detection.',
+    role: 'Desarrollador del modulo de decodificacion: extraccion de QR de imagenes, emails .eml y PDFs, preprocesamiento de imagenes con CLAHE, binarizacion Otsu, y escalado adaptativo.',
+    enRole:
+      'Decoding module developer: QR extraction from images, .eml emails and PDFs, image preprocessing with CLAHE, Otsu binarization, and adaptive scaling.',
+    challenge:
+      'Los filtros de email no pueden leer QR codes porque son imagenes, haciendo invisible la URL maliciosa hasta que un humano la escanea. El ataque quishing esta en auge en 2026 y las organizaciones no tienen herramientas automaticas de deteccion.',
+    enChallenge:
+      'Email filters cannot read QR codes because they are images, making the malicious URL invisible until a human scans it. Quishing attacks are surging in 2026 and organizations lack automatic detection tools.',
+    solution:
+      'Pipeline modular de 5 etapas con contratos explicitos entre modulos. El decode aplica 6 tecnicas de preprocesamiento (grayscale, Otsu normal/invertido, upscaling, CLAHE, adaptive threshold) para maximizar la deteccion. Dual PDF engine (pdf2image + PyMuPDF fallback). Fixtures-as-code para datos de test reproducibles.',
+    enSolution:
+      'Modular 5-stage pipeline with explicit inter-module contracts. Decode applies 6 preprocessing techniques (grayscale, normal/inverted Otsu, upscaling, CLAHE, adaptive threshold) to maximize detection. Dual PDF engine (pdf2image + PyMuPDF fallback). Fixtures-as-code for reproducible test data.',
+    architecture:
+      'Pipeline modular: decode.decode(file_path) -> list[str] -> analisis_url.analizar_url(url) -> dict -> sandbox.detonar(url) -> dict -> scoring.puntuar(signals, sandbox) -> dict -> informe.generar_informe(result, format) -> str. Desarrollo contract-driven con CONTRATOS.md. Branch-per-module en Git.',
+    enArchitecture:
+      'Modular pipeline: decode.decode(file_path) -> list[str] -> analisis_url.analizar_url(url) -> dict -> sandbox.detonar(url) -> dict -> scoring.puntuar(signals, sandbox) -> dict -> informe.generar_informe(result, format) -> str. Contract-driven development with CONTRATOS.md. Branch-per-module in Git.',
+    slug: 'qreaper',
+  },
+  {
+    name: 'VulnPrio - Plataforma de Priorizacion de Vulnerabilidades',
+    enName: 'VulnPrio - Vulnerability Prioritization Platform',
+    description:
+      'Plataforma SaaS de priorizacion inteligente de vulnerabilidades para PYMEs. Analiza dependencias via SBOM, enriquece con 5 fuentes de vulnerabilidades, scoring deterministico + IA, compliance con NIS2 y ENS, integracion CI/CD via GitHub Action.',
+    enDescription:
+      'Intelligent vulnerability prioritization SaaS platform for SMEs. Analyzes dependencies via SBOM, enriches with 5 vulnerability sources, deterministic scoring + AI, NIS2 and ENS compliance, CI/CD integration via GitHub Action.',
+    tech: [
+      'Turborepo',
+      'Express.js',
+      'Next.js 14',
+      'PostgreSQL 16',
+      'Redis 7',
+      'Claude AI',
+      'Stripe',
+      'Drizzle ORM',
+      'Vitest',
+      'Playwright',
+    ],
+    github: 'https://github.com/Andres-Caso-Iglesias/PGPIVP',
+    live: null,
+    impact:
+      'Proyecto de fin de master (PGPIVP). SaaS completo con multi-tenant, 4 tiers de billing, compliance con 2 marcos regulatorios (NIS2 + ENS), GitHub Action para CI/CD, y framework de evaluacion con metricas Precision@K, NDCG@K y MRR.',
+    enImpact:
+      "Master's thesis project (PGPIVP). Complete SaaS with multi-tenant, 4 billing tiers, compliance with 2 regulatory frameworks (NIS2 + ENS), GitHub Action for CI/CD, and evaluation framework with Precision@K, NDCG@K, and MRR metrics.",
+    role: 'Arquitecto y desarrollador full-stack del sistema completo: monorepo Turborepo, API Express.js con 24 servicios, dashboard Next.js, base de datos PostgreSQL con 11 tablas, pipeline de 5 etapas, scoring deterministico + IA, compliance NIS2/ENS, billing Stripe, GitHub Action.',
+    enRole:
+      'Full-stack architect and developer of the complete system: Turborepo monorepo, Express.js API with 24 services, Next.js dashboard, PostgreSQL database with 11 tables, 5-stage pipeline, deterministic scoring + AI, NIS2/ENS compliance, Stripe billing, GitHub Action.',
+    challenge:
+      'Las PYMEs no pueden priorizar vulnerabilidades de forma efectiva. Los herramientas existentes son demasiado complejas, caras o no consideran el contexto del negocio. El 60% de las brechas en PYMEs se podrian haber evitado con priorizacion correcta. Ademas, NIS2 exige compliance que las PYMEs no saben como implementar.',
+    enChallenge:
+      'SMEs cannot effectively prioritize vulnerabilities. Existing tools are too complex, expensive, or don\'t consider business context. 60% of SME breaches could have been prevented with correct prioritization. Additionally, NIS2 requires compliance that SMEs don\'t know how to implement.',
+    solution:
+      'Monorepo con Turborepo: API Express.js (24 servicios, 9 repositorios, DI via composition root), Dashboard Next.js 14 (App Router, Tailwind, Recharts), PostgreSQL 16 (11 tablas, Drizzle ORM), Redis 7 (cache + BullMQ queue). Pipeline de 5 etapas: SBOM (Syft) -> Enrichment (OSV, NVD, GHSA, EPSS, CISA KEV) -> Scoring deterministico (CVSS 30% + EPSS 25% + criticality 25% + exposure 20% + KEV bonus) -> AI (Claude Sonnet con fallback) -> Persistencia. GitHub Action con security gates. Stripe billing (4 tiers). Multi-tenant con RBAC (4 roles). MFA TOTP. SSRF protection, command injection prevention.',
+    enSolution:
+      'Turborepo monorepo: Express.js API (24 services, 9 repositories, DI via composition root), Next.js 14 Dashboard (App Router, Tailwind, Recharts), PostgreSQL 16 (11 tables, Drizzle ORM), Redis 7 (cache + BullMQ queue). 5-stage pipeline: SBOM (Syft) -> Enrichment (OSV, NVD, GHSA, EPSS, CISA KEV) -> Deterministic scoring (CVSS 30% + EPSS 25% + criticality 25% + exposure 20% + KEV bonus) -> AI (Claude Sonnet with fallback) -> Persistence. GitHub Action with security gates. Stripe billing (4 tiers). Multi-tenant with RBAC (4 roles). MFA TOTP. SSRF protection, command injection prevention.',
+    architecture:
+      'Layered Architecture con DI: Presentation (Next.js) -> API (Express Routes) -> Service Layer (24 services) -> Repository Layer (9 interfaces) -> Data (PostgreSQL + Redis). Pipeline pattern para el scanner. Contract-first con Zod validation. Fail-closed security defaults.',
+    enArchitecture:
+      'Layered Architecture with DI: Presentation (Next.js) -> API (Express Routes) -> Service Layer (24 services) -> Repository Layer (9 interfaces) -> Data (PostgreSQL + Redis). Pipeline pattern for the scanner. Contract-first with Zod validation. Fail-closed security defaults.',
+    slug: 'vulnprio',
+  },
   {
     name: 'Security Header Scanner & Quick Assessment Tool',
     enName: 'Security Header Scanner & Quick Assessment Tool',
