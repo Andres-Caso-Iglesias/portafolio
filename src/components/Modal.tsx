@@ -15,16 +15,11 @@ interface ModalProps {
 
 export default function Modal({ project, onClose }: ModalProps) {
   const { lang } = useLanguage();
-  const [isMounted, setIsMounted] = useState(false);
   const [activeTab, setActiveTab] = useState<
     'challenge' | 'solution' | 'architecture' | 'snippets'
   >('challenge');
   const [snippetsContent, setSnippetsContent] = useState<Snippet[]>([]);
   const [isLoadingSnippets, setIsLoadingSnippets] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   const handleClose = useCallback(() => {
     setActiveTab('challenge');
@@ -36,7 +31,7 @@ export default function Modal({ project, onClose }: ModalProps) {
       setActiveTab(tab);
       if (tab === 'snippets' && snippetsContent.length === 0 && !isLoadingSnippets) {
         setIsLoadingSnippets(true);
-        loadSnippetsClient(project.snippetPaths || []).then((snippets) => {
+        loadSnippetsClient(project.snippetPaths || []).then(snippets => {
           setSnippetsContent(snippets);
           setIsLoadingSnippets(false);
         });
@@ -55,19 +50,22 @@ export default function Modal({ project, onClose }: ModalProps) {
     return () => window.removeEventListener('keydown', handleEscape);
   }, [handleClose]);
 
-  if (!isMounted) return null;
-
   return createPortal(
+    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
       onClick={handleClose}
+      onKeyDown={e => {
+        if (e.key === 'Escape') handleClose();
+      }}
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
     >
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
       <div
         className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-slate-900 rounded-xl border border-slate-700 shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
+        onClick={e => e.stopPropagation()}
       >
         <div className="sticky top-0 flex items-center justify-between p-4 border-b border-slate-700 bg-slate-900/95 backdrop-blur-sm z-10 rounded-t-xl">
           <h2 id="modal-title" className="text-xl font-semibold text-white">

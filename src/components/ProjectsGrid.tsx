@@ -67,8 +67,9 @@ export default function ProjectsGrid() {
               key={`${p.slug}-${i}`}
               className="flex-none w-[280px] min-h-[500px] bg-slate-900 rounded-lg p-6 border border-slate-700 hover:border-blue-500 transition-colors cursor-pointer flex flex-col justify-between"
               onClick={() => handleProjectClick(p)}
-              onKeyDown={(e) => handleCardKeyDown(e, p)}
+              onKeyDown={e => handleCardKeyDown(e, p)}
               tabIndex={0}
+              // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
               role="button"
               aria-label={`${displayName(p)} - ${displayDesc(p)}`}
             >
@@ -77,7 +78,10 @@ export default function ProjectsGrid() {
                 <p className="text-slate-300 leading-relaxed line-clamp-5">{displayDesc(p)}</p>
                 <div className="flex flex-wrap gap-2 mt-auto">
                   {p.tech.map((tech: string) => (
-                    <span key={tech} className="px-2 py-1 bg-blue-600/20 text-blue-400 rounded text-xs">
+                    <span
+                      key={tech}
+                      className="px-2 py-1 bg-blue-600/20 text-blue-400 rounded text-xs"
+                    >
                       {tech}
                     </span>
                   ))}
