@@ -103,14 +103,14 @@ function AboutSection() {
       <div className="px-4 lg:px-12 xl:px-20">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           <div className="lg:col-span-2 space-y-4 text-slate-300">
-            <p className="leading-relaxed">{t(lang, 'home.profileIntro')}</p>
-            <p className="leading-relaxed">{t(lang, 'home.profileIntro2')}</p>
+            <p className="text-lg leading-relaxed">{t(lang, 'home.profileIntro')}</p>
+            <p className="text-lg leading-relaxed">{t(lang, 'home.profileIntro2')}</p>
           </div>
           <div className="p-6 bg-slate-900 rounded-lg border-l-4 border-blue-500">
             <p className="text-blue-400 font-medium text-lg">
               {t(lang, 'home.profileDifferTitle')}
             </p>
-            <p className="text-slate-400 mt-3 leading-relaxed">
+            <p className="text-slate-400 mt-3 text-lg leading-relaxed">
               {t(lang, 'home.profileDifferText')}
             </p>
           </div>
