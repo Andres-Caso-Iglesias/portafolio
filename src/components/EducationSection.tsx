@@ -38,7 +38,9 @@ export default function EducationSection() {
         <h2 className="text-3xl min-[1440px]:text-4xl font-bold mb-8 text-white">
           {t(lang, 'home.educationTitle')}
         </h2>
-        <div className="space-y-6">
+      </div>
+      <div className="px-4 lg:px-12 xl:px-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {sortedEducation.map(edu => {
             const title = lang === 'en' && edu.enTitle ? edu.enTitle : edu.title;
             const institution =
@@ -46,7 +48,7 @@ export default function EducationSection() {
             const period = lang === 'en' && edu.enPeriod ? edu.enPeriod : edu.period;
             const details = lang === 'en' && edu.enDetails ? edu.enDetails : edu.details;
             return (
-              <div key={edu.id} className="bg-slate-900 rounded-lg p-6 border border-slate-700">
+              <div key={edu.id} className="bg-slate-900 rounded-lg p-6 min-[1440px]:p-8 border border-slate-700">
                 <h3 className="text-lg min-[1440px]:text-xl font-semibold text-blue-400 mb-2 flex items-center gap-2">
                   {title}
                 </h3>

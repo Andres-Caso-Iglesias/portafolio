@@ -99,19 +99,19 @@ function AboutSection() {
     <section className="py-20 px-6 bg-slate-800">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-3xl font-bold mb-8 text-white">{t(lang, 'home.profileTitle')}</h2>
-        <div className="space-y-4 text-slate-300">
-          <p>{t(lang, 'home.profileIntro')}</p>
-          <p>{t(lang, 'home.profileIntro2')}</p>
-          <div className="mt-6 p-4 bg-slate-900 rounded-lg border-l-4 border-blue-500">
-            <p className="text-blue-400 font-medium">
-              {t(lang, 'home.profileDifferTitle') ||
-                (lang === 'en' ? 'Why am I different?' : '¿Por qué soy diferente?')}
+      </div>
+      <div className="px-4 lg:px-12 xl:px-20">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+          <div className="lg:col-span-2 space-y-4 text-slate-300">
+            <p className="leading-relaxed">{t(lang, 'home.profileIntro')}</p>
+            <p className="leading-relaxed">{t(lang, 'home.profileIntro2')}</p>
+          </div>
+          <div className="p-6 bg-slate-900 rounded-lg border-l-4 border-blue-500">
+            <p className="text-blue-400 font-medium text-lg">
+              {t(lang, 'home.profileDifferTitle')}
             </p>
-            <p className="text-slate-400 mt-1">
-              {t(lang, 'home.profileDifferText') ||
-                (lang === 'en'
-                  ? 'I know what excellence under constant pressure means. I understand the end user because I have been there. I bring discipline, resilience and leadership that few can offer.'
-                  : 'Sé lo que es la excelencia bajo presión constante. Entiendo al usuario final porque yo lo fui. Traigo disciplina, resiliencia y capacidad de liderazgo que pocos pueden ofrecer.')}
+            <p className="text-slate-400 mt-3 leading-relaxed">
+              {t(lang, 'home.profileDifferText')}
             </p>
           </div>
         </div>
