@@ -171,7 +171,7 @@ export default function TimelineDesktop({ items }: TimelineDesktopProps) {
                 {item.durationStr && (
                   <div
                     className={cn(
-                      'mt-3 text-[10px] font-bold tracking-wide text-center px-2.5 py-1 rounded-full w-fit mx-auto bg-neutral-900/60 dark:bg-slate-900/60 shadow-inner',
+                      'mt-3 text-[10px] font-bold tracking-wide text-center px-2.5 py-1 rounded-full w-fit mx-auto bg-black/10 dark:bg-slate-900/60 shadow-inner',
                       theme.text
                     )}
                   >
