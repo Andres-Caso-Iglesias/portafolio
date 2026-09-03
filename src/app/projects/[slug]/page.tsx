@@ -79,14 +79,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   return (
     <div className="max-w-4xl mx-auto py-12 px-4">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">{project.name}</h1>
-        <p className="mt-2 text-gray-600">{project.description}</p>
+        <h1 className="text-3xl font-bold text-neutral-900 dark:text-white">{project.name}</h1>
+        <p className="mt-2 text-neutral-600 dark:text-gray-600">{project.description}</p>
       </div>
 
       <section className="space-y-8">
         {project.erdPath && (
           <div>
-            <h2 className="text-xl font-semibold mb-4">Entity Relationship Diagram (ERD)</h2>
+            <h2 className="text-xl font-semibold mb-4 text-neutral-900 dark:text-white">Entity Relationship Diagram (ERD)</h2>
             <div className="border rounded-lg overflow-hidden shadow">
               <Image
                 src={project.erdPath}
@@ -101,13 +101,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
         {project.apiDocPath && (
           <div>
-            <h2 className="text-xl font-semibold mb-4">API Documentation</h2>
+            <h2 className="text-xl font-semibold mb-4 text-neutral-900 dark:text-white">API Documentation</h2>
             <div className="border rounded-lg overflow-hidden shadow">
               <a
                 href={project.apiDocPath}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block p-4 bg-gray-50 hover:bg-gray-100"
+                className="block p-4 bg-neutral-50 dark:bg-gray-50 hover:bg-neutral-100 dark:hover:bg-gray-100"
               >
                 View API Spec ({project.apiDocPath.split('/').pop()})
               </a>
@@ -117,15 +117,15 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
         {project.snippetPaths && project.snippetPaths.length > 0 && (
           <div>
-            <h2 className="text-xl font-semibold mb-4">Code Snippets</h2>
+            <h2 className="text-xl font-semibold mb-4 text-neutral-900 dark:text-white">Code Snippets</h2>
             <SnippetViewer snippets={snippets} />
           </div>
         )}
 
         {project.dockerCompose && (
           <div>
-            <h2 className="text-xl font-semibold mb-4">Docker Configuration</h2>
-            <div className="border rounded-lg p-4 bg-gray-50">
+            <h2 className="text-xl font-semibold mb-4 text-neutral-900 dark:text-white">Docker Configuration</h2>
+            <div className="border rounded-lg p-4 bg-neutral-50 dark:bg-gray-50">
               <p className="font-semibold mb-2">
                 This project includes Docker Compose configuration:
               </p>
@@ -134,8 +134,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                 <li>PostgreSQL service for Bolsa de Empleo</li>
                 <li>Backend services (Java Spring Boot, NestJS)</li>
               </ul>
-              <p className="mt-2 text-sm text-gray-600">
-                See <code className="bg-gray-200 px-1 rounded">docker-compose.yml</code> in the
+              <p className="mt-2 text-sm text-neutral-600 dark:text-gray-600">
+                See <code className="bg-neutral-200 dark:bg-gray-200 px-1 rounded">docker-compose.yml</code> in the
                 repository root for full details.
               </p>
             </div>
@@ -146,20 +146,20 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       <section className="mt-12 space-y-6">
         {project.challenge && (
           <div>
-            <h2 className="text-xl font-semibold mb-2">Challenge (Reto)</h2>
-            <p className="text-gray-700 text-lg leading-relaxed">{project.challenge}</p>
+            <h2 className="text-xl font-semibold mb-2 text-neutral-900 dark:text-white">Challenge (Reto)</h2>
+            <p className="text-neutral-700 dark:text-gray-700 text-lg leading-relaxed">{project.challenge}</p>
           </div>
         )}
         {project.solution && (
           <div>
-            <h2 className="text-xl font-semibold mb-2">Solution (Solución)</h2>
-            <p className="text-gray-700 text-lg leading-relaxed">{project.solution}</p>
+            <h2 className="text-xl font-semibold mb-2 text-neutral-900 dark:text-white">Solution (Solución)</h2>
+            <p className="text-neutral-700 dark:text-gray-700 text-lg leading-relaxed">{project.solution}</p>
           </div>
         )}
         {project.architecture && (
           <div>
-            <h2 className="text-xl font-semibold mb-2">Architecture (Arquitectura)</h2>
-            <p className="text-gray-700 text-lg leading-relaxed">{project.architecture}</p>
+            <h2 className="text-xl font-semibold mb-2 text-neutral-900 dark:text-white">Architecture (Arquitectura)</h2>
+            <p className="text-neutral-700 dark:text-gray-700 text-lg leading-relaxed">{project.architecture}</p>
           </div>
         )}
       </section>
@@ -170,7 +170,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700"
+            className="flex-1 px-4 py-2 bg-neutral-800 dark:bg-gray-800 text-white rounded hover:bg-neutral-700 dark:hover:bg-gray-700"
           >
             GitHub Repository
           </a>

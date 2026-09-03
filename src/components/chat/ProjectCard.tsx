@@ -23,11 +23,11 @@ interface ProjectCardProps {
 // ──────────────────────────────────────────────────────────────
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <div className="bg-slate-800 rounded-lg p-3 mt-2 border border-slate-600">
-      <h4 className="text-white font-medium text-sm mb-1">{project.name}</h4>
-      <p className="text-slate-300 text-xs mb-2 leading-relaxed">{project.description}</p>
-      <p className="text-slate-400 text-xs mb-3">
-        <span className="text-slate-500">Stack:</span> {project.techStack}
+    <div className="bg-neutral-100 dark:bg-slate-800 rounded-lg p-3 mt-2 border border-neutral-300 dark:border-slate-600">
+      <h4 className="text-neutral-900 dark:text-white font-medium text-sm mb-1">{project.name}</h4>
+      <p className="text-neutral-700 dark:text-slate-300 text-xs mb-2 leading-relaxed">{project.description}</p>
+      <p className="text-neutral-500 dark:text-slate-400 text-xs mb-3">
+        <span className="text-neutral-400 dark:text-slate-500">Stack:</span> {project.techStack}
       </p>
       <div className="flex gap-2">
         <a
@@ -52,8 +52,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
         {project.githubUrl && (
           <a
             href={project.githubUrl}
-            className="inline-flex items-center gap-1 px-3 py-1.5 text-xs bg-slate-700 text-slate-300 
-                       rounded-md hover:bg-slate-600 transition-colors"
+            className="inline-flex items-center gap-1 px-3 py-1.5 text-xs bg-neutral-200 dark:bg-slate-700 text-neutral-700 dark:text-slate-300 
+                       rounded-md hover:bg-neutral-300 dark:hover:bg-slate-600 transition-colors"
           >
             GitHub
             <svg

@@ -2,14 +2,14 @@ import Link from 'next/link';
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen flex items-center justify-center px-6 bg-slate-950 text-slate-100">
+    <main className="min-h-screen flex items-center justify-center px-6 bg-neutral-100 dark:bg-slate-950 text-neutral-900 dark:text-slate-100 transition-colors duration-300">
       <div className="max-w-2xl text-center space-y-6">
-        <h1 className="text-6xl md:text-8xl font-bold tracking-tight text-blue-400">404</h1>
+        <h1 className="text-6xl md:text-8xl font-bold tracking-tight text-blue-600 dark:text-blue-400">404</h1>
         <div className="space-y-3">
-          <h2 className="text-2xl md:text-3xl font-semibold text-slate-100">
+          <h2 className="text-2xl md:text-3xl font-semibold text-neutral-900 dark:text-slate-100">
             Pagina no encontrada / Page not found
           </h2>
-          <p className="text-slate-400 text-base md:text-lg leading-relaxed">
+          <p className="text-neutral-500 dark:text-slate-400 text-base md:text-lg leading-relaxed">
             Lo sentimos, la pagina que buscas no existe. La URL puede haber cambiado o el enlace es
             incorrecto.
             <br />

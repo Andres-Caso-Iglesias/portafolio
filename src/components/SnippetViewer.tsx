@@ -15,7 +15,7 @@ export default function SnippetViewer({
   const [copiedPath, setCopiedPath] = useState<string | null>(null);
 
   if (!snippets || snippets.length === 0) {
-    return <p className="text-slate-400">{emptyLabel}</p>;
+    return <p className="text-neutral-500 dark:text-slate-400">{emptyLabel}</p>;
   }
 
   const handleCopy = async (snippet: Snippet) => {
@@ -37,20 +37,20 @@ export default function SnippetViewer({
         return (
           <div
             key={snippet.path}
-            className="bg-[#0f172a] rounded-lg border border-slate-700 overflow-hidden shadow-lg"
+            className="bg-neutral-950 dark:bg-[#0f172a] rounded-lg border border-neutral-200 dark:border-slate-700 overflow-hidden shadow-lg"
           >
-            <div className="bg-slate-800/80 px-4 py-2 border-b border-slate-700 flex items-center justify-between">
-              <span className="text-xs font-mono text-blue-400">{fileName}</span>
+            <div className="bg-neutral-200/80 dark:bg-slate-800/80 px-4 py-2 border-b border-neutral-200 dark:border-slate-700 flex items-center justify-between">
+              <span className="text-xs font-mono text-blue-600 dark:text-blue-400">{fileName}</span>
               <button
                 type="button"
                 onClick={() => handleCopy(snippet)}
-                className="px-2 py-1 bg-slate-700 hover:bg-slate-600 text-xs rounded text-slate-200 transition-colors font-mono"
+                className="px-2 py-1 bg-neutral-300 dark:bg-slate-700 hover:bg-neutral-400 dark:hover:bg-slate-600 text-xs rounded text-neutral-800 dark:text-slate-200 transition-colors font-mono"
                 aria-label={`Copy snippet ${fileName}`}
               >
                 {isCopied ? 'Copied!' : 'Copy'}
               </button>
             </div>
-            <div className="p-4 overflow-x-auto text-xs sm:text-sm text-slate-300 font-mono leading-relaxed bg-[#0d1117]">
+            <div className="p-4 overflow-x-auto text-xs sm:text-sm text-neutral-800 dark:text-slate-300 font-mono leading-relaxed bg-neutral-900 dark:bg-[#0d1117]">
               <pre>
                 <code className={`language-${snippet.language}`}>{snippet.content}</code>
               </pre>

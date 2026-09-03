@@ -8,9 +8,9 @@ import { t, useLanguage } from '@/lib/i18n';
 export default function Timeline() {
   const { lang } = useLanguage();
   return (
-    <section className="py-20 bg-slate-900 overflow-hidden">
+    <section className="py-20 bg-white dark:bg-slate-900 overflow-hidden transition-colors duration-300">
       <div className="w-full">
-        <h2 className="text-3xl font-bold mb-16 text-white text-center">
+        <h2 className="text-3xl font-bold mb-16 text-neutral-900 dark:text-white text-center">
           {t(lang, 'home.timelineTitle')}
         </h2>
 

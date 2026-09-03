@@ -94,7 +94,7 @@ function parseLinks(text: string): React.ReactNode[] {
         href={m.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-blue-400 hover:text-blue-300 underline"
+        className="text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 underline"
       >
         {m.text}
       </a>
@@ -131,7 +131,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
           'max-w-[80%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed',
           isUser
             ? 'bg-blue-600 text-white rounded-br-md'
-            : 'bg-slate-700 text-slate-100 rounded-bl-md'
+            : 'bg-neutral-200 dark:bg-slate-700 text-neutral-800 dark:text-slate-100 rounded-bl-md'
         )}
       >
         <div className="whitespace-pre-wrap break-words">{parseLinks(message.content)}</div>

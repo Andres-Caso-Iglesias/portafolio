@@ -5,6 +5,8 @@ import './globals.css';
 import { Chat } from '@/components/chat/Chat';
 import { LanguageProvider, type LocaleData } from '@/lib/i18n';
 import { getLangFromCookie } from '@/lib/i18n-server';
+import { ThemeProvider } from '@/lib/theme';
+import { getThemeFromCookie } from '@/lib/theme-server';
 import locales from '@/i18n/locales.json';
 
 const cabinetGrotesk = localFont({
@@ -107,15 +109,34 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const lang = await getLangFromCookie();
+  const theme = await getThemeFromCookie();
   const initialLocales = locales as unknown as LocaleData;
 
   return (
-    <html lang={lang} className={cabinetGrotesk.variable} suppressHydrationWarning>
-      <body className="bg-slate-900 text-white antialiased font-sans">
-        <LanguageProvider initialLang={lang} initialLocales={initialLocales}>
-          {children}
-          <Chat />
-        </LanguageProvider>
+    <html lang={lang} className={`${cabinetGrotesk.variable} dark`} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var stored = localStorage.getItem('theme');
+                  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  var isDark = stored ? stored === 'dark' : prefersDark;
+                  document.documentElement.classList.toggle('dark', isDark);
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body className="bg-white text-neutral-900 dark:bg-slate-900 dark:text-white antialiased font-sans transition-colors duration-300">
+        <ThemeProvider initialTheme={theme}>
+          <LanguageProvider initialLang={lang} initialLocales={initialLocales}>
+            {children}
+            <Chat />
+          </LanguageProvider>
+        </ThemeProvider>
         <Script
           id="json-ld-person"
           type="application/ld+json"

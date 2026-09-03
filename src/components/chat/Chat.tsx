@@ -43,7 +43,7 @@ export function Chat() {
           'flex items-center justify-center',
           'shadow-lg transition-all duration-200',
           'hover:scale-105 active:scale-95',
-          isOpen ? 'bg-slate-700 hover:bg-slate-600' : 'bg-blue-600 hover:bg-blue-700'
+          isOpen ? 'bg-neutral-700 dark:bg-slate-700 hover:bg-neutral-600 dark:hover:bg-slate-600' : 'bg-blue-600 hover:bg-blue-700'
         )}
         aria-label={isOpen ? 'Cerrar chat' : 'Abrir chat'}
       >
@@ -73,31 +73,31 @@ export function Chat() {
           className={cn(
             'fixed bottom-24 right-6 z-50',
             'w-[380px] max-w-[calc(100vw-3rem)]',
-            'bg-slate-900 rounded-2xl shadow-2xl',
-            'border border-slate-700',
+            'bg-white dark:bg-slate-900 rounded-2xl shadow-2xl',
+            'border border-neutral-200 dark:border-slate-700',
             'flex flex-col',
             'overflow-hidden',
             'animate-in fade-in slide-in-from-bottom-4 duration-200'
           )}
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-4 bg-slate-800 border-b border-slate-700">
+          <div className="flex items-center justify-between p-4 bg-neutral-100 dark:bg-slate-800 border-b border-neutral-200 dark:border-slate-700">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center">
                 <span className="text-white font-semibold text-sm">AC</span>
               </div>
               <div>
-                <h3 className="text-white font-medium text-sm">
+                <h3 className="text-neutral-900 dark:text-white font-medium text-sm">
                   {lang === 'es' ? 'Pinche de Andrés' : "Andrés' Sous-chef"}
                 </h3>
-                <p className="text-slate-400 text-xs">
+                <p className="text-neutral-500 dark:text-slate-400 text-xs">
                   {lang === 'es' ? 'Respuestas sobre su perfil' : 'Profile information'}
                 </p>
               </div>
             </div>
             <button
               onClick={closeChat}
-              className="text-slate-400 hover:text-white transition-colors"
+              className="text-neutral-500 dark:text-slate-400 hover:text-neutral-900 dark:hover:text-white transition-colors"
               aria-label="Cerrar chat"
             >
               <svg
@@ -124,15 +124,15 @@ export function Chat() {
             {/* Typing Indicator */}
             {isTyping && (
               <div className="flex justify-start mb-3">
-                <div className="bg-slate-700 text-slate-100 rounded-2xl rounded-bl-md px-4 py-3">
+                <div className="bg-neutral-200 dark:bg-slate-700 text-neutral-800 dark:text-slate-100 rounded-2xl rounded-bl-md px-4 py-3">
                   <div className="flex space-x-1">
-                    <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" />
+                    <div className="w-2 h-2 bg-neutral-400 dark:bg-slate-400 rounded-full animate-bounce" />
                     <div
-                      className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"
+                      className="w-2 h-2 bg-neutral-400 dark:bg-slate-400 rounded-full animate-bounce"
                       style={{ animationDelay: '0.1s' }}
                     />
                     <div
-                      className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"
+                      className="w-2 h-2 bg-neutral-400 dark:bg-slate-400 rounded-full animate-bounce"
                       style={{ animationDelay: '0.2s' }}
                     />
                   </div>
@@ -147,7 +147,7 @@ export function Chat() {
           {/* Quick Actions */}
           {messages.length <= 1 && (
             <div className="px-4 pb-3">
-              <p className="text-slate-500 text-xs mb-2">
+              <p className="text-neutral-400 dark:text-slate-500 text-xs mb-2">
                 {lang === 'es' ? 'Preguntas frecuentes:' : 'Quick questions:'}
               </p>
               <div className="flex flex-wrap gap-2">
@@ -155,8 +155,8 @@ export function Chat() {
                   <button
                     key={action.id}
                     onClick={() => handleQuickAction(action.keywords)}
-                    className="px-3 py-1.5 text-xs bg-slate-800 text-slate-300 
-                               rounded-full hover:bg-slate-700 hover:text-white
+                    className="px-3 py-1.5 text-xs bg-neutral-100 dark:bg-slate-800 text-neutral-700 dark:text-slate-300 
+                               rounded-full hover:bg-neutral-200 dark:hover:bg-slate-700 hover:text-neutral-900 dark:hover:text-white
                                transition-colors duration-150"
                   >
                     {action.label[lang]}

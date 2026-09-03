@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: var(--font-cabinet-grotesk);
 }
@@ -13,5 +15,13 @@
 }
 
 .chat-link:hover {
+  color: #93c5fd;
+}
+
+.dark .chat-link {
+  color: #60a5fa;
+}
+
+.dark .chat-link:hover {
   color: #93c5fd;
 }

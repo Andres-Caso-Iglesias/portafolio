@@ -64,42 +64,42 @@ export default function Modal({ project, onClose }: ModalProps) {
     >
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
       <div
-        className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-slate-900 rounded-xl border border-slate-700 shadow-2xl"
+        className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white dark:bg-slate-900 rounded-xl border border-neutral-200 dark:border-slate-700 shadow-2xl"
         onClick={e => e.stopPropagation()}
       >
-        <div className="sticky top-0 flex items-center justify-between p-4 border-b border-slate-700 bg-slate-900/95 backdrop-blur-sm z-10 rounded-t-xl">
-          <h2 id="modal-title" className="text-xl font-semibold text-white">
+        <div className="sticky top-0 flex items-center justify-between p-4 border-b border-neutral-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm z-10 rounded-t-xl">
+          <h2 id="modal-title" className="text-xl font-semibold text-neutral-900 dark:text-white">
             {lang === 'en' && project.enName ? project.enName : project.name}
           </h2>
           <button
             onClick={handleClose}
             aria-label={lang === 'en' ? 'Close modal' : 'Cerrar modal'}
-            className="p-1 text-slate-400 hover:text-white transition-colors rounded-lg hover:bg-slate-800"
+            className="p-1 text-neutral-500 dark:text-slate-400 hover:text-neutral-900 dark:hover:text-white transition-colors rounded-lg hover:bg-neutral-100 dark:hover:bg-slate-800"
           >
             &times;
           </button>
         </div>
 
         <div className="p-6 md:p-8">
-          <p className="text-slate-300 mb-4">
+          <p className="text-neutral-700 dark:text-slate-300 mb-4">
             {lang === 'en' && project.enDescription ? project.enDescription : project.description}
           </p>
 
           <div className="flex flex-wrap gap-2 mb-6">
             {project.tech.map((tech: string) => (
-              <span key={tech} className="px-2 py-1 bg-blue-600/20 text-blue-400 rounded text-xs">
+              <span key={tech} className="px-2 py-1 bg-blue-100 dark:bg-blue-600/20 text-blue-700 dark:text-blue-400 rounded text-xs">
                 {tech}
               </span>
             ))}
           </div>
 
-          <div className="flex flex-wrap gap-2 mb-4 border-b border-slate-700 pb-2">
+          <div className="flex flex-wrap gap-2 mb-4 border-b border-neutral-200 dark:border-slate-700 pb-2">
             <button
               onClick={() => handleTabChange('challenge')}
               className={`px-3 py-1 text-xs rounded transition-colors ${
                 activeTab === 'challenge'
                   ? 'bg-blue-600 text-white'
-                  : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                  : 'bg-neutral-200 dark:bg-slate-700 text-neutral-700 dark:text-slate-300 hover:bg-neutral-300 dark:hover:bg-slate-600'
               }`}
             >
               {lang === 'en' ? 'Challenge' : 'Reto'}
@@ -109,7 +109,7 @@ export default function Modal({ project, onClose }: ModalProps) {
               className={`px-3 py-1 text-xs rounded transition-colors ${
                 activeTab === 'solution'
                   ? 'bg-blue-600 text-white'
-                  : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                  : 'bg-neutral-200 dark:bg-slate-700 text-neutral-700 dark:text-slate-300 hover:bg-neutral-300 dark:hover:bg-slate-600'
               }`}
             >
               {lang === 'en' ? 'Solution' : 'Solución'}
@@ -119,7 +119,7 @@ export default function Modal({ project, onClose }: ModalProps) {
               className={`px-3 py-1 text-xs rounded transition-colors ${
                 activeTab === 'architecture'
                   ? 'bg-blue-600 text-white'
-                  : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                  : 'bg-neutral-200 dark:bg-slate-700 text-neutral-700 dark:text-slate-300 hover:bg-neutral-300 dark:hover:bg-slate-600'
               }`}
             >
               {lang === 'en' ? 'Architecture' : 'Arquitectura'}
@@ -130,7 +130,7 @@ export default function Modal({ project, onClose }: ModalProps) {
                 className={`px-3 py-1 text-xs rounded transition-colors ${
                   activeTab === 'snippets'
                     ? 'bg-blue-600 text-white'
-                    : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                    : 'bg-neutral-200 dark:bg-slate-700 text-neutral-700 dark:text-slate-300 hover:bg-neutral-300 dark:hover:bg-slate-600'
                 }`}
               >
                 {lang === 'en' ? 'Code Snippets' : 'Snippets de Código'}
@@ -138,9 +138,9 @@ export default function Modal({ project, onClose }: ModalProps) {
             )}
           </div>
 
-          <div className="text-slate-300 text-base">
+          <div className="text-neutral-700 dark:text-slate-300 text-base">
             {activeTab === 'challenge' && (
-              <div className="prose prose-invert max-w-none">
+              <div className="prose prose-neutral dark:prose-invert max-w-none">
                 <p>
                   {lang === 'en'
                     ? project.enChallenge || 'No content.'
@@ -149,7 +149,7 @@ export default function Modal({ project, onClose }: ModalProps) {
               </div>
             )}
             {activeTab === 'solution' && (
-              <div className="prose prose-invert max-w-none">
+              <div className="prose prose-neutral dark:prose-invert max-w-none">
                 <p>
                   {lang === 'en'
                     ? project.enSolution || 'No content.'
@@ -158,7 +158,7 @@ export default function Modal({ project, onClose }: ModalProps) {
               </div>
             )}
             {activeTab === 'architecture' && (
-              <div className="prose prose-invert max-w-none">
+              <div className="prose prose-neutral dark:prose-invert max-w-none">
                 <p>
                   {lang === 'en'
                     ? project.enArchitecture || 'No content.'
@@ -168,7 +168,7 @@ export default function Modal({ project, onClose }: ModalProps) {
                 {/* ERD Diagram */}
                 {project.erdPath && (
                   <div className="mt-6">
-                    <h3 className="text-lg font-semibold text-white mb-3">
+                    <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-3">
                       {lang === 'en'
                         ? 'Entity Relationship Diagram (ERD)'
                         : 'Diagrama Entidad-Relación (ERD)'}
