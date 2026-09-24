@@ -2,7 +2,7 @@
   "es": {
     "home": {
       "title": "Andrés Caso Iglesias",
-      "subtitle": "Desarrollador",
+      "subtitle": "Backend developer con enfoque en ciberseguridad",
       "projectsTitle": "Proyectos",
       "profileTitle": "Perfil Profesional",
       "profileIntro": "Desarrollador Backend bilingüe (Nativo Inglés/Español) con capacidad probada para diseñar sistemas robustos en C# y Java. Aporto dos décadas de experiencia en liderazgo operativo y logística crítica, lo que me permite abordar el desarrollo de software no solo como código, sino como una solución de negocio escalable, segura y preparada para entornos de alta presión.",
@@ -16,10 +16,10 @@
       "skillsCybersecurity": "Ciberseguridad",
       "skillsDevelopment": "Desarrollo",
       "contactTitle": "Contacto",
-      "contactIntro": "Buscando una oportunidad como Developer (España, híbrido o remoto).",
+      "contactIntro": "Disponible desde Asturias · España · híbrido/remoto",
       "contactEmail": "Enviar email",
       "footerRights": "Todos los derechos reservados.",
-      "resume": "Resumen",
+      "resume": "CV",
       "github": "GitHub",
       "linkedin": "LinkedIn",
       "viewGithub": "Ver en GitHub",
@@ -33,14 +33,14 @@
       "legendLogistics": "Logística",
       "legendIT": "IT",
       "legendTraining": "Formación",
-      "seoTitle": "Andrés Caso Iglesias | Developer",
-      "seoDescription": "Portfolio de Andrés Caso Iglesias - Developer especializado en C#/.NET, Java y TypeScript"
+      "seoTitle": "Andrés Caso Iglesias | Backend developer ciberseguridad",
+      "seoDescription": "Portfolio de Andrés Caso Iglesias - Developer especializado en C#/.NET, Java, TypeScript e IA"
     }
   },
   "en": {
     "home": {
       "title": "Andrés Caso Iglesias",
-      "subtitle": "Developer",
+      "subtitle": "Backend developer focused on cybersecurity",
       "projectsTitle": "Projects",
       "profileTitle": "Professional Profile",
       "profileIntro": "Bilingual Backend Developer (Native English/Spanish) with proven ability to design robust systems in C# and Java. I bring two decades of operational leadership and critical logistics experience, enabling me to approach software development not just as code, but as a scalable, secure business solution ready for high-pressure environments.",
@@ -54,10 +54,10 @@
       "skillsCybersecurity": "Cybersecurity",
       "skillsDevelopment": "Development",
       "contactTitle": "Contact",
-      "contactIntro": "Seeking a Developer opportunity (Spain, hybrid or remote).",
+      "contactIntro": "Available from Asturias · Spain · hybrid/remote",
       "contactEmail": "Send email",
       "footerRights": "All rights reserved.",
-      "resume": "Resume",
+      "resume": "CV",
       "github": "GitHub",
       "linkedin": "LinkedIn",
       "viewGithub": "View on GitHub",
@@ -71,8 +71,8 @@
       "legendLogistics": "Logistics",
       "legendIT": "IT",
       "legendTraining": "Education",
-      "seoTitle": "Andrés Caso Iglesias | Developer",
-      "seoDescription": "Portfolio of Andrés Caso Iglesias - Developer specialized in C#/.NET, Java and TypeScript"
+      "seoTitle": "Andrés Caso Iglesias | Backend developer  cybersecurity",
+      "seoDescription": "Portfolio of Andrés Caso Iglesias - Developer specialized in C#/.NET, Java, TypeScript and AI"
     }
   }
 }
