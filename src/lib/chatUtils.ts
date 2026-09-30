@@ -69,7 +69,7 @@ const projectsData: Record<string, Record<Lang, ProjectData>> = {
   },
   'project-auditoria': {
     es: {
-      name: 'Auditoria de Seguridad',
+      name: 'Security Header Scanner',
       description:
         'Herramienta de auditoría de seguridad web que analiza vulnerabilidades OWASP Top 10. Backend NestJS con endpoints para análisis, frontend React con resultados visualizados.',
       techStack: 'NestJS 11, React 19, TypeScript, OWASP',
@@ -77,7 +77,7 @@ const projectsData: Record<string, Record<Lang, ProjectData>> = {
       githubUrl: 'https://github.com/Andres-Caso-Iglesias/Auditoria-web',
     },
     en: {
-      name: 'Security Audit',
+      name: 'Security Header Scanner',
       description:
         'Web security auditing tool that analyzes OWASP Top 10 vulnerabilities. NestJS backend with analysis endpoints, React frontend with visualized results.',
       techStack: 'NestJS 11, React 19, TypeScript, OWASP',

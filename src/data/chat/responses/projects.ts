@@ -19,7 +19,7 @@ export const projectsResponse: ChatResponse = {
     'portfolio projects',
   ],
   message: {
-    es: 'Mis proyectos destacados son:\n\nBolsa de Empleo - NestJS + PostgreSQL\nFoodBites - Spring Boot + MySQL\nGestor Huertos Urbanos - Java Spring Boot\nAuditoria de Seguridad - NestJS + React\nPortafolio - Next.js 16 + TypeScript\n\nEscribe el nombre de un proyecto para ver más detalles.',
-    en: 'My featured projects are:\n\nBolsa de Empleo - NestJS + PostgreSQL\nFoodBites - Spring Boot + MySQL\nGestor Huertos Urbanos - Java Spring Boot\nSecurity Audit - NestJS + React\nPortfolio - Next.js 16 + TypeScript\n\nType a project name to see more details.',
+    es: 'Mis proyectos destacados son:\n\nQReaper - Analisis Anti-Quishing (Python, Playwright)\nVulnPrio - Plataforma de Priorizacion de Vulnerabilidades (Turborepo, Next.js, PostgreSQL)\nSecurity Header Scanner & Quick Assessment Tool (NestJS 11, React 19)\n\nEscribe el nombre de un proyecto para ver más detalles.',
+    en: 'My featured projects are:\n\nQReaper - Anti-Phishing Analysis (Python, Playwright)\nVulnPrio - Vulnerability Prioritization Platform (Turborepo, Next.js, PostgreSQL)\nSecurity Header Scanner & Quick Assessment Tool (NestJS 11, React 19)\n\nType a project name to see more details.',
   },
 };

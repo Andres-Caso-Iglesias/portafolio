@@ -617,7 +617,7 @@ describe('project data (via processUserMessage)', () => {
   it('returns project data for auditoria', async () => {
     const result = await processUserMessage('auditoria de seguridad', 'es');
     expect(result.project).toBeDefined();
-    expect(result.project?.name).toBe('Auditoria de Seguridad');
+    expect(result.project?.name).toBe('Security Header Scanner');
   });
 
   it('returns project data for portfolio', async () => {

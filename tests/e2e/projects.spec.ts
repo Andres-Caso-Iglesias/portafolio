@@ -32,21 +32,15 @@ test.describe('Projects', () => {
   });
 
   test('Click on a project opens the modal', async ({ page }) => {
-    const projectCard = page.getByRole('heading', {
-      level: 3,
-      name: /Security Header Scanner/i,
-    });
+    const projectCard = page.getByRole('heading', { level: 3, name: /FoodBites/i }).first();
     await projectCard.click();
 
-    const modalTitle = page.locator('h2').filter({ hasText: /Security Header Scanner/i });
+    const modalTitle = page.locator('h2').filter({ hasText: /FoodBites/i });
     await expect(modalTitle).toBeVisible();
   });
 
   test('Modal has all four tabs', async ({ page }) => {
-    const projectCard = page.getByRole('heading', {
-      level: 3,
-      name: /Security Header Scanner/i,
-    });
+    const projectCard = page.getByRole('heading', { level: 3, name: /FoodBites/i }).first();
     await projectCard.click();
 
     const challengeTab = page.getByRole('button', { name: /Reto|Challenge/i }).first();
@@ -65,10 +59,7 @@ test.describe('Projects', () => {
   });
 
   test('Challenge tab shows content by default', async ({ page }) => {
-    const projectCard = page.getByRole('heading', {
-      level: 3,
-      name: /Security Header Scanner/i,
-    });
+    const projectCard = page.getByRole('heading', { level: 3, name: /FoodBites/i }).first();
     await projectCard.click();
 
     const challengeContent = page.locator('.prose').first();
@@ -76,10 +67,7 @@ test.describe('Projects', () => {
   });
 
   test('Clicking Solution tab shows solution content', async ({ page }) => {
-    const projectCard = page.getByRole('heading', {
-      level: 3,
-      name: /Security Header Scanner/i,
-    });
+    const projectCard = page.getByRole('heading', { level: 3, name: /FoodBites/i }).first();
     await projectCard.click();
 
     const solutionTab = page.getByRole('button', { name: /Solución|Solution/i }).first();
@@ -90,10 +78,7 @@ test.describe('Projects', () => {
   });
 
   test('Clicking Architecture tab shows architecture content', async ({ page }) => {
-    const projectCard = page.getByRole('heading', {
-      level: 3,
-      name: /Security Header Scanner/i,
-    });
+    const projectCard = page.getByRole('heading', { level: 3, name: /FoodBites/i }).first();
     await projectCard.click();
 
     const architectureTab = page
@@ -106,13 +91,10 @@ test.describe('Projects', () => {
   });
 
   test('Close modal with X button', async ({ page }) => {
-    const projectCard = page.getByRole('heading', {
-      level: 3,
-      name: /Security Header Scanner/i,
-    });
+    const projectCard = page.getByRole('heading', { level: 3, name: /FoodBites/i }).first();
     await projectCard.click();
 
-    const modalTitle = page.locator('h2').filter({ hasText: /Security Header Scanner/i });
+    const modalTitle = page.locator('h2').filter({ hasText: /FoodBites/i });
     await expect(modalTitle).toBeVisible();
 
     const closeButton = page.locator('button').filter({ hasText: '\u00d7' });
@@ -122,18 +104,23 @@ test.describe('Projects', () => {
   });
 
   test('Close modal with Escape key', async ({ page }) => {
-    const projectCard = page.getByRole('heading', {
-      level: 3,
-      name: /Security Header Scanner/i,
-    });
+    const projectCard = page.getByRole('heading', { level: 3, name: /FoodBites/i }).first();
     await projectCard.click();
 
-    const modalTitle = page.locator('h2').filter({ hasText: /Security Header Scanner/i });
+    const modalTitle = page.locator('h2').filter({ hasText: /FoodBites/i });
     await expect(modalTitle).toBeVisible();
 
     await page.keyboard.press('Escape');
 
     await expect(modalTitle).not.toBeVisible();
+  });
+
+  test('Clicking a featured project navigates to its detail page', async ({ page }) => {
+    const featuredCard = page.getByRole('heading', { level: 3, name: /QReaper/i });
+    await featuredCard.click();
+
+    await expect(page).toHaveURL('/projects/qreaper');
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('QReaper');
   });
 
   test('Navigate to project detail page loads correctly', async ({ page }) => {

@@ -1,9 +1,16 @@
+export interface ProjectLink {
+  label: string;
+  url: string;
+}
+
 export interface Project {
   name: string;
   description: string;
   tech: string[];
   github: string;
   live: string | null;
+  featured?: boolean;
+  links?: ProjectLink[];
   // recruiter-focused details
   impact?: string;
   role?: string;
@@ -38,6 +45,7 @@ export const projects: Project[] = [
     tech: ['Python 3.10+', 'OpenCV', 'pyzbar', 'Playwright', 'ReportLab', 'Click', 'PyMuPDF'],
     github: 'https://github.com/bdjoseluis/qreaper',
     live: null,
+    featured: true,
     impact:
       'Proyecto de equipo (5 personas) para el Master en Ciberseguridad en Evolve Academy. Modulo de decodificacion completo con 6 tecnicas de preprocesamiento de imagen para deteccion robusta de QR.',
     enImpact:
@@ -58,6 +66,10 @@ export const projects: Project[] = [
     enArchitecture:
       'Modular pipeline: decode.decode(file_path) -> list[str] -> analisis_url.analizar_url(url) -> dict -> sandbox.detonar(url) -> dict -> scoring.puntuar(signals, sandbox) -> dict -> informe.generar_informe(result, format) -> str. Contract-driven development with CONTRATOS.md. Branch-per-module in Git.',
     slug: 'qreaper',
+    links: [
+      { label: 'qreaper.es', url: 'https://qreaper.es/' },
+      { label: 'Instagram', url: 'https://www.instagram.com/qreaper.es/' },
+    ],
   },
   {
     name: 'VulnPrio - Plataforma de Priorizacion de Vulnerabilidades',
@@ -80,6 +92,7 @@ export const projects: Project[] = [
     ],
     github: 'https://github.com/Andres-Caso-Iglesias/PGPIVP',
     live: null,
+    featured: true,
     impact:
       'Proyecto de fin de master (PGPIVP). SaaS completo con multi-tenant, 4 tiers de billing, compliance con 2 marcos regulatorios (NIS2 + ENS), GitHub Action para CI/CD, y framework de evaluacion con metricas Precision@K, NDCG@K y MRR.',
     enImpact:
@@ -111,6 +124,7 @@ export const projects: Project[] = [
     tech: ['NestJS 11', 'React 19', 'TypeScript 5', 'Vite 8', 'Node.js 22', 'Swagger/OpenAPI'],
     github: 'https://github.com/Andres-Caso-Iglesias/Auditoria-web',
     live: null,
+    featured: true,
     impact:
       'Proyecto de master en ciberseguridad que implementa un escáner pasivo de 15 headers de seguridad con scoring ponderado, verificaciones TLS/DNS nativas, mapeo OWASP+NIS2 y detección de CVEs. 83 tests unitarios, 19 suites, y exportación profesional a PDF con pdfkit.',
     enImpact:
@@ -284,3 +298,7 @@ export const projects: Project[] = [
     snippetPaths: ['/snippets/react-component.tsx'],
   },
 ];
+
+export const featuredProjects: Project[] = projects.filter(p => p.featured === true);
+
+export const marqueeProjects: Project[] = projects.filter(p => p.featured !== true);
