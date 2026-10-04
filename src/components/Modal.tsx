@@ -87,7 +87,10 @@ export default function Modal({ project, onClose }: ModalProps) {
 
           <div className="flex flex-wrap gap-2 mb-6">
             {project.tech.map((tech: string) => (
-              <span key={tech} className="px-2 py-1 bg-blue-100 dark:bg-blue-600/20 text-blue-700 dark:text-blue-400 rounded text-xs">
+              <span
+                key={tech}
+                className="px-2 py-1 bg-blue-100 dark:bg-blue-600/20 text-blue-700 dark:text-blue-400 rounded text-xs"
+              >
                 {tech}
               </span>
             ))}

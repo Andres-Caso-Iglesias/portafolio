@@ -48,7 +48,10 @@ export default function EducationSection() {
             const period = lang === 'en' && edu.enPeriod ? edu.enPeriod : edu.period;
             const details = lang === 'en' && edu.enDetails ? edu.enDetails : edu.details;
             return (
-              <div key={edu.id} className="bg-white dark:bg-slate-900 rounded-lg p-6 min-[1440px]:p-8 border border-neutral-200 dark:border-slate-700">
+              <div
+                key={edu.id}
+                className="bg-white dark:bg-slate-900 rounded-lg p-6 min-[1440px]:p-8 border border-neutral-200 dark:border-slate-700"
+              >
                 <h3 className="text-lg min-[1440px]:text-xl font-semibold text-blue-600 dark:text-blue-400 mb-2 flex items-center gap-2">
                   {title}
                 </h3>

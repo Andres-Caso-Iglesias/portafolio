@@ -25,7 +25,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <div className="bg-neutral-100 dark:bg-slate-800 rounded-lg p-3 mt-2 border border-neutral-300 dark:border-slate-600">
       <h4 className="text-neutral-900 dark:text-white font-medium text-sm mb-1">{project.name}</h4>
-      <p className="text-neutral-700 dark:text-slate-300 text-xs mb-2 leading-relaxed">{project.description}</p>
+      <p className="text-neutral-700 dark:text-slate-300 text-xs mb-2 leading-relaxed">
+        {project.description}
+      </p>
       <p className="text-neutral-500 dark:text-slate-400 text-xs mb-3">
         <span className="text-neutral-400 dark:text-slate-500">Stack:</span> {project.techStack}
       </p>

@@ -127,7 +127,9 @@ export default function TimelineDesktop({ items }: TimelineDesktopProps) {
               className={cn(
                 'w-4 h-4 rounded-full border-2 transition-all duration-300 bg-white dark:bg-slate-900',
                 theme.border,
-                isHovered ? 'scale-150 bg-neutral-100 dark:bg-slate-800 ring-4 ring-black/10 dark:ring-white/10' : 'group-hover:scale-125'
+                isHovered
+                  ? 'scale-150 bg-neutral-100 dark:bg-slate-800 ring-4 ring-black/10 dark:ring-white/10'
+                  : 'group-hover:scale-125'
               )}
             />
 

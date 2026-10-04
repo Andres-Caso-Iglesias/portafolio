@@ -69,7 +69,9 @@ function ExperienceItem({ item }: { item: TimelineItem }) {
         </span>
         <p className="text-neutral-900 dark:text-white font-medium">{item.expTitle}</p>
         <p className="text-neutral-500 dark:text-slate-400 text-sm">{item.expSubtitle}</p>
-        {item.durationStr && <p className="text-neutral-500 dark:text-slate-400 text-xs mt-1">{item.durationStr}</p>}
+        {item.durationStr && (
+          <p className="text-neutral-500 dark:text-slate-400 text-xs mt-1">{item.durationStr}</p>
+        )}
       </div>
     </div>
   );
@@ -84,7 +86,9 @@ function EducationItem({ item }: { item: TimelineItem }) {
         <span className="font-bold text-purple-600 dark:text-purple-400">{item.year}</span>
         <p className="text-neutral-900 dark:text-white font-medium">{item.eduTitle}</p>
         <p className="text-neutral-500 dark:text-slate-400 text-sm">{item.eduSubtitle}</p>
-        {item.durationStr && <p className="text-neutral-500 dark:text-slate-400 text-xs mt-1">{item.durationStr}</p>}
+        {item.durationStr && (
+          <p className="text-neutral-500 dark:text-slate-400 text-xs mt-1">{item.durationStr}</p>
+        )}
       </div>
     </div>
   );
