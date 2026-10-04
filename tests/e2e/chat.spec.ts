@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Chat', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('load');
   });
 
   test('Chat toggle button is visible', async ({ page }) => {
@@ -65,35 +65,25 @@ test.describe('Chat', () => {
     const sendButton = page.getByRole('button', { name: 'Enviar mensaje' });
     await sendButton.click();
 
-    const userMessage = page.locator('.bg-blue-600').first();
-    await expect(userMessage).toBeVisible();
-
-    await page.waitForTimeout(1500);
-
-    const assistantMessages = page.locator('.bg-slate-700');
-    await expect(assistantMessages.first()).toBeVisible();
+    const messageBodies = page.getByRole('log').locator('.whitespace-pre-wrap');
+    await expect(messageBodies).toHaveCount(3, { timeout: 15_000 });
   });
 
   test('Chat handles English input', async ({ page }) => {
-    const langButton = page.getByRole('button', { name: 'Toggle language' });
+    const langButton = page.getByRole('button', { name: /Switch to English|Cambiar a Español/i });
     await langButton.click();
 
-    const chatButton = page.getByRole('button', { name: 'Abrir chat' });
+    const chatButton = page.getByRole('button', { name: /Abrir chat|Open chat/i });
     await chatButton.click();
 
     const textarea = page.getByPlaceholder(/Escribe tu pregunta|Type your question/i);
     await textarea.fill('experience');
 
-    const sendButton = page.getByRole('button', { name: 'Enviar mensaje' });
+    const sendButton = page.getByRole('button', { name: /Enviar mensaje|Send message/i });
     await sendButton.click();
 
-    const userMessage = page.locator('.bg-blue-600').first();
-    await expect(userMessage).toBeVisible();
-
-    await page.waitForTimeout(1500);
-
-    const assistantMessages = page.locator('.bg-slate-700');
-    await expect(assistantMessages.first()).toBeVisible();
+    const messageBodies = page.getByRole('log').locator('.whitespace-pre-wrap');
+    await expect(messageBodies).toHaveCount(3, { timeout: 15_000 });
   });
 
   test('Close chat window with close button', async ({ page }) => {

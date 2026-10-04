@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Internationalization (i18n)', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('load');
   });
 
   test('Default language is Spanish', async ({ page }) => {
@@ -22,7 +22,7 @@ test.describe('Internationalization (i18n)', () => {
   });
 
   test('LanguageSwitch toggles to English', async ({ page }) => {
-    const langButton = page.getByRole('button', { name: 'Toggle language' });
+    const langButton = page.getByRole('button', { name: /Switch to English|Cambiar a Español/i });
     await langButton.click();
 
     const skillsHeading = page.getByRole('heading', {
@@ -40,7 +40,7 @@ test.describe('Internationalization (i18n)', () => {
   });
 
   test('Language persists after page reload', async ({ page }) => {
-    const langButton = page.getByRole('button', { name: 'Toggle language' });
+    const langButton = page.getByRole('button', { name: /Switch to English|Cambiar a Español/i });
     await langButton.click();
 
     const contactEn = page.getByRole('heading', {
@@ -50,7 +50,7 @@ test.describe('Internationalization (i18n)', () => {
     await expect(contactEn).toBeVisible();
 
     await page.reload();
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('load');
 
     const contactStillEn = page.getByRole('heading', {
       level: 2,
@@ -60,7 +60,7 @@ test.describe('Internationalization (i18n)', () => {
   });
 
   test('Switch back to Spanish works', async ({ page }) => {
-    const langButton = page.getByRole('button', { name: 'Toggle language' });
+    const langButton = page.getByRole('button', { name: /Switch to English|Cambiar a Español/i });
 
     await langButton.click();
     const contactEn = page.getByRole('heading', {
@@ -78,7 +78,7 @@ test.describe('Internationalization (i18n)', () => {
   });
 
   test('English shows translated section headings', async ({ page }) => {
-    const langButton = page.getByRole('button', { name: 'Toggle language' });
+    const langButton = page.getByRole('button', { name: /Switch to English|Cambiar a Español/i });
     await langButton.click();
 
     const contactHeading = page.getByRole('heading', {

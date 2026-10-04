@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Projects', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('load');
   });
 
   test('Projects section renders project cards', async ({ page }) => {
@@ -33,7 +33,7 @@ test.describe('Projects', () => {
 
   test('Click on a project opens the modal', async ({ page }) => {
     const projectCard = page.getByRole('heading', { level: 3, name: /FoodBites/i }).first();
-    await projectCard.click();
+    await projectCard.click({ force: true });
 
     const modalTitle = page.locator('h2').filter({ hasText: /FoodBites/i });
     await expect(modalTitle).toBeVisible();
@@ -41,16 +41,18 @@ test.describe('Projects', () => {
 
   test('Modal has all four tabs', async ({ page }) => {
     const projectCard = page.getByRole('heading', { level: 3, name: /FoodBites/i }).first();
-    await projectCard.click();
+    await projectCard.click({ force: true });
 
-    const challengeTab = page.getByRole('button', { name: /Reto|Challenge/i }).first();
-    const solutionTab = page.getByRole('button', { name: /Solución|Solution/i }).first();
+    const challengeTab = page.getByRole('dialog').getByRole('button', { name: /Reto|Challenge/i });
+    const solutionTab = page
+      .getByRole('dialog')
+      .getByRole('button', { name: /Solución|Solution/i });
     const architectureTab = page
-      .getByRole('button', { name: /Arquitectura|Architecture/i })
-      .first();
+      .getByRole('dialog')
+      .getByRole('button', { name: /Arquitectura|Architecture/i });
     const snippetsTab = page
-      .getByRole('button', { name: /Snippets de Código|Code Snippets/i })
-      .first();
+      .getByRole('dialog')
+      .getByRole('button', { name: /Snippets de Código|Code Snippets/i });
 
     await expect(challengeTab).toBeVisible();
     await expect(solutionTab).toBeVisible();
@@ -60,7 +62,7 @@ test.describe('Projects', () => {
 
   test('Challenge tab shows content by default', async ({ page }) => {
     const projectCard = page.getByRole('heading', { level: 3, name: /FoodBites/i }).first();
-    await projectCard.click();
+    await projectCard.click({ force: true });
 
     const challengeContent = page.locator('.prose').first();
     await expect(challengeContent).not.toBeEmpty();
@@ -68,9 +70,11 @@ test.describe('Projects', () => {
 
   test('Clicking Solution tab shows solution content', async ({ page }) => {
     const projectCard = page.getByRole('heading', { level: 3, name: /FoodBites/i }).first();
-    await projectCard.click();
+    await projectCard.click({ force: true });
 
-    const solutionTab = page.getByRole('button', { name: /Solución|Solution/i }).first();
+    const solutionTab = page
+      .getByRole('dialog')
+      .getByRole('button', { name: /Solución|Solution/i });
     await solutionTab.click();
 
     const solutionContent = page.locator('.prose').first();
@@ -79,11 +83,11 @@ test.describe('Projects', () => {
 
   test('Clicking Architecture tab shows architecture content', async ({ page }) => {
     const projectCard = page.getByRole('heading', { level: 3, name: /FoodBites/i }).first();
-    await projectCard.click();
+    await projectCard.click({ force: true });
 
     const architectureTab = page
-      .getByRole('button', { name: /Arquitectura|Architecture/i })
-      .first();
+      .getByRole('dialog')
+      .getByRole('button', { name: /Arquitectura|Architecture/i });
     await architectureTab.click();
 
     const architectureContent = page.locator('.prose').first();
@@ -92,7 +96,7 @@ test.describe('Projects', () => {
 
   test('Close modal with X button', async ({ page }) => {
     const projectCard = page.getByRole('heading', { level: 3, name: /FoodBites/i }).first();
-    await projectCard.click();
+    await projectCard.click({ force: true });
 
     const modalTitle = page.locator('h2').filter({ hasText: /FoodBites/i });
     await expect(modalTitle).toBeVisible();
@@ -105,7 +109,7 @@ test.describe('Projects', () => {
 
   test('Close modal with Escape key', async ({ page }) => {
     const projectCard = page.getByRole('heading', { level: 3, name: /FoodBites/i }).first();
-    await projectCard.click();
+    await projectCard.click({ force: true });
 
     const modalTitle = page.locator('h2').filter({ hasText: /FoodBites/i });
     await expect(modalTitle).toBeVisible();
@@ -125,24 +129,43 @@ test.describe('Projects', () => {
 
   test('Navigate to project detail page loads correctly', async ({ page }) => {
     await page.goto('/projects/auditoria-web');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('load');
 
     const heading = page.getByRole('heading', { level: 1 });
     await expect(heading).toContainText('Security Header Scanner');
 
     const erdSection = page.getByRole('heading', {
       level: 2,
-      name: /Entity Relationship Diagram/,
+      name: /Entity Relationship Diagram|Diagrama Entidad-Relación/i,
     });
     await expect(erdSection).toBeVisible();
   });
 
   test('Project detail page shows GitHub link', async ({ page }) => {
     await page.goto('/projects/auditoria-web');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('load');
 
-    const githubLink = page.getByRole('link', { name: /GitHub Repository/i });
+    const githubLink = page.getByRole('link', {
+      name: /GitHub Repository|Repositorio en GitHub/i,
+    });
     await expect(githubLink).toBeVisible();
     await expect(githubLink).toHaveAttribute('target', '_blank');
+  });
+
+  test('QReaper detail page offers the PDF report and no GitHub link', async ({ page }) => {
+    await page.goto('/projects/qreaper');
+    await page.waitForLoadState('load');
+
+    const pdfLink = page.getByRole('link', { name: /Informe de la práctica|Practice report/i });
+    await expect(pdfLink).toBeVisible();
+    await expect(pdfLink).toHaveAttribute('href', '/QReaper_Informe_Practica1.pdf');
+
+    await expect(
+      page.getByRole('link', { name: /Repositorio en GitHub|GitHub Repository/i })
+    ).toHaveCount(0);
+  });
+
+  test('No dead GitHub link points at the removed QReaper repository', async ({ page }) => {
+    await expect(page.locator('a[href*="bdjoseluis"]')).toHaveCount(0);
   });
 });

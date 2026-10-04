@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Navigation', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('load');
   });
 
   test('Home page loads successfully with status 200', async ({ page }) => {
@@ -21,7 +21,7 @@ test.describe('Navigation', () => {
   });
 
   test('Language switch button is visible in the header', async ({ page }) => {
-    const langButton = page.getByRole('button', { name: 'Toggle language' });
+    const langButton = page.getByRole('button', { name: /Switch to English|Cambiar a Español/i });
     await expect(langButton).toBeVisible();
   });
 
