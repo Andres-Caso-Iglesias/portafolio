@@ -1,0 +1,16 @@
+# Normaliza fin de linea a LF en todos los archivos de texto.
+# Sin esto, con core.autocrlf=true (Windows) los archivos se checkean como
+# CRLF y prettier ("endOfLine": "lf") reporta un error por cada linea.
+# Los binarios quedan excluidos por text=auto.
+* text=auto eol=lf
+
+*.pdf   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.ico   binary
+*.otf   binary
+*.woff  binary
+*.woff2 binary
