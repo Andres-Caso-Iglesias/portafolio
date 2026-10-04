@@ -75,7 +75,7 @@ export default function ProjectsGrid() {
         {featuredProjects.map(p => (
           <article
             key={p.slug}
-            className="relative flex flex-col justify-between min-h-[420px] bg-white dark:bg-slate-900 rounded-lg p-6 border border-neutral-200 dark:border-slate-700 hover:border-blue-500 transition-colors"
+            className="relative flex flex-col justify-between min-h-[420px] bg-white dark:bg-slate-900 rounded-lg p-6 border border-neutral-200 dark:border-slate-700 hover:border-blue-500 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500 transition-colors"
           >
             <div className="flex flex-col gap-4">
               <h3 className="text-xl min-[1440px]:text-2xl font-bold text-neutral-900 dark:text-white leading-tight">
@@ -102,20 +102,16 @@ export default function ProjectsGrid() {
               </div>
             </div>
             <div className="flex flex-wrap items-center gap-4 mt-6">
-              <span
-                aria-hidden="true"
-                className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium"
-              >
-                {t(lang, 'home.viewProject')}
-              </span>
-              <a
-                href={p.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative z-10 inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 transition-colors"
-              >
-                {t(lang, 'home.viewGithub')} →
-              </a>
+              {p.github && (
+                <a
+                  href={p.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative z-10 inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 transition-colors"
+                >
+                  {t(lang, 'home.viewGithub')} →
+                </a>
+              )}
               {p.links?.map(link => (
                 <a
                   key={link.url}
@@ -184,14 +180,16 @@ export default function ProjectsGrid() {
                   ))}
                 </div>
               </div>
-              <a
-                href={p.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 transition-colors"
-              >
-                {t(lang, 'home.viewGithub')} →
-              </a>
+              {p.github && (
+                <a
+                  href={p.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 transition-colors"
+                >
+                  {t(lang, 'home.viewGithub')} →
+                </a>
+              )}
             </article>
           ))}
         </div>

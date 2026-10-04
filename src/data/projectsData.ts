@@ -1,13 +1,14 @@
 export interface ProjectLink {
   label: string;
   url: string;
+  enLabel?: string;
 }
 
 export interface Project {
   name: string;
   description: string;
   tech: string[];
-  github: string;
+  github: string | null;
   live: string | null;
   featured?: boolean;
   links?: ProjectLink[];
@@ -43,7 +44,7 @@ export const projects: Project[] = [
     enDescription:
       'Phishing analysis tool for hidden QR codes. Detects malicious URLs in emails, PDFs, and images through a 5-stage pipeline: decoding, static URL analysis, headless browser sandbox, risk scoring, and report generation.',
     tech: ['Python 3.10+', 'OpenCV', 'pyzbar', 'Playwright', 'ReportLab', 'Click', 'PyMuPDF'],
-    github: 'https://github.com/bdjoseluis/qreaper',
+    github: null,
     live: null,
     featured: true,
     impact:
@@ -69,6 +70,11 @@ export const projects: Project[] = [
     links: [
       { label: 'qreaper.es', url: 'https://qreaper.es/' },
       { label: 'Instagram', url: 'https://www.instagram.com/qreaper.es/' },
+      {
+        label: 'Informe de la práctica (PDF, 129 KB)',
+        enLabel: 'Practice report (PDF, 129 KB)',
+        url: '/QReaper_Informe_Practica1.pdf',
+      },
     ],
   },
   {
