@@ -3,6 +3,8 @@ import localFont from 'next/font/local';
 import Script from 'next/script';
 import './globals.css';
 import { Chat } from '@/components/chat/Chat';
+import SiteControls from '@/components/SiteControls';
+import LangRefresh from '@/components/LangRefresh';
 import { LanguageProvider, type LocaleData } from '@/lib/i18n';
 import { getLangFromCookie } from '@/lib/i18n-server';
 import { ThemeProvider } from '@/lib/theme';
@@ -133,7 +135,9 @@ export default async function RootLayout({
       <body className="bg-white text-neutral-900 dark:bg-slate-900 dark:text-white antialiased font-sans transition-colors duration-300">
         <ThemeProvider initialTheme={theme}>
           <LanguageProvider initialLang={lang} initialLocales={initialLocales}>
+            <LangRefresh />
             {children}
+            <SiteControls />
             <Chat />
           </LanguageProvider>
         </ThemeProvider>

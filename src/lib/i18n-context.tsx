@@ -2,11 +2,7 @@
 
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
 import type { Lang } from '@/i18n/types';
-
-export type LocaleData = {
-  es: Record<string, unknown>;
-  en: Record<string, unknown>;
-};
+import type { LocaleData } from './translate';
 
 export type LanguageContextValue = {
   lang: Lang;

@@ -2,8 +2,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { skills } from '@/data/skillsData';
-import LanguageSwitch from '@/components/LanguageSwitch';
-import ThemeToggle from '@/components/ThemeToggle';
 import ProjectsGrid from '@/components/ProjectsGrid';
 import ProfileIntroText from '@/components/ProfileIntroText';
 import { useLanguage, t } from '@/lib/i18n';
@@ -12,12 +10,7 @@ function HeroSection() {
   const { lang } = useLanguage();
   return (
     <section className="min-h-screen flex flex-col justify-center items-center px-6 bg-gradient-to-b from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800 relative transition-colors duration-300">
-      <div className="absolute top-6 right-6 flex items-center gap-3">
-        <ThemeToggle />
-        <LanguageSwitch />
-      </div>
-
-      <div className="w-full max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-center gap-10 md:gap-16 mt-16 md:mt-0">
+      <div className="w-full max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-center gap-10 md:gap-16 mt-24 md:mt-0">
         <div className="flex-shrink-0">
           <div className="relative w-56 h-72 md:w-72 md:h-96 rounded-[50%] overflow-hidden border-4 border-slate-300 dark:border-slate-700 shadow-xl">
             <Image
@@ -35,7 +28,9 @@ function HeroSection() {
           <h1 className="text-4xl md:text-6xl font-bold mb-4 text-neutral-900 dark:text-white">
             {t(lang, 'home.title')}
           </h1>
-          <p className="text-xl md:text-2xl text-blue-600 dark:text-blue-400 mb-6">{t(lang, 'home.subtitle')}</p>
+          <p className="text-xl md:text-2xl text-blue-600 dark:text-blue-400 mb-6">
+            {t(lang, 'home.subtitle')}
+          </p>
           <ProfileIntroText />
           <div className="flex flex-wrap justify-center md:justify-start gap-4">
             <Link
@@ -100,7 +95,9 @@ function AboutSection() {
   return (
     <section className="py-20 px-6 bg-slate-100 dark:bg-slate-800 transition-colors duration-300">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold mb-8 text-neutral-900 dark:text-white">{t(lang, 'home.profileTitle')}</h2>
+        <h2 className="text-3xl font-bold mb-8 text-neutral-900 dark:text-white">
+          {t(lang, 'home.profileTitle')}
+        </h2>
       </div>
       <div className="px-4 lg:px-12 xl:px-20">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
@@ -217,7 +214,9 @@ function ContactSection() {
   return (
     <section className="py-20 px-6 bg-white dark:bg-slate-900 text-center transition-colors duration-300">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold mb-4 text-neutral-900 dark:text-white">{t(lang, 'home.contactTitle')}</h2>
+        <h2 className="text-3xl font-bold mb-4 text-neutral-900 dark:text-white">
+          {t(lang, 'home.contactTitle')}
+        </h2>
         <p className="text-neutral-600 dark:text-slate-300 mb-6">{t(lang, 'home.contactIntro')}</p>
         <a
           href="mailto:andrescasoiglesias@gmail.com"

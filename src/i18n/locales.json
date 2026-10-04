@@ -6,7 +6,6 @@
       "projectsTitle": "Proyectos",
       "featuredLabel": "Destacados",
       "moreProjectsLabel": "Más proyectos",
-      "viewProject": "Ver proyecto",
       "profileTitle": "Perfil Profesional",
       "profileIntro": "Desarrollador Backend bilingüe (Nativo Inglés/Español) con capacidad probada para diseñar sistemas robustos en C# y Java. Aporto dos décadas de experiencia en liderazgo operativo y logística crítica, lo que me permite abordar el desarrollo de software no solo como código, sino como una solución de negocio escalable, segura y preparada para entornos de alta presión.",
       "profileIntroFull": "Después de casi 20 años liderando equipos en hostelería y logística, di un giro radical hacia el desarrollo de software.\n\nCuento con una dilatada experiencia en liderazgo operativo en sectores críticos, una trayectoria que ahora canalizo hacia la ingeniería de software. Mi enfoque se centra en el desarrollo backend, la ciberseguridad y la alineación de soluciones técnicas con objetivos de negocio. Siempre me ha intrigado cómo funcionan las cosas por dentro.\n\nY por si no queda claro, soy bilingüe nativo español-inglés.",
@@ -38,6 +37,35 @@
       "legendTraining": "Formación",
       "seoTitle": "Andrés Caso Iglesias | Backend developer ciberseguridad",
       "seoDescription": "Portfolio de Andrés Caso Iglesias - Developer especializado en C#/.NET, Java, TypeScript e IA"
+    },
+    "project": {
+      "erdTitle": "Diagrama Entidad-Relación (ERD)",
+      "apiDocTitle": "Documentación de la API",
+      "viewApiSpec": "Ver especificación de la API ({file})",
+      "snippetsTitle": "Fragmentos de código",
+      "dockerTitle": "Configuración de Docker",
+      "dockerIntro": "Este proyecto incluye configuración de Docker Compose:",
+      "dockerMysql": "Servicio MySQL para FoodBites y Urban Garden Manager",
+      "dockerPostgres": "Servicio PostgreSQL para Bolsa de Empleo",
+      "dockerBackend": "Servicios backend (Java Spring Boot, NestJS)",
+      "dockerSeePrefix": "Consulta",
+      "dockerSeeSuffix": "en la raíz del repositorio para más detalles.",
+      "challenge": "Reto",
+      "solution": "Solución",
+      "architecture": "Arquitectura",
+      "github": "Repositorio en GitHub",
+      "live": "Demo en vivo"
+    },
+    "chat": {
+      "dialogLabel": "Chat sobre el perfil de Andrés",
+      "open": "Abrir chat",
+      "close": "Cerrar chat",
+      "send": "Enviar mensaje",
+      "title": "Pinche de Andrés",
+      "subtitle": "Respuestas sobre su perfil",
+      "quickActions": "Preguntas frecuentes:",
+      "placeholder": "Escribe tu pregunta...",
+      "typing": "Escribiendo..."
     }
   },
   "en": {
@@ -47,7 +75,6 @@
       "projectsTitle": "Projects",
       "featuredLabel": "Featured",
       "moreProjectsLabel": "More projects",
-      "viewProject": "View project",
       "profileTitle": "Professional Profile",
       "profileIntro": "Bilingual Backend Developer (Native English/Spanish) with proven ability to design robust systems in C# and Java. I bring two decades of operational leadership and critical logistics experience, enabling me to approach software development not just as code, but as a scalable, secure business solution ready for high-pressure environments.",
       "profileIntroFull": "After almost 20 years leading teams in hospitality and logistics, I pivoted to software development.\n\nI bring extensive experience in operational leadership in critical sectors, now channeled into software engineering with a focus on backend development, security, and business-aligned technical solutions. I have always been curious how things work internally.\n\nAnd to clarify, I am bilingual native Spanish-English.",
@@ -79,6 +106,35 @@
       "legendTraining": "Education",
       "seoTitle": "Andrés Caso Iglesias | Backend developer  cybersecurity",
       "seoDescription": "Portfolio of Andrés Caso Iglesias - Developer specialized in C#/.NET, Java, TypeScript and AI"
+    },
+    "project": {
+      "erdTitle": "Entity Relationship Diagram (ERD)",
+      "apiDocTitle": "API Documentation",
+      "viewApiSpec": "View API Spec ({file})",
+      "snippetsTitle": "Code Snippets",
+      "dockerTitle": "Docker Configuration",
+      "dockerIntro": "This project includes Docker Compose configuration:",
+      "dockerMysql": "MySQL service for FoodBites and Urban Garden Manager",
+      "dockerPostgres": "PostgreSQL service for Bolsa de Empleo",
+      "dockerBackend": "Backend services (Java Spring Boot, NestJS)",
+      "dockerSeePrefix": "See",
+      "dockerSeeSuffix": "in the repository root for full details.",
+      "challenge": "Challenge",
+      "solution": "Solution",
+      "architecture": "Architecture",
+      "github": "GitHub Repository",
+      "live": "Live Demo"
+    },
+    "chat": {
+      "dialogLabel": "Chat about Andrés' profile",
+      "open": "Open chat",
+      "close": "Close chat",
+      "send": "Send message",
+      "title": "Andrés' Sous-chef",
+      "subtitle": "Profile information",
+      "quickActions": "Quick questions:",
+      "placeholder": "Type your question...",
+      "typing": "Typing..."
     }
   }
 }
