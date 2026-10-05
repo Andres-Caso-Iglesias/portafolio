@@ -158,7 +158,7 @@ test.describe('Projects', () => {
 
     const pdfLink = page.getByRole('link', { name: /Informe de la práctica|Practice report/i });
     await expect(pdfLink).toBeVisible();
-    await expect(pdfLink).toHaveAttribute('href', '/QReaper_Informe_Practica1.pdf');
+    await expect(pdfLink).toHaveAttribute('href', '/informe_proyecto.pdf');
 
     await expect(
       page.getByRole('link', { name: /Repositorio en GitHub|GitHub Repository/i })

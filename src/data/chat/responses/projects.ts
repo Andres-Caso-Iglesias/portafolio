@@ -19,7 +19,7 @@ export const projectsResponse: ChatResponse = {
     'portfolio projects',
   ],
   message: {
-    es: 'Mis proyectos destacados son:\n\nQReaper - Analisis Anti-Quishing (Python, Playwright)\nVulnPrio - Plataforma de Priorizacion de Vulnerabilidades (Turborepo, Next.js, PostgreSQL)\nSecurity Header Scanner & Quick Assessment Tool (NestJS 11, React 19)\n\nEscribe el nombre de un proyecto para ver más detalles.',
+    es: 'Mis proyectos destacados son:\n\nQReaper - Analisis Anti-Quishing (Python, Playwright)\nVulnPrio - Plataforma de Priorización de Vulnerabilidades (Turborepo, Next.js, PostgreSQL)\nSecurity Header Scanner & Quick Assessment Tool (NestJS 11, React 19)\n\nEscribe el nombre de un proyecto para ver más detalles.',
     en: 'My featured projects are:\n\nQReaper - Anti-Phishing Analysis (Python, Playwright)\nVulnPrio - Vulnerability Prioritization Platform (Turborepo, Next.js, PostgreSQL)\nSecurity Header Scanner & Quick Assessment Tool (NestJS 11, React 19)\n\nType a project name to see more details.',
   },
 };

@@ -53,6 +53,10 @@
       "challenge": "Reto",
       "solution": "Solución",
       "architecture": "Arquitectura",
+      "role": "Mi rol",
+      "impact": "Impacto",
+      "pipeline": "Pipeline de priorización",
+      "security": "Seguridad",
       "github": "Repositorio en GitHub",
       "live": "Demo en vivo"
     },
@@ -122,6 +126,10 @@
       "challenge": "Challenge",
       "solution": "Solution",
       "architecture": "Architecture",
+      "role": "My role",
+      "impact": "Impact",
+      "pipeline": "Prioritization pipeline",
+      "security": "Security",
       "github": "GitHub Repository",
       "live": "Live Demo"
     },

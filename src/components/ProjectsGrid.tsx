@@ -72,60 +72,73 @@ export default function ProjectsGrid() {
         aria-labelledby="projects-featured-label"
         className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10"
       >
-        {featuredProjects.map(p => (
-          <article
-            key={p.slug}
-            className="relative flex flex-col justify-between min-h-[420px] bg-white dark:bg-slate-900 rounded-lg p-6 border border-neutral-200 dark:border-slate-700 hover:border-blue-500 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500 transition-colors"
-          >
-            <div className="flex flex-col gap-4">
-              <h3 className="text-xl min-[1440px]:text-2xl font-bold text-neutral-900 dark:text-white leading-tight">
-                <Link
-                  href={`/projects/${p.slug}`}
-                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                >
-                  {displayName(p)}
-                  <span className="after:absolute after:inset-0 after:content-['']" />
-                </Link>
-              </h3>
-              <p className="text-neutral-700 dark:text-slate-300 leading-relaxed line-clamp-5">
-                {displayDesc(p)}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {p.tech.map((tech: string) => (
-                  <span
-                    key={tech}
-                    className="px-2 py-1 bg-blue-100 dark:bg-blue-600/20 text-blue-700 dark:text-blue-400 rounded text-xs"
+        {featuredProjects.map(p => {
+          const visibleLinks = (p.links ?? []).filter(link => !link.detailOnly);
+          const hasCtaContent =
+            Boolean(p.github) || visibleLinks.length > 0 || Boolean(p.statusNote);
+
+          return (
+            <article
+              key={p.slug}
+              className="relative flex flex-col justify-between min-h-[420px] bg-white dark:bg-slate-900 rounded-lg p-6 border border-neutral-200 dark:border-slate-700 hover:border-blue-500 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500 transition-colors"
+            >
+              <div className="flex flex-col gap-4">
+                <h3 className="text-xl min-[1440px]:text-2xl font-bold text-neutral-900 dark:text-white leading-tight">
+                  <Link
+                    href={`/projects/${p.slug}`}
+                    className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                   >
-                    {tech}
-                  </span>
-                ))}
+                    {displayName(p)}
+                    <span className="after:absolute after:inset-0 after:content-['']" />
+                  </Link>
+                </h3>
+                <p className="text-neutral-700 dark:text-slate-300 leading-relaxed line-clamp-5">
+                  {displayDesc(p)}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {p.tech.map((tech: string) => (
+                    <span
+                      key={tech}
+                      className="px-2 py-1 bg-blue-100 dark:bg-blue-600/20 text-blue-700 dark:text-blue-400 rounded text-xs"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
-            <div className="flex flex-wrap items-center gap-4 mt-6">
-              {p.github && (
-                <a
-                  href={p.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="relative z-10 inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 transition-colors"
-                >
-                  {t(lang, 'home.viewGithub')} →
-                </a>
+              {hasCtaContent && (
+                <div className="flex flex-wrap items-center gap-4 mt-6">
+                  {p.github && (
+                    <a
+                      href={p.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="relative z-10 inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 transition-colors"
+                    >
+                      {t(lang, 'home.viewGithub')} →
+                    </a>
+                  )}
+                  {visibleLinks.map(link => (
+                    <a
+                      key={link.url}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="relative z-10 text-sm text-neutral-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                    >
+                      {lang === 'en' && link.enLabel ? link.enLabel : link.label}
+                    </a>
+                  ))}
+                  {p.statusNote && (
+                    <span className="inline-flex items-center px-2 py-1 rounded text-xs border bg-neutral-100 border-neutral-200 text-neutral-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-400">
+                      {lang === 'en' && p.enStatusNote ? p.enStatusNote : p.statusNote}
+                    </span>
+                  )}
+                </div>
               )}
-              {p.links?.map(link => (
-                <a
-                  key={link.url}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="relative z-10 text-sm text-neutral-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          </article>
-        ))}
+            </article>
+          );
+        })}
       </div>
 
       <p

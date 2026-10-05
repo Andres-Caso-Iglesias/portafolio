@@ -2,6 +2,19 @@ export interface ProjectLink {
   label: string;
   url: string;
   enLabel?: string;
+  detailOnly?: boolean;
+}
+
+export interface LocalizedItem {
+  text: string;
+  enText?: string;
+}
+
+export interface PipelineStep {
+  title: string;
+  enTitle?: string;
+  description: string;
+  enDescription?: string;
 }
 
 export interface Project {
@@ -27,6 +40,11 @@ export interface Project {
   enSolution?: string;
   architecture?: string;
   enArchitecture?: string;
+  // Round 3: status chip and detail-only sections
+  statusNote?: string;
+  enStatusNote?: string;
+  pipeline?: PipelineStep[];
+  security?: LocalizedItem[];
   // New fields for technical visualization
   slug: string;
   erdPath?: string;
@@ -73,15 +91,16 @@ export const projects: Project[] = [
       {
         label: 'Informe de la práctica (PDF, 129 KB)',
         enLabel: 'Practice report (PDF, 129 KB)',
-        url: '/QReaper_Informe_Practica1.pdf',
+        url: '/informe_proyecto.pdf',
+        detailOnly: true,
       },
     ],
   },
   {
-    name: 'VulnPrio - Plataforma de Priorizacion de Vulnerabilidades',
+    name: 'VulnPrio - Plataforma de Priorización de Vulnerabilidades',
     enName: 'VulnPrio - Vulnerability Prioritization Platform',
     description:
-      'Plataforma SaaS de priorizacion inteligente de vulnerabilidades para PYMEs. Analiza dependencias via SBOM, enriquece con 5 fuentes de vulnerabilidades, scoring deterministico + IA, compliance con NIS2 y ENS, integracion CI/CD via GitHub Action.',
+      'Plataforma SaaS de priorización inteligente de vulnerabilidades para PYMEs. Analiza dependencias vía SBOM, enriquece con 5 fuentes de vulnerabilidades, scoring determinístico + IA, compliance con NIS2 y ENS, integración CI/CD vía GitHub Action.',
     enDescription:
       'Intelligent vulnerability prioritization SaaS platform for SMEs. Analyzes dependencies via SBOM, enriches with 5 vulnerability sources, deterministic scoring + AI, NIS2 and ENS compliance, CI/CD integration via GitHub Action.',
     tech: [
@@ -96,28 +115,82 @@ export const projects: Project[] = [
       'Vitest',
       'Playwright',
     ],
-    github: 'https://github.com/Andres-Caso-Iglesias/PGPIVP',
+    github: null,
     live: null,
     featured: true,
     impact:
-      'Proyecto de fin de master (PGPIVP). SaaS completo con multi-tenant, 4 tiers de billing, compliance con 2 marcos regulatorios (NIS2 + ENS), GitHub Action para CI/CD, y framework de evaluacion con metricas Precision@K, NDCG@K y MRR.',
+      'Proyecto de fin de máster (PGPIVP). SaaS completo con multi-tenant, 4 tiers de billing, compliance con 2 marcos regulatorios (NIS2 + ENS), GitHub Action para CI/CD, y framework de evaluación con métricas Precision@K, NDCG@K y MRR.',
     enImpact:
       "Master's thesis project (PGPIVP). Complete SaaS with multi-tenant, 4 billing tiers, compliance with 2 regulatory frameworks (NIS2 + ENS), GitHub Action for CI/CD, and evaluation framework with Precision@K, NDCG@K, and MRR metrics.",
-    role: 'Arquitecto y desarrollador full-stack del sistema completo: monorepo Turborepo, API Express.js con 24 servicios, dashboard Next.js, base de datos PostgreSQL con 11 tablas, pipeline de 5 etapas, scoring deterministico + IA, compliance NIS2/ENS, billing Stripe, GitHub Action.',
+    role: 'Arquitecto y desarrollador full-stack del sistema completo: monorepo Turborepo, API Express.js con 24 servicios, dashboard Next.js, base de datos PostgreSQL con 11 tablas, pipeline de 5 etapas, scoring determinístico + IA, compliance NIS2/ENS, billing Stripe, GitHub Action.',
     enRole:
       'Full-stack architect and developer of the complete system: Turborepo monorepo, Express.js API with 24 services, Next.js dashboard, PostgreSQL database with 11 tables, 5-stage pipeline, deterministic scoring + AI, NIS2/ENS compliance, Stripe billing, GitHub Action.',
     challenge:
-      'Las PYMEs no pueden priorizar vulnerabilidades de forma efectiva. Los herramientas existentes son demasiado complejas, caras o no consideran el contexto del negocio. El 60% de las brechas en PYMEs se podrian haber evitado con priorizacion correcta. Ademas, NIS2 exige compliance que las PYMEs no saben como implementar.',
+      'Las PYMEs no pueden priorizar vulnerabilidades de forma efectiva. Las herramientas existentes son demasiado complejas, caras o no consideran el contexto del negocio. El 60% de las brechas en PYMEs se podrían haber evitado con priorización correcta. Además, NIS2 exige compliance que las PYMEs no saben cómo implementar.',
     enChallenge:
       "SMEs cannot effectively prioritize vulnerabilities. Existing tools are too complex, expensive, or don't consider business context. 60% of SME breaches could have been prevented with correct prioritization. Additionally, NIS2 requires compliance that SMEs don't know how to implement.",
     solution:
-      'Monorepo con Turborepo: API Express.js (24 servicios, 9 repositorios, DI via composition root), Dashboard Next.js 14 (App Router, Tailwind, Recharts), PostgreSQL 16 (11 tablas, Drizzle ORM), Redis 7 (cache + BullMQ queue). Pipeline de 5 etapas: SBOM (Syft) -> Enrichment (OSV, NVD, GHSA, EPSS, CISA KEV) -> Scoring deterministico (CVSS 30% + EPSS 25% + criticality 25% + exposure 20% + KEV bonus) -> AI (Claude Sonnet con fallback) -> Persistencia. GitHub Action con security gates. Stripe billing (4 tiers). Multi-tenant con RBAC (4 roles). MFA TOTP. SSRF protection, command injection prevention.',
+      'Monorepo con Turborepo: API Express.js (24 servicios, 9 repositorios, DI vía composition root), Dashboard Next.js 14 (App Router, Tailwind, Recharts), PostgreSQL 16 (11 tablas, Drizzle ORM), Redis 7 (cache + BullMQ queue). Pipeline de 5 etapas: SBOM (Syft) -> Enrichment (OSV, NVD, GHSA, EPSS, CISA KEV) -> Scoring determinístico (CVSS 30% + EPSS 25% + criticality 25% + exposure 20% + KEV bonus) -> AI (Claude Sonnet con fallback) -> Persistencia. GitHub Action con security gates. Stripe billing (4 tiers). Multi-tenant con RBAC (4 roles). MFA TOTP. SSRF protection, command injection prevention.',
     enSolution:
       'Turborepo monorepo: Express.js API (24 services, 9 repositories, DI via composition root), Next.js 14 Dashboard (App Router, Tailwind, Recharts), PostgreSQL 16 (11 tables, Drizzle ORM), Redis 7 (cache + BullMQ queue). 5-stage pipeline: SBOM (Syft) -> Enrichment (OSV, NVD, GHSA, EPSS, CISA KEV) -> Deterministic scoring (CVSS 30% + EPSS 25% + criticality 25% + exposure 20% + KEV bonus) -> AI (Claude Sonnet with fallback) -> Persistence. GitHub Action with security gates. Stripe billing (4 tiers). Multi-tenant with RBAC (4 roles). MFA TOTP. SSRF protection, command injection prevention.',
     architecture:
       'Layered Architecture con DI: Presentation (Next.js) -> API (Express Routes) -> Service Layer (24 services) -> Repository Layer (9 interfaces) -> Data (PostgreSQL + Redis). Pipeline pattern para el scanner. Contract-first con Zod validation. Fail-closed security defaults.',
     enArchitecture:
       'Layered Architecture with DI: Presentation (Next.js) -> API (Express Routes) -> Service Layer (24 services) -> Repository Layer (9 interfaces) -> Data (PostgreSQL + Redis). Pipeline pattern for the scanner. Contract-first with Zod validation. Fail-closed security defaults.',
+    statusNote: 'Repositorio privado',
+    enStatusNote: 'Private repository',
+    pipeline: [
+      {
+        title: 'SBOM',
+        description: 'Inventario de dependencias generado con Syft.',
+        enDescription: 'Dependency inventory generated with Syft.',
+      },
+      {
+        title: 'Enriquecimiento',
+        enTitle: 'Enrichment',
+        description: 'Cada vulnerabilidad se cruza con OSV, NVD, GHSA, EPSS y CISA KEV.',
+        enDescription:
+          'Each vulnerability is cross-referenced against OSV, NVD, GHSA, EPSS and CISA KEV.',
+      },
+      {
+        title: 'Scoring determinístico',
+        enTitle: 'Deterministic scoring',
+        description: 'CVSS 30% + EPSS 25% + criticality 25% + exposure 20% + KEV bonus.',
+        enDescription: 'CVSS 30% + EPSS 25% + criticality 25% + exposure 20% + KEV bonus.',
+      },
+      {
+        title: 'IA',
+        enTitle: 'AI',
+        description: 'Claude Sonnet con fallback sobre los resultados del scoring.',
+        enDescription: 'Claude Sonnet with fallback over the scoring results.',
+      },
+      {
+        title: 'Persistencia',
+        enTitle: 'Persistence',
+        description: 'Guardado de los resultados priorizados.',
+        enDescription: 'Saving of the prioritized results.',
+      },
+    ],
+    security: [
+      {
+        text: 'Autenticación multifactor con TOTP',
+        enText: 'Multifactor authentication with TOTP',
+      },
+      {
+        text: 'RBAC con 4 roles en entorno multi-tenant',
+        enText: 'RBAC with 4 roles in a multi-tenant environment',
+      },
+      { text: 'Protección contra SSRF', enText: 'SSRF protection' },
+      { text: 'Prevención de command injection', enText: 'Command injection prevention' },
+      {
+        text: 'Contratos validados con Zod y valores por defecto fail-closed',
+        enText: 'Contracts validated with Zod and fail-closed default values',
+      },
+      {
+        text: 'Security gates en la GitHub Action de CI/CD',
+        enText: 'Security gates in the CI/CD GitHub Action',
+      },
+    ],
     slug: 'vulnprio',
   },
   {
@@ -286,7 +359,10 @@ export const projects: Project[] = [
     live: 'https://portafolio-livid-two-33.vercel.app',
     impact:
       '24 commits de evolución con refactorización completa a clean architecture (datos, lógica, presentación), tests de humo automatizados (i18n + SEO), tipado estricto con TypeScript strict mode, y buenas prácticas de ingeniería en producción.',
+    enImpact:
+      '24 commits of evolution with a full refactoring to clean architecture (data, logic, presentation), automated smoke tests (i18n + SEO), strict typing with TypeScript strict mode, and production-grade engineering best practices.',
     role: 'Frontend / Diseño & Arquitectura',
+    enRole: 'Frontend / Design & Architecture',
     challenge:
       'Crear un portfolio personal que no solo presentara proyectos, sino que demostrara activamente las capacidades técnicas del desarrollador a través de su propia implementación. El desafío era mantener código limpio y tipado estricto mientras se lograba una experiencia de usuario atractiva y responsiva.',
     enChallenge:

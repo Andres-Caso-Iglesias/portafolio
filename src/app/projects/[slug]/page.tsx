@@ -122,6 +122,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const solution = isEn && project.enSolution ? project.enSolution : project.solution;
   const architecture =
     isEn && project.enArchitecture ? project.enArchitecture : project.architecture;
+  const role = isEn && project.enRole ? project.enRole : project.role;
+  const impact = isEn && project.enImpact ? project.enImpact : project.impact;
+
+  const hasCtaContent =
+    Boolean(project.github) ||
+    Boolean(project.live) ||
+    (project.links?.length ?? 0) > 0 ||
+    Boolean(project.statusNote);
 
   const snippets =
     project.snippetPaths && project.snippetPaths.length > 0
@@ -213,6 +221,18 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       </section>
 
       <section className="mt-12 space-y-6">
+        {role && (
+          <div className={`${PANEL} p-6`}>
+            <h2 className={SECTION_TITLE}>{t(lang, 'project.role')}</h2>
+            <p className={`mt-3 ${BODY}`}>{role}</p>
+          </div>
+        )}
+        {impact && (
+          <div className={`${PANEL} p-6`}>
+            <h2 className={SECTION_TITLE}>{t(lang, 'project.impact')}</h2>
+            <p className={`mt-3 ${BODY}`}>{impact}</p>
+          </div>
+        )}
         {challenge && (
           <div className={`${ACCENT_PANEL} p-6`}>
             <h2 className={SECTION_TITLE}>{t(lang, 'project.challenge')}</h2>
@@ -225,6 +245,31 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             <p className={`mt-3 ${BODY}`}>{solution}</p>
           </div>
         )}
+        {project.pipeline && project.pipeline.length > 0 && (
+          <div className={`${PANEL} p-6`}>
+            <h2 className={SECTION_TITLE}>{t(lang, 'project.pipeline')}</h2>
+            <ol className="mt-3 list-decimal list-inside space-y-2 text-neutral-700 dark:text-slate-300">
+              {project.pipeline.map(step => (
+                <li key={step.title}>
+                  <span className="font-semibold text-neutral-900 dark:text-white">
+                    {isEn && step.enTitle ? step.enTitle : step.title}:
+                  </span>{' '}
+                  {isEn && step.enDescription ? step.enDescription : step.description}
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
+        {project.security && project.security.length > 0 && (
+          <div className={`${PANEL} p-6`}>
+            <h2 className={SECTION_TITLE}>{t(lang, 'project.security')}</h2>
+            <ul className="mt-3 list-disc list-inside space-y-2 text-neutral-700 dark:text-slate-300">
+              {project.security.map(item => (
+                <li key={item.text}>{isEn && item.enText ? item.enText : item.text}</li>
+              ))}
+            </ul>
+          </div>
+        )}
         {architecture && (
           <div className={`${ACCENT_PANEL} p-6`}>
             <h2 className={SECTION_TITLE}>{t(lang, 'project.architecture')}</h2>
@@ -233,39 +278,46 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         )}
       </section>
 
-      <div className="mt-12 flex flex-wrap gap-4">
-        {project.github && (
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={PRIMARY_CTA}
-          >
-            {t(lang, 'project.github')}
-          </a>
-        )}
-        {project.live && (
-          <a
-            href={project.live}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={SECONDARY_CTA}
-          >
-            {t(lang, 'project.live')}
-          </a>
-        )}
-        {project.links?.map(link => (
-          <a
-            key={link.url}
-            href={link.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={GHOST_CTA}
-          >
-            {isEn && link.enLabel ? link.enLabel : link.label}
-          </a>
-        ))}
-      </div>
+      {hasCtaContent && (
+        <div className="mt-12 flex flex-wrap items-center gap-4">
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={PRIMARY_CTA}
+            >
+              {t(lang, 'project.github')}
+            </a>
+          )}
+          {project.live && (
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={SECONDARY_CTA}
+            >
+              {t(lang, 'project.live')}
+            </a>
+          )}
+          {project.links?.map(link => (
+            <a
+              key={link.url}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={GHOST_CTA}
+            >
+              {isEn && link.enLabel ? link.enLabel : link.label}
+            </a>
+          ))}
+          {project.statusNote && (
+            <span className="inline-flex items-center px-2 py-1 rounded text-xs border bg-neutral-100 border-neutral-200 text-neutral-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-400">
+              {isEn && project.enStatusNote ? project.enStatusNote : project.statusNote}
+            </span>
+          )}
+        </div>
+      )}
     </div>
   );
 }
