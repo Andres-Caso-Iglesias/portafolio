@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import { Project } from '@/data/projectsData';
@@ -13,8 +13,18 @@ interface ModalProps {
   onClose: () => void;
 }
 
+const FOCUSABLE_SELECTOR = [
+  'a[href]',
+  'button:not([disabled])',
+  'input:not([disabled])',
+  'select:not([disabled])',
+  'textarea:not([disabled])',
+  '[tabindex]:not([tabindex="-1"])',
+].join(', ');
+
 export default function Modal({ project, onClose }: ModalProps) {
   const { lang } = useLanguage();
+  const dialogRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<
     'challenge' | 'solution' | 'architecture' | 'snippets'
   >('challenge');
@@ -50,14 +60,60 @@ export default function Modal({ project, onClose }: ModalProps) {
     return () => window.removeEventListener('keydown', handleEscape);
   }, [handleClose]);
 
+  useEffect(() => {
+    const previouslyFocused =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null;
+
+    dialogRef.current?.focus();
+
+    return () => {
+      if (previouslyFocused && document.contains(previouslyFocused)) {
+        previouslyFocused.focus();
+      }
+    };
+  }, []);
+
+  const handleOverlayKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Escape') {
+      handleClose();
+      return;
+    }
+    if (e.key !== 'Tab') return;
+
+    const root = dialogRef.current;
+    if (!root) return;
+
+    const focusables = Array.from(root.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)).filter(
+      el => !el.hasAttribute('aria-hidden') && !el.hasAttribute('disabled')
+    );
+    if (focusables.length === 0) {
+      e.preventDefault();
+      return;
+    }
+
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    const active = document.activeElement;
+
+    if (e.shiftKey) {
+      if (active === first || active === root || !root.contains(active)) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else if (active === last || active === root || !root.contains(active)) {
+      e.preventDefault();
+      first.focus();
+    }
+  };
+
   return createPortal(
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+      ref={dialogRef}
+      tabIndex={-1}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm focus:outline-none"
       onClick={handleClose}
-      onKeyDown={e => {
-        if (e.key === 'Escape') handleClose();
-      }}
+      onKeyDown={handleOverlayKeyDown}
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"

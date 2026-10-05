@@ -157,54 +157,60 @@ export default function ProjectsGrid() {
           className="flex gap-6 marquee-track"
           style={{
             animation: `marquee ${MARQUEE_DURATION_S}s linear infinite`,
+            animationPlayState: selectedProject ? 'paused' : undefined,
             width: 'max-content',
           }}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
           onTouchCancel={handleTouchEnd}
         >
-          {loopProjects.map((p, i) => (
-            <article
-              key={`${p.slug}-${i}`}
-              inert={i >= marqueeProjects.length}
-              className="flex-none w-[280px] min-h-[500px] bg-white dark:bg-slate-900 rounded-lg p-6 border border-neutral-200 dark:border-slate-700 hover:border-blue-500 transition-colors cursor-pointer flex flex-col justify-between"
-              onClick={() => handleProjectClick(p)}
-              onKeyDown={e => handleCardKeyDown(e, p)}
-              tabIndex={0}
-              // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
-              role="button"
-              aria-label={`${displayName(p)} - ${displayDesc(p)}`}
-            >
-              <div className="flex flex-col gap-4">
-                <h3 className="text-2xl font-bold text-neutral-900 dark:text-white leading-tight">
-                  {displayName(p)}
-                </h3>
-                <p className="text-neutral-700 dark:text-slate-300 leading-relaxed line-clamp-5">
-                  {displayDesc(p)}
-                </p>
-                <div className="flex flex-wrap gap-2 mt-auto">
-                  {p.tech.map((tech: string) => (
-                    <span
-                      key={tech}
-                      className="px-2 py-1 bg-blue-100 dark:bg-blue-600/20 text-blue-700 dark:text-blue-400 rounded text-xs"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+          {loopProjects.map((p, i) => {
+            const isClone = i >= marqueeProjects.length;
+
+            return (
+              <article
+                key={`${p.slug}-${i}`}
+                aria-hidden={isClone ? true : undefined}
+                className="flex-none w-[280px] min-h-[500px] bg-white dark:bg-slate-900 rounded-lg p-6 border border-neutral-200 dark:border-slate-700 hover:border-blue-500 transition-colors cursor-pointer flex flex-col justify-between"
+                onClick={() => handleProjectClick(p)}
+                onKeyDown={e => handleCardKeyDown(e, p)}
+                tabIndex={isClone ? -1 : 0}
+                // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
+                role="button"
+                aria-label={`${displayName(p)} - ${displayDesc(p)}`}
+              >
+                <div className="flex flex-col gap-4">
+                  <h3 className="text-2xl font-bold text-neutral-900 dark:text-white leading-tight">
+                    {displayName(p)}
+                  </h3>
+                  <p className="text-neutral-700 dark:text-slate-300 leading-relaxed line-clamp-5">
+                    {displayDesc(p)}
+                  </p>
+                  <div className="flex flex-wrap gap-2 mt-auto">
+                    {p.tech.map((tech: string) => (
+                      <span
+                        key={tech}
+                        className="px-2 py-1 bg-blue-100 dark:bg-blue-600/20 text-blue-700 dark:text-blue-400 rounded text-xs"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-              {p.github && (
-                <a
-                  href={p.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 transition-colors"
-                >
-                  {t(lang, 'home.viewGithub')} →
-                </a>
-              )}
-            </article>
-          ))}
+                {p.github && (
+                  <a
+                    href={p.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    tabIndex={isClone ? -1 : undefined}
+                    className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 transition-colors"
+                  >
+                    {t(lang, 'home.viewGithub')} →
+                  </a>
+                )}
+              </article>
+            );
+          })}
         </div>
       </div>
       {selectedProject &&
