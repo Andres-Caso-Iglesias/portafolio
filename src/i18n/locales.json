@@ -58,7 +58,8 @@
       "pipeline": "Pipeline de priorización",
       "security": "Seguridad",
       "github": "Repositorio en GitHub",
-      "live": "Demo en vivo"
+      "live": "Demo en vivo",
+      "back": "Volver al inicio"
     },
     "chat": {
       "dialogLabel": "Chat sobre el perfil de Andrés",
@@ -131,7 +132,8 @@
       "pipeline": "Prioritization pipeline",
       "security": "Security",
       "github": "GitHub Repository",
-      "live": "Live Demo"
+      "live": "Live Demo",
+      "back": "Back to home"
     },
     "chat": {
       "dialogLabel": "Chat about Andrés' profile",

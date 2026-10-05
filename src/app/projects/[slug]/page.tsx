@@ -6,6 +6,7 @@ import { loadSnippetsServer } from '@/lib/snippetLoader';
 import { getLangFromCookie } from '@/lib/i18n-server';
 import { t } from '@/lib/translate';
 import SnippetViewer from '@/components/SnippetViewer';
+import BackButton from '@/components/BackButton';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://andres-caso-portfolio.vercel.app';
 
@@ -139,7 +140,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const apiDocFile = project.apiDocPath ? (project.apiDocPath.split('/').pop() ?? '') : '';
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-28 pb-20">
+    <div className="px-4 sm:px-6 pt-28 pb-20">
+      <BackButton />
       <header className="mb-10 pb-8 border-b border-neutral-200 dark:border-slate-700">
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-neutral-900 dark:text-white">
           {name}
