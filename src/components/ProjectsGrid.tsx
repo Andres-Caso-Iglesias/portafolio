@@ -10,6 +10,13 @@ import { useLanguage, t } from '@/lib/i18n';
 const MARQUEE_COPIES = 4;
 const MARQUEE_DURATION_S = 60;
 
+const LINK_PILL = [
+  'inline-flex items-center gap-2 px-4 py-2 rounded-full border transition-colors',
+  'border-blue-500 dark:border-blue-500',
+  'text-blue-700 dark:text-blue-400',
+  'hover:bg-blue-50 hover:text-blue-800 dark:hover:bg-blue-600/10 dark:hover:text-blue-300',
+].join(' ');
+
 export default function ProjectsGrid() {
   const { lang } = useLanguage();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -113,7 +120,7 @@ export default function ProjectsGrid() {
                       href={p.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="relative z-10 inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 transition-colors"
+                      className={`relative z-10 ${LINK_PILL}`}
                     >
                       {t(lang, 'home.viewGithub')} →
                     </a>
@@ -124,7 +131,7 @@ export default function ProjectsGrid() {
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="relative z-10 text-sm text-neutral-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                      className="relative z-10 underline underline-offset-4 text-sm text-neutral-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                     >
                       {lang === 'en' && link.enLabel ? link.enLabel : link.label}
                     </a>
@@ -203,7 +210,7 @@ export default function ProjectsGrid() {
                     target="_blank"
                     rel="noopener noreferrer"
                     tabIndex={isClone ? -1 : undefined}
-                    className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 transition-colors"
+                    className={LINK_PILL}
                   >
                     {t(lang, 'home.viewGithub')} →
                   </a>
