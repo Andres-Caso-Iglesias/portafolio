@@ -123,7 +123,7 @@ test.describe('Projects', () => {
     const featuredCard = page.getByRole('heading', { level: 3, name: /QReaper/i });
     await featuredCard.click();
 
-    await expect(page).toHaveURL('/projects/qreaper');
+    await expect(page).toHaveURL('/projects/qreaper', { timeout: 15000 });
     await expect(page.getByRole('heading', { level: 1 })).toContainText('QReaper');
   });
 
@@ -167,5 +167,30 @@ test.describe('Projects', () => {
 
   test('No dead GitHub link points at the removed QReaper repository', async ({ page }) => {
     await expect(page.locator('a[href*="bdjoseluis"]')).toHaveCount(0);
+  });
+
+  test('Marquee clone cards are excluded from keyboard and screen reader navigation', async ({
+    page,
+  }) => {
+    const marqueeRegion = page.locator(
+      'div[role="region"][aria-labelledby="projects-more-label"]'
+    );
+    const cards = marqueeRegion.locator('article[role="button"]');
+    await expect(cards).toHaveCount(16);
+
+    const clones = marqueeRegion.locator(
+      'article[role="button"][aria-hidden="true"][tabindex="-1"]'
+    );
+    await expect(clones).toHaveCount(12);
+
+    const originals = marqueeRegion.locator(
+      'article[role="button"][tabindex="0"]:not([aria-hidden])'
+    );
+    await expect(originals).toHaveCount(4);
+
+    await expect(clones.locator('a[tabindex="-1"]')).toHaveCount(12);
+    await expect(originals.locator('a:not([tabindex])')).toHaveCount(4);
+
+    await expect(page.locator('[inert]')).toHaveCount(0);
   });
 });
