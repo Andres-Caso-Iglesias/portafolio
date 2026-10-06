@@ -161,7 +161,65 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </ul>
       </header>
 
-      <section className="space-y-10">
+      <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        {role && (
+          <div className={`${PANEL} p-6`}>
+            <h2 className={SECTION_TITLE}>{t(lang, 'project.role')}</h2>
+            <p className={`mt-3 max-w-prose ${BODY}`}>{role}</p>
+          </div>
+        )}
+        {impact && (
+          <div className={`${PANEL} p-6`}>
+            <h2 className={SECTION_TITLE}>{t(lang, 'project.impact')}</h2>
+            <p className={`mt-3 max-w-prose ${BODY}`}>{impact}</p>
+          </div>
+        )}
+        {challenge && (
+          <div className={`${ACCENT_PANEL} p-6`}>
+            <h2 className={SECTION_TITLE}>{t(lang, 'project.challenge')}</h2>
+            <p className={`mt-3 max-w-prose ${BODY}`}>{challenge}</p>
+          </div>
+        )}
+        {solution && (
+          <div className={`${ACCENT_PANEL} p-6`}>
+            <h2 className={SECTION_TITLE}>{t(lang, 'project.solution')}</h2>
+            <p className={`mt-3 max-w-prose ${BODY}`}>{solution}</p>
+          </div>
+        )}
+        {project.pipeline && project.pipeline.length > 0 && (
+          <div className={`${PANEL} p-6`}>
+            <h2 className={SECTION_TITLE}>{t(lang, 'project.pipeline')}</h2>
+            <ol className="mt-3 list-decimal list-inside space-y-2 text-neutral-700 dark:text-slate-300">
+              {project.pipeline.map(step => (
+                <li key={step.title}>
+                  <span className="font-semibold text-neutral-900 dark:text-white">
+                    {isEn && step.enTitle ? step.enTitle : step.title}:
+                  </span>{' '}
+                  {isEn && step.enDescription ? step.enDescription : step.description}
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
+        {project.security && project.security.length > 0 && (
+          <div className={`${PANEL} p-6`}>
+            <h2 className={SECTION_TITLE}>{t(lang, 'project.security')}</h2>
+            <ul className="mt-3 list-disc list-inside space-y-2 text-neutral-700 dark:text-slate-300">
+              {project.security.map(item => (
+                <li key={item.text}>{isEn && item.enText ? item.enText : item.text}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {architecture && (
+          <div className={`${ACCENT_PANEL} p-6`}>
+            <h2 className={SECTION_TITLE}>{t(lang, 'project.architecture')}</h2>
+            <p className={`mt-3 max-w-prose ${BODY}`}>{architecture}</p>
+          </div>
+        )}
+      </section>
+
+      <section className="mt-12 space-y-10">
         {project.erdPath && (
           <section>
             <h2 className={`${SECTION_TITLE} mb-4`}>{t(lang, 'project.erdTitle')}</h2>
@@ -219,64 +277,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               </p>
             </div>
           </section>
-        )}
-      </section>
-
-      <section className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {role && (
-          <div className={`${PANEL} p-6`}>
-            <h2 className={SECTION_TITLE}>{t(lang, 'project.role')}</h2>
-            <p className={`mt-3 max-w-prose ${BODY}`}>{role}</p>
-          </div>
-        )}
-        {impact && (
-          <div className={`${PANEL} p-6`}>
-            <h2 className={SECTION_TITLE}>{t(lang, 'project.impact')}</h2>
-            <p className={`mt-3 max-w-prose ${BODY}`}>{impact}</p>
-          </div>
-        )}
-        {challenge && (
-          <div className={`${ACCENT_PANEL} p-6`}>
-            <h2 className={SECTION_TITLE}>{t(lang, 'project.challenge')}</h2>
-            <p className={`mt-3 max-w-prose ${BODY}`}>{challenge}</p>
-          </div>
-        )}
-        {solution && (
-          <div className={`${ACCENT_PANEL} p-6`}>
-            <h2 className={SECTION_TITLE}>{t(lang, 'project.solution')}</h2>
-            <p className={`mt-3 max-w-prose ${BODY}`}>{solution}</p>
-          </div>
-        )}
-        {project.pipeline && project.pipeline.length > 0 && (
-          <div className={`${PANEL} p-6`}>
-            <h2 className={SECTION_TITLE}>{t(lang, 'project.pipeline')}</h2>
-            <ol className="mt-3 list-decimal list-inside space-y-2 text-neutral-700 dark:text-slate-300">
-              {project.pipeline.map(step => (
-                <li key={step.title}>
-                  <span className="font-semibold text-neutral-900 dark:text-white">
-                    {isEn && step.enTitle ? step.enTitle : step.title}:
-                  </span>{' '}
-                  {isEn && step.enDescription ? step.enDescription : step.description}
-                </li>
-              ))}
-            </ol>
-          </div>
-        )}
-        {project.security && project.security.length > 0 && (
-          <div className={`${PANEL} p-6`}>
-            <h2 className={SECTION_TITLE}>{t(lang, 'project.security')}</h2>
-            <ul className="mt-3 list-disc list-inside space-y-2 text-neutral-700 dark:text-slate-300">
-              {project.security.map(item => (
-                <li key={item.text}>{isEn && item.enText ? item.enText : item.text}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-        {architecture && (
-          <div className={`${ACCENT_PANEL} p-6`}>
-            <h2 className={SECTION_TITLE}>{t(lang, 'project.architecture')}</h2>
-            <p className={`mt-3 max-w-prose ${BODY}`}>{architecture}</p>
-          </div>
         )}
       </section>
 
