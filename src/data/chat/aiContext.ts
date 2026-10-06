@@ -79,10 +79,10 @@ No dispongo de titulación oficial de inglés, pero mi nivel lo acredita la expe
    - Solucion: Backend Spring Boot 3.2.0 con 5 entidades JPA: Huerto con cascade 1:N a Bancal, Semilla, RegistroCultivo y Siembra. Unico controller REST (HuertoController) con endpoints para CRUD y gestion de bancales. DTOs con conversion manual. Frontend con 3 HTMLs vanilla + Bootstrap 5.3.2.
    - Arquitectura: Java 17 + Spring Boot 3.2.0 + MySQL 8.2 + JPA/Hibernate + Lombok + Maven + Bootstrap 5.3.2 + HTML/CSS/JS vanilla. MVC con 1 @RestController, repositorios Spring Data JPA, servicios con @Transactional. ddl-auto=update para sincronizacion automatica del esquema.
 
-4. Portafolio Profesional: Next.js 16 + React 19 + TypeScript + Tailwind CSS v4. Arquitectura limpia, chat bilingue, 252 unit tests, 36 E2E tests, CI/CD con GitHub Actions.
+4. Portafolio Profesional: Next.js 16 + React 19 + TypeScript + Tailwind CSS v4. Arquitectura limpia, chat bilingue, 268 unit tests, 40 E2E tests, CI/CD con GitHub Actions.
    - Reto: Crear un portfolio que demostrara capacidades tecnicas a traves de su propia implementacion. Codigo limpio, tipado estricto, experiencia de usuario atractiva y responsiva, chat interactivo bilingue con contexto conversacional.
    - Solucion: Arquitectura limpia con separacion estricta de capas: datos (arrays tipados en /data), logica (funciones puras en /lib), presentacion (componentes React en /components). Chat hibrido con 37 categorias de respuesta, fuzzy matching Levenshtein, contexto conversacional, quick actions, e integracion con Gemini AI via Server Action con rate limiting.
-   - Arquitectura: Next.js 16 (App Router) + React 19 + TypeScript + Tailwind CSS v4. Container-presentational pattern, estado con useState/useReducer, renderizado hibrido SSR + cliente. Server Action /api/chat con rate limiting in-memory (30 req/min IP, 50 req/min sesion). Fallback automatico a rule-based si la IA falla. 252 unit tests (Vitest) + 36 E2E tests (Playwright). CI/CD con GitHub Actions.
+   - Arquitectura: Next.js 16 (App Router) + React 19 + TypeScript + Tailwind CSS v4. Container-presentational pattern, estado con useState/useReducer, renderizado hibrido SSR + cliente. Server Action /api/chat con rate limiting in-memory (30 req/min IP, 50 req/min sesion). Fallback automatico a rule-based si la IA falla. 268 unit tests (Vitest) + 40 E2E tests (Playwright). CI/CD con GitHub Actions.
 
 ## Disponibilidad y Contacto
 
@@ -175,10 +175,10 @@ I do not have an official English qualification, but my level is evidenced by re
    - Solution: Spring Boot 3.2.0 backend with 5 JPA entities: Garden with cascade 1:N to Plot, Seed, CropRecord and Sowing. Single REST controller (GardenController) exposing endpoints for CRUD and plot management. DTOs with manual entity conversion. Frontend with 3 vanilla HTML + Bootstrap 5.3.2 pages.
    - Architecture: Java 17 + Spring Boot 3.2.0 + MySQL 8.2 + JPA/Hibernate + Lombok + Maven + Bootstrap 5.3.2 + vanilla HTML/CSS/JS. MVC with 1 @RestController, Spring Data JPA repositories, services with @Transactional. ddl-auto=update for automatic schema synchronization.
 
-4. Professional Portfolio: Next.js 16 + React 19 + TypeScript + Tailwind CSS v4. Clean architecture, bilingual chat, 252 unit tests, 36 E2E tests, CI/CD with GitHub Actions.
+4. Professional Portfolio: Next.js 16 + React 19 + TypeScript + Tailwind CSS v4. Clean architecture, bilingual chat, 268 unit tests, 40 E2E tests, CI/CD with GitHub Actions.
    - Challenge: Create a portfolio that would demonstrate technical capabilities through its own implementation. Clean code, strict typing, attractive and responsive user experience, interactive bilingual chat with conversational context.
    - Solution: Clean architecture with strict layer separation: data (typed arrays in /data), logic (pure functions in /lib), presentation (React components in /components). Hybrid chat with 37 response categories, Levenshtein fuzzy matching, conversational context, quick actions, and Gemini AI integration via Server Action with rate limiting.
-   - Architecture: Next.js 16 (App Router) + React 19 + TypeScript + Tailwind CSS v4. Container-presentational pattern, state with useState/useReducer, hybrid SSR + client rendering. /api/chat Server Action with in-memory rate limiting (30 req/min IP, 50 req/min session). Automatic fallback to rule-based if AI fails. 252 unit tests (Vitest) + 36 E2E tests (Playwright). CI/CD with GitHub Actions.
+   - Architecture: Next.js 16 (App Router) + React 19 + TypeScript + Tailwind CSS v4. Container-presentational pattern, state with useState/useReducer, hybrid SSR + client rendering. /api/chat Server Action with in-memory rate limiting (30 req/min IP, 50 req/min session). Automatic fallback to rule-based if AI fails. 268 unit tests (Vitest) + 40 E2E tests (Playwright). CI/CD with GitHub Actions.
 
 ## Availability and Contact
 
