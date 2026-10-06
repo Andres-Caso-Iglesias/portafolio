@@ -14,7 +14,7 @@ El proyecto esta **deployado en produccion**. Sprint production-readiness comple
 
 - Branch `main` deployada en produccion
 - Gemini AI integrado en chat (`/api/chat/route.ts`) con rate limiting, contexto del perfil y fallback rule-based
-- 252 unit tests + 36 E2E tests + CI/CD completo
+- 268 unit tests + 40 E2E tests + CI/CD completo
 - 46 archivos de respuestas chat (refactorizado desde monolito 2300+ lineas)
 
 ---
@@ -66,8 +66,8 @@ npm run start        # Next.js production server
 npm run lint         # ESLint
 npm run typecheck    # TypeScript --noEmit
 npm run test         # Smoke tests (i18n + seo)
-npm run test:unit    # Vitest unit tests (252 tests)
-npm run test:e2e     # Playwright E2E tests (36 tests)
+npm run test:unit    # Vitest unit tests (268 tests)
+npm run test:e2e     # Playwright E2E tests (40 tests)
 ```
 
 ---
@@ -75,18 +75,19 @@ npm run test:e2e     # Playwright E2E tests (36 tests)
 ## Estructura de Tests
 
 ```
-/src/lib/__tests__/
+/src/lib/__tests__/  # 7 archivos, 268 tests (265 en verde, 3 fallos preexistentes)
   utils.test.ts           # 6 tests - cn()
   timelineUtils.test.ts   # 71 tests - fechas, duraciones, posiciones
   chatUtils.test.ts       # 117 tests - matching, respuestas, pipeline
   i18n.test.ts            # 13 tests - traducciones, interpolacion
   snippetLoader.test.ts   # 22 tests - deteccion idioma, carga server
   snippetLoaderClient.test.ts # 23 tests - deteccion idioma, carga client
+  projectsChatSync.test.ts # 16 tests - sync projectsData con secciones de chat
 
-/tests/e2e/
+/tests/e2e/  # 4 archivos, 40 tests (40 aprobados en chromium, 0 flaky)
   navigation.spec.ts      # 9 tests - home, secciones, footer
   i18n.spec.ts            # 5 tests - toggle idioma, persistencia
-  projects.spec.ts        # 14 tests - cards, modal, slug pages
+  projects.spec.ts        # 16 tests - cards, modal, slug pages
   chat.spec.ts            # 10 tests - toggle, mensajes, quick actions
   tsconfig.json           # Config TS para tests E2E
 ```
@@ -159,9 +160,9 @@ git log --oneline -10
 git diff main..dev --stat
 
 # Tests
-npm run test:unit                    # 252 unit tests
+npm run test:unit                    # 268 unit tests
 npx vitest run --reporter=verbose    # verbose output
-npm run test:e2e                     # 36 E2E tests
+npm run test:e2e                     # 40 E2E tests
 npx playwright test --project=chromium  # solo chromium (rapido)
 npx playwright test --ui             # UI interactiva
 

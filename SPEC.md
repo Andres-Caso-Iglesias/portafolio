@@ -60,8 +60,8 @@ npm run start
 | `npm run lint`      | ESLint                                 |
 | `npm run typecheck` | TypeScript --noEmit                    |
 | `npm run test`      | Smoke tests (i18n + seo)               |
-| `npm run test:unit` | Vitest unit tests (252 tests)          |
-| `npm run test:e2e`  | Playwright E2E tests (36 tests)        |
+| `npm run test:unit` | Vitest unit tests (268 tests)          |
+| `npm run test:e2e`  | Playwright E2E tests (40 tests)        |
 
 ## Estructura del Proyecto
 
@@ -306,7 +306,7 @@ export function cn(...inputs: ClassValue[]) {
 
 ### Unit Tests (Vitest)
 
-252 tests en `src/lib/__tests__/` (6 archivos):
+268 tests en `src/lib/__tests__/` (7 archivos, 265 en verde, 3 fallos preexistentes):
 
 - `utils.test.ts` — 6 tests: cn()
 - `timelineUtils.test.ts` — 71 tests: fechas, duraciones, posiciones
@@ -314,14 +314,15 @@ export function cn(...inputs: ClassValue[]) {
 - `i18n.test.ts` — 13 tests: traducciones, interpolacion
 - `snippetLoader.test.ts` — 22 tests: deteccion idioma, carga server
 - `snippetLoaderClient.test.ts` — 23 tests: deteccion idioma, carga client
+- `projectsChatSync.test.ts` — 16 tests: sync projectsData con secciones de chat
 
 ### E2E Tests (Playwright)
 
-36 tests en `tests/e2e/` (4 archivos):
+40 tests en `tests/e2e/` (4 archivos, 40 aprobados en chromium, 0 flaky):
 
 - `navigation.spec.ts` — 9 tests: home, secciones, footer
 - `i18n.spec.ts` — 5 tests: toggle idioma, persistencia
-- `projects.spec.ts` — 14 tests: cards, modal, slug pages
+- `projects.spec.ts` — 16 tests: cards, modal, slug pages
 - `chat.spec.ts` — 10 tests: toggle, mensajes, quick actions
 
 ### CI/CD (GitHub Actions)

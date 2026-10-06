@@ -126,7 +126,7 @@ src/
 - Funciones en `timelineUtils.ts` y `chatUtils.ts` son puras:
   - Mismos inputs -> mismos outputs
   - Sin efectos secundarios
-  - Faciles de testear unitariamente (252 tests)
+  - Faciles de testear unitariamente (268 tests)
   - Reutilizables en cualquier parte de la app
 
 ### 5. Arquitectura Modular del Chat
@@ -197,7 +197,7 @@ public/swagger/
 
 ### 8. Testing Infrastructure
 
-#### Unit Tests (Vitest - 252 tests)
+#### Unit Tests (Vitest - 268 tests, 265 en verde, 3 fallos preexistentes)
 
 ```
 src/lib/__tests__/
@@ -206,16 +206,17 @@ src/lib/__tests__/
     ├── chatUtils.test.ts          # 117 tests - matching, pipeline
     ├── i18n.test.ts               # 13 tests - traducciones
     ├── snippetLoader.test.ts      # 22 tests - deteccion idioma
-    └── snippetLoaderClient.test.ts # 23 tests - deteccion idioma
+    ├── snippetLoaderClient.test.ts # 23 tests - deteccion idioma
+    └── projectsChatSync.test.ts   # 16 tests - sync projects/chat
 ```
 
-#### E2E Tests (Playwright - 36 tests)
+#### E2E Tests (Playwright - 40 tests, 40 aprobados en chromium, 0 flaky)
 
 ```
 tests/e2e/
     ├── navigation.spec.ts  # 9 tests - home, secciones
     ├── i18n.spec.ts        # 5 tests - toggle idioma
-    ├── projects.spec.ts    # 14 tests - cards, modal, slug
+    ├── projects.spec.ts    # 16 tests - cards, modal, slug
     └── chat.spec.ts        # 10 tests - toggle, mensajes
 ```
 
@@ -234,8 +235,8 @@ Pipeline en `.github/workflows/ci.yml`:
 
 1. **TypeScript Compila**: `npm run typecheck` -> Exito
 2. **Lint Passing**: `npm run lint` -> Sin errores
-3. **252 Unit Tests**: `npm run test:unit` -> 100% pass
-4. **36 E2E Tests**: `npm run test:e2e` -> 100% pass en chromium
+3. **268 Unit Tests**: `npm run test:unit` -> 265 en verde, 3 fallos preexistentes
+4. **40 E2E Tests**: `npm run test:e2e` -> 40 aprobados en chromium, 0 flaky
 5. **Separacion Clara**: Cada capa tiene responsabilidad unica
 6. **Responsive**: Versiones especializadas para cada breakpoint
 7. **Mantenible**: Cambios en datos no requieren tocar componentes UI

@@ -18,7 +18,7 @@ Este portafolio presenta mi trayectoria, proyectos y habilidades como desarrolla
 | **Estilos**              | Tailwind CSS v4                 | Framework utility-first para diseno responsivo y mantenible                                       |
 | **Iconos**               | SVG inline                      | Iconos personalizados y accesibles                                                                |
 | **Chat**                 | Gemini AI + Rule-based fallback | Chatbot interactivo para reclutadores con 46+ categorias, rate limiting e contexto conversacional |
-| **Testing**              | Vitest + Playwright             | 252 unit tests + 36 E2E tests                                                                     |
+| **Testing**              | Vitest + Playwright             | 268 unit tests + 40 E2E tests                                                                     |
 | **Despliegue**           | Vercel                          | Plataforma de despliegue optimizada para Next.js                                                  |
 | **Gestion de Paquetes**  | npm                             | Gestor de paquetes estandar                                                                       |
 | **Control de Versiones** | Git                             | Con convenciones de commits convencionales                                                        |
@@ -178,13 +178,13 @@ Pagina estatica (RSC) para cada proyecto con:
 - **Accesibilidad (a11y):** Contraste de colores adecuado, navegacion por teclado, uso de labels/ARIA y enfoque visible.
 - **SEO y Metadatos:** Metaetiquetas completas, Open Graph, Twitter Card, JSON-LD, sitemap dinamico y robots.txt.
 - **Seguridad:** CSP environment-aware (unsafe-eval solo en dev), HSTS, X-Frame-Options DENY, X-Content-Type-Options nosniff, Permissions-Policy, COOP/CORP. URL sanitization en chat (bloquea javascript:, data:, vbscript:). Rate limiting en API chat.
-- **Testing y Calidad:** 252 tests unitarios (Vitest) + 36 tests E2E (Playwright) + CI/CD con GitHub Actions (lint + typecheck + audit + unit tests + build + E2E tests).
+- **Testing y Calidad:** 268 tests unitarios (Vitest, 265 en verde, 3 fallos preexistentes) + 40 tests E2E (Playwright, 40 aprobados en chromium, 0 flaky) + CI/CD con GitHub Actions (lint + typecheck + audit + unit tests + build + E2E tests).
 
 ## Testing y Calidad
 
 ### Unit Tests (Vitest)
 
-252 tests cubriendo toda la capa `/src/lib/`:
+268 tests (7 archivos, 265 en verde, 3 fallos preexistentes) cubriendo toda la capa `/src/lib/`:
 
 | Archivo                       | Tests | Funciones                                            |
 | ----------------------------- | ----- | ---------------------------------------------------- |
@@ -194,16 +194,17 @@ Pagina estatica (RSC) para cada proyecto con:
 | `i18n.test.ts`                | 13    | Traducciones, interpolacion, bilingual               |
 | `snippetLoader.test.ts`       | 22    | Deteccion idioma (15 extensions), carga server       |
 | `snippetLoaderClient.test.ts` | 23    | Deteccion idioma, carga client                       |
+| `projectsChatSync.test.ts`    | 16    | Sync projectsData con secciones de chat              |
 
 ### E2E Tests (Playwright)
 
-36 tests en chromium cubriendo los flujos principales:
+40 tests (4 archivos, 40 aprobados en chromium, 0 flaky) cubriendo los flujos principales:
 
 | Archivo              | Tests | Cobertura                                 |
 | -------------------- | ----- | ----------------------------------------- |
 | `navigation.spec.ts` | 9     | Home, secciones, footer                   |
 | `i18n.spec.ts`       | 5     | Toggle idioma, persistencia, traducciones |
-| `projects.spec.ts`   | 14    | Cards, modal 4 tabs, slug pages           |
+| `projects.spec.ts`   | 16    | Cards, modal 4 tabs, slug pages           |
 | `chat.spec.ts`       | 10    | Toggle, mensajes, quick actions           |
 
 ### CI/CD (GitHub Actions)
@@ -213,9 +214,9 @@ Pipeline automatico en cada PR y push a `main`:
 - **Lint** (ESLint + Prettier)
 - **Typecheck** (TypeScript --noEmit)
 - **Security Audit** (npm audit --audit-level=high)
-- **Unit Tests** (Vitest - 252 tests)
+- **Unit Tests** (Vitest - 268 tests)
 - **Build** (Next.js production build)
-- **E2E Tests** (Playwright - 36 tests en chromium)
+- **E2E Tests** (Playwright - 40 tests en chromium)
 
 ---
 
@@ -252,8 +253,8 @@ La aplicacion estara disponible en `http://localhost:3000`.
 ### 4. Tests
 
 ```bash
-npm run test:unit    # 252 tests unitarios (Vitest)
-npm run test:e2e     # 36 tests E2E (Playwright)
+npm run test:unit    # 268 tests unitarios (Vitest)
+npm run test:e2e     # 40 tests E2E (Playwright)
 npm run lint         # ESLint + Prettier
 npm run typecheck    # TypeScript --noEmit
 ```
