@@ -37,7 +37,7 @@ export default function SnippetViewer({
         return (
           <div
             key={snippet.path}
-            className="bg-neutral-950 dark:bg-[#0f172a] rounded-lg border border-neutral-200 dark:border-slate-700 overflow-hidden shadow-lg"
+            className="bg-neutral-950 dark:bg-slate-900 rounded-lg border border-neutral-200 dark:border-slate-700 overflow-hidden shadow-lg"
           >
             <div className="bg-neutral-200/80 dark:bg-slate-800/80 px-4 py-2 border-b border-neutral-200 dark:border-slate-700 flex items-center justify-between">
               <span className="text-xs font-mono text-blue-600 dark:text-blue-400">{fileName}</span>
@@ -50,7 +50,7 @@ export default function SnippetViewer({
                 {isCopied ? 'Copied!' : 'Copy'}
               </button>
             </div>
-            <div className="p-4 overflow-x-auto text-xs sm:text-sm text-neutral-800 dark:text-slate-300 font-mono leading-relaxed bg-neutral-900 dark:bg-[#0d1117]">
+            <div className="p-4 overflow-x-auto text-xs sm:text-sm text-neutral-800 dark:text-slate-300 font-mono leading-relaxed bg-neutral-900 dark:bg-slate-950">
               <pre>
                 <code className={`language-${snippet.language}`}>{snippet.content}</code>
               </pre>
