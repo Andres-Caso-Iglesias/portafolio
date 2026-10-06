@@ -276,20 +276,21 @@ Chatbot rule-based para responder preguntas de reclutadores sobre el perfil prof
 
 ### Unit Tests (Vitest)
 
-- **252 tests** en `/src/lib/__tests__/` (6 archivos, 100% pass)
+- **268 tests** en `/src/lib/__tests__/` (7 archivos, 265 en verde, 3 fallos preexistentes)
 - `utils.test.ts` — 6 tests: `cn()` (clsx + twMerge)
 - `timelineUtils.test.ts` — 71 tests: fechas espanolas, duraciones, posiciones timeline
 - `chatUtils.test.ts` — 117 tests: matching, scoring, fuzzy match, follow-ups, pipeline completo
 - `i18n.test.ts` — 13 tests: traducciones, interpolacion, bilingual
 - `snippetLoader.test.ts` — 22 tests: deteccion idioma (15 extensions), carga server (mock fs)
 - `snippetLoaderClient.test.ts` — 23 tests: deteccion idioma, carga client (mock fetch)
+- `projectsChatSync.test.ts` — 16 tests: sync projectsData con secciones de chat
 
 ### E2E Tests (Playwright)
 
-- **36 tests** en `/tests/e2e/` (4 archivos, 100% pass en chromium)
+- **40 tests** en `/tests/e2e/` (4 archivos, 40 aprobados en chromium, 0 flaky)
 - `navigation.spec.ts` — 9 tests: home, secciones, footer
 - `i18n.spec.ts` — 5 tests: toggle idioma, persistencia, traducciones
-- `projects.spec.ts` — 14 tests: cards, modal 4 tabs, slug pages
+- `projects.spec.ts` — 16 tests: cards, modal 4 tabs, slug pages
 - `chat.spec.ts` — 10 tests: toggle, mensajes, quick actions
 
 ### CI/CD (GitHub Actions)
@@ -300,8 +301,8 @@ Chatbot rule-based para responder preguntas de reclutadores sobre el perfil prof
 ### Scripts de testing
 
 ```bash
-npm run test:unit    # Vitest unit tests (252 tests)
-npm run test:e2e     # Playwright E2E (36 tests)
+npm run test:unit    # Vitest unit tests (268 tests, 265 en verde)
+npm run test:e2e     # Playwright E2E (40 tests)
 npm run lint         # ESLint + Prettier
 npm run typecheck    # TypeScript --noEmit
 ```
@@ -360,8 +361,8 @@ Esta decision se tomopara mantener consistencia y evitar problemas de compatibil
 - **Refactor `chatData.ts` monolito** (2300+ lineas) → arquitectura modular `/data/chat/` (46 archivos individuales, deduplicado salary+compensation, keywords limpias, prioridad explicita en `allResponses.ts`).
 - **Fix 2 errores TS pre-existentes** (`messagesEndRef` tipado en `ChatActions`).
 - **Instalado `server-only` package** en `i18n-server.ts` y `snippetLoader.ts` (defense-in-depth: build falla si se importa en Client Component).
-- **252 tests unitarios** en `/src/lib/__tests__/` (6 archivos, 100% pass).
-- **36 tests E2E** con Playwright en `/tests/e2e/` (4 archivos, 100% pass en chromium).
+- **268 tests unitarios** en `/src/lib/__tests__/` (7 archivos, 265 en verde, 3 fallos preexistentes).
+- **40 tests E2E** con Playwright en `/tests/e2e/` (4 archivos, 40 aprobados en chromium, 0 flaky).
 - **GitHub Actions CI/CD** configurado (lint + typecheck + audit + unit tests + build + E2E tests en cada PR/push a main).
 - **Gemini AI integrado** en chat (`/api/chat/route.ts`) con rate limiting, contexto estatico del perfil (`aiContext.ts`) y fallback rule-based.
 
