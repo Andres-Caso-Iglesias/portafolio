@@ -143,10 +143,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     <div className="px-4 sm:px-6 pt-28 pb-20">
       <BackButton />
       <header className="mb-10 pb-8 border-b border-neutral-200 dark:border-slate-700">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-neutral-900 dark:text-white">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-neutral-900 dark:text-white text-center text-balance">
           {name}
         </h1>
-        <p className="mt-4 text-lg md:text-xl leading-relaxed text-neutral-600 dark:text-slate-300">
+        <p className="mt-4 max-w-prose text-lg md:text-xl leading-relaxed text-neutral-600 dark:text-slate-300">
           {description}
         </p>
         <ul className="mt-6 flex flex-wrap gap-2">
@@ -222,29 +222,29 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         )}
       </section>
 
-      <section className="mt-12 space-y-6">
+      <section className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2">
         {role && (
           <div className={`${PANEL} p-6`}>
             <h2 className={SECTION_TITLE}>{t(lang, 'project.role')}</h2>
-            <p className={`mt-3 ${BODY}`}>{role}</p>
+            <p className={`mt-3 max-w-prose ${BODY}`}>{role}</p>
           </div>
         )}
         {impact && (
           <div className={`${PANEL} p-6`}>
             <h2 className={SECTION_TITLE}>{t(lang, 'project.impact')}</h2>
-            <p className={`mt-3 ${BODY}`}>{impact}</p>
+            <p className={`mt-3 max-w-prose ${BODY}`}>{impact}</p>
           </div>
         )}
         {challenge && (
           <div className={`${ACCENT_PANEL} p-6`}>
             <h2 className={SECTION_TITLE}>{t(lang, 'project.challenge')}</h2>
-            <p className={`mt-3 ${BODY}`}>{challenge}</p>
+            <p className={`mt-3 max-w-prose ${BODY}`}>{challenge}</p>
           </div>
         )}
         {solution && (
           <div className={`${ACCENT_PANEL} p-6`}>
             <h2 className={SECTION_TITLE}>{t(lang, 'project.solution')}</h2>
-            <p className={`mt-3 ${BODY}`}>{solution}</p>
+            <p className={`mt-3 max-w-prose ${BODY}`}>{solution}</p>
           </div>
         )}
         {project.pipeline && project.pipeline.length > 0 && (
@@ -275,7 +275,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         {architecture && (
           <div className={`${ACCENT_PANEL} p-6`}>
             <h2 className={SECTION_TITLE}>{t(lang, 'project.architecture')}</h2>
-            <p className={`mt-3 ${BODY}`}>{architecture}</p>
+            <p className={`mt-3 max-w-prose ${BODY}`}>{architecture}</p>
           </div>
         )}
       </section>
