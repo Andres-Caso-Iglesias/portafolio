@@ -51,6 +51,7 @@ export interface Project {
   apiDocPath?: string;
   snippetPaths?: string[];
   dockerCompose?: boolean;
+  pairedArtifacts?: boolean;
 }
 
 export const projects: Project[] = [
@@ -224,6 +225,7 @@ export const projects: Project[] = [
     slug: 'auditoria-web',
     erdPath: '/erd/auditoria-seguridad.svg',
     snippetPaths: ['/snippets/security-audit.ts'],
+    pairedArtifacts: true,
   },
   {
     name: 'Bolsa de Empleo',

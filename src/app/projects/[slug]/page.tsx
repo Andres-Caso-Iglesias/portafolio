@@ -146,10 +146,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-neutral-900 dark:text-white text-center text-balance">
           {name}
         </h1>
-        <p className="mt-4 max-w-prose text-lg md:text-xl leading-relaxed text-neutral-600 dark:text-slate-300">
+        <p className="mt-4 max-w-prose mx-auto text-center text-lg md:text-xl leading-relaxed text-neutral-600 dark:text-slate-300">
           {description}
         </p>
-        <ul className="mt-6 flex flex-wrap gap-2">
+        <ul className="mt-6 flex flex-wrap justify-center gap-2">
           {project.tech.map(tech => (
             <li
               key={tech}
@@ -219,7 +219,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         )}
       </section>
 
-      <section className="mt-12 space-y-10">
+      <section
+        className={
+          project.pairedArtifacts
+            ? 'mt-12 grid grid-cols-1 xl:grid-cols-[1.5fr_1fr] gap-6'
+            : 'mt-12 space-y-10'
+        }
+      >
         {project.erdPath && (
           <section>
             <h2 className={`${SECTION_TITLE} mb-4`}>{t(lang, 'project.erdTitle')}</h2>
