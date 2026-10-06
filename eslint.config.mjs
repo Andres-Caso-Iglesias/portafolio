@@ -70,6 +70,7 @@ export default tseslint.config(
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       'jsx-a11y/anchor-is-valid': 'off',
+      'jsx-a11y/no-aria-hidden-on-focusable': 'error',
       'jsx-a11y/click-events-have-key-events': 'warn',
       'jsx-a11y/no-noninteractive-element-interactions': 'warn',
     },
