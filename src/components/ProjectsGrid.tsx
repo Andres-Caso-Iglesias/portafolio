@@ -122,7 +122,7 @@ export default function ProjectsGrid() {
                       rel="noopener noreferrer"
                       className={`relative z-10 ${LINK_PILL}`}
                     >
-                      {t(lang, 'home.viewGithub')} →
+                      {t(lang, 'home.viewGithub')}
                     </a>
                   )}
                   {visibleLinks.map(link => (
@@ -131,7 +131,7 @@ export default function ProjectsGrid() {
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="relative z-10 underline underline-offset-4 text-sm text-neutral-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                      className={`relative z-10 ${LINK_PILL}`}
                     >
                       {lang === 'en' && link.enLabel ? link.enLabel : link.label}
                     </a>
@@ -173,6 +173,7 @@ export default function ProjectsGrid() {
         >
           {loopProjects.map((p, i) => {
             const isClone = i >= marqueeProjects.length;
+            const visibleLinks = (p.links ?? []).filter(link => !link.detailOnly);
 
             return (
               <article
@@ -204,17 +205,33 @@ export default function ProjectsGrid() {
                     ))}
                   </div>
                 </div>
-                {p.github && (
-                  <a
-                    href={p.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    tabIndex={isClone ? -1 : undefined}
-                    className={LINK_PILL}
-                  >
-                    {t(lang, 'home.viewGithub')} →
-                  </a>
-                )}
+                <div className="flex flex-wrap items-center gap-4">
+                  {p.github && (
+                    <a
+                      href={p.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      tabIndex={isClone ? -1 : undefined}
+                      className={`relative z-10 ${LINK_PILL}`}
+                      onClick={e => e.stopPropagation()}
+                    >
+                      {t(lang, 'home.viewGithub')}
+                    </a>
+                  )}
+                  {visibleLinks.map(link => (
+                    <a
+                      key={link.url}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      tabIndex={isClone ? -1 : undefined}
+                      className={`relative z-10 ${LINK_PILL}`}
+                      onClick={e => e.stopPropagation()}
+                    >
+                      {lang === 'en' && link.enLabel ? link.enLabel : link.label}
+                    </a>
+                  ))}
+                </div>
               </article>
             );
           })}
