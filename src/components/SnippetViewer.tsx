@@ -50,7 +50,12 @@ export default function SnippetViewer({
                 {isCopied ? 'Copied!' : 'Copy'}
               </button>
             </div>
-            <div className="p-4 overflow-x-auto text-xs sm:text-sm text-neutral-800 dark:text-slate-300 font-mono leading-relaxed bg-neutral-900 dark:bg-slate-950">
+            <div
+              tabIndex={0}
+              role="region"
+              aria-label={fileName}
+              className="p-4 overflow-x-auto text-xs sm:text-sm text-neutral-800 dark:text-slate-300 font-mono leading-relaxed bg-neutral-900 dark:bg-slate-950"
+            >
               <pre>
                 <code className={`language-${snippet.language}`}>{snippet.content}</code>
               </pre>

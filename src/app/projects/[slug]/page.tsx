@@ -227,22 +227,22 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         }
       >
         {project.erdPath && (
-          <section>
+          <section className="min-w-0">
             <h2 className={`${SECTION_TITLE} mb-4`}>{t(lang, 'project.erdTitle')}</h2>
-            <div className="rounded-lg border border-neutral-200 dark:border-slate-700 overflow-hidden bg-white dark:bg-slate-800 shadow-sm">
+            <div className="aspect-[20/13] rounded-lg border border-neutral-200 dark:border-slate-700 overflow-hidden bg-white dark:bg-slate-800 shadow-sm">
               <Image
                 src={project.erdPath}
                 alt={`${name} ERD`}
                 width={800}
-                height={600}
-                className="w-full h-auto"
+                height={520}
+                className="w-full h-full object-contain"
               />
             </div>
           </section>
         )}
 
         {project.apiDocPath && (
-          <section>
+          <section className="min-w-0">
             <h2 className={`${SECTION_TITLE} mb-4`}>{t(lang, 'project.apiDocTitle')}</h2>
             <a
               href={project.apiDocPath}
@@ -256,14 +256,23 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         )}
 
         {project.snippetPaths && project.snippetPaths.length > 0 && (
-          <section>
-            <h2 className={`${SECTION_TITLE} mb-4`}>{t(lang, 'project.snippetsTitle')}</h2>
-            <SnippetViewer snippets={snippets} />
+          <section className="min-w-0 min-h-0 xl:contain-size xl:flex xl:flex-col">
+            <h2 id="snippets-heading" className={`${SECTION_TITLE} mb-4`}>
+              {t(lang, 'project.snippetsTitle')}
+            </h2>
+            <div
+              tabIndex={0}
+              role="region"
+              aria-labelledby="snippets-heading"
+              className={`flex-1 min-h-0 max-h-[65vh] xl:max-h-none overflow-y-auto scrollbar-thin scrollbar-thumb-neutral-500 dark:scrollbar-thumb-slate-400 scrollbar-gutter-stable ${FOCUS_RING}`}
+            >
+              <SnippetViewer snippets={snippets} />
+            </div>
           </section>
         )}
 
         {project.dockerCompose && (
-          <section>
+          <section className="min-w-0">
             <h2 className={`${SECTION_TITLE} mb-4`}>{t(lang, 'project.dockerTitle')}</h2>
             <div className={`${PANEL} p-5`}>
               <p className="font-semibold text-neutral-900 dark:text-white">
