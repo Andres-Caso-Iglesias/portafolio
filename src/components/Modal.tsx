@@ -22,11 +22,20 @@ const FOCUSABLE_SELECTOR = [
   '[tabindex]:not([tabindex="-1"])',
 ].join(', ');
 
+const FOCUS_RING = [
+  'focus-visible:outline-none',
+  'focus-visible:ring-2',
+  'focus-visible:ring-blue-500',
+  'focus-visible:ring-offset-2',
+  'focus-visible:ring-offset-white',
+  'dark:focus-visible:ring-offset-slate-900',
+].join(' ');
+
 export default function Modal({ project, onClose }: ModalProps) {
   const { lang } = useLanguage();
   const dialogRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<
-    'challenge' | 'solution' | 'architecture' | 'snippets'
+    'challenge' | 'solution' | 'architecture' | 'circuits' | 'snippets'
   >('challenge');
   const [snippetsContent, setSnippetsContent] = useState<Snippet[]>([]);
   const [isLoadingSnippets, setIsLoadingSnippets] = useState(false);
@@ -37,7 +46,7 @@ export default function Modal({ project, onClose }: ModalProps) {
   }, [onClose]);
 
   const handleTabChange = useCallback(
-    (tab: 'challenge' | 'solution' | 'architecture' | 'snippets') => {
+    (tab: 'challenge' | 'solution' | 'architecture' | 'circuits' | 'snippets') => {
       setActiveTab(tab);
       if (tab === 'snippets' && snippetsContent.length === 0 && !isLoadingSnippets) {
         setIsLoadingSnippets(true);
@@ -130,7 +139,7 @@ export default function Modal({ project, onClose }: ModalProps) {
           <button
             onClick={handleClose}
             aria-label={lang === 'en' ? 'Close modal' : 'Cerrar modal'}
-            className="p-1 text-neutral-500 dark:text-slate-400 hover:text-neutral-900 dark:hover:text-white transition-colors rounded-lg hover:bg-neutral-100 dark:hover:bg-slate-800"
+            className={`min-h-6 min-w-6 p-1 text-neutral-500 dark:text-slate-400 hover:text-neutral-900 dark:hover:text-white transition-colors rounded-lg hover:bg-neutral-100 dark:hover:bg-slate-800 ${FOCUS_RING}`}
           >
             &times;
           </button>
@@ -150,12 +159,17 @@ export default function Modal({ project, onClose }: ModalProps) {
                 {tech}
               </span>
             ))}
+            {project.statusNote && (
+              <span className="inline-flex items-center px-2 py-1 rounded text-xs border bg-neutral-100 border-neutral-200 text-neutral-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-400">
+                {lang === 'en' && project.enStatusNote ? project.enStatusNote : project.statusNote}
+              </span>
+            )}
           </div>
 
           <div className="flex flex-wrap gap-2 mb-4 border-b border-neutral-200 dark:border-slate-700 pb-2">
             <button
               onClick={() => handleTabChange('challenge')}
-              className={`px-3 py-1 text-xs rounded transition-colors ${
+              className={`px-3 py-1 text-xs rounded transition-colors ${FOCUS_RING} ${
                 activeTab === 'challenge'
                   ? 'bg-blue-600 text-white'
                   : 'bg-neutral-200 dark:bg-slate-700 text-neutral-700 dark:text-slate-300 hover:bg-neutral-300 dark:hover:bg-slate-600'
@@ -165,7 +179,7 @@ export default function Modal({ project, onClose }: ModalProps) {
             </button>
             <button
               onClick={() => handleTabChange('solution')}
-              className={`px-3 py-1 text-xs rounded transition-colors ${
+              className={`px-3 py-1 text-xs rounded transition-colors ${FOCUS_RING} ${
                 activeTab === 'solution'
                   ? 'bg-blue-600 text-white'
                   : 'bg-neutral-200 dark:bg-slate-700 text-neutral-700 dark:text-slate-300 hover:bg-neutral-300 dark:hover:bg-slate-600'
@@ -175,7 +189,7 @@ export default function Modal({ project, onClose }: ModalProps) {
             </button>
             <button
               onClick={() => handleTabChange('architecture')}
-              className={`px-3 py-1 text-xs rounded transition-colors ${
+              className={`px-3 py-1 text-xs rounded transition-colors ${FOCUS_RING} ${
                 activeTab === 'architecture'
                   ? 'bg-blue-600 text-white'
                   : 'bg-neutral-200 dark:bg-slate-700 text-neutral-700 dark:text-slate-300 hover:bg-neutral-300 dark:hover:bg-slate-600'
@@ -183,10 +197,22 @@ export default function Modal({ project, onClose }: ModalProps) {
             >
               {lang === 'en' ? 'Architecture' : 'Arquitectura'}
             </button>
+            {project.images && project.images.length > 0 && (
+              <button
+                onClick={() => handleTabChange('circuits')}
+                className={`px-3 py-1 text-xs rounded transition-colors ${FOCUS_RING} ${
+                  activeTab === 'circuits'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-neutral-200 dark:bg-slate-700 text-neutral-700 dark:text-slate-300 hover:bg-neutral-300 dark:hover:bg-slate-600'
+                }`}
+              >
+                {lang === 'en' ? 'Circuits' : 'Circuitos'}
+              </button>
+            )}
             {project.snippetPaths && project.snippetPaths.length > 0 && (
               <button
                 onClick={() => handleTabChange('snippets')}
-                className={`px-3 py-1 text-xs rounded transition-colors ${
+                className={`px-3 py-1 text-xs rounded transition-colors ${FOCUS_RING} ${
                   activeTab === 'snippets'
                     ? 'bg-blue-600 text-white'
                     : 'bg-neutral-200 dark:bg-slate-700 text-neutral-700 dark:text-slate-300 hover:bg-neutral-300 dark:hover:bg-slate-600'
@@ -243,6 +269,30 @@ export default function Modal({ project, onClose }: ModalProps) {
                     </div>
                   </div>
                 )}
+              </div>
+            )}
+            {activeTab === 'circuits' && project.images && project.images.length > 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {project.images.map((src, i) => (
+                  <div
+                    key={src}
+                    className="relative aspect-[5/2] overflow-hidden rounded-lg border border-neutral-200 dark:border-slate-700 bg-white dark:bg-slate-800"
+                  >
+                    <Image
+                      src={src}
+                      alt={
+                        project.imageAlts?.[i]
+                          ? lang === 'en' && project.imageAlts[i].enText
+                            ? project.imageAlts[i].enText
+                            : project.imageAlts[i].text
+                          : ''
+                      }
+                      fill
+                      sizes="(min-width: 640px) 400px, 90vw"
+                      className="object-contain"
+                    />
+                  </div>
+                ))}
               </div>
             )}
             {activeTab === 'snippets' && (

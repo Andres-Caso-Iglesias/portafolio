@@ -27,9 +27,9 @@ describe('projectsData <-> chat featured projects sync', () => {
     expect(enOthers).not.toBe('');
   });
 
-  it('partitions the projects array into 3 featured and 4 marquee projects', () => {
+  it('partitions the projects array into 3 featured and 5 marquee projects', () => {
     expect(featuredProjects).toHaveLength(3);
-    expect(marqueeProjects).toHaveLength(4);
+    expect(marqueeProjects).toHaveLength(5);
     expect(featuredProjects.length + marqueeProjects.length).toBe(projects.length);
     expect(featuredProjects.every(p => p.featured === true)).toBe(true);
     expect(marqueeProjects.every(p => p.featured !== true)).toBe(true);

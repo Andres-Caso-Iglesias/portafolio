@@ -84,6 +84,8 @@ No dispongo de titulación oficial de inglés, pero mi nivel lo acredita la expe
    - Solucion: Arquitectura limpia con separacion estricta de capas: datos (arrays tipados en /data), logica (funciones puras en /lib), presentacion (componentes React en /components). Chat hibrido con 37 categorias de respuesta, fuzzy matching Levenshtein, contexto conversacional, quick actions, e integracion con Gemini AI via Server Action con rate limiting.
    - Arquitectura: Next.js 16 (App Router) + React 19 + TypeScript + Tailwind CSS v4. Container-presentational pattern, estado con useState/useReducer, renderizado hibrido SSR + cliente. Server Action /api/chat con rate limiting in-memory (30 req/min IP, 50 req/min sesion). Fallback automatico a rule-based si la IA falla. 268 unit tests (Vitest) + 40 E2E tests (Playwright). CI/CD con GitHub Actions.
 
+5. Laboratorio IoT: Formacion practica de Arduino con circuitos simulados en Tinkercad: contador con pantalla LCD, sensor de temperatura, atenuacion por PWM y boton con LED. Cada circuito con su codigo .ino y su captura. En curso. Es una coleccion en crecimiento: se anaden circuitos nuevos.
+
 ## Disponibilidad y Contacto
 
 - Busca oportunidades en desarrollo de software, ciberseguridad o roles que combinen ambas areas.
@@ -179,6 +181,8 @@ I do not have an official English qualification, but my level is evidenced by re
    - Challenge: Create a portfolio that would demonstrate technical capabilities through its own implementation. Clean code, strict typing, attractive and responsive user experience, interactive bilingual chat with conversational context.
    - Solution: Clean architecture with strict layer separation: data (typed arrays in /data), logic (pure functions in /lib), presentation (React components in /components). Hybrid chat with 37 response categories, Levenshtein fuzzy matching, conversational context, quick actions, and Gemini AI integration via Server Action with rate limiting.
    - Architecture: Next.js 16 (App Router) + React 19 + TypeScript + Tailwind CSS v4. Container-presentational pattern, state with useState/useReducer, hybrid SSR + client rendering. /api/chat Server Action with in-memory rate limiting (30 req/min IP, 50 req/min session). Automatic fallback to rule-based if AI fails. 268 unit tests (Vitest) + 40 E2E tests (Playwright). CI/CD with GitHub Actions.
+
+5. IoT Lab: Hands-on Arduino training with circuits simulated in Tinkercad: LCD counter, temperature sensor, PWM fade and button with LED. Each circuit ships with its .ino code and a circuit screenshot. In progress. A growing collection, with new circuits being added.
 
 ## Availability and Contact
 

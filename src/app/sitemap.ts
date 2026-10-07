@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { projects } from '@/data/projectsData';
+import { projects, projectWithoutDetailPage } from '@/data/projectsData';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://andres-caso-portfolio.vercel.app';
 
@@ -21,18 +21,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const projectUrls: MetadataRoute.Sitemap = projects.map(project => ({
-    url: `${siteUrl}/projects/${project.slug}`,
-    lastModified: now,
-    changeFrequency: 'monthly',
-    priority: 0.8,
-    alternates: {
-      languages: {
-        es: `${siteUrl}/projects/${project.slug}?lang=es`,
-        en: `${siteUrl}/projects/${project.slug}?lang=en`,
+  const projectUrls: MetadataRoute.Sitemap = projects
+    .filter(project => !projectWithoutDetailPage.has(project.slug))
+    .map(project => ({
+      url: `${siteUrl}/projects/${project.slug}`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+      alternates: {
+        languages: {
+          es: `${siteUrl}/projects/${project.slug}?lang=es`,
+          en: `${siteUrl}/projects/${project.slug}?lang=en`,
+        },
       },
-    },
-  }));
+    }));
 
   return [...staticUrls, ...projectUrls];
 }

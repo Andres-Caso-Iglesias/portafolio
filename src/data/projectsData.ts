@@ -50,6 +50,8 @@ export interface Project {
   erdPath?: string;
   apiDocPath?: string;
   snippetPaths?: string[];
+  images?: string[];
+  imageAlts?: LocalizedItem[];
   dockerCompose?: boolean;
   pairedArtifacts?: boolean;
 }
@@ -381,8 +383,70 @@ export const projects: Project[] = [
     erdPath: '/erd/portafolio.svg',
     snippetPaths: ['/snippets/react-component.tsx'],
   },
+  {
+    name: 'Laboratorio IoT',
+    enName: 'IoT Lab',
+    description:
+      'Colección de circuitos de Arduino simulados en Tinkercad, cada uno con su código .ino, su captura y notas de montaje. Sigo añadiendo circuitos nuevos.',
+    enDescription:
+      'A collection of Arduino circuits simulated in Tinkercad, each with its .ino code, a screenshot and build notes. I keep adding new circuits.',
+    tech: ['Arduino', 'C++', 'Tinkercad', 'Protoboard'],
+    github: null,
+    live: null,
+    challenge:
+      'Montar un circuito es fácil hasta que no funciona y no sabes si la culpa es del cable, del código o del componente. Quería practicar con casos reales: temporizadores, PWM, lectura analógica y una pantalla LCD, sin saltearme la parte de depurar.',
+    enChallenge:
+      'Building a circuit is easy until it does not work and you cannot tell whether the fault is in the wire, the code or the component. I wanted to practice with real cases: timers, PWM, analog reads and an LCD screen, without skipping the debugging part.',
+    solution:
+      'Circuito a circuito, en Tinkercad: contador con pantalla LCD, sensor de temperatura, atenuación por PWM y botón con LED. Cada montaje queda documentado con una captura del circuito y el código comentado.',
+    enSolution:
+      'Circuit by circuit, in Tinkercad: LCD counter, temperature sensor, PWM fade and button with LED. Every build is documented with a circuit screenshot and commented code.',
+    architecture:
+      'Arduino UNO como plataforma y protoboard para el cableado, con LED, resistencias, botón, sensor analógico y pantalla LCD 16x2. Simulación en Tinkercad con el mismo pinout que el hardware real. Cada circuito vive en un sketch independiente, compilable con el IDE de Arduino.',
+    enArchitecture:
+      'Arduino UNO as the platform with breadboard wiring, plus LED, resistors, button, analog sensor and a 16x2 LCD. Simulated in Tinkercad with the same pinout as real hardware. Each circuit lives in its own sketch, compilable with the Arduino IDE.',
+    statusNote: 'En curso',
+    enStatusNote: 'In progress',
+    slug: 'iot',
+    snippetPaths: [
+      '/snippets/ino-lcd-hola-mundo-contador.ino',
+      '/snippets/ino-sensor-analogico.ino',
+      '/snippets/ino-fade-pwm.ino',
+      '/snippets/ino-boton-led.ino',
+    ],
+    images: [
+      '/iot/holamundo-contador.png',
+      '/iot/luz-intermitente.png',
+      '/iot/luz-temporal.png',
+      '/iot/sensor-temperatura.png',
+    ],
+    imageAlts: [
+      {
+        text: 'Circuito simulado en Tinkercad: Arduino UNO conectada a una pantalla LCD 16x2 que muestra un contador en marcha.',
+        enText:
+          'Simulated Tinkercad circuit: Arduino UNO wired to a 16x2 LCD screen showing a running counter.',
+      },
+      {
+        text: 'Circuito simulado en Tinkercad: Arduino UNO con un LED cuyo brillo se atenua de forma gradual, subiendo y bajando.',
+        enText:
+          'Simulated Tinkercad circuit: Arduino UNO with an LED whose brightness ramps up and down gradually.',
+      },
+      {
+        text: 'Circuito simulado en Tinkercad: Arduino UNO con un botón que enciende y apaga un LED.',
+        enText:
+          'Simulated Tinkercad circuit: Arduino UNO with a button that turns an LED on and off.',
+      },
+      {
+        text: 'Circuito simulado en Tinkercad: Arduino UNO con un sensor de temperatura analógico conectado a la entrada A0.',
+        enText:
+          'Simulated Tinkercad circuit: Arduino UNO with an analog temperature sensor wired to input A0.',
+      },
+    ],
+  },
 ];
 
 export const featuredProjects: Project[] = projects.filter(p => p.featured === true);
 
 export const marqueeProjects: Project[] = projects.filter(p => p.featured !== true);
+
+export const projectWithoutDetailPage = new Set(['iot']);

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { projects } from '@/data/projectsData';
+import { projects, projectWithoutDetailPage } from '@/data/projectsData';
 import { loadSnippetsServer } from '@/lib/snippetLoader';
 import { getLangFromCookie } from '@/lib/i18n-server';
 import { t } from '@/lib/translate';
@@ -13,7 +13,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://andres-caso-portfol
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return projects.map(p => ({ slug: p.slug }));
+  return projects.filter(p => !projectWithoutDetailPage.has(p.slug)).map(p => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({

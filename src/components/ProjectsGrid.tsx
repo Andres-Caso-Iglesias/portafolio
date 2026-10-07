@@ -17,6 +17,15 @@ const LINK_PILL = [
   'hover:bg-blue-50 hover:text-blue-800 dark:hover:bg-blue-600/10 dark:hover:text-blue-300',
 ].join(' ');
 
+const FOCUS_RING = [
+  'focus-visible:outline-none',
+  'focus-visible:ring-2',
+  'focus-visible:ring-blue-500',
+  'focus-visible:ring-offset-2',
+  'focus-visible:ring-offset-white',
+  'dark:focus-visible:ring-offset-slate-900',
+].join(' ');
+
 export default function ProjectsGrid() {
   const { lang } = useLanguage();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -179,13 +188,19 @@ export default function ProjectsGrid() {
               <article
                 key={`${p.slug}-${i}`}
                 aria-hidden={isClone ? true : undefined}
-                className="flex-none w-[280px] min-h-[500px] bg-white dark:bg-slate-900 rounded-lg p-6 border border-neutral-200 dark:border-slate-700 hover:border-blue-500 transition-colors cursor-pointer flex flex-col justify-between"
+                className={`flex-none w-[280px] min-h-[500px] bg-white dark:bg-slate-900 rounded-lg p-6 border border-neutral-200 dark:border-slate-700 hover:border-blue-500 transition-colors cursor-pointer flex flex-col justify-between ${FOCUS_RING}`}
                 onClick={() => handleProjectClick(p)}
                 onKeyDown={e => handleCardKeyDown(e, p)}
                 tabIndex={isClone ? -1 : 0}
                 // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
                 role="button"
-                aria-label={`${displayName(p)} - ${displayDesc(p)}`}
+                aria-label={
+                  p.statusNote
+                    ? `${displayName(p)} - ${displayDesc(p)}. ${
+                        lang === 'en' && p.enStatusNote ? p.enStatusNote : p.statusNote
+                      }`
+                    : `${displayName(p)} - ${displayDesc(p)}`
+                }
               >
                 <div className="flex flex-col gap-4">
                   <h3 className="text-2xl font-bold text-neutral-900 dark:text-white leading-tight">
@@ -231,6 +246,11 @@ export default function ProjectsGrid() {
                       {lang === 'en' && link.enLabel ? link.enLabel : link.label}
                     </a>
                   ))}
+                  {p.statusNote && (
+                    <span className="inline-flex items-center px-2 py-1 rounded text-xs border bg-neutral-100 border-neutral-200 text-neutral-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-400">
+                      {lang === 'en' && p.enStatusNote ? p.enStatusNote : p.statusNote}
+                    </span>
+                  )}
                 </div>
               </article>
             );

@@ -169,6 +169,25 @@ test.describe('Projects', () => {
     await expect(page.locator('a[href*="bdjoseluis"]')).toHaveCount(0);
   });
 
+  test('IoT Lab modal shows the Circuits tab', async ({ page }) => {
+    const projectCard = page
+      .getByRole('heading', { level: 3, name: /Laboratorio IoT|IoT Lab/i })
+      .first();
+    await projectCard.click({ force: true });
+
+    const circuitsTab = page.getByRole('dialog').getByRole('button', { name: /Circuitos|Circuits/i });
+    await expect(circuitsTab).toBeVisible();
+    await expect(circuitsTab).toHaveCount(1);
+  });
+
+  test('FoodBites modal has no Circuits tab', async ({ page }) => {
+    const projectCard = page.getByRole('heading', { level: 3, name: /FoodBites/i }).first();
+    await projectCard.click({ force: true });
+
+    const circuitsTab = page.getByRole('dialog').getByRole('button', { name: /Circuitos|Circuits/i });
+    await expect(circuitsTab).toHaveCount(0);
+  });
+
   test('Marquee clone cards are excluded from keyboard and screen reader navigation', async ({
     page,
   }) => {
@@ -176,17 +195,17 @@ test.describe('Projects', () => {
       'div[role="region"][aria-labelledby="projects-more-label"]'
     );
     const cards = marqueeRegion.locator('article[role="button"]');
-    await expect(cards).toHaveCount(16);
+    await expect(cards).toHaveCount(20);
 
     const clones = marqueeRegion.locator(
       'article[role="button"][aria-hidden="true"][tabindex="-1"]'
     );
-    await expect(clones).toHaveCount(12);
+    await expect(clones).toHaveCount(15);
 
     const originals = marqueeRegion.locator(
       'article[role="button"][tabindex="0"]:not([aria-hidden])'
     );
-    await expect(originals).toHaveCount(4);
+    await expect(originals).toHaveCount(5);
 
     await expect(clones.locator('a[tabindex="-1"]')).toHaveCount(12);
     await expect(originals.locator('a:not([tabindex])')).toHaveCount(4);
