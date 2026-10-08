@@ -84,6 +84,27 @@ const ACCENT_PANEL = 'rounded-lg border-l-4 border-blue-500 bg-neutral-50 dark:b
 
 const BODY = 'text-neutral-700 dark:text-slate-300 text-lg leading-relaxed';
 
+const MEASURE = 'max-w-prose';
+
+const ARTIFACT_FRAME = [
+  'rounded-lg border border-neutral-200 dark:border-slate-700',
+  'bg-slate-900 overflow-hidden',
+].join(' ');
+
+const FRAME_FOCUS = [
+  'focus-visible:outline-none',
+  'focus-visible:ring-2',
+  'focus-visible:ring-blue-500',
+  'focus-visible:ring-offset-2',
+  'focus-visible:ring-offset-slate-900',
+].join(' ');
+
+const STEP_BADGE =
+  'mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-semibold text-white';
+
+const SECURITY_CHIP =
+  'rounded-full border border-neutral-300 bg-white px-3 py-1 text-sm text-neutral-700 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-300';
+
 const PRIMARY_CTA = [
   'inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium',
   'bg-blue-600 dark:bg-blue-600 text-white dark:text-white',
@@ -139,14 +160,48 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
   const apiDocFile = project.apiDocPath ? (project.apiDocPath.split('/').pop() ?? '') : '';
 
+  const hasPipeline = Boolean(project.pipeline && project.pipeline.length > 0);
+  const hasSecurity = Boolean(project.security && project.security.length > 0);
+  const hasNarrativeTail = hasPipeline || hasSecurity || Boolean(architecture);
+
+  const hasEvidence =
+    Boolean(project.erdPath) ||
+    Boolean(project.apiDocPath) ||
+    Boolean(project.snippetPaths && project.snippetPaths.length > 0) ||
+    Boolean(project.dockerCompose);
+
+  const diagramHeading = project.diagramTitle
+    ? t(lang, 'project.diagramTitle')
+    : t(lang, 'project.erdTitle');
+
+  const diagramAlt = project.diagramAlt
+    ? isEn && project.diagramAlt.enText
+      ? project.diagramAlt.enText
+      : project.diagramAlt.text
+    : `${name} ERD`;
+
+  const diagramCaption = project.diagramCaption
+    ? isEn && project.diagramCaption.enText
+      ? project.diagramCaption.enText
+      : project.diagramCaption.text
+    : '';
+
+  const pipelineHeading = project.pipelineTitle
+    ? isEn && project.pipelineTitle.enText
+      ? project.pipelineTitle.enText
+      : project.pipelineTitle.text
+    : t(lang, 'project.pipeline');
+
   return (
-    <div className="px-4 sm:px-6 pt-28 pb-20">
+    <main className="px-4 sm:px-6 pt-28 pb-20">
       <BackButton />
       <header className="mb-10 pb-8 border-b border-neutral-200 dark:border-slate-700">
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-neutral-900 dark:text-white text-center text-balance">
           {name}
         </h1>
-        <p className="mt-4 max-w-prose mx-auto text-center text-lg md:text-xl leading-relaxed text-neutral-600 dark:text-slate-300">
+        <p
+          className={`mt-4 ${MEASURE} mx-auto text-center text-lg md:text-xl leading-relaxed text-neutral-600 dark:text-slate-300`}
+        >
           {description}
         </p>
         <ul className="mt-6 flex flex-wrap justify-center gap-2">
@@ -161,139 +216,184 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </ul>
       </header>
 
-      <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {role && (
-          <div className={`${PANEL} p-6`}>
-            <h2 className={SECTION_TITLE}>{t(lang, 'project.role')}</h2>
-            <p className={`mt-3 max-w-prose ${BODY}`}>{role}</p>
-          </div>
-        )}
-        {impact && (
-          <div className={`${PANEL} p-6`}>
-            <h2 className={SECTION_TITLE}>{t(lang, 'project.impact')}</h2>
-            <p className={`mt-3 max-w-prose ${BODY}`}>{impact}</p>
-          </div>
-        )}
-        {challenge && (
-          <div className={`${ACCENT_PANEL} p-6`}>
-            <h2 className={SECTION_TITLE}>{t(lang, 'project.challenge')}</h2>
-            <p className={`mt-3 max-w-prose ${BODY}`}>{challenge}</p>
-          </div>
-        )}
-        {solution && (
-          <div className={`${ACCENT_PANEL} p-6`}>
-            <h2 className={SECTION_TITLE}>{t(lang, 'project.solution')}</h2>
-            <p className={`mt-3 max-w-prose ${BODY}`}>{solution}</p>
-          </div>
-        )}
-        {project.pipeline && project.pipeline.length > 0 && (
-          <div className={`${PANEL} p-6`}>
-            <h2 className={SECTION_TITLE}>{t(lang, 'project.pipeline')}</h2>
-            <ol className="mt-3 list-decimal list-inside space-y-2 text-neutral-700 dark:text-slate-300">
-              {project.pipeline.map(step => (
-                <li key={step.title}>
-                  <span className="font-semibold text-neutral-900 dark:text-white">
-                    {isEn && step.enTitle ? step.enTitle : step.title}:
-                  </span>{' '}
-                  {isEn && step.enDescription ? step.enDescription : step.description}
-                </li>
-              ))}
-            </ol>
-          </div>
-        )}
-        {project.security && project.security.length > 0 && (
-          <div className={`${PANEL} p-6`}>
-            <h2 className={SECTION_TITLE}>{t(lang, 'project.security')}</h2>
-            <ul className="mt-3 list-disc list-inside space-y-2 text-neutral-700 dark:text-slate-300">
-              {project.security.map(item => (
-                <li key={item.text}>{isEn && item.enText ? item.enText : item.text}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-        {architecture && (
-          <div className={`${ACCENT_PANEL} p-6`}>
-            <h2 className={SECTION_TITLE}>{t(lang, 'project.architecture')}</h2>
-            <p className={`mt-3 max-w-prose ${BODY}`}>{architecture}</p>
-          </div>
-        )}
-      </section>
-
-      <section
-        className={
-          project.pairedArtifacts
-            ? 'mt-12 grid grid-cols-1 xl:grid-cols-[1.5fr_1fr] gap-6'
-            : 'mt-12 space-y-10'
-        }
-      >
-        {project.erdPath && (
-          <section className="min-w-0">
-            <h2 className={`${SECTION_TITLE} mb-4`}>{t(lang, 'project.erdTitle')}</h2>
-            <div className="aspect-[20/13] rounded-lg border border-neutral-200 dark:border-slate-700 overflow-hidden bg-white dark:bg-slate-800 shadow-sm">
-              <Image
-                src={project.erdPath}
-                alt={`${name} ERD`}
-                width={800}
-                height={520}
-                className="w-full h-full object-contain"
-              />
+      {(role || impact) && (
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          {role && (
+            <div className={`${PANEL} p-6`}>
+              <h2 className={SECTION_TITLE}>{t(lang, 'project.role')}</h2>
+              <p className={`mt-3 ${MEASURE} ${BODY}`}>{role}</p>
             </div>
-          </section>
-        )}
-
-        {project.apiDocPath && (
-          <section className="min-w-0">
-            <h2 className={`${SECTION_TITLE} mb-4`}>{t(lang, 'project.apiDocTitle')}</h2>
-            <a
-              href={project.apiDocPath}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`block p-4 text-neutral-700 dark:text-slate-300 transition-colors hover:bg-neutral-100 dark:hover:bg-slate-700 ${PANEL} ${FOCUS_RING}`}
-            >
-              {t(lang, 'project.viewApiSpec', { file: apiDocFile })}
-            </a>
-          </section>
-        )}
-
-        {project.snippetPaths && project.snippetPaths.length > 0 && (
-          <section className="min-w-0 min-h-0 xl:contain-size xl:flex xl:flex-col">
-            <h2 id="snippets-heading" className={`${SECTION_TITLE} mb-4`}>
-              {t(lang, 'project.snippetsTitle')}
-            </h2>
-            <div
-              tabIndex={0}
-              role="region"
-              aria-labelledby="snippets-heading"
-              className={`flex-1 min-h-0 max-h-[65vh] xl:max-h-none overflow-y-auto scrollbar-thin scrollbar-thumb-neutral-500 dark:scrollbar-thumb-slate-400 scrollbar-gutter-stable ${FOCUS_RING}`}
-            >
-              <SnippetViewer snippets={snippets} />
+          )}
+          {impact && (
+            <div className={`${PANEL} p-6`}>
+              <h2 className={SECTION_TITLE}>{t(lang, 'project.impact')}</h2>
+              <p className={`mt-3 ${MEASURE} ${BODY}`}>{impact}</p>
             </div>
-          </section>
-        )}
+          )}
+        </div>
+      )}
 
-        {project.dockerCompose && (
-          <section className="min-w-0">
-            <h2 className={`${SECTION_TITLE} mb-4`}>{t(lang, 'project.dockerTitle')}</h2>
-            <div className={`${PANEL} p-5`}>
-              <p className="font-semibold text-neutral-900 dark:text-white">
-                {t(lang, 'project.dockerIntro')}
-              </p>
-              <ul className="mt-3 list-disc list-inside space-y-2 text-neutral-700 dark:text-slate-300">
-                <li>{t(lang, 'project.dockerMysql')}</li>
-                <li>{t(lang, 'project.dockerPostgres')}</li>
-                <li>{t(lang, 'project.dockerBackend')}</li>
+      {(challenge || solution) && (
+        <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+          {challenge && (
+            <div className={`${ACCENT_PANEL} p-6`}>
+              <h2 className={SECTION_TITLE}>{t(lang, 'project.challenge')}</h2>
+              <p className={`mt-3 ${MEASURE} ${BODY}`}>{challenge}</p>
+            </div>
+          )}
+          {solution && (
+            <div className={`${ACCENT_PANEL} p-6`}>
+              <h2 className={SECTION_TITLE}>{t(lang, 'project.solution')}</h2>
+              <p className={`mt-3 ${MEASURE} ${BODY}`}>{solution}</p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {hasNarrativeTail && (
+        <div className="mt-6 space-y-6">
+          {hasPipeline && (
+            <div className={`${PANEL} p-6`}>
+              <h2 className={SECTION_TITLE}>{pipelineHeading}</h2>
+              <ol className={`mt-4 ${MEASURE} space-y-3`}>
+                {project.pipeline?.map((step, index) => (
+                  <li key={step.title} className="flex gap-3">
+                    <span aria-hidden="true" className={STEP_BADGE}>
+                      {index + 1}
+                    </span>
+                    <span className="leading-relaxed text-neutral-700 dark:text-slate-300">
+                      <span className="font-semibold text-neutral-900 dark:text-white">
+                        {isEn && step.enTitle ? step.enTitle : step.title}:
+                      </span>{' '}
+                      {isEn && step.enDescription ? step.enDescription : step.description}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
+          {hasSecurity && (
+            <div className={`${PANEL} p-6`}>
+              <h2 className={SECTION_TITLE}>{t(lang, 'project.security')}</h2>
+              <ul className={`mt-4 ${MEASURE} flex flex-wrap gap-2`}>
+                {project.security?.map(item => (
+                  <li key={item.text} className={SECURITY_CHIP}>
+                    {isEn && item.enText ? item.enText : item.text}
+                  </li>
+                ))}
               </ul>
-              <p className="mt-3 text-sm text-neutral-600 dark:text-slate-400">
-                {t(lang, 'project.dockerSeePrefix')}{' '}
-                <code className="bg-neutral-200 dark:bg-slate-700 text-neutral-800 dark:text-white px-1 rounded">
-                  docker-compose.yml
-                </code>{' '}
-                {t(lang, 'project.dockerSeeSuffix')}
-              </p>
             </div>
-          </section>
-        )}
-      </section>
+          )}
+          {architecture && (
+            <div className={`${ACCENT_PANEL} p-6`}>
+              <h2 className={SECTION_TITLE}>{t(lang, 'project.architecture')}</h2>
+              <p className={`mt-3 ${MEASURE} ${BODY}`}>{architecture}</p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {hasEvidence && (
+        <section
+          aria-label={t(lang, 'project.evidenceTitle')}
+          className={
+            project.pairedArtifacts
+              ? 'mt-12 grid grid-cols-1 gap-6 xl:grid-cols-[1.5fr_1fr]'
+              : 'mt-12 space-y-10'
+          }
+        >
+          {project.erdPath && (
+            <section className="min-w-0">
+              <h2 id="diagram-heading" className={`${SECTION_TITLE} mb-4`}>
+                {diagramHeading}
+              </h2>
+              <figure>
+                <div className={ARTIFACT_FRAME}>
+                  <div
+                    tabIndex={0}
+                    role="region"
+                    aria-labelledby="diagram-heading"
+                    className={`overflow-x-auto ${FRAME_FOCUS}`}
+                  >
+                    <div className="min-w-[800px]">
+                      <Image
+                        src={project.erdPath}
+                        alt={diagramAlt}
+                        width={800}
+                        height={520}
+                        className="block h-auto max-h-[60vh] w-full object-contain"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex justify-end border-t border-slate-700 px-4 py-2">
+                    <a
+                      href={project.erdPath}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`inline-flex min-h-7 items-center gap-1 text-sm text-blue-400 underline underline-offset-2 transition-colors hover:text-blue-300 ${FRAME_FOCUS}`}
+                    >
+                      {t(lang, 'project.viewFullDiagram')}
+                    </a>
+                  </div>
+                </div>
+                {diagramCaption && (
+                  <figcaption
+                    className={`mt-3 ${MEASURE} text-sm text-neutral-600 dark:text-slate-400`}
+                  >
+                    {diagramCaption}
+                  </figcaption>
+                )}
+              </figure>
+            </section>
+          )}
+
+          {project.apiDocPath && (
+            <section className="min-w-0">
+              <h2 className={`${SECTION_TITLE} mb-4`}>{t(lang, 'project.apiDocTitle')}</h2>
+              <a
+                href={project.apiDocPath}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`block p-4 text-neutral-700 dark:text-slate-300 transition-colors hover:bg-neutral-100 dark:hover:bg-slate-700 ${PANEL} ${FOCUS_RING}`}
+              >
+                {t(lang, 'project.viewApiSpec', { file: apiDocFile })}
+              </a>
+            </section>
+          )}
+
+          {project.snippetPaths && project.snippetPaths.length > 0 && (
+            <section className="min-w-0">
+              <h2 className={`${SECTION_TITLE} mb-4`}>{t(lang, 'project.snippetsTitle')}</h2>
+              <SnippetViewer snippets={snippets} />
+            </section>
+          )}
+
+          {project.dockerCompose && (
+            <section className="min-w-0">
+              <h2 className={`${SECTION_TITLE} mb-4`}>{t(lang, 'project.dockerTitle')}</h2>
+              <div className={`${PANEL} p-5`}>
+                <p className="font-semibold text-neutral-900 dark:text-white">
+                  {t(lang, 'project.dockerIntro')}
+                </p>
+                <ul
+                  className={`mt-3 ${MEASURE} list-disc list-inside space-y-2 text-neutral-700 dark:text-slate-300`}
+                >
+                  <li>{t(lang, 'project.dockerMysql')}</li>
+                  <li>{t(lang, 'project.dockerPostgres')}</li>
+                  <li>{t(lang, 'project.dockerBackend')}</li>
+                </ul>
+                <p className="mt-3 text-sm text-neutral-600 dark:text-slate-400">
+                  {t(lang, 'project.dockerSeePrefix')}{' '}
+                  <code className="bg-neutral-200 dark:bg-slate-700 text-neutral-800 dark:text-white px-1 rounded">
+                    docker-compose.yml
+                  </code>{' '}
+                  {t(lang, 'project.dockerSeeSuffix')}
+                </p>
+              </div>
+            </section>
+          )}
+        </section>
+      )}
 
       {hasCtaContent && (
         <div className="mt-12 flex flex-wrap items-center gap-4">
@@ -335,6 +435,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           )}
         </div>
       )}
-    </div>
+    </main>
   );
 }

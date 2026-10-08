@@ -59,7 +59,16 @@
       "security": "Seguridad",
       "github": "Repositorio en GitHub",
       "live": "Demo en vivo",
-      "back": "Volver al inicio"
+      "back": "Volver al inicio",
+      "evidenceTitle": "Artefactos técnicos",
+      "viewFullDiagram": "Ver tamaño completo",
+      "viewFullCode": "Ver completo",
+      "viewLessCode": "Ver menos",
+      "copyCode": "Copiar",
+      "copyCodeDone": "Copiado",
+      "copyCodeAria": "Copiar código de {file}",
+      "snippetsEmpty": "No hay snippets disponibles.",
+      "diagramTitle": "Arquitectura de módulos"
     },
     "chat": {
       "dialogLabel": "Chat sobre el perfil de Andrés",
@@ -133,7 +142,16 @@
       "security": "Security",
       "github": "GitHub Repository",
       "live": "Live Demo",
-      "back": "Back to home"
+      "back": "Back to home",
+      "evidenceTitle": "Technical artifacts",
+      "viewFullDiagram": "Open full size",
+      "viewFullCode": "View full",
+      "viewLessCode": "Show less",
+      "copyCode": "Copy",
+      "copyCodeDone": "Copied",
+      "copyCodeAria": "Copy code from {file}",
+      "snippetsEmpty": "No snippets available.",
+      "diagramTitle": "Module architecture"
     },
     "chat": {
       "dialogLabel": "Chat about Andrés' profile",

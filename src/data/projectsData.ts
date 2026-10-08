@@ -44,6 +44,7 @@ export interface Project {
   statusNote?: string;
   enStatusNote?: string;
   pipeline?: PipelineStep[];
+  pipelineTitle?: LocalizedItem;
   security?: LocalizedItem[];
   // New fields for technical visualization
   slug: string;
@@ -53,6 +54,12 @@ export interface Project {
   images?: string[];
   imageAlts?: LocalizedItem[];
   dockerCompose?: boolean;
+  // Diagram metadata (data-driven, optional)
+  // diagramTitle: true switches the section heading from project.erdTitle
+  // to the localized project.diagramTitle key (non-ERD diagrams).
+  diagramTitle?: boolean;
+  diagramAlt?: LocalizedItem;
+  diagramCaption?: LocalizedItem;
   pairedArtifacts?: boolean;
 }
 
@@ -88,6 +95,44 @@ export const projects: Project[] = [
     enArchitecture:
       'Modular pipeline: decode.decode(file_path) -> list[str] -> analisis_url.analizar_url(url) -> dict -> sandbox.detonar(url) -> dict -> scoring.puntuar(signals, sandbox) -> dict -> informe.generar_informe(result, format) -> str. Contract-driven development with CONTRATOS.md. Branch-per-module in Git.',
     slug: 'qreaper',
+    pipelineTitle: {
+      text: 'Pipeline de analisis',
+      enText: 'Analysis pipeline',
+    },
+    pipeline: [
+      {
+        title: 'Decodificación',
+        enTitle: 'Decoding',
+        description:
+          'decode.decode(file_path) -> list[str]: extracción de QR de imágenes, emails .eml y PDFs.',
+        enDescription:
+          'decode.decode(file_path) -> list[str]: QR extraction from images, .eml emails and PDFs.',
+      },
+      {
+        title: 'Análisis estático de URLs',
+        enTitle: 'Static URL analysis',
+        description: 'analisis_url.analizar_url(url) -> dict: análisis estático de la URL.',
+        enDescription: 'analisis_url.analizar_url(url) -> dict: static analysis of the URL.',
+      },
+      {
+        title: 'Sandbox con headless browser',
+        enTitle: 'Headless browser sandbox',
+        description: 'sandbox.detonar(url) -> dict: ejecución en sandbox con navegador headless.',
+        enDescription: 'sandbox.detonar(url) -> dict: execution in a headless browser sandbox.',
+      },
+      {
+        title: 'Scoring de riesgo',
+        enTitle: 'Risk scoring',
+        description: 'scoring.puntuar(signals, sandbox) -> dict: scoring de riesgo de la señal.',
+        enDescription: 'scoring.puntuar(signals, sandbox) -> dict: risk scoring of the signal.',
+      },
+      {
+        title: 'Generación de informes',
+        enTitle: 'Report generation',
+        description: 'informe.generar_informe(result, format) -> str: generación del informe.',
+        enDescription: 'informe.generar_informe(result, format) -> str: report generation.',
+      },
+    ],
     links: [
       { label: 'qreaper.es', url: 'https://qreaper.es/' },
       { label: 'Instagram', url: 'https://www.instagram.com/qreaper.es/' },
@@ -195,6 +240,11 @@ export const projects: Project[] = [
       },
     ],
     slug: 'vulnprio',
+    erdPath: '/erd/vulnprio.svg',
+    diagramCaption: {
+      text: 'Modelo de datos de VulnPrio: 11 tablas PostgreSQL (Drizzle ORM).',
+      enText: 'VulnPrio data model: 11 PostgreSQL tables (Drizzle ORM).',
+    },
   },
   {
     name: 'Security Header Scanner & Quick Assessment Tool',
@@ -213,21 +263,31 @@ export const projects: Project[] = [
       "Master's cybersecurity project implementing a passive scanner for 15 security headers with weighted scoring, native TLS/DNS checks, OWASP+NIS2 mapping, and CVE detection. 83 unit tests, 19 suites, and professional PDF export with pdfkit.",
     role: 'Full-stack / Cybersecurity',
     challenge:
-      'Desarrollar una herramienta de auditoría de seguridad web pasiva que analizara 15 headers de seguridad HTTP (CSP, HSTS, XFO, CORS, etc.), verificara TLS/SSL mediante conexión raw, consultara registros DNS de seguridad (SPF, DKIM, DMARC), escaneara archivos sensibles y de seguridad (security.txt RFC 9116, robots.txt), verificara integridad de recursos SRI, realizara fingerprinting tecnológico con detección de 20 CVEs conocidos, y generara reportes exportables en PDF y JSON. Todo mapeado contra marcos normativos OWASP Top 10 2021 y Directiva NIS2 2023.',
+      'Desarrollar una herramienta de auditoría de seguridad web pasiva que analizara 15 headers de seguridad HTTP (CSP, HSTS, XFO, CORS, etc.), verificara TLS/SSL mediante conexión raw, consultara registros DNS de seguridad (SPF, DKIM, DMARC), escaneara archivos sensibles y de seguridad (security.txt RFC 9116, robots.txt), verificara integridad de recursos SRI, realizara fingerprinting tecnológico con detección de 25 CVEs conocidos, y generara reportes exportables en PDF y JSON. Todo mapeado contra marcos normativos OWASP Top 10 2021 y Directiva NIS2 2023.',
     enChallenge:
-      'Develop a passive web security auditing tool that would analyze 15 HTTP security headers (CSP, HSTS, XFO, CORS, etc.), verify TLS/SSL via raw connection, query DNS security records (SPF, DKIM, DMARC), scan for sensitive and security files (security.txt RFC 9116, robots.txt), verify SRI resource integrity, perform tech fingerprinting with 20 known CVE detection, and generate exportable PDF and JSON reports. All mapped against OWASP Top 10 2021 and NIS2 Directive 2023 regulatory frameworks.',
+      'Develop a passive web security auditing tool that would analyze 15 HTTP security headers (CSP, HSTS, XFO, CORS, etc.), verify TLS/SSL via raw connection, query DNS security records (SPF, DKIM, DMARC), scan for sensitive and security files (security.txt RFC 9116, robots.txt), verify SRI resource integrity, perform tech fingerprinting with 25 known CVE detection, and generate exportable PDF and JSON reports. All mapped against OWASP Top 10 2021 and NIS2 Directive 2023 regulatory frameworks.',
     solution:
-      'Backend NestJS 11 modular con 5 módulos funcionales (Scanner, Analyzer, Compliance, Report, Common) comunicados mediante inyección de dependencias. 15 checkers individuales implementando la interfaz HeaderChecker con scoring ponderado por severidad (critical=25, high=15, medium=10, low=5). TLS checker con conexión raw vía tls.connect() de Node.js para extraer versión del protocolo y certificado completo. DNS checker mediante dns/promises nativo para SPF/DKIM/DMARC. Escaneo paralelo con Promise.all para minimizar latencia. Frontend React 19 + Vite 8 con ScoreCircle SVG animado, grilla de headers con barras de progreso, secciones de compliance, TLS/DNS, SRI y fingerprinting, más botones de exportación JSON/PDF.',
+      'Backend NestJS 11 modular con 4 módulos funcionales (Scanner, Analyzer, Compliance, Report) comunicados mediante inyección de dependencias. 15 checkers individuales implementando la interfaz HeaderChecker con scoring ponderado por severidad (critical=25, high=15, medium=10, low=5). TLS checker con conexión raw vía tls.connect() de Node.js para extraer versión del protocolo y certificado completo. DNS checker mediante dns/promises nativo para SPF/DKIM/DMARC. Escaneo paralelo con Promise.all para minimizar latencia. Frontend React 19 + Vite 8 con ScoreCircle SVG animado, grilla de headers con barras de progreso, secciones de compliance, TLS/DNS, SRI y fingerprinting, más botones de exportación JSON/PDF.',
     enSolution:
-      'Modular NestJS 11 backend with 5 functional modules (Scanner, Analyzer, Compliance, Report, Common) communicating via dependency injection. 15 individual checkers implementing the HeaderChecker interface with severity-weighted scoring (critical=25, high=15, medium=10, low=5). TLS checker with raw connection via Node.js tls.connect() to extract protocol version and full certificate. DNS checker via native dns/promises for SPF/DKIM/DMARC. Parallel scanning with Promise.all to minimize latency. React 19 + Vite 8 frontend with animated SVG ScoreCircle, header grid with progress bars, compliance, TLS/DNS, SRI and fingerprinting sections, plus JSON/PDF export buttons.',
+      'Modular NestJS 11 backend with 4 functional modules (Scanner, Analyzer, Compliance, Report) communicating via dependency injection. 15 individual checkers implementing the HeaderChecker interface with severity-weighted scoring (critical=25, high=15, medium=10, low=5). TLS checker with raw connection via Node.js tls.connect() to extract protocol version and full certificate. DNS checker via native dns/promises for SPF/DKIM/DMARC. Parallel scanning with Promise.all to minimize latency. React 19 + Vite 8 frontend with animated SVG ScoreCircle, header grid with progress bars, compliance, TLS/DNS, SRI and fingerprinting sections, plus JSON/PDF export buttons.',
     architecture:
-      'NestJS 11 (TypeScript) + React 19 + Vite 8 + Axios + class-validator + Swagger/OpenAPI + pdfkit. Arquitectura modular con ScannerController como entry point, ScannerService como orquestador que ejecuta 7 verificaciones en paralelo (HTTP client, TLS, DNS, security files, sensitive files, SRI, fingerprinting) via Promise.all. AnalyzerService con 15 checkers implementando HeaderChecker interface y ScoreCalculator para scoring ponderado (max 165pts). ComplianceService con mappers OWASP Top 10 (3 controles) y NIS2 (4 controles). ReportService genera JSON final con recomendaciones priorizadas por severidad. ExportService genera PDF profesional con pdfkit. Frontend React 19 con estados: inicial, carga (spinner + barra de progreso), éxito (fade-in con ScoreCircle animado, grilla 3 columnas de headers, compliance lateral, TLS/DNS, security files, SRI, fingerprinting + tabla de CVEs, recomendaciones en 4 columnas por severidad) y error (banner rojo). Proxy Vite /api -> NestJS :3000.',
+      'NestJS 11 (TypeScript) + React 19 + Vite 8 + Axios + class-validator + Swagger/OpenAPI + pdfkit. Arquitectura modular con ScannerController como entry point, ScannerService como orquestador que ejecuta 6 verificaciones en paralelo tras la peticion HTTP inicial (TLS, DNS, security files, sensitive files, SRI, fingerprinting) via Promise.all. AnalyzerService con 15 checkers implementando HeaderChecker interface y ScoreCalculator para scoring ponderado (max 165pts). ComplianceService con mappers para OWASP Top 10, NIS2, ENS e ISO 27001. ReportService genera JSON final con recomendaciones priorizadas por severidad. ExportService genera PDF profesional con pdfkit. Frontend React 19 con estados: inicial, carga (spinner + barra de progreso), éxito (fade-in con ScoreCircle animado, grilla 3 columnas de headers, compliance lateral, TLS/DNS, security files, SRI, fingerprinting + tabla de CVEs, recomendaciones en 4 columnas por severidad) y error (banner rojo). Proxy Vite /api -> NestJS :3000.',
     enArchitecture:
-      'NestJS 11 (TypeScript) + React 19 + Vite 8 + Axios + class-validator + Swagger/OpenAPI + pdfkit. Modular architecture with ScannerController as entry point, ScannerService as orchestrator executing 7 parallel checks (HTTP client, TLS, DNS, security files, sensitive files, SRI, fingerprinting) via Promise.all. AnalyzerService with 15 checkers implementing HeaderChecker interface and ScoreCalculator for weighted scoring (max 165pts). ComplianceService with OWASP Top 10 (3 controls) and NIS2 (4 controls) mappers. ReportService generates final JSON with severity-prioritized recommendations. ExportService generates professional PDF with pdfkit. React 19 frontend with states: initial, loading (spinner + progress bar), success (fade-in with animated ScoreCircle, 3-column header grid, side compliance, TLS/DNS, security files, SRI, fingerprinting + CVE table, 4-column severity recommendations) and error (red banner). Vite proxy /api -> NestJS :3000.',
+      'NestJS 11 (TypeScript) + React 19 + Vite 8 + Axios + class-validator + Swagger/OpenAPI + pdfkit. Modular architecture with ScannerController as entry point, ScannerService as orchestrator executing 6 parallel checks after the initial HTTP request (TLS, DNS, security files, sensitive files, SRI, fingerprinting) via Promise.all. AnalyzerService with 15 checkers implementing HeaderChecker interface and ScoreCalculator for weighted scoring (max 165pts). ComplianceService with mappers for OWASP Top 10, NIS2, ENS and ISO 27001. ReportService generates final JSON with severity-prioritized recommendations. ExportService generates professional PDF with pdfkit. React 19 frontend with states: initial, loading (spinner + progress bar), success (fade-in with animated ScoreCircle, 3-column header grid, side compliance, TLS/DNS, security files, SRI, fingerprinting + CVE table, 4-column severity recommendations) and error (red banner). Vite proxy /api -> NestJS :3000.',
     slug: 'auditoria-web',
     erdPath: '/erd/auditoria-seguridad.svg',
     snippetPaths: ['/snippets/security-audit.ts'],
     pairedArtifacts: true,
+    diagramTitle: true,
+    diagramAlt: {
+      text: 'Security Header Scanner: arquitectura de módulos',
+      enText: 'Security Header Scanner: module architecture',
+    },
+    diagramCaption: {
+      text: 'Módulos Scanner, Analyzer, Compliance y Report comunicados por inyección de dependencias.',
+      enText:
+        'Scanner, Analyzer, Compliance and Report modules wired through dependency injection.',
+    },
   },
   {
     name: 'Bolsa de Empleo',

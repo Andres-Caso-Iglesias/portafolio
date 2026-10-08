@@ -136,7 +136,7 @@ test.describe('Projects', () => {
 
     const erdSection = page.getByRole('heading', {
       level: 2,
-      name: /Entity Relationship Diagram|Diagrama Entidad-Relación/i,
+      name: /Arquitectura de módulos|Module architecture/i,
     });
     await expect(erdSection).toBeVisible();
   });

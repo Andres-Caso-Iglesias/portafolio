@@ -302,12 +302,7 @@ export default function Modal({ project, onClose }: ModalProps) {
                     {lang === 'en' ? 'Loading snippets...' : 'Cargando snippets...'}
                   </p>
                 ) : (
-                  <SnippetViewer
-                    snippets={snippetsContent}
-                    emptyLabel={
-                      lang === 'en' ? 'No snippets available.' : 'No hay snippets disponibles.'
-                    }
-                  />
+                  <SnippetViewer snippets={snippetsContent} />
                 )}
               </div>
             )}

@@ -1,0 +1,187 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 880">
+  <rect width="800" height="880" fill="#0f172a"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" fill="#e2e8f0" font-size="22" font-weight="bold">VulnPrio - Diagrama Entidad-Relación</text>
+
+  <!-- ROW 1 -->
+
+  <!-- Entity: users -->
+  <rect x="25" y="60" width="225" height="134" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="137.5" y="81" text-anchor="middle" fill="#8b5cf6" font-size="13" font-weight="bold">users</text>
+  <line x1="25" y1="92" x2="250" y2="92" stroke="#475569"/>
+  <text x="35" y="110" fill="#94a3b8" font-size="11">- id (PK)</text>
+  <text x="35" y="126" fill="#94a3b8" font-size="11">- email (unique)</text>
+  <text x="35" y="142" fill="#94a3b8" font-size="11">- organization_id (FK)</text>
+  <text x="35" y="158" fill="#94a3b8" font-size="11">- role (enum)</text>
+  <text x="35" y="174" fill="#94a3b8" font-size="11">- mfa_enabled</text>
+  <text x="35" y="190" fill="#94a3b8" font-size="11">- created_at</text>
+
+  <!-- Entity: organizations -->
+  <rect x="290" y="60" width="225" height="134" rx="6" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+  <text x="402.5" y="81" text-anchor="middle" fill="#3b82f6" font-size="13" font-weight="bold">organizations</text>
+  <line x1="290" y1="92" x2="515" y2="92" stroke="#475569"/>
+  <text x="300" y="110" fill="#94a3b8" font-size="11">- id (PK)</text>
+  <text x="300" y="126" fill="#94a3b8" font-size="11">- name</text>
+  <text x="300" y="142" fill="#94a3b8" font-size="11">- plan (enum)</text>
+  <text x="300" y="158" fill="#94a3b8" font-size="11">- stripe_customer_id</text>
+  <text x="300" y="174" fill="#94a3b8" font-size="11">- scans_this_month</text>
+  <text x="300" y="190" fill="#94a3b8" font-size="11">- created_at</text>
+
+  <!-- Entity: auditor_organization -->
+  <rect x="555" y="60" width="225" height="118" rx="6" fill="#1e293b" stroke="#14b8a6" stroke-width="2"/>
+  <text x="667.5" y="81" text-anchor="middle" fill="#14b8a6" font-size="13" font-weight="bold">auditor_organization</text>
+  <line x1="555" y1="92" x2="780" y2="92" stroke="#475569"/>
+  <text x="565" y="110" fill="#94a3b8" font-size="11">- id (PK)</text>
+  <text x="565" y="126" fill="#94a3b8" font-size="11">- auditor_organization_id (FK)</text>
+  <text x="565" y="142" fill="#94a3b8" font-size="11">- client_organization_id (FK)</text>
+  <text x="565" y="158" fill="#94a3b8" font-size="11">- access_level (enum)</text>
+  <text x="565" y="174" fill="#94a3b8" font-size="11">- invited_by (FK)</text>
+
+  <!-- ROW 2 -->
+
+  <!-- Entity: repositories -->
+  <rect x="25" y="230" width="225" height="150" rx="6" fill="#1e293b" stroke="#22c55e" stroke-width="2"/>
+  <text x="137.5" y="251" text-anchor="middle" fill="#22c55e" font-size="13" font-weight="bold">repositories</text>
+  <line x1="25" y1="262" x2="250" y2="262" stroke="#475569"/>
+  <text x="35" y="280" fill="#94a3b8" font-size="11">- id (PK)</text>
+  <text x="35" y="296" fill="#94a3b8" font-size="11">- name</text>
+  <text x="35" y="312" fill="#94a3b8" font-size="11">- url</text>
+  <text x="35" y="328" fill="#94a3b8" font-size="11">- platform (enum)</text>
+  <text x="35" y="344" fill="#94a3b8" font-size="11">- organization_id (FK)</text>
+  <text x="35" y="360" fill="#94a3b8" font-size="11">- criticality (enum)</text>
+  <text x="35" y="376" fill="#94a3b8" font-size="11">- last_scan_at</text>
+
+  <!-- Entity: sboms -->
+  <rect x="290" y="230" width="225" height="102" rx="6" fill="#1e293b" stroke="#06b6d4" stroke-width="2"/>
+  <text x="402.5" y="251" text-anchor="middle" fill="#06b6d4" font-size="13" font-weight="bold">sboms</text>
+  <line x1="290" y1="262" x2="515" y2="262" stroke="#475569"/>
+  <text x="300" y="280" fill="#94a3b8" font-size="11">- id (PK)</text>
+  <text x="300" y="296" fill="#94a3b8" font-size="11">- repository_id (FK)</text>
+  <text x="300" y="312" fill="#94a3b8" font-size="11">- format (enum)</text>
+  <text x="300" y="328" fill="#94a3b8" font-size="11">- generated_at</text>
+
+  <!-- Entity: reports -->
+  <rect x="555" y="230" width="225" height="134" rx="6" fill="#1e293b" stroke="#ec4899" stroke-width="2"/>
+  <text x="667.5" y="251" text-anchor="middle" fill="#ec4899" font-size="13" font-weight="bold">reports</text>
+  <line x1="555" y1="262" x2="780" y2="262" stroke="#475569"/>
+  <text x="565" y="280" fill="#94a3b8" font-size="11">- id (PK)</text>
+  <text x="565" y="296" fill="#94a3b8" font-size="11">- name</text>
+  <text x="565" y="312" fill="#94a3b8" font-size="11">- organization_id (FK)</text>
+  <text x="565" y="328" fill="#94a3b8" font-size="11">- repository_ids (uuid[])</text>
+  <text x="565" y="344" fill="#94a3b8" font-size="11">- type (enum)</text>
+  <text x="565" y="360" fill="#94a3b8" font-size="11">- period_from, period_to</text>
+
+  <!-- ROW 3 -->
+
+  <!-- Entity: scans -->
+  <rect x="25" y="430" width="225" height="150" rx="6" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+  <text x="137.5" y="451" text-anchor="middle" fill="#f59e0b" font-size="13" font-weight="bold">scans</text>
+  <line x1="25" y1="462" x2="250" y2="462" stroke="#475569"/>
+  <text x="35" y="480" fill="#94a3b8" font-size="11">- id (PK)</text>
+  <text x="35" y="496" fill="#94a3b8" font-size="11">- repository_id (FK)</text>
+  <text x="35" y="512" fill="#94a3b8" font-size="11">- status (enum)</text>
+  <text x="35" y="528" fill="#94a3b8" font-size="11">- scan_type (enum)</text>
+  <text x="35" y="544" fill="#94a3b8" font-size="11">- started_at</text>
+  <text x="35" y="560" fill="#94a3b8" font-size="11">- findings_summary (jsonb)</text>
+  <text x="35" y="576" fill="#94a3b8" font-size="11">- error_message</text>
+
+  <!-- Entity: sbom_components -->
+  <rect x="290" y="430" width="225" height="134" rx="6" fill="#1e293b" stroke="#06b6d4" stroke-width="2"/>
+  <text x="402.5" y="451" text-anchor="middle" fill="#06b6d4" font-size="13" font-weight="bold">sbom_components</text>
+  <line x1="290" y1="462" x2="515" y2="462" stroke="#475569"/>
+  <text x="300" y="480" fill="#94a3b8" font-size="11">- id (PK)</text>
+  <text x="300" y="496" fill="#94a3b8" font-size="11">- sbom_id (FK)</text>
+  <text x="300" y="512" fill="#94a3b8" font-size="11">- name</text>
+  <text x="300" y="528" fill="#94a3b8" font-size="11">- version</text>
+  <text x="300" y="544" fill="#94a3b8" font-size="11">- ecosystem (enum)</text>
+  <text x="300" y="560" fill="#94a3b8" font-size="11">- purl</text>
+
+  <!-- Entity: vulnerabilities -->
+  <rect x="555" y="430" width="225" height="134" rx="6" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+  <text x="667.5" y="451" text-anchor="middle" fill="#ef4444" font-size="13" font-weight="bold">vulnerabilities</text>
+  <line x1="555" y1="462" x2="780" y2="462" stroke="#475569"/>
+  <text x="565" y="480" fill="#94a3b8" font-size="11">- id (PK, CVE)</text>
+  <text x="565" y="496" fill="#94a3b8" font-size="11">- source (enum)</text>
+  <text x="565" y="512" fill="#94a3b8" font-size="11">- summary</text>
+  <text x="565" y="528" fill="#94a3b8" font-size="11">- cvss_score, epss_score</text>
+  <text x="565" y="544" fill="#94a3b8" font-size="11">- is_known_exploited</text>
+  <text x="565" y="560" fill="#94a3b8" font-size="11">- raw_data (jsonb)</text>
+
+  <!-- ROW 4 -->
+
+  <!-- Entity: findings -->
+  <rect x="25" y="640" width="225" height="182" rx="6" fill="#1e293b" stroke="#f43f5e" stroke-width="2"/>
+  <text x="137.5" y="661" text-anchor="middle" fill="#f43f5e" font-size="13" font-weight="bold">findings</text>
+  <line x1="25" y1="672" x2="250" y2="672" stroke="#475569"/>
+  <text x="35" y="690" fill="#94a3b8" font-size="11">- id (PK)</text>
+  <text x="35" y="706" fill="#94a3b8" font-size="11">- scan_id (FK)</text>
+  <text x="35" y="722" fill="#94a3b8" font-size="11">- repository_id (FK)</text>
+  <text x="35" y="738" fill="#94a3b8" font-size="11">- vulnerability_id (FK)</text>
+  <text x="35" y="754" fill="#94a3b8" font-size="11">- component_id (FK)</text>
+  <text x="35" y="770" fill="#94a3b8" font-size="11">- priority (enum)</text>
+  <text x="35" y="786" fill="#94a3b8" font-size="11">- score</text>
+  <text x="35" y="802" fill="#94a3b8" font-size="11">- exposure_level (enum)</text>
+  <text x="35" y="818" fill="#94a3b8" font-size="11">- created_at</text>
+
+  <!-- Entity: audit_annotations -->
+  <rect x="290" y="640" width="225" height="118" rx="6" fill="#1e293b" stroke="#d946ef" stroke-width="2"/>
+  <text x="402.5" y="661" text-anchor="middle" fill="#d946ef" font-size="13" font-weight="bold">audit_annotations</text>
+  <line x1="290" y1="672" x2="515" y2="672" stroke="#475569"/>
+  <text x="300" y="690" fill="#94a3b8" font-size="11">- id (PK)</text>
+  <text x="300" y="706" fill="#94a3b8" font-size="11">- finding_id (FK)</text>
+  <text x="300" y="722" fill="#94a3b8" font-size="11">- auditor_id (FK)</text>
+  <text x="300" y="738" fill="#94a3b8" font-size="11">- status (enum)</text>
+  <text x="300" y="754" fill="#94a3b8" font-size="11">- comment</text>
+
+  <!-- Relationships -->
+  <!-- users -> organizations -->
+  <line x1="250" y1="110" x2="290" y2="110" stroke="#94a3b8" stroke-width="2"/>
+  <text x="270" y="103" text-anchor="middle" fill="#94a3b8" font-size="10">1:N</text>
+
+  <!-- auditor_organization -> organizations -->
+  <line x1="555" y1="120" x2="515" y2="120" stroke="#94a3b8" stroke-width="2"/>
+  <text x="535" y="113" text-anchor="middle" fill="#94a3b8" font-size="10">1:N</text>
+
+  <!-- auditor_organization.invited_by -> users (routed above row 1) -->
+  <polyline points="780,100 788,100 788,48 140,48 140,60" fill="none" stroke="#94a3b8" stroke-width="2"/>
+
+  <!-- repositories -> organizations -->
+  <polyline points="170,230 170,214 330,214 330,194" fill="none" stroke="#94a3b8" stroke-width="2"/>
+  <text x="245" y="207" text-anchor="middle" fill="#94a3b8" font-size="10">1:N</text>
+
+  <!-- reports -> organizations -->
+  <line x1="440" y1="230" x2="440" y2="194" stroke="#94a3b8" stroke-width="2"/>
+  <text x="452" y="215" fill="#94a3b8" font-size="10">1:N</text>
+
+  <!-- sboms -> repositories -->
+  <line x1="290" y1="280" x2="250" y2="280" stroke="#94a3b8" stroke-width="2"/>
+  <text x="270" y="273" text-anchor="middle" fill="#94a3b8" font-size="10">1:N</text>
+
+  <!-- sbom_components -> sboms -->
+  <line x1="400" y1="332" x2="400" y2="430" stroke="#94a3b8" stroke-width="2"/>
+  <text x="412" y="385" fill="#94a3b8" font-size="10">1:N</text>
+
+  <!-- scans -> repositories -->
+  <line x1="140" y1="380" x2="140" y2="430" stroke="#94a3b8" stroke-width="2"/>
+  <text x="152" y="408" fill="#94a3b8" font-size="10">1:N</text>
+
+  <!-- findings -> scans -->
+  <line x1="140" y1="580" x2="140" y2="640" stroke="#94a3b8" stroke-width="2"/>
+  <text x="152" y="613" fill="#94a3b8" font-size="10">1:N</text>
+
+  <!-- findings -> vulnerabilities (routed below row 4) -->
+  <polyline points="140,822 140,856 665,856 665,564" fill="none" stroke="#94a3b8" stroke-width="2"/>
+  <text x="400" y="849" text-anchor="middle" fill="#94a3b8" font-size="10">1:N</text>
+
+  <!-- findings -> sbom_components -->
+  <line x1="250" y1="655" x2="292" y2="566" stroke="#94a3b8" stroke-width="2"/>
+  <text x="274" y="612" text-anchor="middle" fill="#94a3b8" font-size="9">1:N</text>
+
+  <!-- findings -> repositories (routed along left edge) -->
+  <polyline points="25,700 12,700 12,300 25,300" fill="none" stroke="#94a3b8" stroke-width="2"/>
+
+  <!-- audit_annotations -> findings -->
+  <line x1="290" y1="700" x2="250" y2="700" stroke="#94a3b8" stroke-width="2"/>
+  <text x="270" y="693" text-anchor="middle" fill="#94a3b8" font-size="10">1:N</text>
+</svg>
