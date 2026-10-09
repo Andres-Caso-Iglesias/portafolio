@@ -287,7 +287,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           {architecture && (
             <div className={`${ACCENT_PANEL} p-6`}>
               <h2 className={SECTION_TITLE}>{t(lang, 'project.architecture')}</h2>
-              <p className={`mt-3 ${MEASURE} ${BODY}`}>{architecture}</p>
+              <p className={`mt-3 ${BODY}`}>{architecture}</p>
             </div>
           )}
         </div>
