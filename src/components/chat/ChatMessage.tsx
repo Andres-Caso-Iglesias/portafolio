@@ -137,7 +137,10 @@ export function ChatMessage({ message }: ChatMessageProps) {
         <div className="whitespace-pre-wrap break-words">{parseLinks(message.content)}</div>
         {message.project && <ProjectCard project={message.project} />}
         <span
-          className={cn('text-[10px] mt-1 block opacity-50', isUser ? 'text-right' : 'text-left')}
+          className={cn(
+            'text-[10px] mt-1 block',
+            isUser ? 'text-right' : 'text-left text-neutral-600 dark:text-slate-300'
+          )}
         >
           {message.timestamp.toLocaleTimeString([], {
             hour: '2-digit',

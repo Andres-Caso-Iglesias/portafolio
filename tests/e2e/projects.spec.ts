@@ -43,16 +43,16 @@ test.describe('Projects', () => {
     const projectCard = page.getByRole('heading', { level: 3, name: /FoodBites/i }).first();
     await projectCard.click({ force: true });
 
-    const challengeTab = page.getByRole('dialog').getByRole('button', { name: /Reto|Challenge/i });
+    const challengeTab = page.getByRole('dialog').getByRole('tab', { name: /Reto|Challenge/i });
     const solutionTab = page
       .getByRole('dialog')
-      .getByRole('button', { name: /Solución|Solution/i });
+      .getByRole('tab', { name: /Solución|Solution/i });
     const architectureTab = page
       .getByRole('dialog')
-      .getByRole('button', { name: /Arquitectura|Architecture/i });
+      .getByRole('tab', { name: /Arquitectura|Architecture/i });
     const snippetsTab = page
       .getByRole('dialog')
-      .getByRole('button', { name: /Snippets de Código|Code Snippets/i });
+      .getByRole('tab', { name: /Snippets de Código|Code Snippets/i });
 
     await expect(challengeTab).toBeVisible();
     await expect(solutionTab).toBeVisible();
@@ -74,7 +74,7 @@ test.describe('Projects', () => {
 
     const solutionTab = page
       .getByRole('dialog')
-      .getByRole('button', { name: /Solución|Solution/i });
+      .getByRole('tab', { name: /Solución|Solution/i });
     await solutionTab.click();
 
     const solutionContent = page.locator('.prose').first();
@@ -87,7 +87,7 @@ test.describe('Projects', () => {
 
     const architectureTab = page
       .getByRole('dialog')
-      .getByRole('button', { name: /Arquitectura|Architecture/i });
+      .getByRole('tab', { name: /Arquitectura|Architecture/i });
     await architectureTab.click();
 
     const architectureContent = page.locator('.prose').first();
@@ -175,7 +175,7 @@ test.describe('Projects', () => {
       .first();
     await projectCard.click({ force: true });
 
-    const circuitsTab = page.getByRole('dialog').getByRole('button', { name: /Circuitos|Circuits/i });
+    const circuitsTab = page.getByRole('dialog').getByRole('tab', { name: /Circuitos|Circuits/i });
     await expect(circuitsTab).toBeVisible();
     await expect(circuitsTab).toHaveCount(1);
   });
@@ -184,7 +184,7 @@ test.describe('Projects', () => {
     const projectCard = page.getByRole('heading', { level: 3, name: /FoodBites/i }).first();
     await projectCard.click({ force: true });
 
-    const circuitsTab = page.getByRole('dialog').getByRole('button', { name: /Circuitos|Circuits/i });
+    const circuitsTab = page.getByRole('dialog').getByRole('tab', { name: /Circuitos|Circuits/i });
     await expect(circuitsTab).toHaveCount(0);
   });
 

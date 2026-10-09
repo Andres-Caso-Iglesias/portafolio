@@ -636,14 +636,14 @@ describe('project data (via processUserMessage)', () => {
 // Edge cases and integration
 // ──────────────────────────────────────────────────────────────
 describe('edge cases and integration', () => {
-  it('processUserMessage with default config parameter', () => {
-    const result = processUserMessage('hello', 'en');
+  it('processUserMessage with default config parameter', async () => {
+    const result = await processUserMessage('hello', 'en');
     expect(result).toHaveProperty('response');
     expect(result).toHaveProperty('topic');
   });
 
-  it('processUserMessage with lastTopic=null (default)', () => {
-    const result = processUserResponse('test', 'es');
+  it('processUserMessage with lastTopic=null (default)', async () => {
+    const result = await processUserResponse('test', 'es');
     expect(result).toHaveProperty('response');
   });
 

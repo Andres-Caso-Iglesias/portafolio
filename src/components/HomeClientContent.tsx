@@ -53,7 +53,7 @@ function HeroSection() {
               href={lang === 'en' ? '/andres_caso_iglesias_EN.pdf' : '/andres_caso_iglesias_Es.pdf'}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 rounded-lg font-medium transition-colors text-white"
+              className="px-6 py-3 bg-emerald-700 hover:bg-emerald-800 rounded-lg font-medium transition-colors text-white"
             >
               {t(lang, 'home.resume')}
             </a>
@@ -131,7 +131,7 @@ function SkillsSection() {
       </div>
       <div className="w-full max-w-screen-2xl mx-auto">
         <div className="mb-8">
-          <h3 className="text-xl min-[1440px]:text-2xl font-semibold text-teal-600 dark:text-teal-400 mb-4 max-w-4xl mx-auto text-center">
+          <h3 className="text-xl min-[1440px]:text-2xl font-semibold text-teal-700 dark:text-teal-400 mb-4 max-w-4xl mx-auto text-center">
             {t(lang, 'home.skillsCybersecurity')}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -160,7 +160,7 @@ function SkillsSection() {
           </div>
         </div>
         <div>
-          <h3 className="text-xl min-[1440px]:text-2xl font-semibold text-teal-600 dark:text-teal-400 mb-4 max-w-4xl mx-auto text-center">
+          <h3 className="text-xl min-[1440px]:text-2xl font-semibold text-teal-700 dark:text-teal-400 mb-4 max-w-4xl mx-auto text-center">
             {t(lang, 'home.skillsDevelopment')}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -232,7 +232,7 @@ function ContactSection() {
 function Footer() {
   const { lang } = useLanguage();
   return (
-    <footer className="py-8 px-6 bg-neutral-100 dark:bg-slate-950 text-center text-neutral-500 dark:text-slate-500 text-sm transition-colors duration-300">
+    <footer className="py-8 px-6 bg-neutral-100 dark:bg-slate-950 text-center text-neutral-600 dark:text-slate-400 text-sm transition-colors duration-300">
       <p>
         © {new Date().getFullYear()} Andrés Caso Iglesias. {t(lang, 'home.footerRights')}
       </p>

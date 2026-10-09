@@ -8,7 +8,7 @@ describe('t() function', () => {
     });
 
     it('returns the value for a nested key', () => {
-      expect(t('es', 'home.subtitle')).toBe('Desarrollador');
+      expect(t('es', 'home.subtitle')).toBe('Backend developer con enfoque en ciberseguridad');
     });
 
     it('returns the key itself when the key does not exist', () => {

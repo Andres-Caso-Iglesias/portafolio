@@ -31,22 +31,29 @@ const FOCUS_RING = [
   'dark:focus-visible:ring-offset-slate-900',
 ].join(' ');
 
+type ModalTabKey = 'challenge' | 'solution' | 'architecture' | 'circuits' | 'snippets';
+
 export default function Modal({ project, onClose }: ModalProps) {
   const { lang } = useLanguage();
   const dialogRef = useRef<HTMLDivElement>(null);
-  const [activeTab, setActiveTab] = useState<
-    'challenge' | 'solution' | 'architecture' | 'circuits' | 'snippets'
-  >('challenge');
+  const tabListRef = useRef<HTMLDivElement>(null);
+  const [activeTab, setActiveTab] = useState<ModalTabKey>('challenge');
+  const [focusedTab, setFocusedTab] = useState<ModalTabKey>('challenge');
   const [snippetsContent, setSnippetsContent] = useState<Snippet[]>([]);
   const [isLoadingSnippets, setIsLoadingSnippets] = useState(false);
 
+  const tabOrder: ModalTabKey[] = ['challenge', 'solution', 'architecture'];
+  if (project.images && project.images.length > 0) tabOrder.push('circuits');
+  if (project.snippetPaths && project.snippetPaths.length > 0) tabOrder.push('snippets');
+
   const handleClose = useCallback(() => {
     setActiveTab('challenge');
+    setFocusedTab('challenge');
     onClose();
   }, [onClose]);
 
   const handleTabChange = useCallback(
-    (tab: 'challenge' | 'solution' | 'architecture' | 'circuits' | 'snippets') => {
+    (tab: ModalTabKey) => {
       setActiveTab(tab);
       if (tab === 'snippets' && snippetsContent.length === 0 && !isLoadingSnippets) {
         setIsLoadingSnippets(true);
@@ -81,6 +88,58 @@ export default function Modal({ project, onClose }: ModalProps) {
       }
     };
   }, []);
+
+  // Scroll-lock: measure the scrollbar width BEFORE hiding it (measuring after
+  // returns 0). StrictMode-safe: each setup captures its own previous values.
+  useEffect(() => {
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    const previousOverflow = document.body.style.overflow;
+    const previousPaddingRight = document.body.style.paddingRight;
+
+    if (scrollbarWidth > 0) {
+      const computedPadding = parseFloat(window.getComputedStyle(document.body).paddingRight);
+      const basePadding = Number.isNaN(computedPadding) ? 0 : computedPadding;
+      document.body.style.paddingRight = `${basePadding + scrollbarWidth}px`;
+    }
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.body.style.paddingRight = previousPaddingRight;
+    };
+  }, []);
+
+  const focusTab = (tab: ModalTabKey) => {
+    setFocusedTab(tab);
+    tabListRef.current?.querySelector<HTMLElement>(`#modal-tab-${tab}`)?.focus();
+  };
+
+  // Manual activation: arrows only move focus, Enter/Space/click activates.
+  const handleTabListKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const count = tabOrder.length;
+    const current = tabOrder.indexOf(focusedTab);
+    let next: number;
+
+    switch (e.key) {
+      case 'ArrowRight':
+        next = current < 0 ? 0 : (current + 1) % count;
+        break;
+      case 'ArrowLeft':
+        next = current < 0 ? count - 1 : (current - 1 + count) % count;
+        break;
+      case 'Home':
+        next = 0;
+        break;
+      case 'End':
+        next = count - 1;
+        break;
+      default:
+        return;
+    }
+
+    e.preventDefault();
+    focusTab(tabOrder[next]);
+  };
 
   const handleOverlayKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Escape') {
@@ -166,9 +225,25 @@ export default function Modal({ project, onClose }: ModalProps) {
             )}
           </div>
 
-          <div className="flex flex-wrap gap-2 mb-4 border-b border-neutral-200 dark:border-slate-700 pb-2">
+          <div
+            ref={tabListRef}
+            role="tablist"
+            tabIndex={-1}
+            aria-orientation="horizontal"
+            aria-label={lang === 'en' ? 'Project detail sections' : 'Secciones de detalle'}
+            onKeyDown={handleTabListKeyDown}
+            className="flex flex-wrap gap-2 mb-4 border-b border-neutral-200 dark:border-slate-700 pb-2"
+          >
             <button
-              onClick={() => handleTabChange('challenge')}
+              role="tab"
+              id="modal-tab-challenge"
+              aria-selected={activeTab === 'challenge'}
+              aria-controls="modal-tabpanel"
+              tabIndex={focusedTab === 'challenge' ? 0 : -1}
+              onClick={() => {
+                setFocusedTab('challenge');
+                handleTabChange('challenge');
+              }}
               className={`px-3 py-1 text-xs rounded transition-colors ${FOCUS_RING} ${
                 activeTab === 'challenge'
                   ? 'bg-blue-600 text-white'
@@ -178,7 +253,15 @@ export default function Modal({ project, onClose }: ModalProps) {
               {lang === 'en' ? 'Challenge' : 'Reto'}
             </button>
             <button
-              onClick={() => handleTabChange('solution')}
+              role="tab"
+              id="modal-tab-solution"
+              aria-selected={activeTab === 'solution'}
+              aria-controls="modal-tabpanel"
+              tabIndex={focusedTab === 'solution' ? 0 : -1}
+              onClick={() => {
+                setFocusedTab('solution');
+                handleTabChange('solution');
+              }}
               className={`px-3 py-1 text-xs rounded transition-colors ${FOCUS_RING} ${
                 activeTab === 'solution'
                   ? 'bg-blue-600 text-white'
@@ -188,7 +271,15 @@ export default function Modal({ project, onClose }: ModalProps) {
               {lang === 'en' ? 'Solution' : 'Solución'}
             </button>
             <button
-              onClick={() => handleTabChange('architecture')}
+              role="tab"
+              id="modal-tab-architecture"
+              aria-selected={activeTab === 'architecture'}
+              aria-controls="modal-tabpanel"
+              tabIndex={focusedTab === 'architecture' ? 0 : -1}
+              onClick={() => {
+                setFocusedTab('architecture');
+                handleTabChange('architecture');
+              }}
               className={`px-3 py-1 text-xs rounded transition-colors ${FOCUS_RING} ${
                 activeTab === 'architecture'
                   ? 'bg-blue-600 text-white'
@@ -199,7 +290,15 @@ export default function Modal({ project, onClose }: ModalProps) {
             </button>
             {project.images && project.images.length > 0 && (
               <button
-                onClick={() => handleTabChange('circuits')}
+                role="tab"
+                id="modal-tab-circuits"
+                aria-selected={activeTab === 'circuits'}
+                aria-controls="modal-tabpanel"
+                tabIndex={focusedTab === 'circuits' ? 0 : -1}
+                onClick={() => {
+                  setFocusedTab('circuits');
+                  handleTabChange('circuits');
+                }}
                 className={`px-3 py-1 text-xs rounded transition-colors ${FOCUS_RING} ${
                   activeTab === 'circuits'
                     ? 'bg-blue-600 text-white'
@@ -211,7 +310,15 @@ export default function Modal({ project, onClose }: ModalProps) {
             )}
             {project.snippetPaths && project.snippetPaths.length > 0 && (
               <button
-                onClick={() => handleTabChange('snippets')}
+                role="tab"
+                id="modal-tab-snippets"
+                aria-selected={activeTab === 'snippets'}
+                aria-controls="modal-tabpanel"
+                tabIndex={focusedTab === 'snippets' ? 0 : -1}
+                onClick={() => {
+                  setFocusedTab('snippets');
+                  handleTabChange('snippets');
+                }}
                 className={`px-3 py-1 text-xs rounded transition-colors ${FOCUS_RING} ${
                   activeTab === 'snippets'
                     ? 'bg-blue-600 text-white'
@@ -223,7 +330,15 @@ export default function Modal({ project, onClose }: ModalProps) {
             )}
           </div>
 
-          <div className="text-neutral-700 dark:text-slate-300 text-base">
+          <div
+            role="tabpanel"
+            id="modal-tabpanel"
+            aria-labelledby={`modal-tab-${activeTab}`}
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- APG: tabpanel gets focus so its content is announced
+            tabIndex={0}
+            aria-busy={activeTab === 'snippets' && isLoadingSnippets}
+            className="text-neutral-700 dark:text-slate-300 text-base"
+          >
             {activeTab === 'challenge' && (
               <div className="prose prose-neutral dark:prose-invert max-w-none">
                 <p>
