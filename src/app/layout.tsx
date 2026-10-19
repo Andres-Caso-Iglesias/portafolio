@@ -9,6 +9,7 @@ import { LanguageProvider, type LocaleData } from '@/lib/i18n';
 import { getLangFromCookie } from '@/lib/i18n-server';
 import { ThemeProvider } from '@/lib/theme';
 import { getThemeFromCookie } from '@/lib/theme-server';
+import { siteUrl } from '@/lib/site';
 import locales from '@/i18n/locales.json';
 
 const cabinetGrotesk = localFont({
@@ -25,8 +26,6 @@ const cabinetGrotesk = localFont({
   variable: '--font-cabinet-grotesk',
   display: 'swap',
 });
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://andres-caso-portfolio.vercel.app';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

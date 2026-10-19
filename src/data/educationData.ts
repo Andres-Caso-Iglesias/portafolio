@@ -47,7 +47,7 @@ export const educationData: EducationItem[] = [
     details: [
       'Proyecto final: Aplicación de gestión de tareas multiplataforma (Flutter + Firebase)',
       'Certificación MongoDB Java Developer Path',
-      'Especialización en desarrollo multiplataforme ',
+      'Especialización en desarrollo multiplataforma',
     ],
   },
   {

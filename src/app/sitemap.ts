@@ -1,7 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { projects, projectWithoutDetailPage } from '@/data/projectsData';
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://andres-caso-portfolio.vercel.app';
+import { siteUrl } from '@/lib/site';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

@@ -7,8 +7,7 @@ import { getLangFromCookie } from '@/lib/i18n-server';
 import { t } from '@/lib/translate';
 import SnippetViewer from '@/components/SnippetViewer';
 import BackButton from '@/components/BackButton';
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://andres-caso-portfolio.vercel.app';
+import { siteUrl } from '@/lib/site';
 
 export const dynamicParams = false;
 
