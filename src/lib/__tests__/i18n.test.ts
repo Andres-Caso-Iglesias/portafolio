@@ -1,5 +1,15 @@
 import { describe, it, expect } from 'vitest';
 import { t } from '@/lib/i18n';
+import locales from '@/i18n/locales.json';
+
+function collectLeafKeys(obj: unknown, prefix = ''): string[] {
+  if (typeof obj !== 'object' || obj === null) {
+    return [prefix];
+  }
+  return Object.entries(obj as Record<string, unknown>).flatMap(([key, value]) =>
+    collectLeafKeys(value, prefix ? `${prefix}.${key}` : key)
+  );
+}
 
 describe('t() function', () => {
   describe('simple key lookup', () => {
@@ -8,7 +18,9 @@ describe('t() function', () => {
     });
 
     it('returns the value for a nested key', () => {
-      expect(t('es', 'home.subtitle')).toBe('Backend developer con enfoque en ciberseguridad');
+      expect(t('es', 'home.subtitle')).toBe(
+        'Backend developer bilingüe nativo con enfoque en ciberseguridad'
+      );
     });
 
     it('returns the key itself when the key does not exist', () => {
@@ -66,5 +78,36 @@ describe('t() function', () => {
       const result = t('es', 'a.b.c.d');
       expect(result).toBe('a.b.c.d');
     });
+  });
+});
+
+describe('i18n parity (ES/EN)', () => {
+  const esKeys = collectLeafKeys(locales.es).sort();
+  const enKeys = collectLeafKeys(locales.en).sort();
+
+  it('has at least one key in each language', () => {
+    expect(esKeys.length).toBeGreaterThan(0);
+    expect(enKeys.length).toBeGreaterThan(0);
+  });
+
+  it('has no keys missing in EN that exist in ES', () => {
+    const missingInEn = esKeys.filter(key => !enKeys.includes(key));
+    expect(missingInEn).toEqual([]);
+  });
+
+  it('has no keys missing in ES that exist in EN', () => {
+    const missingInEs = enKeys.filter(key => !esKeys.includes(key));
+    expect(missingInEs).toEqual([]);
+  });
+
+  it('has identical key sets in both languages', () => {
+    expect(enKeys).toEqual(esKeys);
+  });
+
+  it('has no empty values in either language', () => {
+    const emptyEs = esKeys.filter(key => t('es', key).trim() === '');
+    const emptyEn = enKeys.filter(key => t('en', key).trim() === '');
+    expect(emptyEs).toEqual([]);
+    expect(emptyEn).toEqual([]);
   });
 });

@@ -22,6 +22,25 @@ Medida el 19 de octubre de 2026 contra `https://portafolio-livid-two-33.vercel.a
 | Cross-Origin-Embeder-Policy | No presente. Añadir solo si no rompe recursos cross-origin. |
 | X-XSS-Protection | Obsoleta; no recomendada por OWASP. No añadir. |
 
+## Decisión sobre CSP con nonce (Fase 0b, 2026-10-19)
+
+**Decisión: no implementar CSP con nonce en el MVP.** Se cierran los huecos baratos (`object-src 'none'`, `upgrade-insecure-requests`) y se deja `unsafe-inline` en `script-src`.
+
+Razones:
+
+1. El único XSS surface real (enlaces markdown del chat) ya está mitigado: `parseLinks` en `ChatMessage.tsx` rechaza `javascript:`, `data:`, `vbscript:`, `file:` y `about:`.
+2. El nonce exige middleware + render dinámic por petición; en la propuesta `security-hardening.md` el riesgo "CSP breaks Next.js runtime scripts" está clasificado Medium/High.
+3. `style-src` exigiría `unsafe-inline` de todos modos por Tailwind, por lo que el nonce solo cubriría `script-src`.
+4. El sitio no tiene datos de usuarios ni contenido generado por terceros: el beneficio marginal no compensa el riesgo de romper el runtime en el lanzamiento.
+
+Revisar si el sitio incorpora contenido generado por usuarios o si se añade más script inline en el futuro.
+
+### Cambios aplicados (Fase 0b)
+
+- `object-src 'none'` añadido a la CSP.
+- `upgrade-insecure-requests` añadido a la CSP.
+- Flag `NEXT_PUBLIC_AI_ENABLED=false` por defecto: la terminal/chat no llama a `/api/chat` (verifica de que Gemini sigue dormant sin clave).
+
 ## Observaciones
 
 - `unsafe-inline` en `script-src`: sustituir por nonce requiere render dinámico (ver §4 del plan v3.2: decidir tras estas mediciones si compensa).

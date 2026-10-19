@@ -7,6 +7,11 @@ import { defaultChatConfig } from '@/data/chat/config';
 import { welcomeMessage, quickActions } from '@/data/chat';
 import { type ProjectData } from '@/components/chat/ProjectCard';
 
+// AI disabled by default for the MVP: the terminal/chat resolves everything
+// with the local rule-based matcher. Set NEXT_PUBLIC_AI_ENABLED=true to
+// activate the /api/chat Gemini endpoint (requires GOOGLE_AI_API_KEY).
+const AI_ENABLED = process.env.NEXT_PUBLIC_AI_ENABLED === 'true';
+
 // ──────────────────────────────────────────────────────────────
 // Message Interface
 // ──────────────────────────────────────────────────────────────
@@ -106,6 +111,7 @@ export function useChat(): ChatState & ChatActions {
   // AI fetcher: calls the server API route, returns null on failure
   const fetchAIResponse = useCallback(
     async (message: string, msgLang: string): Promise<string | null> => {
+      if (!AI_ENABLED) return null;
       try {
         const res = await fetch('/api/chat', {
           method: 'POST',

@@ -35,12 +35,18 @@ function collectKeys(node, prefix) {
 try {
   // ─── ES basic keys ─────────────────────────────────────────────
   assert.strictEqual(t('es', 'home.title'), 'Andrés Caso Iglesias');
-  assert.strictEqual(t('es', 'home.subtitle'), 'Desarrollador');
+  assert.ok(
+    t('es', 'home.subtitle').includes('Backend developer'),
+    'es home.subtitle must mention "Backend developer"'
+  );
   assert.ok(t('es', 'home.seoTitle').length > 0);
 
   // ─── EN basic keys ─────────────────────────────────────────────
   assert.strictEqual(t('en', 'home.title'), 'Andrés Caso Iglesias');
-  assert.strictEqual(t('en', 'home.subtitle'), 'Developer');
+  assert.ok(
+    t('en', 'home.subtitle').includes('backend developer'),
+    'en home.subtitle must mention "backend developer"'
+  );
   assert.ok(t('en', 'home.seoTitle').length > 0);
 
   // ─── PINNED: "Seniority Hibrido" (decision #44, 2026-05-10) ─────

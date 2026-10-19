@@ -53,9 +53,11 @@ function getCspHeader(): string {
     "img-src 'self' data: blob:", // Allow data URIs for images
     "font-src 'self' data:", // Local fonts + data URIs
     "connect-src 'self'", // API calls to same origin
+    "object-src 'none'", // No plugins (Flash, PDF, etc.)
     "frame-ancestors 'none'", // Prevent clickjacking
     "base-uri 'self'",
     "form-action 'self'",
+    "upgrade-insecure-requests",
   ].join('; ');
 }
 
