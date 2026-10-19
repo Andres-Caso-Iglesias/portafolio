@@ -2,39 +2,41 @@
 
 > **Proposito**: Este archivo es el puente entre sesiones. Si arrancas una sesion nueva en este proyecto, lee este archivo PRIMERO. Te ahorra 20 minutos de "que carajo hicimos la ultima vez".
 >
-> **Ultima actualizacion**: Julio 2026, revision de documentacion completa.
+> **Ultima actualizacion**: Octubre 2026 — rediseño v3.2, Fase 1 (casos de estudio) completada.
 
 ---
 
 ## TL;DR (30 segundos)
 
-El proyecto esta **deployado en produccion**. Sprint production-readiness completado y mergado a `main`. Gemini AI integrado en el chat con rate limiting y fallback rule-based.
+El proyecto esta **deployado en produccion** (via `main`). El rediseño v3.2 se ejecuta en la rama `rediseño`: Fase 0a y 0b completadas, **Fase 1 (casos de estudio) completada y empujada**.
 
 **Estado actual:**
 
-- Branch `main` deployada en produccion
-- Gemini AI integrado en chat (`/api/chat/route.ts`) con rate limiting, contexto del perfil y fallback rule-based
-- 268 unit tests + 40 E2E tests + CI/CD completo
-- 46 archivos de respuestas chat (refactorizado desde monolito 2300+ lineas)
+- Branch activa: `rediseño` (commits `2cdd506`, `d227667`, `a8ac6d3` pushados a `origin/rediseño`); NO tocar `main` hasta el lanzamiento del MVP
+- Fase 1: 3 casos de estudio en `/case-studies/[slug]` (QReaper, VulnPrio, Security Header Scanner) con enlace desde la ficha de proyecto y respuestas de chat sincronizadas
+- Gemini AI **dormido**: sin `GOOGLE_AI_API_KEY` en Vercel, chat 100% rule-based (flag `NEXT_PUBLIC_AI_ENABLED=false`)
+- 298 unit tests + 51 E2E tests, todas las puertas en verde (lint, typecheck, smoke, build)
 
 ---
 
 ## Estado del Repo
 
-| Recurso       | Estado                                       |
-| ------------- | -------------------------------------------- |
-| Branch actual | `main`                                       |
-| `main`        | Deployado, al dia con `origin/main`          |
-| Working tree  | Limpio                                       |
-| Ultimo commit | `04b0f2f fix: dont trust IA it boke he lint` |
+| Recurso       | Estado                                                        |
+| ------------- | ------------------------------------------------------------- |
+| Branch actual | `rediseño`                                                    |
+| `main`        | Deployado en produccion (intacto durante el rediseño)          |
+| `rediseño`    | Al dia con `origin/rediseño`                                  |
+| Working tree  | Limpio                                                        |
+| Ultimo commit | `a8ac6d3 feat(fase-1): anade casos de estudio...`             |
 
-Commits recientes:
+Commits recientes (rama `rediseño`):
 
 ```bash
-git log --oneline -5
-# 04b0f2f fix: dont trust IA it boke he lint
-# 0dd39ff fix: cambio keywords por error en tests
-# cd849d8 fix: reajustes respuestas chat, cambio colores botones y sub botones enlace a hack platforms
+git log --oneline -4
+# a8ac6d3 feat(fase-1): anade casos de estudio de QReaper, VulnPrio y Security Header Scanner
+# d227667 feat(fase-0b): refuerzo de cabeceras, flag AI, tokens de diseno e i18n
+# 2cdd506 fix(seo): unifica siteUrl en constante compartida y corrige errata
+# ce59caa feat: update cv's
 ```
 
 ---
@@ -43,7 +45,7 @@ git log --oneline -5
 
 | Paquete      | Version        |
 | ------------ | -------------- |
-| Next.js      | 16.2.1         |
+| Next.js      | 16.4.0         |
 | React        | 19.2.4         |
 | TypeScript   | 5.9.3 (strict) |
 | Tailwind CSS | 4.2.2          |
@@ -66,8 +68,8 @@ npm run start        # Next.js production server
 npm run lint         # ESLint
 npm run typecheck    # TypeScript --noEmit
 npm run test         # Smoke tests (i18n + seo)
-npm run test:unit    # Vitest unit tests (268 tests)
-npm run test:e2e     # Playwright E2E tests (40 tests)
+npm run test:unit    # Vitest unit tests (298 tests)
+npm run test:e2e     # Playwright E2E tests (51 tests)
 ```
 
 ---
@@ -75,20 +77,22 @@ npm run test:e2e     # Playwright E2E tests (40 tests)
 ## Estructura de Tests
 
 ```
-/src/lib/__tests__/  # 7 archivos, 268 tests (265 en verde, 3 fallos preexistentes)
+/src/lib/__tests__/  # 8 archivos, 298 tests (todos en verde)
   utils.test.ts           # 6 tests - cn()
   timelineUtils.test.ts   # 71 tests - fechas, duraciones, posiciones
   chatUtils.test.ts       # 117 tests - matching, respuestas, pipeline
-  i18n.test.ts            # 13 tests - traducciones, interpolacion
+  i18n.test.ts            # 18 tests - traducciones, interpolacion, paridad ES/EN
   snippetLoader.test.ts   # 22 tests - deteccion idioma, carga server
   snippetLoaderClient.test.ts # 23 tests - deteccion idioma, carga client
-  projectsChatSync.test.ts # 16 tests - sync projectsData con secciones de chat
+  projectsChatSync.test.ts # 18 tests - sync projectsData con secciones de chat
+  caseStudyChatSync.test.ts # 23 tests - sync caseStudiesData con respuestas de chat
 
-/tests/e2e/  # 4 archivos, 40 tests (40 aprobados en chromium, 0 flaky)
+/tests/e2e/  # 5 archivos, 51 tests (aprobados en chromium, webkit y firefox)
   navigation.spec.ts      # 9 tests - home, secciones, footer
   i18n.spec.ts            # 5 tests - toggle idioma, persistencia
   projects.spec.ts        # 16 tests - cards, modal, slug pages
   chat.spec.ts            # 10 tests - toggle, mensajes, quick actions
+  case-studies.spec.ts    # 9 tests - secciones, ERD, back-link, 404, EN
   tsconfig.json           # Config TS para tests E2E
 ```
 
@@ -115,6 +119,29 @@ npm run test:e2e     # Playwright E2E tests (40 tests)
 - `sitemap.ts`, `robots.ts`, `opengraph-image.tsx` (1200x630)
 - JSON-LD Person en `layout.tsx`
 - Favicons: `icon.svg` + `apple-icon.svg` (Next 16 convention) + `favicon.ico` (legacy)
+
+---
+
+## Pendientes de Revision y Material (Fase 1 - casos de estudio)
+
+> Registrado en Octubre 2026. Estos dos items quedan **abiertos a proposito**: el codigo esta completo y verificado, pero el contenido y el material visual dependen de revision/produccion del autor.
+
+### 1. Revisar las secciones "Que haria distinto" (REDACCION PENDIENTE DEL AUTOR)
+
+Los 3 casos de estudio (`src/data/caseStudiesData.ts`) incluyen la seccion `lessons` ("Que haria distinto" / "What I would do differently"). **Esas secciones fueron redactadas por IA a partir de la arquitectura existente** en `projectsData.ts`; no pasaron por la voz profesional de Andres.
+
+- **Que falta**: que el autor lea las 3 secciones (`lessons` de `qreaper`, `vulnprio` y `auditoria-web`) y las reescriba/refine en primera persona con su criterio real.
+- **Por que importa**: es contenido de posicionamiento profesional dirigido a reclutadores y clientes; la voz autentica pesa mas que la correccion tecnica.
+- **Donde tocar**: `src/data/caseStudiesData.ts`, campo `lessons` de cada caso. Bilingue (ES + EN).
+- **No rompe nada**: cambiar texto no afecta tests (las suites solo validan presencia y longitud, no contenido exacto).
+
+### 2. Capturas / GIFs de proyectos (MATERIAL PENDIENTE DEL AUTOR)
+
+Los casos de estudio y las fichas de proyecto funcionan sin imagenes de interfaz, pero ganarian mucho con material visual.
+
+- **Mas impactantes**: VulnPrio (dashboard de priorizacion / scoring) y Security Header Scanner (resultado del escaneo con score 0-100).
+- **Donde ponerlo**: `/public/screenshots/` (directorio aun no existe). En `caseStudiesData.ts` se puede anadir un campo opcional tipo `gallery` si se quiere un carrusel; hoy la pagina ya renderiza el ERD si `erdPath` esta presente.
+- **Nota**: QReaper no tiene ERD (es un pipeline, no una base de datos); su representacion visual natural seria un diagrama de las 5 etapas o un GIF del decode.
 
 ---
 
@@ -160,9 +187,9 @@ git log --oneline -10
 git diff main..dev --stat
 
 # Tests
-npm run test:unit                    # 268 unit tests
+npm run test:unit                    # 298 unit tests
 npx vitest run --reporter=verbose    # verbose output
-npm run test:e2e                     # 40 E2E tests
+npm run test:e2e                     # 51 E2E tests
 npx playwright test --project=chromium  # solo chromium (rapido)
 npx playwright test --ui             # UI interactiva
 
