@@ -80,6 +80,17 @@
       "quickActions": "Preguntas frecuentes:",
       "placeholder": "Escribe tu pregunta...",
       "typing": "Escribiendo..."
+    },
+    "caseStudy": {
+      "contextTitle": "Contexto",
+      "problemTitle": "Problema",
+      "decisionsTitle": "Decisiones técnicas",
+      "architectureTitle": "Arquitectura",
+      "resultsTitle": "Resultados",
+      "lessonsTitle": "Qué haría distinto",
+      "backToProject": "Ver ficha del proyecto",
+      "readCaseStudy": "Leer caso de estudio",
+      "caseStudyBadge": "Caso de estudio"
     }
   },
   "en": {
@@ -163,6 +174,17 @@
       "quickActions": "Quick questions:",
       "placeholder": "Type your question...",
       "typing": "Typing..."
+    },
+    "caseStudy": {
+      "contextTitle": "Context",
+      "problemTitle": "Problem",
+      "decisionsTitle": "Technical decisions",
+      "architectureTitle": "Architecture",
+      "resultsTitle": "Results",
+      "lessonsTitle": "What I would do differently",
+      "backToProject": "View project page",
+      "readCaseStudy": "Read case study",
+      "caseStudyBadge": "Case study"
     }
   }
 }

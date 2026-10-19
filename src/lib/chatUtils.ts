@@ -67,7 +67,7 @@ const projectsData: Record<string, Record<Lang, ProjectData>> = {
       githubUrl: 'https://github.com/Andres-Caso-Iglesias/Gestor_Huertos_Urbanos',
     },
   },
-  'project-auditoria': {
+  'project-auditoria-web': {
     es: {
       name: 'Security Header Scanner',
       description:
@@ -83,6 +83,38 @@ const projectsData: Record<string, Record<Lang, ProjectData>> = {
       techStack: 'NestJS 11, React 19, TypeScript, OWASP',
       detailUrl: 'https://andres-caso-iglesias.vercel.app/projects/auditoria-web',
       githubUrl: 'https://github.com/Andres-Caso-Iglesias/Auditoria-web',
+    },
+  },
+  'project-qreaper': {
+    es: {
+      name: 'QReaper',
+      description:
+        'Pipeline anti-quishing de 5 etapas para detectar URLs maliciosas en QR codes de emails, PDFs e imágenes. Desarrollé el módulo de decodificación con 6 técnicas de preprocesamiento y doble motor de PDF.',
+      techStack: 'Python, OpenCV, pyzbar, Playwright, ReportLab, PyMuPDF',
+      detailUrl: 'https://andres-caso-iglesias.vercel.app/projects/qreaper',
+    },
+    en: {
+      name: 'QReaper',
+      description:
+        '5-stage anti-phishing pipeline to detect malicious URLs in QR codes from emails, PDFs, and images. I built the decoding module with 6 preprocessing techniques and a dual PDF engine.',
+      techStack: 'Python, OpenCV, pyzbar, Playwright, ReportLab, PyMuPDF',
+      detailUrl: 'https://andres-caso-iglesias.vercel.app/projects/qreaper',
+    },
+  },
+  'project-vulnprio': {
+    es: {
+      name: 'VulnPrio',
+      description:
+        'SaaS multi-tenant para priorización de vulnerabilidades en PYMEs: pipeline de 5 etapas, scoring determinístico + IA, 24 servicios, compliance NIS2 + ENS, billing Stripe. Repositorio privado.',
+      techStack: 'Turborepo, Express.js, Next.js 14, PostgreSQL 16, Redis 7, Claude AI, Stripe',
+      detailUrl: 'https://andres-caso-iglesias.vercel.app/projects/vulnprio',
+    },
+    en: {
+      name: 'VulnPrio',
+      description:
+        'Multi-tenant SaaS for SME vulnerability prioritization: 5-stage pipeline, deterministic scoring + AI, 24 services, NIS2 + ENS compliance, Stripe billing. Private repository.',
+      techStack: 'Turborepo, Express.js, Next.js 14, PostgreSQL 16, Redis 7, Claude AI, Stripe',
+      detailUrl: 'https://andres-caso-iglesias.vercel.app/projects/vulnprio',
     },
   },
   'project-portfolio': {

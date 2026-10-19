@@ -10,6 +10,8 @@ import { projectBolsaResponse } from './responses/project-bolsa';
 import { projectFoodbitesResponse } from './responses/project-foodbites';
 import { projectHuertosResponse } from './responses/project-huertos';
 import { projectAuditoriaResponse } from './responses/project-auditoria';
+import { projectQreaperResponse } from './responses/project-qreaper';
+import { projectVulnprioResponse } from './responses/project-vulnprio';
 import { projectPortfolioResponse } from './responses/project-portfolio';
 import { cybersecurityResponse } from './responses/cybersecurity';
 import { certificationsResponse } from './responses/certifications';
@@ -60,10 +62,12 @@ import { opensourceResponse } from './responses/opensource';
 
 export const allResponses: ChatResponse[] = [
   // ─── PROJECT-SPECIFIC (highest priority - most specific keywords) ───
+  projectQreaperResponse,
+  projectVulnprioResponse,
+  projectAuditoriaResponse,
   projectBolsaResponse,
   projectFoodbitesResponse,
   projectHuertosResponse,
-  projectAuditoriaResponse,
   projectPortfolioResponse,
 
   // ─── GENERAL PROJECTS LIST ───

@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 import { projects, projectWithoutDetailPage } from '@/data/projectsData';
+import { getCaseStudyForProject } from '@/data/caseStudiesData';
 import { loadSnippetsServer } from '@/lib/snippetLoader';
 import { getLangFromCookie } from '@/lib/i18n-server';
 import { t } from '@/lib/translate';
@@ -146,11 +148,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const role = isEn && project.enRole ? project.enRole : project.role;
   const impact = isEn && project.enImpact ? project.enImpact : project.impact;
 
+  const caseStudy = getCaseStudyForProject(slug);
+
   const hasCtaContent =
     Boolean(project.github) ||
     Boolean(project.live) ||
     (project.links?.length ?? 0) > 0 ||
-    Boolean(project.statusNote);
+    Boolean(project.statusNote) ||
+    Boolean(caseStudy);
 
   const snippets =
     project.snippetPaths && project.snippetPaths.length > 0
@@ -396,12 +401,17 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
       {hasCtaContent && (
         <div className="mt-12 flex flex-wrap items-center gap-4">
+          {caseStudy && (
+            <Link href={`/case-studies/${caseStudy.slug}`} className={PRIMARY_CTA}>
+              {t(lang, 'caseStudy.readCaseStudy')}
+            </Link>
+          )}
           {project.github && (
             <a
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className={PRIMARY_CTA}
+              className={caseStudy ? SECONDARY_CTA : PRIMARY_CTA}
             >
               {t(lang, 'project.github')}
             </a>
@@ -411,7 +421,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               href={project.live}
               target="_blank"
               rel="noopener noreferrer"
-              className={SECONDARY_CTA}
+              className={caseStudy ? GHOST_CTA : SECONDARY_CTA}
             >
               {t(lang, 'project.live')}
             </a>

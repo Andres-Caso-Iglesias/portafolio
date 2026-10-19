@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { projects, projectWithoutDetailPage } from '@/data/projectsData';
+import { caseStudies } from '@/data/caseStudiesData';
 import { siteUrl } from '@/lib/site';
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -35,5 +36,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     }));
 
-  return [...staticUrls, ...projectUrls];
+  const caseStudyUrls: MetadataRoute.Sitemap = caseStudies.map(cs => ({
+    url: `${siteUrl}/case-studies/${cs.slug}`,
+    lastModified: now,
+    changeFrequency: 'monthly',
+    priority: 0.7,
+    alternates: {
+      languages: {
+        es: `${siteUrl}/case-studies/${cs.slug}?lang=es`,
+        en: `${siteUrl}/case-studies/${cs.slug}?lang=en`,
+      },
+    },
+  }));
+
+  return [...staticUrls, ...projectUrls, ...caseStudyUrls];
 }
