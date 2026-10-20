@@ -111,3 +111,59 @@ describe('i18n parity (ES/EN)', () => {
     expect(emptyEn).toEqual([]);
   });
 });
+
+describe('terminal and secrets dictionary coverage', () => {
+  const terminalOutputKeys = [
+    'terminal.helpBody',
+    'terminal.whoami',
+    'terminal.skills',
+    'terminal.contact',
+    'terminal.projectsEmpty',
+    'terminal.langUsage',
+  ];
+
+  it('resolves every terminal command output key in both languages', () => {
+    for (const key of terminalOutputKeys) {
+      expect(t('es', key)).not.toBe(key);
+      expect(t('en', key)).not.toBe(key);
+    }
+  });
+
+  it('welcome message points to the help command in both languages', () => {
+    expect(t('es', 'terminal.welcome')).toContain('help');
+    expect(t('en', 'terminal.welcome')).toContain('help');
+  });
+
+  it('help body lists the lang command in both languages', () => {
+    expect(t('es', 'terminal.helpBody')).toContain('lang');
+    expect(t('en', 'terminal.helpBody')).toContain('lang');
+  });
+
+  it('secret messages are bilingual and not identical', () => {
+    for (const key of ['secrets.konamiOn', 'secrets.iddqd', 'secrets.consoleArt']) {
+      expect(t('es', key)).not.toBe(key);
+      expect(t('en', key)).not.toBe(key);
+      expect(t('es', key)).not.toBe(t('en', key));
+    }
+  });
+
+  it('honeypot joke invites to an interview in both languages', () => {
+    expect(t('es', 'honeypot.joke')).toContain('entrevista');
+    expect(t('en', 'honeypot.joke')).toContain('interview');
+  });
+
+  it('honeypot discloses the easter egg in both languages', () => {
+    expect(t('es', 'honeypot.footnote')).toContain('easter egg');
+    expect(t('en', 'honeypot.footnote')).toContain('easter egg');
+  });
+
+  it('teapot body is 418-themed in both languages', () => {
+    expect(t('es', 'teapot.body')).toContain('418');
+    expect(t('en', 'teapot.body')).toContain('418');
+  });
+
+  it('not-found hint mentions the Ctrl+K terminal shortcut', () => {
+    expect(t('es', 'notFound.terminalHint')).toContain('Ctrl+K');
+    expect(t('en', 'notFound.terminalHint')).toContain('Ctrl+K');
+  });
+});

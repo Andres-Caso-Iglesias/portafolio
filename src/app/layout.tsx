@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import Script from 'next/script';
 import './globals.css';
-import { Chat } from '@/components/chat/Chat';
+import { TerminalMount } from '@/components/terminal/TerminalMount';
+import { SecretWatcher } from '@/components/terminal/SecretWatcher';
 import SiteHeader from '@/components/SiteHeader';
 import LangRefresh from '@/components/LangRefresh';
 import { LanguageProvider, type LocaleData } from '@/lib/i18n';
@@ -137,7 +138,8 @@ export default async function RootLayout({
             <LangRefresh />
             <SiteHeader />
             {children}
-            <Chat />
+            <TerminalMount />
+            <SecretWatcher />
           </LanguageProvider>
         </ThemeProvider>
         <Script

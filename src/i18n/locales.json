@@ -83,18 +83,9 @@
       "copyCodeDone": "Copiado",
       "copyCodeAria": "Copiar código de {file}",
       "snippetsEmpty": "No hay snippets disponibles.",
-      "diagramTitle": "Arquitectura de módulos"
-    },
-    "chat": {
-      "dialogLabel": "Chat sobre el perfil de Andrés",
-      "open": "Abrir chat",
-      "close": "Cerrar chat",
-      "send": "Enviar mensaje",
-      "title": "Pinche de Andrés",
-      "subtitle": "Respuestas sobre su perfil",
-      "quickActions": "Preguntas frecuentes:",
-      "placeholder": "Escribe tu pregunta...",
-      "typing": "Escribiendo..."
+      "diagramTitle": "Arquitectura de módulos",
+      "viewDetail": "Ver detalle",
+      "stackLabel": "Stack"
     },
     "caseStudy": {
       "contextTitle": "Contexto",
@@ -106,6 +97,49 @@
       "backToProject": "Ver ficha del proyecto",
       "readCaseStudy": "Leer caso de estudio",
       "caseStudyBadge": "Caso de estudio"
+    },
+    "terminal": {
+      "dialogLabel": "Terminal de entrevista",
+      "open": "Abrir terminal",
+      "close": "Cerrar terminal",
+      "title": "Pinche CLI",
+      "subtitle": "asistente de perfil",
+      "placeholder": "Escribe un comando o pregunta...",
+      "send": "Ejecutar",
+      "typing": "Procesando...",
+      "welcome": "Pinche CLI v1.0 — terminal de entrevista de Andres\nEscribe 'help' para ver los comandos o pregúntale lo que quieras en lenguaje natural.",
+      "helpBody": "Comandos disponibles:\n  help / ayuda      - esta lista\n  whoami            - perfil resumido\n  projects          - lista de proyectos\n  skills            - habilidades destacadas\n  contact           - canales de contacto\n  lang es|en        - cambiar idioma\n  clear / limpiar   - limpiar pantalla\nTambién puedes escribir cualquier pregunta en lenguaje natural.",
+      "whoami": "Andres Caso Iglesias — Backend Developer bilingüe nativo (español/inglés)\nCasi 20 años liderando equipos en hostelería y logística; ahora backend y ciberseguridad (máster en curso, preparando eJPT).\nStack: NestJS, Spring Boot, TypeScript, PostgreSQL, Docker.",
+      "skills": "Backend: NestJS, Spring Boot, .NET, TypeORM, JPA\nFrontend: React 19, Next.js 16, TypeScript\nCiberseguridad: NIS2, pentesting, security headers\nCloud y DevOps: Docker, Azure, CI/CD",
+      "contact": "LinkedIn: [andrescasoiglesias](https://www.linkedin.com/in/andrescasoiglesias/)\nGitHub: [Andres-Caso-Iglesias](https://github.com/Andres-Caso-Iglesias)\nEmail: [andrescasoiglesias@gmail.com](mailto:andrescasoiglesias@gmail.com)",
+      "projectsEmpty": "No hay proyectos cargados.",
+      "langUsage": "Uso: lang es|en",
+      "langChanged": "Idioma cambiado / Language changed."
+    },
+    "secrets": {
+      "konamiOn": "MODO RETRO ACTIVADO — impresionante, comandante.",
+      "konamiOff": "Modo retro desactivado.",
+      "iddqd": "DOS: 249. God mode. Aquí no hace falta: la seguridad es por diseño.",
+      "consoleArt": "Pinche CLI — console easter egg\nHay 6 secretos por la web. Ctrl+K abre la terminal; Konami y iddqd también existen."
+    },
+    "honeypot": {
+      "title": "Panel de administración",
+      "subtitle": "Acceso restringido",
+      "user": "Usuario",
+      "password": "Contraseña",
+      "submit": "Entrar",
+      "joke": "SQL injection detectada. Tranquilo, solo soy HTML. ¿Hablamos en una entrevista?",
+      "jokeLink": "Ir a contacto",
+      "footnote": "Esto es un easter egg, no hay nada real aquí."
+    },
+    "notFound": {
+      "heading": "Página no encontrada",
+      "body": "Lo sentimos, la página que buscas no existe. La URL puede haber cambiado o el enlace es incorrecto.",
+      "home": "Volver al inicio",
+      "terminalHint": "O prueba suerte con la terminal: pulsa Ctrl+K"
+    },
+    "teapot": {
+      "body": "418: Soy una tetera. Esta ruta no infiere café, solo chistes."
     }
   },
   "en": {
@@ -192,18 +226,9 @@
       "copyCodeDone": "Copied",
       "copyCodeAria": "Copy code from {file}",
       "snippetsEmpty": "No snippets available.",
-      "diagramTitle": "Module architecture"
-    },
-    "chat": {
-      "dialogLabel": "Chat about Andrés' profile",
-      "open": "Open chat",
-      "close": "Close chat",
-      "send": "Send message",
-      "title": "Andrés' Sous-chef",
-      "subtitle": "Profile information",
-      "quickActions": "Quick questions:",
-      "placeholder": "Type your question...",
-      "typing": "Typing..."
+      "diagramTitle": "Module architecture",
+      "viewDetail": "View details",
+      "stackLabel": "Stack"
     },
     "caseStudy": {
       "contextTitle": "Context",
@@ -215,6 +240,49 @@
       "backToProject": "View project page",
       "readCaseStudy": "Read case study",
       "caseStudyBadge": "Case study"
+    },
+    "terminal": {
+      "dialogLabel": "Interview terminal",
+      "open": "Open terminal",
+      "close": "Close terminal",
+      "title": "Pinche CLI",
+      "subtitle": "profile assistant",
+      "placeholder": "Type a command or question...",
+      "send": "Run",
+      "typing": "Processing...",
+      "welcome": "Pinche CLI v1.0 — Andres's interview terminal\nType 'help' to see the commands, or just ask anything in plain language.",
+      "helpBody": "Available commands:\n  help              - this list\n  whoami            - short profile\n  projects          - project list\n  skills            - key skills\n  contact           - contact channels\n  lang es|en        - switch language\n  clear             - clear screen\nYou can also type any question in plain language.",
+      "whoami": "Andres Caso Iglesias — native bilingual Backend Developer (Spanish/English)\nAlmost 20 years leading teams in hospitality and logistics; now backend and cybersecurity (master's in progress, preparing eJPT).\nStack: NestJS, Spring Boot, TypeScript, PostgreSQL, Docker.",
+      "skills": "Backend: NestJS, Spring Boot, .NET, TypeORM, JPA\nFrontend: React 19, Next.js 16, TypeScript\nCybersecurity: NIS2, pentesting, security headers\nCloud and DevOps: Docker, Azure, CI/CD",
+      "contact": "LinkedIn: [andrescasoiglesias](https://www.linkedin.com/in/andrescasoiglesias/?locale=en-US)\nGitHub: [Andres-Caso-Iglesias](https://github.com/Andres-Caso-Iglesias)\nEmail: [andrescasoiglesias@gmail.com](mailto:andrescasoiglesias@gmail.com)",
+      "projectsEmpty": "No projects loaded.",
+      "langUsage": "Usage: lang es|en",
+      "langChanged": "Idioma cambiado / Language changed."
+    },
+    "secrets": {
+      "konamiOn": "RETRO MODE ENGAGED — impressive, commander.",
+      "konamiOff": "Retro mode disabled.",
+      "iddqd": "DOS: 249. God mode. Not needed here: security is by design.",
+      "consoleArt": "Pinche CLI — console easter egg\nThere are 6 secrets around the site. Ctrl+K opens the terminal; Konami and iddqd exist too."
+    },
+    "honeypot": {
+      "title": "Administration panel",
+      "subtitle": "Restricted access",
+      "user": "User",
+      "password": "Password",
+      "submit": "Sign in",
+      "joke": "SQL injection detected. Don't worry, I'm just HTML. Shall we talk in an interview?",
+      "jokeLink": "Go to contact",
+      "footnote": "This is an easter egg, there is nothing real here."
+    },
+    "notFound": {
+      "heading": "Page not found",
+      "body": "Sorry, the page you are looking for does not exist. The URL may have changed or the link is incorrect.",
+      "home": "Go to home",
+      "terminalHint": "Or try your luck with the terminal: hit Ctrl+K"
+    },
+    "teapot": {
+      "body": "418: I'm a teapot. This route brews no coffee, only jokes."
     }
   }
 }

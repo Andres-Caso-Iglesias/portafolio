@@ -8,17 +8,14 @@ export * from './types';
 // Config
 export { defaultChatConfig, systemPrompts } from './config';
 
-// Fallback & Welcome
-export { fallbackResponse, welcomeMessage, affirmativeKeywords } from './fallback';
+// Fallback
+export { fallbackResponse, affirmativeKeywords } from './fallback';
 
 // Responses
 export { allResponses, getProjectResponses, getNonProjectResponses } from './allResponses';
 
 // Follow-ups
 export { followUpResponses } from './followUps';
-
-// Quick Actions
-export { quickActions } from './quickActions';
 
 // Individual responses (for direct import if needed)
 export { experienceResponse } from './responses/experience';

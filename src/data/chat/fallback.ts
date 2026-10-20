@@ -9,14 +9,6 @@ export const fallbackResponse: Record<Lang, string> = {
 };
 
 // ──────────────────────────────────────────────────────────────
-// Welcome Message
-// ──────────────────────────────────────────────────────────────
-export const welcomeMessage: Record<Lang, string> = {
-  es: '¡Hola! Soy el pinche de Andrés. Puedo responder preguntas sobre su perfil profesional. ¿Qué te gustaría saber?',
-  en: "Hello! I'm Andrés' sous-chef. I can answer questions about his professional profile. What would you like to know?",
-};
-
-// ──────────────────────────────────────────────────────────────
 // Affirmative Response Keywords (for detecting "yes" type answers)
 // ──────────────────────────────────────────────────────────────
 export const affirmativeKeywords: string[] = [

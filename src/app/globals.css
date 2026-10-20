@@ -149,3 +149,19 @@ section[id] {
     scroll-behavior: auto !important;
   }
 }
+
+/* Retro mode (Konami easter egg): CRT scanlines overlay */
+html.retro::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 255, 65, 0.03) 0px,
+    rgba(0, 255, 65, 0.03) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+}

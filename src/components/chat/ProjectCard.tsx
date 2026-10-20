@@ -1,5 +1,7 @@
 'use client';
 
+import { useLanguage, t } from '@/lib/i18n';
+
 // ──────────────────────────────────────────────────────────────
 // Project Data Interface
 // ──────────────────────────────────────────────────────────────
@@ -22,22 +24,22 @@ interface ProjectCardProps {
 // ProjectCard Component
 // ──────────────────────────────────────────────────────────────
 export function ProjectCard({ project }: ProjectCardProps) {
+  const { lang } = useLanguage();
+
   return (
-    <div className="bg-neutral-100 dark:bg-slate-800 rounded-lg p-3 mt-2 border border-neutral-300 dark:border-slate-600">
-      <h4 className="text-neutral-900 dark:text-white font-medium text-sm mb-1">{project.name}</h4>
-      <p className="text-neutral-700 dark:text-slate-300 text-xs mb-2 leading-relaxed">
-        {project.description}
-      </p>
-      <p className="text-neutral-500 dark:text-slate-400 text-xs mb-3">
-        <span className="text-neutral-400 dark:text-slate-500">Stack:</span> {project.techStack}
+    <div className="bg-slate-900 rounded-lg p-3 mt-2 border border-slate-700">
+      <h4 className="text-slate-100 font-medium text-sm mb-1">{project.name}</h4>
+      <p className="text-slate-300 text-xs mb-2 leading-relaxed">{project.description}</p>
+      <p className="text-slate-400 text-xs mb-3">
+        <span className="text-slate-500">{t(lang, 'project.stackLabel')}:</span> {project.techStack}
       </p>
       <div className="flex gap-2">
         <a
           href={project.detailUrl}
-          className="inline-flex items-center gap-1 px-3 py-1.5 text-xs bg-blue-600 text-white 
-                     rounded-md hover:bg-blue-700 transition-colors"
+          className="inline-flex items-center gap-1 px-3 py-1.5 text-xs bg-emerald-600 text-white 
+                     rounded-md hover:bg-emerald-500 transition-colors"
         >
-          Ver detalle
+          {t(lang, 'project.viewDetail')}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -54,8 +56,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
         {project.githubUrl && (
           <a
             href={project.githubUrl}
-            className="inline-flex items-center gap-1 px-3 py-1.5 text-xs bg-neutral-200 dark:bg-slate-700 text-neutral-700 dark:text-slate-300 
-                       rounded-md hover:bg-neutral-300 dark:hover:bg-slate-600 transition-colors"
+            className="inline-flex items-center gap-1 px-3 py-1.5 text-xs bg-slate-800 text-slate-300 
+                     rounded-md hover:bg-slate-700 transition-colors"
           >
             GitHub
             <svg
