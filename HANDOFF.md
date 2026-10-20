@@ -32,11 +32,11 @@ Commits recientes (rama `rediseño`):
 
 ```bash
 git log --oneline -5
-# feat(fase-3): terminal REPL, secretos, honeypot y teapot (hash en git log)
-# 421c8e6 docs(handoff): registra puertas verdes del gate visual de la fase 2
-# abd8234 docs(handoff): registra decisiones y hallazgos de la fase 2
-# 7694dc0 docs(handoff): registra auditorias de la fase 2 (axe y lighthouse)
-# 4724444 feat(fase-2): rediseño visual con header fijo, bento, timeline por etapas y animaciones
+# 45ce04b docs(handoff): registra cierre de la fase 3 y actualiza estructura y conteos
+# 0c6f396 feat(fase-3): terminal REPL, secretos, honeypot y teapot
+# 421c8e6 docs(handoff): ajusta estado del repo tras el push de cierre
+# abd8234 docs(agents): actualiza estructura de componentes y conteos de tests
+# 7694dc0 docs(handoff): registra cierre de la fase 2 y actualiza convenciones y conteos
 ```
 
 ---
