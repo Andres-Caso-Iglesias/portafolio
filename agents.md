@@ -48,16 +48,21 @@ Este portafolio presenta la trayectoria, proyectos y habilidades de Andres Caso 
           route.ts   # Endpoint Gemini AI con rate limiting e hybrid fallback
       /projects
         /[slug]       # Pagina detalle RSC con generateMetadata, generateStaticParams, snippets via loader
+      /case-studies
+        /[slug]       # Caso de estudio RSC (Fase 1): narrativa, decisiones, ERD
     /components       # Capa de Presentacion (JSX y estado UI exclusivamente)
       Modal.tsx       # Modal de vista rapida (usa createPortal)
       SnippetViewer.tsx # UI comun de snippets (Server-safe + boton copy Client)
-      Timeline.tsx    # Componente principal del timeline
+      SiteHeader.tsx  # Header sticky: skip-link, navegacion por anclas, ThemeToggle + LanguageSwitch (Fase 2)
+      Reveal.tsx      # Wrapper reveal-on-scroll con IntersectionObserver y fallback (Fase 2)
+      Timeline.tsx    # Seccion del timeline (agrupa por etapas via groupTimelineByStage)
       LanguageSwitch.tsx # Switch de idioma (setea cookie + localStorage + evento)
-      HomeClientContent.tsx # Hero/About/Skills/Projects/Contact/Footer
+      ThemeToggle.tsx  # Switch de tema oscuro/claro (setea cookie theme)
+      HomeClientContent.tsx # Hero/About/Skills/Projects/Contact/Footer (bento + ids de ancla)
       ProfileIntroText.tsx # Texto introductorio del perfil
       EducationSection.tsx # Seccion de educacion
-      ProjectsGrid.tsx # Grid de proyectos (usa createPortal)
-      /timeline      # Componentes especializados (TimelineDesktop, TimelineMobile)
+      ProjectsGrid.tsx # Grid bento de proyectos destacados + marquee (usa createPortal)
+      /timeline      # Timeline por etapas (Fase 2): StagePanel, TimelineStages, stageMeta
       /chat          # Componentes del chat interactivo
         Chat.tsx     # Contenedor principal del chat (dentro de LanguageProvider)
         ChatMessage.tsx # Presentacion de mensajes con parseo de markdown
@@ -69,6 +74,7 @@ Este portafolio presenta la trayectoria, proyectos y habilidades de Andres Caso 
       skillsData.ts   # Interfaz SkillCategory + skills array (8 categorias)
       timelineData.ts # Interfaz TimelineItem + rawTimelineData
       educationData.ts # Interfaz EducationItem + educationData
+      caseStudiesData.ts # 3 casos bilingues + getCaseStudy/getCaseStudyForProject (Fase 1)
       /chat           # Chat data modular (refactorizado desde monolito chatData.ts)
         index.ts              # Barrel exports
         types.ts              # Interfaces (ChatResponse, FollowUpResponse, etc.)
@@ -81,11 +87,12 @@ Este portafolio presenta la trayectoria, proyectos y habilidades de Andres Caso 
         /responses            # 46 archivos individuales (uno por categoria)
     /lib              # Capa de Logica (utilidades, calculos puros y helpers)
       utils.ts        # cn() utility (clsx + twMerge)
-      timelineUtils.ts # Funciones puras para fechas, duraciones, posiciones
+      timelineUtils.ts # Funciones puras: fechas, duraciones, posiciones, groupTimelineByStage
       chatUtils.ts    # Logica de matching, contexto conversacional y soporte IA
       i18n.ts         # BARREL Client-safe (re-exporta de i18n-context)
       i18n-context.tsx # "use client" - LanguageContext, useLanguage, LanguageProvider
       i18n-server.ts  # Server-only - getLangFromCookie (lee cookies() de next/headers)
+      theme-server.ts # getThemeFromCookie (server) - default 'dark'
       snippetLoader.ts       # Server: loadSnippetsServer (usa fs/promises, importa "server-only")
       snippetLoaderClient.ts # "use client" - loadSnippetsClient (usa fetch)
       rateLimiter.ts         # Rate limiter in-memory (IP + session) para API chat
@@ -199,7 +206,7 @@ Chatbot rule-based para responder preguntas de reclutadores sobre el perfil prof
 
 ### Convenciones de Nombrado
 
-- **Archivos**: `kebab-case` para componentes y utilidades (`timelineDesktop.tsx`, `dateUtils.ts`).
+- **Archivos**: `kebab-case` para utilidades (`timelineUtils.ts`, `dateUtils.ts`); componentes React en `PascalCase` (`StagePanel.tsx`, `HomeClientContent.tsx`) segun el codigo existente.
 - **Interfaces y Types**: `PascalCase` (`TimelineItem`, `SkillCategory`, `Project`).
 - **Constantes**: `UPPER_SNAKE_CASE` cuando aplique (poco usado en este proyecto).
 - **Funciones y Variables**: `camelCase` (`getTimelineItems`, `formatDate`).
@@ -276,22 +283,24 @@ Chatbot rule-based para responder preguntas de reclutadores sobre el perfil prof
 
 ### Unit Tests (Vitest)
 
-- **268 tests** en `/src/lib/__tests__/` (7 archivos, 265 en verde, 3 fallos preexistentes)
+- **307 tests** en `/src/lib/__tests__/` (8 archivos, 307 en verde)
 - `utils.test.ts` — 6 tests: `cn()` (clsx + twMerge)
-- `timelineUtils.test.ts` — 71 tests: fechas espanolas, duraciones, posiciones timeline
+- `timelineUtils.test.ts` — 80 tests: fechas espanolas, duraciones, posiciones y agrupacion por etapas
 - `chatUtils.test.ts` — 117 tests: matching, scoring, fuzzy match, follow-ups, pipeline completo
-- `i18n.test.ts` — 13 tests: traducciones, interpolacion, bilingual
+- `i18n.test.ts` — 18 tests: traducciones, interpolacion, bilingual, claves de navegacion y etapas
 - `snippetLoader.test.ts` — 22 tests: deteccion idioma (15 extensions), carga server (mock fs)
 - `snippetLoaderClient.test.ts` — 23 tests: deteccion idioma, carga client (mock fetch)
-- `projectsChatSync.test.ts` — 16 tests: sync projectsData con secciones de chat
+- `projectsChatSync.test.ts` — 18 tests: sync projectsData con secciones de chat
+- `caseStudyChatSync.test.ts` — 23 tests: sync caseStudiesData con secciones de chat
 
 ### E2E Tests (Playwright)
 
-- **40 tests** en `/tests/e2e/` (4 archivos, 40 aprobados en chromium, 0 flaky)
+- **51 tests** en `/tests/e2e/` (5 archivos, 51 por navegador en chromium/firefox/webkit; 1 flaky documentado en firefox con retry)
 - `navigation.spec.ts` — 9 tests: home, secciones, footer
 - `i18n.spec.ts` — 5 tests: toggle idioma, persistencia, traducciones
-- `projects.spec.ts` — 16 tests: cards, modal 4 tabs, slug pages
+- `projects.spec.ts` — 18 tests: cards, modal 4 tabs, slug pages, marquee a11y
 - `chat.spec.ts` — 10 tests: toggle, mensajes, quick actions
+- `case-studies.spec.ts` — 9 tests: enlaces ficha/caso, secciones, idioma, ERD, 404
 
 ### CI/CD (GitHub Actions)
 
@@ -301,8 +310,8 @@ Chatbot rule-based para responder preguntas de reclutadores sobre el perfil prof
 ### Scripts de testing
 
 ```bash
-npm run test:unit    # Vitest unit tests (268 tests, 265 en verde)
-npm run test:e2e     # Playwright E2E (40 tests)
+npm run test:unit    # Vitest unit tests (307 tests, 307 en verde)
+npm run test:e2e     # Playwright E2E (51 tests por navegador)
 npm run lint         # ESLint + Prettier
 npm run typecheck    # TypeScript --noEmit
 ```
@@ -324,10 +333,10 @@ npm run typecheck    # TypeScript --noEmit
 
 ### Sprint futuro - BAJA prioridad
 
-1. **Menu de navegacion con resaltado de seccion** - mejora usabilidad en paginas largas.
-2. **Modo claro/oscuro con persistencia** - usando `next-themes` correctamente configurado.
-3. **Optimizacion de imagenes** - cuando se anadan fotos o screenshots de proyectos.
-4. **Analisis de rendimiento** - Lighthouse y Web Vitals para monitorear y mejorar.
+1. **Menu de navegacion con resaltado de seccion activa** - el header sticky con anclas ya existe (Fase 2).
+2. **Tests de componentes** - @testing-library/react para componentes de UI.
+3. **Optimizacion de imagenes nuevas** - screenshots pendientes del autor, con next/image.
+4. **Mejora de performance** - Lighthouse baseline 85 (Fase 2): LCP del hero, JS unused del chat, render-blocking.
 
 ## NOTA IMPORTANTE: Sin Emojis
 
@@ -361,8 +370,8 @@ Esta decision se tomopara mantener consistencia y evitar problemas de compatibil
 - **Refactor `chatData.ts` monolito** (2300+ lineas) → arquitectura modular `/data/chat/` (46 archivos individuales, deduplicado salary+compensation, keywords limpias, prioridad explicita en `allResponses.ts`).
 - **Fix 2 errores TS pre-existentes** (`messagesEndRef` tipado en `ChatActions`).
 - **Instalado `server-only` package** en `i18n-server.ts` y `snippetLoader.ts` (defense-in-depth: build falla si se importa en Client Component).
-- **268 tests unitarios** en `/src/lib/__tests__/` (7 archivos, 265 en verde, 3 fallos preexistentes).
-- **40 tests E2E** con Playwright en `/tests/e2e/` (4 archivos, 40 aprobados en chromium, 0 flaky).
+- **307 tests unitarios** en `/src/lib/__tests__/` (8 archivos, 307 en verde).
+- **51 tests E2E** con Playwright en `/tests/e2e/` (5 archivos, 51 por navegador, 1 flaky en firefox con retry).
 - **GitHub Actions CI/CD** configurado (lint + typecheck + audit + unit tests + build + E2E tests en cada PR/push a main).
 - **Gemini AI integrado** en chat (`/api/chat/route.ts`) con rate limiting, contexto estatico del perfil (`aiContext.ts`) y fallback rule-based.
 
@@ -371,12 +380,12 @@ Esta decision se tomopara mantener consistencia y evitar problemas de compatibil
 - **MEDIA** — Migrar a `next-intl` con routing `/en/*`.
 - **MEDIA** — Cerrar 9 manual browser tests del SDD previo `estrategia-visualizacion-tecnica`.
 - **MEDIA** — IA real en el chat (interfaz `AIProvider` ya preparada).
-- **BAJA** — Dark mode con persistencia, menu con resaltado, optimizacion imagenes, Lighthouse.
+- **BAJA** — Lista completa y actualizada en `HANDOFF.md` (Gaps Residuales).
 
 ### Branch state
 
-- `feat/vitest-unit-tests` activa, al dia con `origin/feat/vitest-unit-tests`. Listo para PR a `main`.
-- `main` deployado en produccion.
+- `rediseño` activa, al dia con `origin/rediseño` (Fases 0a/0b/1/2 completadas; ver `HANDOFF.md`).
+- `main` deployado en produccion (intacto durante el rediseño).
 
 ### Contexto persistido
 
