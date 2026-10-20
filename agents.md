@@ -42,14 +42,18 @@ Este portafolio presenta la trayectoria, proyectos y habilidades de Andres Caso 
       opengraph-image.tsx  # next/og 1200x630 placeholder
       icon.svg       # Favicon (convencion Next 16)
       apple-icon.svg # Apple touch icon
-      globals.css    # Estilos globales (Tailwind v4)
+      globals.css    # Estilos globales (Tailwind v4, incluye scanlines de modo retro)
       /api
         /chat
-          route.ts   # Endpoint Gemini AI con rate limiting e hybrid fallback
+          route.ts   # Endpoint Gemini AI con rate limiting e hybrid fallback (sin UI cliente; fallback interno)
       /projects
         /[slug]       # Pagina detalle RSC con generateMetadata, generateStaticParams, snippets via loader
       /case-studies
         /[slug]       # Caso de estudio RSC (Fase 1): narrativa, decisiones, ERD
+      /admin-backup
+        page.tsx     # Honeypot (Fase 3): fake admin login, noindex/noarchive, cero red
+      /teapot
+        route.ts     # Easter egg (Fase 3): 418 teapot bilingue
     /components       # Capa de Presentacion (JSX y estado UI exclusivamente)
       Modal.tsx       # Modal de vista rapida (usa createPortal)
       SnippetViewer.tsx # UI comun de snippets (Server-safe + boton copy Client)
@@ -63,12 +67,17 @@ Este portafolio presenta la trayectoria, proyectos y habilidades de Andres Caso 
       EducationSection.tsx # Seccion de educacion
       ProjectsGrid.tsx # Grid bento de proyectos destacados + marquee (usa createPortal)
       /timeline      # Timeline por etapas (Fase 2): StagePanel, TimelineStages, stageMeta
-      /chat          # Componentes del chat interactivo
-        Chat.tsx     # Contenedor principal del chat (dentro de LanguageProvider)
-        ChatMessage.tsx # Presentacion de mensajes con parseo de markdown
-        ChatInput.tsx   # Input del usuario con envio por Enter
-        ProjectCard.tsx # Tarjeta de proyecto para respuestas del chat
-        index.ts     # Barrel exports
+      /terminal      # Terminal REPL flotante (Fase 3)
+        TerminalMount.tsx # dynamic import ssr:false + montaje diferido requestIdleCallback (chunk async separado)
+        Terminal.tsx     # Dialog terminal + FAB + Ctrl+K + toggles ~ y ` (retro)
+        TerminalLine.tsx # Render de lineas: texto, links [t](u), ProjectCard
+        useTerminal.ts   # Estado del REPL (lineas, historia, entrada)
+        SecretWatcher.tsx # Konami/iddqd (html.retro + toast), SecretWatcher dentro de LanguageProvider
+        parseLinks.tsx   # Parseo de markdown links a React nodes
+      /honeypot
+        FakeAdminLogin.tsx # Form fake (solo estado React, cero fetch)
+      /chat          # Solo ProjectCard (UI del chat eliminada en Fase 3)
+        ProjectCard.tsx # Tarjeta de proyecto usada por la terminal
     /data             # Capa de Datos (arrays estaticos y tipados)
       projectsData.ts # Interfaz Project + projects array (bilingue, sin campo id)
       skillsData.ts   # Interfaz SkillCategory + skills array (8 categorias)
@@ -79,9 +88,8 @@ Este portafolio presenta la trayectoria, proyectos y habilidades de Andres Caso 
         index.ts              # Barrel exports
         types.ts              # Interfaces (ChatResponse, FollowUpResponse, etc.)
         config.ts             # ChatConfig, defaultChatConfig, systemPrompts
-        fallback.ts           # fallbackResponse, welcomeMessage, affirmativeKeywords
+        fallback.ts           # fallbackResponse, affirmativeKeywords (welcomeMessage eliminado en Fase 3)
         followUps.ts          # Follow-up responses (context-aware)
-        quickActions.ts       # Quick action buttons
         allResponses.ts       # Array ordenado por prioridad explicita
         aiContext.ts          # Contexto estatico del perfil para system prompt del chat IA
         /responses            # 46 archivos individuales (uno por categoria)
@@ -96,8 +104,10 @@ Este portafolio presenta la trayectoria, proyectos y habilidades de Andres Caso 
       snippetLoader.ts       # Server: loadSnippetsServer (usa fs/promises, importa "server-only")
       snippetLoaderClient.ts # "use client" - loadSnippetsClient (usa fetch)
       rateLimiter.ts         # Rate limiter in-memory (IP + session) para API chat
+      keySequence.ts         # Tracker puro de secuencias de teclas (konami, iddqd, ~, `, Ctrl+K)
+      terminalUtils.ts       # Parser y output puro del REPL (parseTerminalCommand, getCommandOutput)
     /hooks            # Hooks personalizados
-      useChat.ts      # Estado del chat con tracking de contexto
+      useKeySequence.ts # Secuencias de teclado sobre keySequence.ts (detecta contenteditable)
     /i18n             # Traducciones
       locales.json    # ES + EN, contiene "Seniority Hibrido" copy
       types.ts        # Tipo Lang ('es' | 'en')
@@ -109,14 +119,13 @@ Este portafolio presenta la trayectoria, proyectos y habilidades de Andres Caso 
       foodbites.json  # OpenAPI 3.0 placeholder (marcado PLACEHOLDER)
     /fonts            # Fuente CabinetGrotesk (8 variantes .otf)
     profile.jpg       # Foto de perfil
-    chat.png          # Screenshot del chat
     espanola.png      # Icono bandera espanola
     ingles.png        # Icono bandera inglesa
     andres_caso_iglesias_Es.pdf  # CV en espanol
     andres_caso_iglesias_EN.pdf  # CV en ingles
     favicon.ico       # Favicon (legacy, Next 16 tambien lee /src/app/icon.svg)
   /tests
-    /e2e              # 4 spec files (Playwright)
+    /e2e              # 6 spec files (Playwright): navigation, i18n, projects, case-studies, terminal, secrets
     i18n_smoke.js     # Smoke test i18n
     seo_smoke.js      # Smoke test SEO
   /.github
@@ -184,23 +193,32 @@ Pagina estatica para cada proyecto con:
 - Codigo snippets
 - Links a GitHub y demo
 
-#### Chat Interactivo ("Pinche de Andres")
+#### Terminal REPL ("Pinche de Andres") y secretos (Fase 3)
 
-Chatbot rule-based para responder preguntas de reclutadores sobre el perfil profesional:
+El chat flotante se sustituyo por una terminal REPL flotante que reutiliza el mismo motor de respuestas rule-based:
 
-- **Arquitectura en Capas**: Datos (`/data/chat`), Logica (`/lib/chatUtils.ts`), Presentacion (`/components/chat/`)
-- **37 Categorias de Respuesta** (refactorizadas a archivos individuales en `/data/chat/responses/`): Experiencia, habilidades, formacion, contacto, proyectos, certificaciones, idiomas, disponibilidad, salario, sobre mi, frontend, backend, devops, soft skills, IA, hosteleria, edad, ubicacion, logistica, procesos, motivacion, debilidades, fortalezas, proyectos personales, empleo anterior, referencias, tecnologias especificas, frameworks, bases de datos, testing, git, metodologia, comunicacion, creando, aprendiendo, colaboracion, problemas, futuro, herramientas, open source.
+- **Arquitectura en Capas**: Datos (`/data/chat`), Logica (`/lib/chatUtils.ts`, `terminalUtils.ts`, `keySequence.ts`), Presentacion (`/components/terminal/`).
+- **Carga diferida**: montada via `dynamic(() => import('./Terminal'), {ssr: false})` + `requestIdleCallback` en `TerminalMount.tsx`; la logica vive en un chunk async fuera de los chunks iniciales del home.
+- **Comandos bilingues**: help/ayuda, whoami, projects, skills, contact, lang es|en, clear/limpiar (alias en `COMMAND_ALIASES`); texto libre pasa por el matcher existente (`processUserMessage`); IA desactivada salvo `NEXT_PUBLIC_AI_ENABLED='true'` (cero peticiones a `/api/chat` por defecto).
+- **Capas de logica pura**: parser/output del REPL en `src/lib/terminalUtils.ts`; tracker de secuencias de teclas en `src/lib/keySequence.ts`; hook `useKeySequence` detecta campos editables.
+- **Secretos**: Konami (`↑↑↓↓←→←→BA`) alterna `html.retro` (scanlines en `globals.css`) + toast `role="status"`; `iddqd` solo toast; teclas `~` y `` ` `` alternan retro como alias; `Ctrl+K` abre/cierra la terminal; `console.log` art una sola vez (`secrets.consoleArt`).
+- **37 Categorias de Respuesta** (archivos individuales en `/data/chat/responses/`): Experiencia, habilidades, formacion, contacto, proyectos, certificaciones, idiomas, disponibilidad, salario, sobre mi, frontend, backend, devops, soft skills, IA, hosteleria, edad, ubicacion, logistica, procesos, motivacion, debilidades, fortalezas, proyectos personales, empleo anterior, referencias, tecnologias especificas, frameworks, bases de datos, testing, git, metodologia, comunicacion, creando, aprendiendo, colaboracion, problemas, futuro, herramientas, open source.
 - **Arquitectura Modular**: Eliminado monolito `chatData.ts` (2300+ lineas) → 46 archivos en `/data/chat/responses/`, `allResponses.ts` con prioridad explicita project-specific > general > broader.
 - **Deduplicacion**: `salary` + `compensation` (respuestas identicas) fusionados en uno solo.
 - **Keywords Limpias**: Sin solapamiento entre categorias, especificas no genericas.
 - **Contexto Conversacional**: Trackea el ultimo tema discutido para follow-ups (ej. despues de "contacto" pregunta si quiere los enlaces y los da con markdown clickeable).
 - **Deteccion de Afirmaciones**: Detecta "si", "dale", "claro", "ok", "yes", "sure" para responder follow-ups.
 - **Respuestas de Seguimiento**: Enlaces reales clickeables (LinkedIn, GitHub, Email) despues de preguntar.
-- **Bilingue**: Soporte completo para espanol e ingles en todas las respuestas.
-- **Quick Actions**: 10 botones para preguntas frecuentes.
+- **Bilingue**: Soporte completo para espanol e ingles en todas las respuestas; `langChanged` es identico en ES/EN (el `t` esta stale tras `setLang`, decision documentada).
 - **Markdown Links**: Parseo de syntax `[texto](url)` para enlaces clickeables.
 - **Matching Mejorado**: Fuzzy matching con Levenshtein para tolerancia a typos.
 - **Defense-in-depth**: `server-only` package en `i18n-server.ts` y `snippetLoader.ts` para evitar imports accidentales en Client Components.
+
+#### Honeypot y easter eggs (Fase 3)
+
+- **`/admin-backup`**: pagina fake de login admin (`FakeAdminLogin`, cero fetch); `generateMetadata` con `robots: noindex, noarchive`; tambien `disallow` en `robots.ts` y header `X-Robots-Tag` en `next.config.ts`.
+- **`/teapot`**: route handler con status 418 y texto bilingue.
+- Los tests E2E `secrets.spec.ts` verifican konami/iddqd/Ctrl+K y que el honeypot no emite red.
 
 ## Guia de Estilo y Convenciones
 
@@ -283,24 +301,28 @@ Chatbot rule-based para responder preguntas de reclutadores sobre el perfil prof
 
 ### Unit Tests (Vitest)
 
-- **307 tests** en `/src/lib/__tests__/` (8 archivos, 307 en verde)
+- **359 tests** en `/src/lib/__tests__/` (8 archivos) + `/src/hooks/__tests__/` (1 archivo), 359 en verde
 - `utils.test.ts` — 6 tests: `cn()` (clsx + twMerge)
 - `timelineUtils.test.ts` — 80 tests: fechas espanolas, duraciones, posiciones y agrupacion por etapas
 - `chatUtils.test.ts` — 117 tests: matching, scoring, fuzzy match, follow-ups, pipeline completo
-- `i18n.test.ts` — 18 tests: traducciones, interpolacion, bilingual, claves de navegacion y etapas
+- `i18n.test.ts` — 26 tests: traducciones, interpolacion, bilingual, claves de navegacion, etapas, terminal y secretos
 - `snippetLoader.test.ts` — 22 tests: deteccion idioma (15 extensions), carga server (mock fs)
 - `snippetLoaderClient.test.ts` — 23 tests: deteccion idioma, carga client (mock fetch)
 - `projectsChatSync.test.ts` — 18 tests: sync projectsData con secciones de chat
 - `caseStudyChatSync.test.ts` — 23 tests: sync caseStudiesData con secciones de chat
+- `keySequence.test.ts` — secuencias konami/iddqd/~/`/Ctrl+K sobre tracker puro
+- `terminalUtils.test.ts` — parser y output del REPL (alias, lang, clear)
+- `useKeySequence.test.ts` — hook con deteccion de contenteditable (jsdom)
 
 ### E2E Tests (Playwright)
 
-- **51 tests** en `/tests/e2e/` (5 archivos, 51 por navegador en chromium/firefox/webkit; 1 flaky documentado en firefox con retry)
+- **61 tests** en `/tests/e2e/` (6 archivos, 183 ejecuciones por navegador en chromium/firefox/webkit; 1 flaky documentado en firefox con retry)
 - `navigation.spec.ts` — 9 tests: home, secciones, footer
 - `i18n.spec.ts` — 5 tests: toggle idioma, persistencia, traducciones
 - `projects.spec.ts` — 18 tests: cards, modal 4 tabs, slug pages, marquee a11y
-- `chat.spec.ts` — 10 tests: toggle, mensajes, quick actions
 - `case-studies.spec.ts` — 9 tests: enlaces ficha/caso, secciones, idioma, ERD, 404
+- `terminal.spec.ts` — 12 tests: FAB, Ctrl+K, comandos, lang, links, cero peticiones a /api/chat, axe dialog
+- `secrets.spec.ts` — 8 tests: konami, iddqd, honeypot cero red, teapot 418
 
 ### CI/CD (GitHub Actions)
 
@@ -310,8 +332,8 @@ Chatbot rule-based para responder preguntas de reclutadores sobre el perfil prof
 ### Scripts de testing
 
 ```bash
-npm run test:unit    # Vitest unit tests (307 tests, 307 en verde)
-npm run test:e2e     # Playwright E2E (51 tests por navegador)
+npm run test:unit    # Vitest unit tests (359 tests, 359 en verde)
+npm run test:e2e     # Playwright E2E (61 tests por navegador)
 npm run lint         # ESLint + Prettier
 npm run typecheck    # TypeScript --noEmit
 ```
@@ -336,7 +358,7 @@ npm run typecheck    # TypeScript --noEmit
 1. **Menu de navegacion con resaltado de seccion activa** - el header sticky con anclas ya existe (Fase 2).
 2. **Tests de componentes** - @testing-library/react para componentes de UI.
 3. **Optimizacion de imagenes nuevas** - screenshots pendientes del autor, con next/image.
-4. **Mejora de performance** - Lighthouse baseline 85 (Fase 2): LCP del hero, JS unused del chat, render-blocking.
+4. **Mejora de performance** - Lighthouse local de Fase 3 queda en 82 (baseline Fase 2: 85): investigar forced-reflow ~75ms sin atribuir y LCP del hero; re-medir en produccion (Fase 4).
 
 ## NOTA IMPORTANTE: Sin Emojis
 
@@ -370,10 +392,11 @@ Esta decision se tomopara mantener consistencia y evitar problemas de compatibil
 - **Refactor `chatData.ts` monolito** (2300+ lineas) → arquitectura modular `/data/chat/` (46 archivos individuales, deduplicado salary+compensation, keywords limpias, prioridad explicita en `allResponses.ts`).
 - **Fix 2 errores TS pre-existentes** (`messagesEndRef` tipado en `ChatActions`).
 - **Instalado `server-only` package** en `i18n-server.ts` y `snippetLoader.ts` (defense-in-depth: build falla si se importa en Client Component).
-- **307 tests unitarios** en `/src/lib/__tests__/` (8 archivos, 307 en verde).
-- **51 tests E2E** con Playwright en `/tests/e2e/` (5 archivos, 51 por navegador, 1 flaky en firefox con retry).
+- **359 tests unitarios** en `/src/lib/__tests__/` (8 archivos) + `/src/hooks/__tests__/` (1 archivo), 359 en verde.
+- **61 tests E2E** con Playwright en `/tests/e2e/` (6 archivos, 61 por navegador, 1 flaky en firefox con retry).
 - **GitHub Actions CI/CD** configurado (lint + typecheck + audit + unit tests + build + E2E tests en cada PR/push a main).
 - **Gemini AI integrado** en chat (`/api/chat/route.ts`) con rate limiting, contexto estatico del perfil (`aiContext.ts`) y fallback rule-based.
+- **Fase 3 (rediseño) — Terminal REPL + secretos**: chat UI eliminado, terminal con chunk async diferido (requestIdleCallback), honeypot `/admin-backup`, teapot 418, `X-Robots-Tag`, fix de flip de tema post-hidratacion, 359 unit / 61 E2E (6 ficheros).
 
 ### Gaps residuales (out-of-scope, priorizados)
 
@@ -384,7 +407,7 @@ Esta decision se tomopara mantener consistencia y evitar problemas de compatibil
 
 ### Branch state
 
-- `rediseño` activa, al dia con `origin/rediseño` (Fases 0a/0b/1/2 completadas; ver `HANDOFF.md`).
+- `rediseño` activa, al dia con `origin/rediseño` (Fases 0a/0b/1/2/3 completadas; ver `HANDOFF.md`).
 - `main` deployado en produccion (intacto durante el rediseño).
 
 ### Contexto persistido

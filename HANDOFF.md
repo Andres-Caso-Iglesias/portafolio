@@ -2,20 +2,20 @@
 
 > **Proposito**: Este archivo es el puente entre sesiones. Si arrancas una sesion nueva en este proyecto, lee este archivo PRIMERO. Te ahorra 20 minutos de "que carajo hicimos la ultima vez".
 >
-> **Ultima actualizacion**: Octubre 2026 — rediseño v3.2, Fase 2 (rediseño visual) completada.
+> **Ultima actualizacion**: Octubre 2026 — rediseño v3.2, Fase 3 (terminal y secretos) completada.
 
 ---
 
 ## TL;DR (30 segundos)
 
-El proyecto esta **deployado en produccion** (via `main`). El rediseño v3.2 se ejecuta en la rama `rediseño`: Fase 0a, 0b, 1 (casos de estudio) y **2 (rediseño visual) completadas y empujadas**.
+El proyecto esta **deployado en produccion** (via `main`). El rediseño v3.2 se ejecuta en la rama `rediseño`: Fase 0a, 0b, 1 (casos de estudio), 2 (rediseño visual) y **3 (terminal REPL + secretos) completadas**.
 
 **Estado actual:**
 
-- Branch activa: `rediseño` (commits `2cdd506`, `d227667`, `a8ac6d3`, `9035e9e`, `4724444` pushados a `origin/rediseño`); NO tocar `main` hasta el lanzamiento del MVP
-- Fase 2: header sticky con navegacion por anclas, hero renovado, bento de proyectos/skills, timeline en 4 etapas, reveal-on-scroll con prefers-reduced-motion
-- Gemini AI **dormido**: sin `GOOGLE_AI_API_KEY` en Vercel, chat 100% rule-based (flag `NEXT_PUBLIC_AI_ENABLED=false`)
-- 307 unit tests + 51 E2E tests por navegador, todas las puertas en verde (lint, typecheck, smoke, build, E2E 3 navegadores, axe, Lighthouse)
+- Branch activa: `rediseño`; NO tocar `main` hasta el lanzamiento del MVP
+- Fase 3: chat UI eliminado y sustituido por terminal REPL flotante (chunk async diferido), secretos konami/iddqd, honeypot `/admin-backup`, teapot 418
+- Gemini AI **dormido**: sin `GOOGLE_AI_API_KEY` en Vercel; IA de la terminal desactivada salvo `NEXT_PUBLIC_AI_ENABLED=true` (cero peticiones a `/api/chat` por defecto)
+- 359 unit tests + 61 E2E tests por navegador (6 ficheros), todas las puertas en verde (lint, typecheck, smoke, build, E2E 3 navegadores, axe)
 
 ---
 
@@ -25,19 +25,18 @@ El proyecto esta **deployado en produccion** (via `main`). El rediseño v3.2 se 
 | ------------- | ------------------------------------------------------------- |
 | Branch actual | `rediseño`                                                    |
 | `main`        | Deployado en produccion (intacto durante el rediseño)          |
-| `rediseño`    | Al dia con `origin/rediseño` (docs de cierre empujadas)        |
-| Working tree  | Limpio                                                         |
-| Ultimo commit | `4724444 feat(fase-2): rediseño visual con header fijo...`     |
+| `rediseño`    | Fases 0a/0b/1/2/3 completadas                                  |
+| Working tree  | Limpio tras el commit de Fase 3                                |
 
 Commits recientes (rama `rediseño`):
 
 ```bash
 git log --oneline -5
+# feat(fase-3): terminal REPL, secretos, honeypot y teapot (hash en git log)
+# 421c8e6 docs(handoff): registra puertas verdes del gate visual de la fase 2
+# abd8234 docs(handoff): registra decisiones y hallazgos de la fase 2
+# 7694dc0 docs(handoff): registra auditorias de la fase 2 (axe y lighthouse)
 # 4724444 feat(fase-2): rediseño visual con header fijo, bento, timeline por etapas y animaciones
-# 9035e9e docs(handoff): registra pendientes de la fase 1 y actualiza estado de la rama rediseño
-# a8ac6d3 feat(fase-1): anade casos de estudio de QReaper, VulnPrio y Security Header Scanner
-# d227667 feat(fase-0b): refuerzo de cabeceras, flag AI, tokens de diseno e i18n
-# 2cdd506 fix(seo): unifica siteUrl en constante compartida y corrige errata
 ```
 
 ---
@@ -69,8 +68,8 @@ npm run start        # Next.js production server
 npm run lint         # ESLint
 npm run typecheck    # TypeScript --noEmit
 npm run test         # Smoke tests (i18n + seo)
-npm run test:unit    # Vitest unit tests (298 tests)
-npm run test:e2e     # Playwright E2E tests (51 tests)
+npm run test:unit    # Vitest unit tests (359 tests)
+npm run test:e2e     # Playwright E2E tests (61 tests por navegador)
 ```
 
 ---
@@ -78,22 +77,28 @@ npm run test:e2e     # Playwright E2E tests (51 tests)
 ## Estructura de Tests
 
 ```
-/src/lib/__tests__/  # 8 archivos, 298 tests (todos en verde)
+/src/lib/__tests__/  # 8 archivos
   utils.test.ts           # 6 tests - cn()
-  timelineUtils.test.ts   # 71 tests - fechas, duraciones, posiciones
+  timelineUtils.test.ts   # 80 tests - fechas, duraciones, posiciones, etapas
   chatUtils.test.ts       # 117 tests - matching, respuestas, pipeline
-  i18n.test.ts            # 18 tests - traducciones, interpolacion, paridad ES/EN
+  i18n.test.ts            # 26 tests - traducciones, interpolacion, paridad ES/EN, terminal, secretos
   snippetLoader.test.ts   # 22 tests - deteccion idioma, carga server
   snippetLoaderClient.test.ts # 23 tests - deteccion idioma, carga client
   projectsChatSync.test.ts # 18 tests - sync projectsData con secciones de chat
   caseStudyChatSync.test.ts # 23 tests - sync caseStudiesData con respuestas de chat
+  keySequence.test.ts     # tracker puro: konami, iddqd, ~, `, Ctrl+K
+  terminalUtils.test.ts   # parser/output del REPL (alias, lang, clear)
 
-/tests/e2e/  # 5 archivos, 51 tests (aprobados en chromium, webkit y firefox)
+/src/hooks/__tests__/ # 1 archivo
+  useKeySequence.test.ts  # hook con deteccion de contenteditable (jsdom)
+
+/tests/e2e/  # 6 archivos, 61 tests (aprobados en chromium, webkit y firefox)
   navigation.spec.ts      # 9 tests - home, secciones, footer
   i18n.spec.ts            # 5 tests - toggle idioma, persistencia
-  projects.spec.ts        # 16 tests - cards, modal, slug pages
-  chat.spec.ts            # 10 tests - toggle, mensajes, quick actions
+  projects.spec.ts        # 18 tests - cards, modal, slug pages, marquee
   case-studies.spec.ts    # 9 tests - secciones, ERD, back-link, 404, EN
+  terminal.spec.ts        # 12 tests - FAB, Ctrl+K, comandos, lang, links, cero /api/chat, axe dialog
+  secrets.spec.ts         # 8 tests - konami, iddqd, honeypot cero red, teapot 418
   tsconfig.json           # Config TS para tests E2E
 ```
 
@@ -101,13 +106,14 @@ npm run test:e2e     # Playwright E2E tests (51 tests)
 
 ## Funcionalidades Clave
 
-### Chat "Pinche de Andres" (Gemini AI)
+### Terminal REPL "Pinche de Andres" (motor rule-based)
 
-- **Endpoint**: `/api/chat/route.ts` — Gemini AI con rate limiting in-memory
+- **UI**: terminal flotante en `/components/terminal/` (Fase 3); la UI del chat fue eliminada
+- **Endpoint**: `/api/chat/route.ts` — Gemini AI con rate limiting in-memory (solo si `NEXT_PUBLIC_AI_ENABLED=true`)
 - **Contexto**: `src/data/chat/aiContext.ts` — perfil estatico para system prompt
 - **Rate Limiter**: `src/lib/rateLimiter.ts` — IP + session
 - **Fallback**: Rule-based con 46 categorias de respuesta en `/data/chat/responses/`
-- **Config**: Sin `GEMINI_API_KEY` en `.env.local`, el chat usa fallback rule-based
+- **Config**: por defecto cero peticiones a `/api/chat` (IA off en la terminal)
 
 ### i18n Custom
 
@@ -158,6 +164,39 @@ npm run test:e2e     # Playwright E2E tests (51 tests)
 
 ---
 
+## Fase 3 (terminal y secretos) — Completada
+
+### Entregado
+
+- **Terminal REPL flotante** (`/components/terminal/`): FAB + dialog + Ctrl+K; comandos bilingues help/ayuda, whoami, projects, skills, contact, lang, clear (alias en `COMMAND_ALIASES` de `terminalUtils.ts`); texto libre pasa por el matcher existente (`processUserMessage`); links `[texto](url)` parseados a `<a>`; ProjectCard reutilizado.
+- **Carga diferida real**: `TerminalMount.tsx` con `dynamic(() => import('./Terminal'), {ssr: false})` + montaje tras `requestIdleCallback`; la logica del REPL vive en un chunk async (`1ixcntz7250ek.js`) que NO aparece en `rootMainFiles` del build manifest.
+- **Logica pura testada**: `src/lib/terminalUtils.ts` (parser/output), `src/lib/keySequence.ts` (tracker de secuencias: konami, iddqd, ~, backquote, Ctrl+K), `src/hooks/useKeySequence.ts` (detecta contenteditable via getAttribute en jsdom).
+- **Secretos**: Konami alterna `html.retro` + toast; iddqd solo toast; `~`/`` ` `` como alias retro; Ctrl+K toggle terminal; console.log art una vez (`secrets.consoleArt`). SecretWatcher montado dentro de LanguageProvider.
+- **Honeypot**: `/admin-backup` con `FakeAdminLogin` (solo estado React, cero fetch), `robots: noindex, noarchive`, disallow en robots.ts y header `X-Robots-Tag` en next.config.ts.
+- **Easter egg**: `/teapot` devuelve 418 con texto bilingue.
+- **Chat UI eliminada**: Chat.tsx, ChatInput.tsx, ChatMessage.tsx, chat/index.ts, useChat.ts, quickActions.ts, chat.spec.ts; el motor de respuestas (`/data/chat/`, chatUtils) se conserva y lo consume la terminal. `welcomeMessage` y los quick actions desaparecieron del diccionario.
+- **Fix de tema**: `theme-context.tsx` sincroniza el estado con el resultado del script bloqueante cuando no hay cookie `theme` (antes forzaba 'dark' post-hidratacion = flip visual y carrera con axe).
+
+### Puertas ejecutadas (todas en verde)
+
+- lint · typecheck · **359/359 unit** · smoke i18n/seo · build · **E2E 182 passed / 0 failed** (61 x chromium/firefox/webkit) + 1 flaky persistente conocido (`case-studies.spec.ts:92`, firefox, pasa en retry; CI solo chromium)
+- **axe (2 pasadas)**: home/dialog solo el marquee pre-existente; **admin-backup 0 violaciones**; **not-found 0 violaciones**.
+- **Lighthouse**: perf **82** · a11y 100 · bp 100 · seo 100 (mediana de 5 runs locales tras diferir terminal a idle). Baseline Fase 2: 85/100/100/100. Auditorias identicas al baseline salvo un `forced-reflow` ~75ms sin atribuir (nuevo, sin causa localizada); LCP ~4.6s ya estaba en el baseline (~4.2s). Documentado como gap BAJA; re-medir en produccion (Fase 4).
+
+### Decisiones de la fase
+
+- **IA off por defecto**: `AI_ENABLED = NEXT_PUBLIC_AI_ENABLED === 'true'`; terminal 100% local. El endpoint `/api/chat` se conserva para uso futuro.
+- **`langChanged` bilingue identico** en ES/EN: el `t` del contexto esta stale tras `setLang` (decisión ya conocida en Fase 2).
+- **`@axe-core/playwright` como devDependency** (`^4.14.0`) en vez de resolucion puntual; casteo del page de Playwright al tipo de AxeBuilder.
+- **Fondos de 404/honeypot**: white/slate-900 (no slate-50/950) para pasar contraste axe.
+- **ProjectCard se queda en `components/chat/`** (lo consumen terminal y chatUtils) en vez de moverlo a `/terminal` (menos churn).
+
+### Pendiente del gate manual
+
+- Revisar terminal y secretos en **movil real** del autor (teclado, Ctrl+K inexistente → FAB, konami imposible sin teclado fisico → alias `~`).
+
+---
+
 ## Pendientes de Revision y Material (Fase 1 - casos de estudio)
 
 > Registrado en Octubre 2026. Estos dos items quedan **abiertos a proposito**: el codigo esta completo y verificado, pero el contenido y el material visual dependen de revision/produccion del autor.
@@ -187,16 +226,17 @@ Los casos de estudio y las fichas de proyecto funcionan sin imagenes de interfaz
 
 1. **Migrar a `next-intl`** con routing `/en/*` (reemplaza i18n custom con cookie)
 2. **Cerrar 9 manual browser tests** del SDD previo `estrategia-visualizacion-tecnica`
-3. **Dynamic import del Chat** en layout (carga en cada pagina incluyendo 404)
-4. **Agregar error.tsx** en app/ y projects/[slug]/
-5. **Investigar flaky de firefox**: `case-studies.spec.ts:92` (language switch pasa en retry; CI solo chromium, riesgo bajo)
+3. **Agregar error.tsx** en app/ y projects/[slug]/
+4. **Investigar flaky de firefox**: `case-studies.spec.ts:92` (language switch pasa en retry; CI solo chromium, riesgo bajo)
+5. **Re-sincronizar README.md, SPEC.md y README_CLEAN_CODE.md** con Fase 3 (todavia describen el chat UI y `useChat.ts`; AGENTS.md ya esta al dia)
 
 ### BAJA prioridad
 
 1. Menu de navegacion con resaltado de seccion activa (el header sticky ya existe; ver Fase 2)
 2. Tests de componentes (@testing-library/react)
 3. Optimizar imagenes nuevas (screenshots pendientes del autor) con next/image
-4. Mejorar performance de Lighthouse (baseline Fase 2: 85 — LCP del hero, JS unused del chat, render-blocking)
+4. **Lighthouse local de Fase 3: 82 vs baseline 85** — forced-reflow ~75ms sin atribuir + LCP del hero (~4.6s, ya ~4.2s en baseline); re-medir en produccion (Fase 4)
+5. `public/chat.png` eliminado (huerfano tras borrar la UI del chat); si se quiere documentar la terminal, capturar un screenshot nuevo
 
 ---
 
@@ -222,9 +262,9 @@ git log --oneline -10
 git diff main..dev --stat
 
 # Tests
-npm run test:unit                    # 298 unit tests
+npm run test:unit                    # 359 unit tests
 npx vitest run --reporter=verbose    # verbose output
-npm run test:e2e                     # 51 E2E tests
+npm run test:e2e                     # 61 E2E tests por navegador
 npx playwright test --project=chromium  # solo chromium (rapido)
 npx playwright test --ui             # UI interactiva
 
