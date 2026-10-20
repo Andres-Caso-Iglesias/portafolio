@@ -1,3 +1,5 @@
+export type TimelineStage = 'cocina' | 'logistica' | 'it' | 'formacion';
+
 export interface TimelineItem {
   id: number;
   startDateStr: string;
@@ -9,6 +11,8 @@ export interface TimelineItem {
   eduTitle?: string;
   eduSubtitle?: string;
   durationStr?: string;
+  // Career stage (Fase 2): groups the timeline into Cocina -> Logística -> IT -> Formación
+  stage?: TimelineStage;
   // Calculated positions for timeline layout
   startPos?: number; // 0-100 percentage
   endPos?: number; // 0-100 percentage
@@ -21,6 +25,7 @@ export const rawTimelineData: TimelineItem[] = [
   // Education items (will appear in bottom bubbles)
   {
     id: 1,
+    stage: 'it',
     startDateStr: 'septiembre 2023',
     endDateStr: 'diciembre 2025',
     year: '2023',
@@ -29,6 +34,7 @@ export const rawTimelineData: TimelineItem[] = [
   },
   {
     id: 2,
+    stage: 'logistica',
     startDateStr: 'septiembre 2022',
     endDateStr: 'junio 2023',
     year: '2022',
@@ -37,6 +43,7 @@ export const rawTimelineData: TimelineItem[] = [
   },
   {
     id: 3,
+    stage: 'cocina',
     startDateStr: 'enero 2021',
     endDateStr: 'octubre 2021',
     year: '2021',
@@ -45,6 +52,7 @@ export const rawTimelineData: TimelineItem[] = [
   },
   {
     id: 4,
+    stage: 'cocina',
     startDateStr: 'septiembre 2007',
     endDateStr: 'febrero 2008',
     year: '2007',
@@ -53,6 +61,7 @@ export const rawTimelineData: TimelineItem[] = [
   },
   {
     id: 5,
+    stage: 'cocina',
     startDateStr: 'septiembre 2002',
     endDateStr: 'junio 2005',
     year: '2002',
@@ -61,6 +70,7 @@ export const rawTimelineData: TimelineItem[] = [
   },
   {
     id: 6,
+    stage: 'cocina',
     startDateStr: 'septiembre 2000',
     endDateStr: 'junio 2002',
     year: '2000',
@@ -70,6 +80,7 @@ export const rawTimelineData: TimelineItem[] = [
   // Experience items (top bubbles)
   {
     id: 7,
+    stage: 'cocina',
     startDateStr: 'sept. 2006',
     endDateStr: 'sept. 2007',
     year: '2006',
@@ -79,6 +90,7 @@ export const rawTimelineData: TimelineItem[] = [
   },
   {
     id: 8,
+    stage: 'cocina',
     startDateStr: 'sept. 2007',
     endDateStr: 'abr. 2008',
     year: '2007',
@@ -88,6 +100,7 @@ export const rawTimelineData: TimelineItem[] = [
   },
   {
     id: 9,
+    stage: 'cocina',
     startDateStr: 'abr. 2008',
     endDateStr: 'sept. 2008',
     year: '2008',
@@ -97,6 +110,7 @@ export const rawTimelineData: TimelineItem[] = [
   },
   {
     id: 10,
+    stage: 'cocina',
     startDateStr: 'oct. 2008',
     endDateStr: 'mar. 2009',
     year: '2008',
@@ -106,6 +120,7 @@ export const rawTimelineData: TimelineItem[] = [
   },
   {
     id: 11,
+    stage: 'cocina',
     startDateStr: 'abr. 2009',
     endDateStr: 'mar. 2010',
     year: '2009',
@@ -115,6 +130,7 @@ export const rawTimelineData: TimelineItem[] = [
   },
   {
     id: 12,
+    stage: 'cocina',
     startDateStr: 'abr. 2010',
     endDateStr: 'nov. 2021',
     year: '2010',
@@ -124,6 +140,7 @@ export const rawTimelineData: TimelineItem[] = [
   },
   {
     id: 13,
+    stage: 'cocina',
     startDateStr: 'mar. 2022',
     endDateStr: 'mar. 2023',
     year: '2022',
@@ -133,6 +150,7 @@ export const rawTimelineData: TimelineItem[] = [
   },
   {
     id: 14,
+    stage: 'logistica',
     startDateStr: 'jul. 2023',
     endDateStr: 'nov. 2023',
     year: '2023',
@@ -142,6 +160,7 @@ export const rawTimelineData: TimelineItem[] = [
   },
   {
     id: 15,
+    stage: 'logistica',
     startDateStr: 'abr. 2024',
     endDateStr: 'oct. 2024',
     year: '2024',
@@ -151,6 +170,7 @@ export const rawTimelineData: TimelineItem[] = [
   },
   {
     id: 16,
+    stage: 'it',
     startDateStr: 'oct. 2025',
     endDateStr: 'ene. 2026',
     year: '2025',
@@ -160,6 +180,7 @@ export const rawTimelineData: TimelineItem[] = [
   },
   {
     id: 17,
+    stage: 'formacion',
     startDateStr: 'abr. 2026',
     endDateStr: 'dic. 2026',
     year: '2026',

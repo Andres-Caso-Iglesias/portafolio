@@ -35,8 +35,23 @@
       "legendLogistics": "Logística",
       "legendIT": "IT",
       "legendTraining": "Formación",
+      "stageCocina": "Cocina y hostelería",
+      "stageLogistica": "Logística y producción",
+      "stageIt": "IT y desarrollo",
+      "stageFormacion": "Formación técnica",
+      "stagePeriodLabel": "Etapa",
+      "heroStatus": "Disponible para nuevas oportunidades",
       "seoTitle": "Andrés Caso Iglesias | Backend developer ciberseguridad",
       "seoDescription": "Portfolio de Andrés Caso Iglesias - Developer especializado en C#/.NET, Java, TypeScript e IA"
+    },
+    "nav": {
+      "profile": "Perfil",
+      "timeline": "Trayectoria",
+      "skills": "Habilidades",
+      "projects": "Proyectos",
+      "contact": "Contacto",
+      "menuLabel": "Navegación principal",
+      "skipToContent": "Saltar al contenido"
     },
     "project": {
       "erdTitle": "Diagrama Entidad-Relación (ERD)",
@@ -129,8 +144,23 @@
       "legendLogistics": "Logistics",
       "legendIT": "IT",
       "legendTraining": "Education",
+      "stageCocina": "Culinary & hospitality",
+      "stageLogistica": "Logistics & production",
+      "stageIt": "IT & software",
+      "stageFormacion": "Technical training",
+      "stagePeriodLabel": "Stage",
+      "heroStatus": "Open to new opportunities",
       "seoTitle": "Andrés Caso Iglesias | Backend developer  cybersecurity",
       "seoDescription": "Portfolio of Andrés Caso Iglesias - Developer specialized in C#/.NET, Java, TypeScript and AI"
+    },
+    "nav": {
+      "profile": "Profile",
+      "timeline": "Timeline",
+      "skills": "Skills",
+      "projects": "Projects",
+      "contact": "Contact",
+      "menuLabel": "Main navigation",
+      "skipToContent": "Skip to content"
     },
     "project": {
       "erdTitle": "Entity Relationship Diagram (ERD)",

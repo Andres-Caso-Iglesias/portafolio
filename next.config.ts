@@ -1,6 +1,10 @@
 import type { NextConfig } from 'next';
 
 const isDev = process.env.NODE_ENV === 'development';
+// UIR only on the platform: WebKit upgrades http://localhost subresources to
+// https:// (SSL error) which breaks local E2E; on Vercel (HTTPS + HSTS) it
+// remains as defense-in-depth.
+const isVercel = Boolean(process.env.VERCEL);
 
 const baseHeaders = [
   {
@@ -46,7 +50,7 @@ function getCspHeader(): string {
   const scriptSrc = isDev
     ? "'self' 'unsafe-inline' 'unsafe-eval'" // eval required by React in dev mode
     : "'self' 'unsafe-inline'"; // production: no eval needed
-  return [
+  const directives = [
     "default-src 'self'",
     `script-src ${scriptSrc}`,
     "style-src 'self' 'unsafe-inline'", // Tailwind uses inline styles
@@ -57,8 +61,11 @@ function getCspHeader(): string {
     "frame-ancestors 'none'", // Prevent clickjacking
     "base-uri 'self'",
     "form-action 'self'",
-    "upgrade-insecure-requests",
-  ].join('; ');
+  ];
+  if (isVercel) {
+    directives.push('upgrade-insecure-requests');
+  }
+  return directives.join('; ');
 }
 
 const nextConfig: NextConfig = {

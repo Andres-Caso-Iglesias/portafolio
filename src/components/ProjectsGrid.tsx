@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { featuredProjects, marqueeProjects, Project } from '@/data/projectsData';
+import { getCaseStudyForProject } from '@/data/caseStudiesData';
 import { createPortal } from 'react-dom';
 import Modal from './Modal';
 import { useLanguage, t } from '@/lib/i18n';
@@ -86,17 +87,26 @@ export default function ProjectsGrid() {
       <div
         role="region"
         aria-labelledby="projects-featured-label"
-        className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10"
+        className="grid grid-cols-1 md:grid-cols-6 gap-6 mb-10"
       >
-        {featuredProjects.map(p => {
+        {featuredProjects.map((p, idx) => {
           const visibleLinks = (p.links ?? []).filter(link => !link.detailOnly);
+          const caseStudy = getCaseStudyForProject(p.slug);
           const hasCtaContent =
-            Boolean(p.github) || visibleLinks.length > 0 || Boolean(p.statusNote);
+            Boolean(p.github) ||
+            visibleLinks.length > 0 ||
+            Boolean(p.statusNote) ||
+            Boolean(caseStudy);
+          const isHeroCard = idx === 0;
 
           return (
             <article
               key={p.slug}
-              className="relative flex flex-col justify-between min-h-[420px] bg-white dark:bg-slate-900 rounded-lg p-6 border border-neutral-200 dark:border-slate-700 hover:border-blue-500 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500 transition-colors"
+              className={`relative flex flex-col justify-between bg-neutral-50 dark:bg-slate-800 rounded-lg p-6 border border-neutral-200 dark:border-slate-700 hover:border-blue-500 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500 transition-colors ${
+                isHeroCard
+                  ? 'min-h-[420px] md:col-span-3 md:row-span-2 md:min-h-[520px] md:justify-start'
+                  : 'min-h-[420px] md:col-span-3 md:min-h-[252px]'
+              }`}
             >
               <div className="flex flex-col gap-4">
                 <h3 className="text-xl min-[1440px]:text-2xl font-bold text-neutral-900 dark:text-white leading-tight">
@@ -145,6 +155,14 @@ export default function ProjectsGrid() {
                       {lang === 'en' && link.enLabel ? link.enLabel : link.label}
                     </a>
                   ))}
+                  {caseStudy && (
+                    <Link
+                      href={`/case-studies/${caseStudy.slug}`}
+                      className={`relative z-10 ${LINK_PILL} border-teal-500 text-teal-700 hover:bg-teal-50 hover:text-teal-800 dark:text-teal-400 dark:hover:bg-teal-600/10 dark:hover:text-teal-300`}
+                    >
+                      {t(lang, 'caseStudy.readCaseStudy')}
+                    </Link>
+                  )}
                   {p.statusNote && (
                     <span className="inline-flex items-center px-2 py-1 rounded text-xs border bg-neutral-100 border-neutral-200 text-neutral-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-400">
                       {lang === 'en' && p.enStatusNote ? p.enStatusNote : p.statusNote}
@@ -188,7 +206,7 @@ export default function ProjectsGrid() {
               <article
                 key={`${p.slug}-${i}`}
                 aria-hidden={isClone ? true : undefined}
-                className={`flex-none w-[280px] min-h-[500px] bg-white dark:bg-slate-900 rounded-lg p-6 border border-neutral-200 dark:border-slate-700 hover:border-blue-500 transition-colors cursor-pointer flex flex-col justify-between ${FOCUS_RING}`}
+                className={`flex-none w-[280px] min-h-[500px] bg-neutral-50 dark:bg-slate-800 rounded-lg p-6 border border-neutral-200 dark:border-slate-700 hover:border-blue-500 transition-colors cursor-pointer flex flex-col justify-between ${FOCUS_RING}`}
                 onClick={() => handleProjectClick(p)}
                 onKeyDown={e => handleCardKeyDown(e, p)}
                 tabIndex={isClone ? -1 : 0}

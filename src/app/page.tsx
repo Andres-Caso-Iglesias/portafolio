@@ -4,7 +4,7 @@ import { HeroAboutClient, SkillsProjectsContactClient } from '@/components/HomeC
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
+    <main id="contenido" className="min-h-screen">
       <HeroAboutClient />
 
       {/* Timeline Section */}

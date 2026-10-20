@@ -1,4 +1,4 @@
-import { TimelineItem } from '@/data/timelineData';
+import { TimelineItem, TimelineStage } from '@/data/timelineData';
 
 // Helper to parse Spanish month names to number
 export function parseSpanishDate(dateStr: string): { year: number; month: number } | null {
@@ -187,3 +187,61 @@ export const expColors = {
     line: 'from-blue-500 to-blue-400',
   },
 };
+
+// ──────────────────────────────────────────────────────────────
+// Fase 2 — Timeline agrupada por etapas
+// Cocina -> Logística -> IT -> Formación
+// ──────────────────────────────────────────────────────────────
+
+export const TIMELINE_STAGE_ORDER: TimelineStage[] = ['cocina', 'logistica', 'it', 'formacion'];
+
+export interface TimelineStageGroup {
+  stage: TimelineStage;
+  /** Chronologically sorted, with durationStr/durationMonths enriched */
+  items: TimelineItem[];
+  /** Inclusive period of the whole stage (parsed from the item dates) */
+  startYear: number;
+  endYear: number;
+}
+
+/**
+ * Fallback stage derivation for items without an explicit `stage` field.
+ * Experience follows its legacy colour mapping; education defaults to the
+ * earliest stage unless dated in the current training era (>= 2026).
+ */
+export function deriveStage(item: TimelineItem): TimelineStage {
+  if (item.stage) return item.stage;
+  if (item.expColor === 'green') return 'cocina';
+  if (item.expColor === 'orange') return 'logistica';
+  if (item.expColor === 'blue') return 'it';
+  const end = parseSpanishDate(item.endDateStr);
+  if (end && end.year >= 2026) return 'formacion';
+  return 'cocina';
+}
+
+/**
+ * Groups timeline items into the four career stages, in canonical order.
+ * Items inside each stage are sorted chronologically (via
+ * `calculateTimelinePositions`) and carry their computed durations.
+ */
+export function groupTimelineByStage(items: TimelineItem[]): TimelineStageGroup[] {
+  const enriched = calculateTimelinePositions(items);
+
+  return TIMELINE_STAGE_ORDER.map(stage => {
+    const stageItems = enriched.filter(item => deriveStage(item) === stage);
+    const dates = stageItems.flatMap(item => [
+      parseSpanishDate(item.startDateStr),
+      parseSpanishDate(item.endDateStr),
+    ]);
+    const years = dates
+      .filter((d): d is { year: number; month: number } => d != null)
+      .map(d => d.year);
+
+    return {
+      stage,
+      items: stageItems,
+      startYear: years.length > 0 ? Math.min(...years) : 0,
+      endYear: years.length > 0 ? Math.max(...years) : 0,
+    };
+  });
+}

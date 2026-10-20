@@ -197,7 +197,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     : t(lang, 'project.pipeline');
 
   return (
-    <main className="px-4 sm:px-6 pt-28 pb-20">
+    <main id="contenido" className="px-4 sm:px-6 pt-28 pb-20">
       <BackButton />
       <header className="mb-10 pb-8 border-b border-neutral-200 dark:border-slate-700">
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-neutral-900 dark:text-white text-center text-balance">

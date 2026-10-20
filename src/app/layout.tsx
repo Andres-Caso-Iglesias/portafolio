@@ -3,7 +3,7 @@ import localFont from 'next/font/local';
 import Script from 'next/script';
 import './globals.css';
 import { Chat } from '@/components/chat/Chat';
-import SiteControls from '@/components/SiteControls';
+import SiteHeader from '@/components/SiteHeader';
 import LangRefresh from '@/components/LangRefresh';
 import { LanguageProvider, type LocaleData } from '@/lib/i18n';
 import { getLangFromCookie } from '@/lib/i18n-server';
@@ -135,8 +135,8 @@ export default async function RootLayout({
         <ThemeProvider initialTheme={theme}>
           <LanguageProvider initialLang={lang} initialLocales={initialLocales}>
             <LangRefresh />
+            <SiteHeader />
             {children}
-            <SiteControls />
             <Chat />
           </LanguageProvider>
         </ThemeProvider>

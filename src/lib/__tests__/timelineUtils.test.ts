@@ -5,8 +5,10 @@ import {
   computeDurationString,
   calculateTimelinePositions,
   expColors,
+  deriveStage,
+  groupTimelineByStage,
 } from '@/lib/timelineUtils';
-import { TimelineItem } from '@/data/timelineData';
+import { TimelineItem, rawTimelineData } from '@/data/timelineData';
 
 describe('parseSpanishDate', () => {
   describe('full month names', () => {
@@ -413,6 +415,90 @@ describe('expColors', () => {
       expect(color).toHaveProperty('text');
       expect(color).toHaveProperty('bubble');
       expect(color).toHaveProperty('line');
+    }
+  });
+});
+
+describe('deriveStage', () => {
+  it('honours an explicit stage over the legacy colour', () => {
+    const item: TimelineItem = {
+      id: 100,
+      startDateStr: 'enero 2024',
+      endDateStr: 'junio 2024',
+      year: '2024',
+      expTitle: 'Operario',
+      expColor: 'green',
+      stage: 'logistica',
+    };
+    expect(deriveStage(item)).toBe('logistica');
+  });
+
+  it('maps experience colours when no explicit stage exists', () => {
+    const base = {
+      id: 101,
+      startDateStr: 'enero 2024',
+      endDateStr: 'junio 2024',
+      year: '2024',
+    };
+    expect(deriveStage({ ...base, expTitle: 'Chef', expColor: 'green' })).toBe('cocina');
+    expect(deriveStage({ ...base, expTitle: 'Operario', expColor: 'orange' })).toBe('logistica');
+    expect(deriveStage({ ...base, expTitle: 'Dev', expColor: 'blue' })).toBe('it');
+  });
+
+  it('maps education by end year when no explicit stage exists', () => {
+    const edu = {
+      id: 102,
+      startDateStr: 'septiembre 2025',
+      year: '2025',
+      eduTitle: 'Máster',
+    };
+    expect(deriveStage({ ...edu, endDateStr: 'junio 2026' })).toBe('formacion');
+    expect(deriveStage({ ...edu, endDateStr: 'junio 2021' })).toBe('cocina');
+  });
+});
+
+describe('groupTimelineByStage', () => {
+  const groups = groupTimelineByStage(rawTimelineData);
+
+  it('returns the four canonical stages in order', () => {
+    expect(groups.map(g => g.stage)).toEqual(['cocina', 'logistica', 'it', 'formacion']);
+  });
+
+  it('partitions every timeline item exactly once', () => {
+    const total = groups.reduce((sum, g) => sum + g.items.length, 0);
+    expect(total).toBe(rawTimelineData.length);
+    expect(groups.every(g => g.items.length > 0)).toBe(true);
+  });
+
+  it('sorts items inside each stage chronologically', () => {
+    for (const group of groups) {
+      const years = group.items.map(item => parseSpanishDate(item.startDateStr)?.year ?? 0);
+      const sorted = [...years].sort((a, b) => a - b);
+      expect(years).toEqual(sorted);
+    }
+  });
+
+  it('computes a coherent period per stage', () => {
+    for (const group of groups) {
+      expect(group.startYear).toBeGreaterThan(0);
+      expect(group.endYear).toBeGreaterThanOrEqual(group.startYear);
+    }
+  });
+
+  it('places key milestones in their expected stage', () => {
+    const findStage = (id: number) => groups.find(g => g.items.some(i => i.id === id))?.stage;
+    expect(findStage(12)).toBe('cocina'); // Posada del Valle (11 años como jefe de cocina)
+    expect(findStage(15)).toBe('logistica'); // Quesería Lafuente
+    expect(findStage(16)).toBe('it'); // Mecalux
+    expect(findStage(17)).toBe('formacion'); // Máster en Ciberseguridad e IA
+  });
+
+  it('enriches items with computed durations', () => {
+    for (const group of groups) {
+      for (const item of group.items) {
+        expect(typeof item.durationStr).toBe('string');
+        expect(item.durationStr!.length).toBeGreaterThan(0);
+      }
     }
   });
 });

@@ -22,7 +22,7 @@ export default function ThemeToggle() {
     <button
       onClick={toggle}
       aria-label={label}
-      className="w-12 h-12 rounded-full flex items-center justify-center bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-800 shadow-lg transition-all duration-200 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900"
+      className="w-10 h-10 rounded-full flex items-center justify-center bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-800 shadow-md transition-all duration-200 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900"
     >
       {isDark ? (
         <svg
@@ -35,7 +35,7 @@ export default function ThemeToggle() {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="w-8 h-8"
+          className="w-5 h-5"
           aria-hidden="true"
         >
           <circle cx="12" cy="12" r="5" />
@@ -59,7 +59,7 @@ export default function ThemeToggle() {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="w-8 h-8"
+          className="w-5 h-5"
           aria-hidden="true"
         >
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />

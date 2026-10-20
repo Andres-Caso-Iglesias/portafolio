@@ -4,66 +4,85 @@ import Image from 'next/image';
 import { skills } from '@/data/skillsData';
 import ProjectsGrid from '@/components/ProjectsGrid';
 import ProfileIntroText from '@/components/ProfileIntroText';
+import Reveal from '@/components/Reveal';
 import { useLanguage, t } from '@/lib/i18n';
+
+const FOCUS_RING = [
+  'focus-visible:outline-none',
+  'focus-visible:ring-2',
+  'focus-visible:ring-blue-500',
+  'focus-visible:ring-offset-2',
+  'focus-visible:ring-offset-white',
+  'dark:focus-visible:ring-offset-slate-900',
+].join(' ');
 
 function HeroSection() {
   const { lang } = useLanguage();
   return (
-    <section className="min-h-screen flex flex-col justify-center items-center px-6 bg-gradient-to-b from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800 relative transition-colors duration-300">
-      <div className="w-full max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-center gap-10 md:gap-16 mt-24 md:mt-0">
-        <div className="flex-shrink-0">
-          <div className="relative w-56 h-72 md:w-72 md:h-96 rounded-[50%] overflow-hidden border-4 border-slate-300 dark:border-slate-700 shadow-xl">
-            <Image
-              src="/profile.jpg"
-              alt="Andrés Caso Iglesias"
-              fill
-              sizes="(max-width: 768px) 224px, 288px"
-              className="object-cover"
-              priority
-            />
-          </div>
+    <section className="relative overflow-hidden bg-gradient-to-b from-white via-white to-slate-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-950 transition-colors duration-300">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_50%_at_50%_-10%,rgba(37,99,235,0.14),transparent_70%)]"
+      />
+      <div className="relative mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-6xl flex-col items-center justify-center gap-10 px-6 py-16 md:flex-row md:gap-14 md:py-20">
+        <div className="relative h-72 w-56 shrink-0 overflow-hidden rounded-3xl border border-neutral-300 shadow-2xl ring-1 ring-blue-500/20 md:h-96 md:w-72 dark:border-slate-700">
+          <Image
+            src="/profile.jpg"
+            alt="Andrés Caso Iglesias"
+            fill
+            sizes="(max-width: 768px) 224px, 288px"
+            className="object-cover"
+            priority
+          />
         </div>
 
-        <div className="flex flex-col items-center md:items-start text-center md:text-left max-w-2xl">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 text-neutral-900 dark:text-white">
+        <div className="flex max-w-2xl flex-col items-center text-center md:items-start md:text-left">
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-xs font-medium text-blue-700 dark:border-blue-400/30 dark:text-blue-300">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-500 opacity-60" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-500" />
+            </span>
+            {t(lang, 'home.heroStatus')}
+          </span>
+          <h1 className="mb-4 text-4xl font-bold tracking-tight text-neutral-900 text-balance md:text-6xl dark:text-white">
             {t(lang, 'home.title')}
           </h1>
-          <p className="text-xl md:text-2xl text-blue-600 dark:text-blue-400 mb-6">
+          <p className="mb-6 text-xl font-medium text-blue-600 md:text-2xl dark:text-blue-400">
             {t(lang, 'home.subtitle')}
           </p>
           <ProfileIntroText />
-          <div className="flex flex-wrap justify-center md:justify-start gap-4">
+          <div className="mt-6 flex flex-wrap justify-center gap-3 md:justify-start">
+            <a
+              href={lang === 'en' ? '/andres_caso_iglesias_EN.pdf' : '/andres_caso_iglesias_Es.pdf'}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`px-6 py-3 rounded-lg font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-md transition-colors ${FOCUS_RING}`}
+            >
+              {t(lang, 'home.resume')}
+            </a>
             <Link
               href={
                 lang === 'en'
                   ? 'https://www.linkedin.com/in/andrescasoiglesias/?locale=en-US'
                   : 'https://www.linkedin.com/in/andrescasoiglesias/'
               }
-              className="px-6 py-3 bg-blue-700 hover:bg-blue-800 rounded-lg font-medium transition-colors text-white"
+              className={`px-6 py-3 rounded-lg font-semibold border border-neutral-300 text-neutral-900 hover:bg-neutral-100 transition-colors dark:border-slate-600 dark:text-white dark:hover:bg-slate-800 ${FOCUS_RING}`}
             >
               {t(lang, 'home.linkedin')}
             </Link>
             <Link
               href="https://github.com/Andres-Caso-Iglesias"
-              className="px-6 py-3 bg-neutral-900 dark:bg-slate-900 hover:bg-neutral-700 dark:hover:bg-slate-700 border border-neutral-300 dark:border-slate-700 rounded-lg font-medium transition-colors text-white"
+              className={`px-6 py-3 rounded-lg font-semibold border border-neutral-300 text-neutral-900 hover:bg-neutral-100 transition-colors dark:border-slate-600 dark:text-white dark:hover:bg-slate-800 ${FOCUS_RING}`}
             >
               {t(lang, 'home.github')}
             </Link>
-            <a
-              href={lang === 'en' ? '/andres_caso_iglesias_EN.pdf' : '/andres_caso_iglesias_Es.pdf'}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-3 bg-emerald-700 hover:bg-emerald-800 rounded-lg font-medium transition-colors text-white"
-            >
-              {t(lang, 'home.resume')}
-            </a>
           </div>
-          <div className="flex flex-wrap justify-center md:justify-start gap-3 mt-4 pt-4 border-t border-neutral-300 dark:border-slate-700">
+          <div className="mt-5 flex flex-wrap justify-center gap-3 border-t border-neutral-300 pt-5 md:justify-start dark:border-slate-700">
             <a
               href="https://app.hackthebox.com/public/users/3412608"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 border border-green-600 text-green-700 dark:text-green-400 hover:bg-green-600/10 hover:text-green-600 dark:hover:text-green-300 rounded-lg font-medium text-sm transition-colors"
+              className={`px-4 py-2 border border-green-600 text-green-700 dark:text-green-400 hover:bg-green-600/10 hover:text-green-600 dark:hover:text-green-300 rounded-lg font-medium text-sm transition-colors ${FOCUS_RING}`}
             >
               {t(lang, 'home.hackTheBox')}
             </a>
@@ -71,7 +90,7 @@ function HeroSection() {
               href="https://labs.thehackerslabs.com/hacker/10479"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 border border-red-600 text-red-700 dark:text-red-400 hover:bg-red-600/10 hover:text-red-600 dark:hover:text-red-300 rounded-lg font-medium text-sm transition-colors"
+              className={`px-4 py-2 border border-red-600 text-red-700 dark:text-red-400 hover:bg-red-600/10 hover:text-red-600 dark:hover:text-red-300 rounded-lg font-medium text-sm transition-colors ${FOCUS_RING}`}
             >
               {t(lang, 'home.theHackersLabs')}
             </a>
@@ -79,7 +98,7 @@ function HeroSection() {
               href="https://tryhackme.com/p/Drosc0"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 border border-orange-600 text-orange-700 dark:text-orange-400 hover:bg-orange-600/10 hover:text-orange-600 dark:hover:text-orange-300 rounded-lg font-medium text-sm transition-colors"
+              className={`px-4 py-2 border border-orange-600 text-orange-700 dark:text-orange-400 hover:bg-orange-600/10 hover:text-orange-600 dark:hover:text-orange-300 rounded-lg font-medium text-sm transition-colors ${FOCUS_RING}`}
             >
               {t(lang, 'home.tryHackMe')}
             </a>
@@ -93,28 +112,33 @@ function HeroSection() {
 function AboutSection() {
   const { lang } = useLanguage();
   return (
-    <section className="py-20 px-6 bg-slate-100 dark:bg-slate-800 transition-colors duration-300">
-      <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold mb-8 text-neutral-900 dark:text-white">
-          {t(lang, 'home.profileTitle')}
-        </h2>
-      </div>
-      <div className="px-4 lg:px-12 xl:px-20">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-          <div className="lg:col-span-2 space-y-4 text-neutral-700 dark:text-slate-300">
-            <p className="text-lg leading-relaxed">{t(lang, 'home.profileIntro')}</p>
-            <p className="text-lg leading-relaxed">{t(lang, 'home.profileIntro2')}</p>
-          </div>
-          <div className="p-6 bg-white dark:bg-slate-900 rounded-lg border-l-4 border-blue-500">
-            <p className="text-blue-600 dark:text-blue-400 font-medium text-lg">
-              {t(lang, 'home.profileDifferTitle')}
-            </p>
-            <p className="text-neutral-500 dark:text-slate-400 mt-3 text-lg leading-relaxed">
-              {t(lang, 'home.profileDifferText')}
-            </p>
+    <section
+      id="perfil"
+      className="bg-white px-6 py-20 transition-colors duration-300 dark:bg-slate-900"
+    >
+      <Reveal>
+        <div className="mx-auto max-w-4xl">
+          <h2 className="mb-8 text-3xl font-bold text-neutral-900 dark:text-white">
+            {t(lang, 'home.profileTitle')}
+          </h2>
+        </div>
+        <div className="px-4 lg:px-12 xl:px-20">
+          <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-3">
+            <div className="space-y-4 text-neutral-700 lg:col-span-2 dark:text-slate-300">
+              <p className="text-lg leading-relaxed">{t(lang, 'home.profileIntro')}</p>
+              <p className="text-lg leading-relaxed">{t(lang, 'home.profileIntro2')}</p>
+            </div>
+            <div className="rounded-lg border-l-4 border-blue-500 bg-neutral-50 p-6 dark:bg-slate-800">
+              <p className="text-lg font-medium text-blue-600 dark:text-blue-400">
+                {t(lang, 'home.profileDifferTitle')}
+              </p>
+              <p className="mt-3 text-lg leading-relaxed text-neutral-500 dark:text-slate-400">
+                {t(lang, 'home.profileDifferText')}
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }
@@ -122,73 +146,88 @@ function AboutSection() {
 function SkillsSection() {
   const { lang } = useLanguage();
   const cyberCategories = ['OSINT', 'Sistemas Operativos', 'Redes'];
+
+  const skillCardClass =
+    'bg-white rounded-lg p-6 border border-neutral-200 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-500/60 dark:border-slate-700 dark:bg-slate-900';
+
+  const groupHeadingClass =
+    'flex items-center gap-3 text-xl min-[1440px]:text-2xl font-semibold text-teal-700 dark:text-teal-400 mb-6 max-w-4xl mx-auto';
+
   return (
-    <section className="py-20 px-6 bg-slate-100 dark:bg-slate-800 w-full transition-colors duration-300">
-      <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl min-[1440px]:text-4xl font-bold mb-8 text-neutral-900 dark:text-white">
+    <section
+      id="habilidades"
+      className="w-full bg-slate-50 px-6 py-20 transition-colors duration-300 dark:bg-slate-950"
+    >
+      <div className="mx-auto max-w-4xl">
+        <h2 className="mb-8 text-3xl min-[1440px]:text-4xl font-bold text-neutral-900 dark:text-white">
           {t(lang, 'home.skillsTitle')}
         </h2>
       </div>
-      <div className="w-full max-w-screen-2xl mx-auto">
-        <div className="mb-8">
-          <h3 className="text-xl min-[1440px]:text-2xl font-semibold text-teal-700 dark:text-teal-400 mb-4 max-w-4xl mx-auto text-center">
-            {t(lang, 'home.skillsCybersecurity')}
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {skills
-              .filter(s => cyberCategories.includes(s.category))
-              .map(skill => (
-                <div
-                  key={skill.category}
-                  className="bg-white dark:bg-slate-900 rounded-lg p-6 border border-neutral-200 dark:border-slate-700"
-                >
-                  <h4 className="text-lg min-[1440px]:text-xl font-semibold text-blue-600 dark:text-blue-400 mb-4">
-                    {skill.category}
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {skill.items.map(item => (
-                      <span
-                        key={item}
-                        className="px-3 py-1 bg-slate-200 dark:bg-slate-700 rounded-full text-sm text-neutral-800 dark:text-slate-200"
-                      >
-                        {item}
-                      </span>
-                    ))}
+      <Reveal>
+        <div className="mx-auto w-full max-w-screen-2xl">
+          <div className="mb-8">
+            <h3 className={groupHeadingClass}>
+              <span className="h-6 w-1.5 rounded-full bg-teal-500" aria-hidden="true" />
+              {t(lang, 'home.skillsCybersecurity')}
+            </h3>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-6 md:gap-6">
+              {skills
+                .filter(s => cyberCategories.includes(s.category))
+                .map(skill => (
+                  <div key={skill.category} className={`${skillCardClass} md:col-span-2`}>
+                    <h4 className="mb-4 text-lg min-[1440px]:text-xl font-semibold text-blue-600 dark:text-blue-400">
+                      {skill.category}
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {skill.items.map(item => (
+                        <span
+                          key={item}
+                          className="px-3 py-1 bg-slate-200 dark:bg-slate-700 rounded-full text-sm text-neutral-800 dark:text-slate-200"
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+            </div>
+          </div>
+          <div>
+            <h3 className={groupHeadingClass}>
+              <span className="h-6 w-1.5 rounded-full bg-teal-500" aria-hidden="true" />
+              {t(lang, 'home.skillsDevelopment')}
+            </h3>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-6 md:gap-6">
+              {skills
+                .filter(s => !cyberCategories.includes(s.category))
+                .map(skill => {
+                  const wide =
+                    skill.category === 'DevOps & Cloud' || skill.category === 'Herramientas de IA';
+                  return (
+                    <div
+                      key={skill.category}
+                      className={`${skillCardClass} ${wide ? 'md:col-span-3' : 'md:col-span-2'}`}
+                    >
+                      <h4 className="mb-4 text-lg min-[1440px]:text-xl font-semibold text-blue-600 dark:text-blue-400">
+                        {skill.category}
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {skill.items.map(item => (
+                          <span
+                            key={item}
+                            className="px-3 py-1 bg-slate-200 dark:bg-slate-700 rounded-full text-sm text-neutral-800 dark:text-slate-200"
+                          >
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
           </div>
         </div>
-        <div>
-          <h3 className="text-xl min-[1440px]:text-2xl font-semibold text-teal-700 dark:text-teal-400 mb-4 max-w-4xl mx-auto text-center">
-            {t(lang, 'home.skillsDevelopment')}
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {skills
-              .filter(s => !cyberCategories.includes(s.category))
-              .map(skill => (
-                <div
-                  key={skill.category}
-                  className="bg-white dark:bg-slate-900 rounded-lg p-6 border border-neutral-200 dark:border-slate-700"
-                >
-                  <h4 className="text-lg min-[1440px]:text-xl font-semibold text-blue-600 dark:text-blue-400 mb-4">
-                    {skill.category}
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {skill.items.map(item => (
-                      <span
-                        key={item}
-                        className="px-3 py-1 bg-slate-200 dark:bg-slate-700 rounded-full text-sm text-neutral-800 dark:text-slate-200"
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-          </div>
-        </div>
-      </div>
+      </Reveal>
     </section>
   );
 }
@@ -196,15 +235,20 @@ function SkillsSection() {
 function ProjectsSection() {
   const { lang } = useLanguage();
   return (
-    <section className="py-20 px-6 bg-slate-100 dark:bg-slate-800 w-full transition-colors duration-300">
-      <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl min-[1440px]:text-4xl font-bold mb-8 text-neutral-900 dark:text-white">
+    <section
+      id="proyectos"
+      className="w-full bg-white px-6 py-20 transition-colors duration-300 dark:bg-slate-900"
+    >
+      <div className="mx-auto max-w-4xl">
+        <h2 className="mb-8 text-3xl min-[1440px]:text-4xl font-bold text-neutral-900 dark:text-white">
           {t(lang, 'home.projectsTitle')}
         </h2>
       </div>
-      <div className="w-full max-w-screen-2xl mx-auto">
-        <ProjectsGrid />
-      </div>
+      <Reveal>
+        <div className="mx-auto w-full max-w-screen-2xl">
+          <ProjectsGrid />
+        </div>
+      </Reveal>
     </section>
   );
 }
@@ -212,19 +256,26 @@ function ProjectsSection() {
 function ContactSection() {
   const { lang } = useLanguage();
   return (
-    <section className="py-20 px-6 bg-white dark:bg-slate-900 text-center transition-colors duration-300">
-      <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold mb-4 text-neutral-900 dark:text-white">
-          {t(lang, 'home.contactTitle')}
-        </h2>
-        <p className="text-neutral-600 dark:text-slate-300 mb-6">{t(lang, 'home.contactIntro')}</p>
-        <a
-          href="mailto:andrescasoiglesias@gmail.com"
-          className="inline-block px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium transition-colors text-white"
-        >
-          {t(lang, 'home.contactEmail')}
-        </a>
-      </div>
+    <section
+      id="contacto"
+      className="bg-slate-50 px-6 py-20 text-center transition-colors duration-300 dark:bg-slate-950"
+    >
+      <Reveal>
+        <div className="mx-auto max-w-4xl">
+          <h2 className="mb-4 text-3xl font-bold text-neutral-900 dark:text-white">
+            {t(lang, 'home.contactTitle')}
+          </h2>
+          <p className="mb-6 text-neutral-600 dark:text-slate-300">
+            {t(lang, 'home.contactIntro')}
+          </p>
+          <a
+            href="mailto:andrescasoiglesias@gmail.com"
+            className={`inline-block rounded-lg bg-blue-600 px-8 py-4 font-medium text-white shadow-md transition-colors hover:bg-blue-700 ${FOCUS_RING}`}
+          >
+            {t(lang, 'home.contactEmail')}
+          </a>
+        </div>
+      </Reveal>
     </section>
   );
 }
@@ -232,7 +283,7 @@ function ContactSection() {
 function Footer() {
   const { lang } = useLanguage();
   return (
-    <footer className="py-8 px-6 bg-neutral-100 dark:bg-slate-950 text-center text-neutral-600 dark:text-slate-400 text-sm transition-colors duration-300">
+    <footer className="border-t border-neutral-200 bg-neutral-100 px-6 py-8 text-center text-sm text-neutral-600 transition-colors duration-300 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400">
       <p>
         © {new Date().getFullYear()} Andrés Caso Iglesias. {t(lang, 'home.footerRights')}
       </p>

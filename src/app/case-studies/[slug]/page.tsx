@@ -128,7 +128,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
     (isEn ? caseStudy.erdAlt?.en : caseStudy.erdAlt?.es) ?? `${title} architecture`;
 
   return (
-    <main className="px-4 sm:px-6 pt-28 pb-20">
+    <main id="contenido" className="px-4 sm:px-6 pt-28 pb-20">
       <BackButton />
       <header className="mb-10 pb-8 border-b border-neutral-200 dark:border-slate-700">
         <p className="mb-3 text-center text-sm font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
