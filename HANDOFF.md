@@ -2,20 +2,20 @@
 
 > **Proposito**: Este archivo es el puente entre sesiones. Si arrancas una sesion nueva en este proyecto, lee este archivo PRIMERO. Te ahorra 20 minutos de "que carajo hicimos la ultima vez".
 >
-> **Ultima actualizacion**: Octubre 2026 — rediseño v3.2, Fase 1 (casos de estudio) completada.
+> **Ultima actualizacion**: Octubre 2026 — rediseño v3.2, Fase 2 (rediseño visual) completada.
 
 ---
 
 ## TL;DR (30 segundos)
 
-El proyecto esta **deployado en produccion** (via `main`). El rediseño v3.2 se ejecuta en la rama `rediseño`: Fase 0a y 0b completadas, **Fase 1 (casos de estudio) completada y empujada**.
+El proyecto esta **deployado en produccion** (via `main`). El rediseño v3.2 se ejecuta en la rama `rediseño`: Fase 0a, 0b, 1 (casos de estudio) y **2 (rediseño visual) completadas y empujadas**.
 
 **Estado actual:**
 
-- Branch activa: `rediseño` (commits `2cdd506`, `d227667`, `a8ac6d3` pushados a `origin/rediseño`); NO tocar `main` hasta el lanzamiento del MVP
-- Fase 1: 3 casos de estudio en `/case-studies/[slug]` (QReaper, VulnPrio, Security Header Scanner) con enlace desde la ficha de proyecto y respuestas de chat sincronizadas
+- Branch activa: `rediseño` (commits `2cdd506`, `d227667`, `a8ac6d3`, `9035e9e`, `4724444` pushados a `origin/rediseño`); NO tocar `main` hasta el lanzamiento del MVP
+- Fase 2: header sticky con navegacion por anclas, hero renovado, bento de proyectos/skills, timeline en 4 etapas, reveal-on-scroll con prefers-reduced-motion
 - Gemini AI **dormido**: sin `GOOGLE_AI_API_KEY` en Vercel, chat 100% rule-based (flag `NEXT_PUBLIC_AI_ENABLED=false`)
-- 298 unit tests + 51 E2E tests, todas las puertas en verde (lint, typecheck, smoke, build)
+- 307 unit tests + 51 E2E tests por navegador, todas las puertas en verde (lint, typecheck, smoke, build, E2E 3 navegadores, axe, Lighthouse)
 
 ---
 
@@ -25,18 +25,19 @@ El proyecto esta **deployado en produccion** (via `main`). El rediseño v3.2 se 
 | ------------- | ------------------------------------------------------------- |
 | Branch actual | `rediseño`                                                    |
 | `main`        | Deployado en produccion (intacto durante el rediseño)          |
-| `rediseño`    | Al dia con `origin/rediseño`                                  |
-| Working tree  | Limpio                                                        |
-| Ultimo commit | `a8ac6d3 feat(fase-1): anade casos de estudio...`             |
+| `rediseño`    | Al dia con `origin/rediseño` (pendiente push de docs)          |
+| Working tree  | Solo AGENTS.md/HANDOFF.md modificados (docs del cierre fase 2) |
+| Ultimo commit | `4724444 feat(fase-2): rediseño visual con header fijo...`     |
 
 Commits recientes (rama `rediseño`):
 
 ```bash
-git log --oneline -4
+git log --oneline -5
+# 4724444 feat(fase-2): rediseño visual con header fijo, bento, timeline por etapas y animaciones
+# 9035e9e docs(handoff): registra pendientes de la fase 1 y actualiza estado de la rama rediseño
 # a8ac6d3 feat(fase-1): anade casos de estudio de QReaper, VulnPrio y Security Header Scanner
 # d227667 feat(fase-0b): refuerzo de cabeceras, flag AI, tokens de diseno e i18n
 # 2cdd506 fix(seo): unifica siteUrl en constante compartida y corrige errata
-# ce59caa feat: update cv's
 ```
 
 ---
@@ -122,6 +123,41 @@ npm run test:e2e     # Playwright E2E tests (51 tests)
 
 ---
 
+## Fase 2 (rediseño visual) — Completada (commit `4724444`)
+
+### Entregado
+
+- **SiteHeader sticky** (`src/components/SiteHeader.tsx`): skip-link a `#contenido`, navegacion por anclas (5 secciones, `/#id` fuera de home), ThemeToggle + LanguageSwitch integrados; sustituye a `SiteControls` (borrado). Todos los `<main>` llevan `id="contenido"`.
+- **Hero renovado**: chip de disponibilidad (`home.heroStatus`), foto rectangular con ring, CV como CTA primario, LinkedIn/GitHub outline.
+- **Bento de proyectos**: QReaper `col-span-3 row-span-2` + VulnPrio/Scanner a la derecha; tarjetas grises (`neutral-50/slate-800`) sobre seccion blanca; pill "Leer caso de estudio" en las 3 featured (closes el enlace home->caso pendiente de Fase 1). Marquee intacto (contrato E2E: 5 originales + 15 clones).
+- **Bento de skills**: grid `md:grid-cols-6` con spans asimetricos (ciber 2/2/2, dev 2/2/2 + 3/3).
+- **Timeline por etapas**: `groupTimelineByStage`/`deriveStage` puros en `timelineUtils.ts` (+9 unit tests); paneles `StagePanel` (Cocina/Logística/IT/Formación, marcador lleno=experiencia, hueco=formacion, periodo `start-end`); `timelineData.ts` anotado con `stage` en los 17 items.
+- **Animaciones**: `Reveal.tsx` (IntersectionObserver con fallback si no existe) sobre secciones + bloque global `prefers-reduced-motion` en `globals.css`; `scroll-behavior: smooth` solo bajo `no-preference`.
+
+### Puertas ejecutadas (todas en verde)
+
+- lint · typecheck · 307/307 unit · smoke i18n/seo · build · **E2E 153/153** (51 x chromium/firefox/webkit, 0 fallos)
+- **1 flaky persistente en firefox**: `case-studies.spec.ts:92` (language switch) — pasa en retry (config: retries 1 local / 2 CI). CI corre solo chromium.
+- **axe (one-off, 4 paginas)**: slug pages 0 violaciones (tras anadir `id="contenido"`); home solo el **marquee pre-existente** (`role="button"` en `<article>` con links anidados = `nested-interactive`/`aria-allowed-role`). NO se toca: es el markup que exige `projects.spec.ts` (20 articulos, 15 clones, 4 links originales).
+- **Lighthouse baseline (nueva, no existia medicion previa)**: performance 85 · accessibility 100 · seo 100 · best-practices 100. Fix aplicado en la ronda de ajustes: `aria-label="Andrés Caso Iglesias"` en el logo del header (en móvil el `AC` era `aria-hidden` y el nombre completo `display:none` -> enlace sin nombre; solo lo veia Lighthouse porque usa viewport 412).
+
+### Decisiones de la fase
+
+- **CSP `upgrade-insecure-requests` condicional a `process.env.VERCEL`** (`next.config.ts`): WebKit sube `http://localhost` a `https://localhost` (SSL connect error) -> pagina sin estilos en webkit local -> 25 E2E en rojo. Produccion (Vercel) mantiene la directiva; local la omite. **Chrome/Firefox no lo necesitan** (excluyen localhost del upgrade); solo WebKit.
+- **Logo del header con `aria-label` estable** (nombre identico en ES/EN, independiente del breakpoint).
+- **Ronda de ajuste unica** (regla del plan): QReaper hero card con `md:justify-start` (elimina el hueco central de `justify-between` en la tarjeta de doble fila).
+
+### Pendiente del gate manual
+
+- **Revision en dispositivo real del autor** (obligatoria por el plan): movil fisico, dark/light, anclas del nav, marquee con dedo.
+
+### Capturas de la fase
+
+- Helper: `$env:TEMP\opencode\capture.cjs <prefix>` (chromium, full-page, reducedMotion). La variante light usa **cookie `theme=light`** porque el server fuerza dark por defecto.
+- Capturas "after" de Fase 2 en `$env:TEMP\opencode\after-*.png` (desktop dark/light, mobile, case study).
+
+---
+
 ## Pendientes de Revision y Material (Fase 1 - casos de estudio)
 
 > Registrado en Octubre 2026. Estos dos items quedan **abiertos a proposito**: el codigo esta completo y verificado, pero el contenido y el material visual dependen de revision/produccion del autor.
@@ -152,16 +188,15 @@ Los casos de estudio y las fichas de proyecto funcionan sin imagenes de interfaz
 1. **Migrar a `next-intl`** con routing `/en/*` (reemplaza i18n custom con cookie)
 2. **Cerrar 9 manual browser tests** del SDD previo `estrategia-visualizacion-tecnica`
 3. **Dynamic import del Chat** en layout (carga en cada pagina incluyendo 404)
-4. **Mover "use client"** de Timeline.tsx a TimelineDesktop/Mobile
-5. **Agregar error.tsx** en app/ y projects/[slug]/
+4. **Agregar error.tsx** en app/ y projects/[slug]/
+5. **Investigar flaky de firefox**: `case-studies.spec.ts:92` (language switch pasa en retry; CI solo chromium, riesgo bajo)
 
 ### BAJA prioridad
 
-1. Menu de navegacion con resaltado de seccion
-2. Modo claro/oscuro con persistencia (next-themes)
-3. Optimizacion de imagenes (reemplazar <img> por next/image)
-4. Analisis de rendimiento (Lighthouse, Web Vitals)
-5. Tests de componentes (@testing-library/react)
+1. Menu de navegacion con resaltado de seccion activa (el header sticky ya existe; ver Fase 2)
+2. Tests de componentes (@testing-library/react)
+3. Optimizar imagenes nuevas (screenshots pendientes del autor) con next/image
+4. Mejorar performance de Lighthouse (baseline Fase 2: 85 — LCP del hero, JS unused del chat, render-blocking)
 
 ---
 
