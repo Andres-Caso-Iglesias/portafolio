@@ -25,8 +25,8 @@ El proyecto esta **deployado en produccion** (via `main`). El rediseño v3.2 se 
 | ------------- | ------------------------------------------------------------- |
 | Branch actual | `rediseño`                                                    |
 | `main`        | Deployado en produccion (intacto durante el rediseño)          |
-| `rediseño`    | Al dia con `origin/rediseño` (pendiente push de docs)          |
-| Working tree  | Solo AGENTS.md/HANDOFF.md modificados (docs del cierre fase 2) |
+| `rediseño`    | Al dia con `origin/rediseño` (docs de cierre empujadas)        |
+| Working tree  | Limpio                                                         |
 | Ultimo commit | `4724444 feat(fase-2): rediseño visual con header fijo...`     |
 
 Commits recientes (rama `rediseño`):
