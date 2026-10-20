@@ -8,14 +8,15 @@
 
 ## TL;DR (30 segundos)
 
-El proyecto esta **deployado en produccion** (via `main`). El rediseño v3.2 se ejecuta en la rama `rediseño`: Fase 0a, 0b, 1 (casos de estudio), 2 (rediseño visual) y **3 (terminal REPL + secretos) completadas**.
+El proyecto esta **deployado en produccion** (via `main`). El rediseño v3.2 se ejecuta en la rama `rediseño`: Fase 0a, 0b, 1 (casos de estudio), 2 (rediseño visual) y 3 (terminal REPL + secretos) completadas; **Fase 4 (lanzamiento) en curso**.
 
 **Estado actual:**
 
 - Branch activa: `rediseño`; NO tocar `main` hasta el lanzamiento del MVP
 - Fase 3: chat UI eliminado y sustituido por terminal REPL flotante (chunk async diferido), secretos konami/iddqd, honeypot `/admin-backup`, teapot 418
+- Fase 4: CI verde en la rama, notas "despues" de headers y Lighthouse publicadas en `docs/audits/`, capturas movil listas; quedan verificaciones en produccion (tras merge), revision en movil fisico y LinkedIn
 - Gemini AI **dormido**: sin `GOOGLE_AI_API_KEY` en Vercel; IA de la terminal desactivada salvo `NEXT_PUBLIC_AI_ENABLED=true` (cero peticiones a `/api/chat` por defecto)
-- 359 unit tests + 61 E2E tests por navegador (6 ficheros), todas las puertas en verde (lint, typecheck, smoke, build, E2E 3 navegadores, axe)
+- 359 unit tests + 61 E2E tests por navegador (6 ficheros), todas las puertas en verde (lint, typecheck, smoke, build, E2E 3 navegadores, axe, CI GitHub Actions en la rama)
 
 ---
 
@@ -194,6 +195,26 @@ npm run test:e2e     # Playwright E2E tests (61 tests por navegador)
 ### Pendiente del gate manual
 
 - Revisar terminal y secretos en **movil real** del autor (teclado, Ctrl+K inexistente → FAB, konami imposible sin teclado fisico → alias `~`).
+
+---
+
+## Fase 4 (lanzamiento) — En curso
+
+Checklist del plan: revision final en movil/navegadores, notas "despues" de headers y Lighthouse, publicacion en LinkedIn.
+
+### Completado (2026-10-20)
+
+- **CI en la rama `rediseño`**: `ci.yml` ahora tambien dispara en pushes a `rediseño` (ademas de `main` y PRs). Pipeline completo **verde en GitHub Actions** sobre el commit `6485cb0` (lint, typecheck, npm audit, 359 unit, build, E2E chromium en linux): https://github.com/Andres-Caso-Iglesias/portafolio/actions/runs/39484261489
+- **Nota "despues" de headers**: `docs/audits/headers-despues-2026-10-20.md` — CSP con `object-src 'none'` (y `upgrade-insecure-requests` solo en produccion), `X-Robots-Tag` en `/admin-backup`, `robots.txt` con `Disallow: /admin-backup`, `/teapot` 418 con cabeceras de seguridad.
+- **Nota "despues" de Lighthouse/axe**: `docs/audits/lighthouse-despues-2026-10-20.md` — 82/100/100/100 local (baseline Fase 2: 85), analisis del delta, axe solo con el marquee pre-existente.
+- **Capturas para la revision manual**: 7 imagenes en `$env:TEMP\opencode\f4-*.png` (home movil, terminal movil con `projects`, terminal desktop con `ayuda`, modo retro con toast, honeypot con mensaje post-submit, 404 movil, teapot). Verificadas visualmente.
+
+### Pendiente (requiere al autor o produccion)
+
+1. **Vercel**: comprobar que `GOOGLE_AI_API_KEY` no existe en ningun entorno y que `NEXT_PUBLIC_AI_ENABLED` no esta definida (o es false) en produccion.
+2. **Merge `rediseño` → `main`** (o PR) para desplegar; despues repetir en la URL de produccion: `curl -sI` (headers), Lighthouse (5 runs) y axe; actualizar las dos notas "despues".
+3. Revision en **movil fisico** del autor (teclado, FAB, marquee con dedo, dark/light).
+4. **Publicacion en LinkedIn** contando el proceso y la caza de secretos (borrador redactado; lo pega el autor).
 
 ---
 

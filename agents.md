@@ -407,7 +407,7 @@ Esta decision se tomopara mantener consistencia y evitar problemas de compatibil
 
 ### Branch state
 
-- `rediseño` activa, al dia con `origin/rediseño` (Fases 0a/0b/1/2/3 completadas; ver `HANDOFF.md`).
+- `rediseño` activa, al dia con `origin/rediseño` (Fases 0a/0b/1/2/3 completadas, Fase 4 en curso; ver `HANDOFF.md`).
 - `main` deployado en produccion (intacto durante el rediseño).
 
 ### Contexto persistido
